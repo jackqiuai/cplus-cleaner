@@ -3,10 +3,11 @@ from pathlib import Path
 import re
 from cplus_cleaner.localization import localized_tk as tk
 from cplus_cleaner.localization.i18n import tr
+from cplus_cleaner.common.runtime import resource_root
 
 
 MINT = "#46d6a0"
-ASSETS = Path(__file__).resolve().parents[2] / "assets"
+ASSETS = resource_root() / "assets"
 
 
 def scroll_canvas(canvas, content, delta):
