@@ -19,6 +19,10 @@ from tests.popup_fixtures import groups as fixture_groups
 
 class PopupPageTests(unittest.TestCase):
     def setUp(self):
+        # Baseline captions must not depend on the runner's Windows language.
+        language = patch.object(desktop.i18n, 'detect_language', return_value='zh')
+        language.start()
+        self.addCleanup(language.stop)
         self.gc_enabled = gc.isenabled()
         gc.disable()
         gc.collect()
