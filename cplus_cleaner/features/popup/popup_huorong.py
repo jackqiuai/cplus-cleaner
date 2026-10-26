@@ -418,3 +418,5 @@ def disable_group(group, reason):
 def matches(rule, window, *, check_pixels=True):
     return bool(rule.supported and rule.matcher is not None and not protected(window)
                 and rule.matcher.match(window, check_pixels=check_pixels))
+
+# Purpose: Huorong rule parsing and capability checks
