@@ -395,3 +395,5 @@ class Dialogs:
 
 messagebox = Dialogs(native_messagebox)
 filedialog = Dialogs(native_filedialog)
+
+# Purpose: Tk text localization adapters
