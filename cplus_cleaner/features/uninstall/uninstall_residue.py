@@ -232,3 +232,5 @@ def clean_residue(manifest, cancel=None, progress=None, *, registry=None):
     except OSError:
         pass
     return dict(deleted=deleted, errors=errors, cancelled=installed._cancelled(cancel))
+
+# Purpose: Supported post-uninstall residue checks
