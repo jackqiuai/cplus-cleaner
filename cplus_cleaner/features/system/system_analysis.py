@@ -136,3 +136,5 @@ def report_text(output):
         if line and not re.fullmatch(r'[\[\] =.\d%]+', line):
             lines.append(line)
     return '\n'.join(lines)
+
+# Purpose: Component analysis, progress and elevated read-only jobs
