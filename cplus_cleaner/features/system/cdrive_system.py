@@ -263,3 +263,5 @@ def run_action(action_id: str, progress=None, *, allow_elevation=False) -> dict:
             result["log_error"] = str(exc)
             result["message"] += f"；写入操作日志失败：{exc}"
     return result
+
+# Purpose: Recycle bin, hibernation, pagefile and component-store interfaces
