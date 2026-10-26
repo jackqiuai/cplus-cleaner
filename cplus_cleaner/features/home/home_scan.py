@@ -146,3 +146,5 @@ def scan(cancel=None, progress=None, *, folders=None, enabled=None):
             progress(dict(key=key, state=state, value=result["value"], unit=result["unit"],
                           message=result["message"], **last))
     return dict(results=results, cancelled=cancel.is_set(), cleanup_bytes=cleanup_bytes(results))
+
+# Purpose: Home scan sequence and progress
