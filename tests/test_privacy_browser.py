@@ -289,3 +289,5 @@ class BrowserPrivacyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for browser history and download records
