@@ -443,3 +443,5 @@ class SoftwareMigrationPage(tk.Frame):
         window.reload_records = reload
         reload()
         return window
+
+# Purpose: App Mover page and history
