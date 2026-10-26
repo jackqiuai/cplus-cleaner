@@ -481,3 +481,5 @@ class HomePage(tk.Frame):
             self._repaint_after = None
         super().destroy()
         self.heading, self.status = None, None
+
+# Purpose: Home cards, illustration and scan state
