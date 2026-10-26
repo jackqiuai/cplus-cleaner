@@ -153,3 +153,5 @@ def clean(session, cancel=None, progress=None):
         category.records = retained
     return dict(cleaned_count=removed, cleaned_physical_count=len(cleaned), errors=errors,
                 cancelled=cancel is not None and cancel.is_set())
+
+# Purpose: Privacy category orchestration, scanning and deletion
