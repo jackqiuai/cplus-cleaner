@@ -189,3 +189,5 @@ class LargeFilesTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for classification of files larger than 30 MiB, moving and recovery records
