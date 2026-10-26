@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 from functools import lru_cache
 import weakref
+from cplus_cleaner.common.runtime import resource_root
 
 _language = 'zh'
 _widgets = weakref.WeakSet()
@@ -72,7 +73,7 @@ def set_language(value):
 def _load():
     global _catalog
     if _catalog is None:
-        data = json.loads((Path(__file__).resolve().parents[2] / 'locales/en.json').read_text(encoding='utf-8'))
+        data = json.loads((resource_root() / 'locales/en.json').read_text(encoding='utf-8'))
         templates, numeric_segments = [], []
         for entry in data['templates']:
             fields, pieces, literals = 0, [], []
