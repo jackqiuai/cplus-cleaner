@@ -162,3 +162,5 @@ class CDriveRuleTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for rule-based drive cleanup categories and time filters
