@@ -173,3 +173,5 @@ class NativeTray:
                 user.DestroyIcon(icon)
             if registered:
                 user.UnregisterClassW(class_name, instance)
+
+# Purpose: Windows tray icon and menu
