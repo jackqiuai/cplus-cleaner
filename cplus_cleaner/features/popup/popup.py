@@ -440,3 +440,5 @@ class Blocker:
 
     def clear_history(self):
         self._commit(lambda state: state.update(history={}))
+
+# Purpose: Popup scan and blocking orchestration
