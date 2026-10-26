@@ -60,3 +60,5 @@ def display_png(data, numerator=3, denominator=5):
                 struct.pack('>I',zlib.crc32(kind+payload) & 0xffffffff))
     return (data[:8]+chunk(b'IHDR',header)+chunk(b'IDAT',zlib.compress(output))+
             chunk(b'IEND',b''))
+
+# Purpose: PNG opacity processing and caching
