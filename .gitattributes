@@ -11,3 +11,5 @@
 *.bat text eol=crlf
 *.png binary
 *.ico binary
+
+# Purpose: Repository line endings and binary asset attributes
