@@ -18,6 +18,10 @@ from cplus_cleaner.ui.ui_widgets import check_images
 
 class CompressionPageTests(unittest.TestCase):
     def setUp(self):
+        # Baseline captions must not depend on the runner's Windows language.
+        language = patch.object(desktop.i18n, 'detect_language', return_value='zh')
+        language.start()
+        self.addCleanup(language.stop)
         self.gc_enabled = gc.isenabled()
         gc.disable()
         gc.collect()
