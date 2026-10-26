@@ -144,3 +144,5 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | `tools/prepare_source_release.py` | Allowlisted export, integrity manifest and managed obsolete-file pruning |
 | `tools/verify_source_tree.py` | Read-only import, rule, asset and manifest validation |
 | `dev/`, `previews/`, `reports/`, `publication/` | Local research, previews, archives and generated output; excluded from commits |
+
+<!-- Purpose: Python module and entry-point purpose guide -->
