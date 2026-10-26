@@ -408,3 +408,5 @@ class PopupTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for popup scan and blocking orchestration
