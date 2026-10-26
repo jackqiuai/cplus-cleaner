@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/build-windows.yml",
-      "bytes": 3068,
-      "sha256": "d42d3d9fdce70ef438351d4d20ce79d6f6e9bd2b133b2d9ad27a09dc002cc2c7",
+      "bytes": 3783,
+      "sha256": "a135065fc1222cb876eef3f0422876ca8222e1b4271939e79f64de753b58aa4b",
       "text": true
     },
     {
@@ -1426,8 +1426,8 @@
     },
     {
       "path": "tests/test_chat_ui.py",
-      "bytes": 8332,
-      "sha256": "53c71ed1ba366d36f7929f25091c6d6ee01073c89d2cd6df2b6dc14f8650ad51",
+      "bytes": 8558,
+      "sha256": "6670b56f72f1020956886c6b7eb3a143d3d4a25060a666c8c5f4edff4089af99",
       "text": true
     },
     {
@@ -1444,14 +1444,14 @@
     },
     {
       "path": "tests/test_desktop.py",
-      "bytes": 55672,
-      "sha256": "b6bf7d173e03532567bdd6403ff2251220fc99d8d9fad742f334343a3651dc55",
+      "bytes": 55898,
+      "sha256": "b87723de29195da6fcc710343e6d41e048b427634129e35eb82f2761fc5d101e",
       "text": true
     },
     {
       "path": "tests/test_duplicates_ui.py",
-      "bytes": 6604,
-      "sha256": "0cf492989bc63e2911fdb9592fe8a51266e8aa5830fc8af3f4690178cf7e9829",
+      "bytes": 6830,
+      "sha256": "26dc498ca4d6a3b4819d2cb41b5ca79862171cd0752baa5a628862e37f4141b7",
       "text": true
     },
     {
@@ -1468,8 +1468,8 @@
     },
     {
       "path": "tests/test_home_ui.py",
-      "bytes": 21924,
-      "sha256": "3e52b0ad5a692867035e8655bdff3cf429f7cec032e579ae06182c05c5b23d02",
+      "bytes": 22150,
+      "sha256": "48197b4b813c764cbd04842025d774f8120bd38caf6d2103c23c497f2f670f5a",
       "text": true
     },
     {
@@ -1486,8 +1486,8 @@
     },
     {
       "path": "tests/test_large_files_ui.py",
-      "bytes": 11477,
-      "sha256": "8e05f7630d4416ba9f59b4c46fd50a547eaf2e6dff3926f2150bf0bc1bffc5f7",
+      "bytes": 11703,
+      "sha256": "cb3e07dd208841aa1461ac01cb792f9f87747640e8ab63b9482b6e6fc816d670",
       "text": true
     },
     {
@@ -1516,8 +1516,8 @@
     },
     {
       "path": "tests/test_popup_ui.py",
-      "bytes": 27020,
-      "sha256": "dfe37bc45457b86478578394ba8437150c412a8ad175975fda666cba80bed5e3",
+      "bytes": 27246,
+      "sha256": "9c48734ec8511025cad88a21cd6a76efe4e48069e0949b3f504d4584458bc742",
       "text": true
     },
     {
@@ -1564,8 +1564,8 @@
     },
     {
       "path": "tests/test_software_compression_ui.py",
-      "bytes": 19056,
-      "sha256": "f6fe0c720f963af38e2e19d82a97d4f93fefdada6f2aa8f2bd4b3a8f43bdb099",
+      "bytes": 19282,
+      "sha256": "2847236d78ea31dfb07e7fc96a1e159f7f5a00acf5a6d52cbb081b7531e4aeb0",
       "text": true
     },
     {
@@ -1576,8 +1576,8 @@
     },
     {
       "path": "tests/test_software_migration_ui.py",
-      "bytes": 14652,
-      "sha256": "df37e9d4baa0ca46ec3a4d9ffc9d68edcbfc43b595b288724ac949e2ec58ba45",
+      "bytes": 14878,
+      "sha256": "09646db217bd76646d50b5436ff450669f3679845ff083a82938e51c023683d0",
       "text": true
     },
     {
@@ -1588,8 +1588,8 @@
     },
     {
       "path": "tests/test_software_uninstall_ui.py",
-      "bytes": 8818,
-      "sha256": "efd3100db10ec60ad3a0f413eb00bd4439b7b85d91150dfee073911d7422153a",
+      "bytes": 9044,
+      "sha256": "60a522826ed0dee1417e1bd38ac24d5041b99d5160bf5ea8536607c40f6a461e",
       "text": true
     },
     {
@@ -1600,8 +1600,8 @@
     },
     {
       "path": "tests/test_system_management_ui.py",
-      "bytes": 10017,
-      "sha256": "e9855ca81a8ce007c795af000a2cded9437e891e2aa76da4c4d0c77aff573079",
+      "bytes": 10243,
+      "sha256": "e0fa054ee0961a2ddddc7e8b07b55c4209d043ca878a4750505b5ba3877cfb02",
       "text": true
     },
     {
