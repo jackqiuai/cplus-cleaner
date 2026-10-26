@@ -307,3 +307,5 @@ def coverage_report() -> dict:
             "解释范围": "恢复 XML 的路径规则经过逐项审核与缩小范围；不是完整原生 DSL 复现。仅系统盘当前用户；默认全部时间，可选择时间筛选；不执行动态表达式、不忽略未知排除条件。",
             "系统项目": "回收站、休眠、分页和组件存储在独立面板操作；不会进入文件全选/直接删除。",
             "逐项支持与未实现原因": audit}
+
+# Purpose: Rule-based drive cleanup categories and time filters
