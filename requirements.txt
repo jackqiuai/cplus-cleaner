@@ -1,3 +1,5 @@
 # Runtime: Python 3.10+ standard library and Tkinter only.
 # Tkinter is installed with Python's Tcl/Tk component, not with pip.
 # No third-party Python packages are required to run CPlus Cleaner.
+
+# Purpose: Standard-library runtime requirements and Tkinter setup
