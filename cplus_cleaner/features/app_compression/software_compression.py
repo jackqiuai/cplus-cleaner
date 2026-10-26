@@ -21,7 +21,7 @@ import threading
 import time
 import uuid
 
-from cplus_cleaner.common import core
+from cplus_cleaner.common import core, runtime
 from cplus_cleaner.application import preferences
 from cplus_cleaner.features.uninstall import software_uninstall as inventory
 from cplus_cleaner.platforms import software_windows as windows
@@ -102,7 +102,9 @@ def _guard(root):
     if not root.is_dir() or not root.is_absolute():
         raise ValueError('软件安装目录不存在')
     shared = [Path(root.anchor), core.canonical(Path.home())]
-    forbidden = [core.canonical(core.APP_DIR), core.canonical(Path(sys.executable).parent)]
+    forbidden = list(map(core.canonical, runtime.protected_paths(core.APP_DIR)))
+    if not runtime.frozen():
+        forbidden.append(core.canonical(Path(sys.executable).parent))
     for name in ('SystemRoot', 'ProgramData'):
         if os.environ.get(name):
             forbidden.append(core.canonical(Path(os.environ[name])))
