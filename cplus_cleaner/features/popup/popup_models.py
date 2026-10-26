@@ -35,3 +35,5 @@ class Software:
     icon: bytes | None = None
     source: str = 'legacy'
     definition: dict = field(default_factory=dict, repr=False)
+
+# Purpose: Popup group, rule and state models
