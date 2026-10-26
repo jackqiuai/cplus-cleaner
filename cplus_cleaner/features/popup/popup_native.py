@@ -161,3 +161,5 @@ class Native:
 @lru_cache(maxsize=1)
 def backend():
     return Native()
+
+# Purpose: Native popup matching and blocking adapters
