@@ -161,3 +161,5 @@ def registry_records(cancel=None, *, registry=None, msi_reader=msi_info):
         except OSError as error:
             errors.append(f'{hive_name} {number}位弹窗软件索引：{error}')
     return records, errors
+
+# Purpose: Popup software inventory and path matching
