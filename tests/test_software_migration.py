@@ -248,3 +248,5 @@ class SoftwareMigrationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for app eligibility, verified copying, junctions and restore
