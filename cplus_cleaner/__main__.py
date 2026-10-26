@@ -5,3 +5,5 @@ from cplus_cleaner.application.single_instance import run
 
 if __name__ == '__main__':
     run(background='--background' in sys.argv[1:])
+
+# Purpose: Desktop launch through `python -m cplus_cleaner`
