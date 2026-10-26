@@ -12,3 +12,5 @@ def main(argv=None):
 
 if __name__ == '__main__':
     main()
+
+# Purpose: Read-only component-analysis helper entry
