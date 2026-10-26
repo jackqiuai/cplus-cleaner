@@ -77,3 +77,5 @@ def draw(canvas, cx, top, elapsed=0, state="idle", scale=1):
     elif state == "idle":
         oval((63,16,67,20),"#b5dfcd")
         oval((-65,155,-62,158),"#b5dfcd")
+
+# Purpose: Home feature catalog, disk data and totals
