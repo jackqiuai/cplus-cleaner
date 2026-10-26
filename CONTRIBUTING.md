@@ -55,3 +55,5 @@ The Windows test suite includes real Tk workflows and fixture-only NTFS operatio
 ## 中文说明
 
 欢迎使用中文提交问题或建议。请提供版本、功能、复现步骤和实际结果，先遮盖截图与日志中的个人信息。新增清理规则需说明明确的缓存范围和必须保留的数据；测试只能使用隔离样本，不应处理真实用户文件或已安装软件。修改界面文案时请同步维护中英文资源。
+
+<!-- Purpose: Contribution guidelines and development checks -->
