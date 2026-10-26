@@ -484,3 +484,5 @@ def restore(item_or_record, cancel=None, progress=None, *, runner=None):
     item = Software(snapshot['key'],record['name'],record['install_path'],record['old_size'],
                     record['new_size'],compressed=True,files=len(snapshot['files']))
     return _operate(item,snapshot,False,cancel,progress,runner,record)
+
+# Purpose: Transparent compression, restore, eligibility and history
