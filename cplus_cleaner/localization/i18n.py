@@ -172,3 +172,5 @@ def _translate(value):
         start = path.end()
     result.append(translate_segment(value[start:]))
     return ''.join(result)
+
+# Purpose: Language selection, catalogs and dynamic text
