@@ -195,3 +195,5 @@ class SystemManagementTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for system Management page
