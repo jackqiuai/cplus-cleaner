@@ -60,3 +60,5 @@ class SingleInstanceTests(unittest.TestCase):
                 root.destroy()
             with SingleInstance(self.name) as released:
                 self.assertTrue(released.primary)
+
+# Purpose: Regression tests for single-instance launch and activation
