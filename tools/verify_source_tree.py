@@ -26,6 +26,13 @@ def verify(root, *, require_manifest=True):
         if not (root / relative).is_file():
             problems.append(f'Missing required file: {relative}')
 
+    if (root/'README.md').is_file() and (root/'.github').is_dir():
+        for path in (root/'.github').iterdir():
+            if path.is_file() and path.name.split('.')[0].casefold() == 'readme':
+                problems.append(
+                    f'{path.relative_to(root)} overrides the root project README on GitHub; '
+                    'use PURPOSE.md for the directory guide.')
+
     modules = {'app', 'cplus_cleaner'}
     runtime = [root/'app.py', *(root/'cplus_cleaner').rglob('*.py')]
     for path in runtime:
