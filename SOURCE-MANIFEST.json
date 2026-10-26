@@ -58,8 +58,8 @@
     },
     {
       "path": "assets/README.md",
-      "bytes": 2706,
-      "sha256": "30a695cfa552efc880d9ccfb6a1f8a6cc027df6a3870ae7f7aa85874032db735",
+      "bytes": 2287,
+      "sha256": "f592e1314eeb9f37e0bcebb11e307132d6155d980c755bf6153304ecd8e856f5",
       "text": true
     },
     {
@@ -814,8 +814,8 @@
     },
     {
       "path": "assets/runtime-assets.json",
-      "bytes": 18720,
-      "sha256": "db44d1b9594fe236531621e0ae818865acc1e9af5421421b372039631b149658",
+      "bytes": 14930,
+      "sha256": "132b8426ab269c06d01278930b908e11d007b4ca20fb2725502276a38fdc5a5b",
       "text": true
     },
     {
@@ -1240,14 +1240,14 @@
     },
     {
       "path": "docs/MODULES.md",
-      "bytes": 10556,
-      "sha256": "fcebe50d62ed55a32565f3eb2707db4a405f43d5aafe3baa219d1461d72bceea",
+      "bytes": 7813,
+      "sha256": "63bd391a2b487962acb45e52db465c02a249d0b65cd5b48a189931ca70cd8efe",
       "text": true
     },
     {
       "path": "docs/SOURCE_LAYOUT.md",
-      "bytes": 5013,
-      "sha256": "d91af3ac54f5578ba021495dd8ecfab06ef8ac90b0209857716ca49c750c616c",
+      "bytes": 4263,
+      "sha256": "8a465b51246a99d08b63faa137d12d11111d1b7cd814d5fd391d4bc04c0359ec",
       "text": true
     },
     {

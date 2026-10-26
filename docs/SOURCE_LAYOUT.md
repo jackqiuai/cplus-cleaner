@@ -53,9 +53,3 @@ Do not include local operation logs, personal settings, browser data, credential
 ## Future EXE packaging
 
 A future build must include the `cplus_cleaner/` package, `assets/`, `rules/`, `locales/` and the component-analysis helper, and adapt helper launching and autostart for a frozen executable. The current source export does not claim that an EXE is already available.
-
-## 中文说明
-
-完整运行源码、图片、规则与语言资源已放在同一目录结构内。运行前可执行 `python tools/verify_source_tree.py` 检查文件完整性，然后用 `python app.py` 或 `start.bat` 启动。用户设置、操作日志和恢复记录写入用户应用数据目录，不随源码提交。此阶段尚未配置 EXE 构建流程。
-
-源码按功能整理在 `cplus_cleaner/features/`，公共界面、文件操作、语言和 Windows 接口独立分目录。根目录仅保留 `app.py` 一个 Python 文件。逐文件用途见 [Python 文件用途](MODULES.md)。本项目必要的回归测试保留在 `tests/`；无关实验、手动测试产物与旧图片归档由 `.gitignore` 和发布白名单排除。
