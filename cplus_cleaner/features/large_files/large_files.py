@@ -323,3 +323,5 @@ def operate(items, action, destination="", cancel=None, progress=None):
             progress(dict(stage=action, completed=index+1, total=len(items), message=f"已处理 {index+1}/{len(items)} 个文件"))
     result["cancelled"] = bool(cancel and cancel.is_set())
     return result
+
+# Purpose: Classification of files larger than 30 MiB, moving and recovery records
