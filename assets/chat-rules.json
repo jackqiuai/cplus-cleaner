@@ -1,4 +1,5 @@
 {
+
   "schema": 1,
   "applications": [
     {"id":"wechat","name":"微信","aliases":["wechat","weixin","微信"],"executables":["wechat.exe","weixin.exe"],"color":"#28c15e","initial":"微",
