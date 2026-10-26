@@ -53,3 +53,5 @@ assets/**/*-preview.png
 .vscode/
 Thumbs.db
 .DS_Store
+
+# Purpose: Exclude local experiments, caches and generated files
