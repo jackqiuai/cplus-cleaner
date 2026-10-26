@@ -892,8 +892,8 @@
     },
     {
       "path": "cplus_cleaner/application/feedback.py",
-      "bytes": 566,
-      "sha256": "9109a17455b1728943ab1c455e0deb87b24f2cf966187f24e1ad5af446dd8918",
+      "bytes": 662,
+      "sha256": "bf64b0ba84c026487a792c2acbacb4074e34364fb83d3ce3e31ca3f52bb0d8f8",
       "text": true
     },
     {
@@ -1264,8 +1264,8 @@
     },
     {
       "path": "cplus_cleaner/ui/desktop_panels.py",
-      "bytes": 15717,
-      "sha256": "7014b68d0c5f821f485d2e8aed49a95c18f8f57d24fb2a5c7e6e128e51b5ee1b",
+      "bytes": 15657,
+      "sha256": "16f21ec5d7a86459330cbf8c38de065c52c65e0bb3427081903b9a20fed99926",
       "text": true
     },
     {
@@ -1402,8 +1402,8 @@
     },
     {
       "path": "tests/test_desktop.py",
-      "bytes": 53719,
-      "sha256": "7a60b910eef409d756c45dc7c91d82e37f6f48c9b8472e6e2a589481e20e704a",
+      "bytes": 55672,
+      "sha256": "b6bf7d173e03532567bdd6403ff2251220fc99d8d9fad742f334343a3651dc55",
       "text": true
     },
     {
