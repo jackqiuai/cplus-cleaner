@@ -6,7 +6,7 @@
 
 CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理、软件搬家、软件压缩、聊天清理、隐私清理、大文件搬家、重复文件清理、软件卸载、弹窗拦截与系统管理。
 
-**项目状态：** 已包含完整 Python 源码、图片、清理规则及语言资源，可按下方说明从源码启动。尚未提供 EXE 安装包或自动构建 EXE 的流程。
+**项目状态：** 已包含完整 Python 源码、图片、清理规则及语言资源，并配置 [GitHub Actions 自动构建 Windows x64 EXE](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)。构建成功后可下载产物，发布 GitHub Release 时会自动附加 EXE、便携 ZIP 和校验文件，详见[构建说明](docs/BUILDING.md)。
 
 ## 功能一览
 
@@ -26,10 +26,14 @@ CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理�
 
 设置支持每日定时清理、开机自启动、关闭时隐藏到系统托盘和语言选择。操作记录使用独立窗口。
 
+## 下载 Windows EXE
+
+版本发布后，可从 [Releases](https://github.com/jackqiuai/cplus-cleaner/releases) 下载 `CPlusCleaner.exe` 或便携 ZIP。需要最新提交的构建版本时，打开成功的 [Actions 构建记录](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)，下载 `CPlusCleaner-windows-x64` 产物。打包后的 Windows x64 程序无需额外安装 Python。
+
 ## 运行要求
 
 - Windows 桌面环境，面向 Windows 10 / Windows 11。
-- Python 3.10 或以上，并包含 Tkinter；当前本地回归测试使用 Python 3.13。
+- 从源码运行时需要 Python 3.10 或以上及 Tkinter；自动 EXE 构建和回归测试使用 Python 3.13。
 - 运行时不需要额外安装第三方 Python 包。
 - 软件搬家要求源、目标位于不同 NTFS 分区；软件压缩要求 NTFS 支持。
 - 部分受保护目录及系统维护操作需要管理员权限；只读组件分析可请求 Windows UAC 授权。
@@ -97,7 +101,7 @@ C盘和聊天清理按类型汇总，不逐个展示文件。大文件搬家与�
 
 ## 项目状态
 
-当前本地开发版本号为 **1.1.0**，不代表本仓库已经发布可下载版本；目前尚未上传安装包或独立可执行文件。
+当前程序版本号为 **1.1.0**，可从成功的 Actions 构建中获取 Windows x64 版本。GitHub Release 需单独发布，发布后工作流会自动附加已验证的二进制文件；目前不生成安装程序。
 
 ## 许可证
 
