@@ -15,6 +15,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | [`preferences.py`](../cplus_cleaner/application/preferences.py) | Settings, autostart and scheduling |
 | [`feedback.py`](../cplus_cleaner/application/feedback.py) | Feedback dialog and issue link |
 | [`tray.py`](../cplus_cleaner/application/tray.py) | Windows tray icon and menu |
+| [`bundle_check.py`](../cplus_cleaner/application/bundle_check.py) | Isolated executable resource and feature-page smoke checks |
 
 ## cplus_cleaner/common
 
@@ -22,6 +23,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | --- | --- |
 | [`core.py`](../cplus_cleaner/common/core.py) | Shared scanning, file checks, deletion, duplicate detection and history |
 | [`image_opacity.py`](../cplus_cleaner/common/image_opacity.py) | PNG opacity processing and caching |
+| [`runtime.py`](../cplus_cleaner/common/runtime.py) | Source and frozen resource paths and self-launch commands |
 
 ## cplus_cleaner/ui
 
@@ -142,6 +144,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | --- | --- |
 | `tests/` | Project regression tests named after the feature under test |
 | `tools/prepare_source_release.py` | Allowlisted export, integrity manifest and managed obsolete-file pruning |
+| `tools/build_windows.py` | Windows executable building, isolated smoke checks and distribution archives |
 | `tools/verify_source_tree.py` | Read-only import, rule, asset and manifest validation |
 | `dev/`, `previews/`, `reports/`, `publication/` | Local research, previews, archives and generated output; excluded from commits |
 
