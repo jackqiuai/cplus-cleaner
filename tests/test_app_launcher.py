@@ -39,6 +39,19 @@ class AppLauncherTests(unittest.TestCase):
             app.main(['--component-analysis-job'])
         self.assertEqual(error.exception.code, 2)
 
+    def test_bundle_check_dispatch_is_isolated_from_the_desktop_guard(self):
+        with patch('cplus_cleaner.application.bundle_check.main', return_value=0) as check, \
+                patch('cplus_cleaner.application.single_instance.run') as run:
+            self.assertEqual(app.main(['--smoke-test', 'fixture-report.json']), 0)
+        check.assert_called_once_with('fixture-report.json')
+        run.assert_not_called()
+
+    def test_bundle_check_requires_one_report_path(self):
+        for arguments in (['--smoke-test'], ['--smoke-test', 'one', 'two']):
+            with self.assertRaises(SystemExit) as error:
+                app.main(arguments)
+            self.assertEqual(error.exception.code, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
