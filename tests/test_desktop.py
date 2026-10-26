@@ -502,6 +502,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertIsNotNone(self.window._settings_window)
         self.assertTrue(self.window._settings_window.winfo_ismapped())
 
+    @patch.dict('cplus_cleaner.application.feedback.FEEDBACK_URLS', bug='', feature='', issues='')
     def test_feedback_panel_empty_links_and_environment_copy(self):
         from cplus_cleaner.application import feedback
         self.window.geometry("980x650+20+20")
@@ -534,17 +535,49 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.window.navigate("feedback")
         self.assertIs(self.window.views["feedback"], page)
 
+    def test_feedback_buttons_open_repository_issue_forms_in_both_languages(self):
+        targets = {
+            'bug': ('https://github.com/jackqiuai/cplus-cleaner/issues/new?template=bug_report.yml', 'Report a bug'),
+            'feature': ('https://github.com/jackqiuai/cplus-cleaner/issues/new?template=feature_request.yml', 'Suggest a feature'),
+            'issues': ('https://github.com/jackqiuai/cplus-cleaner/issues', 'View existing issues'),
+        }
+        self.window.navigate('feedback')
+        page = self.window.views['feedback']
+        self.assertEqual(page.message.get(), '')
+        previous_language = desktop.i18n.language()
+        try:
+            for language in ('zh', 'en'):
+                desktop.i18n.set_language(language)
+                self.window.update()
+                with patch('cplus_cleaner.ui.desktop_panels.webbrowser.open_new_tab', return_value=True) as browser:
+                    for key, (url, english_caption) in targets.items():
+                        button = page.link_buttons[key]
+                        self.assertTrue(button.enabled)
+                        button.invoke()
+                        browser.assert_called_once_with(url)
+                        browser.reset_mock()
+                        if language == 'en':
+                            caption = next(button.itemcget(item, 'text') for item in button.find_all()
+                                           if button.type(item) == 'text')
+                            self.assertEqual(caption, english_caption)
+                            self.assertNotRegex(desktop.i18n.tr(page.message.get()), desktop.i18n.HAN)
+        finally:
+            desktop.i18n.set_language(previous_language)
+        self.assertFalse((core.DATA_DIR/'feedback').exists())
+
     def test_feedback_configured_link_uses_browser_and_reports_failure(self):
         from cplus_cleaner.application import feedback
         self.window.navigate("feedback")
         page = self.window.views["feedback"]
-        with patch.dict(feedback.FEEDBACK_URLS, bug="https://github.com/example/example/issues/new"), \
-                patch('cplus_cleaner.ui.desktop_panels.webbrowser.open_new_tab', return_value=True) as browser:
+        with patch('cplus_cleaner.ui.desktop_panels.webbrowser.open_new_tab', return_value=True) as browser:
             page.open_link("bug")
             browser.assert_called_once_with(feedback.FEEDBACK_URLS["bug"])
             self.assertIn("已在浏览器打开", page.message.get())
             browser.return_value = False
             page.open_link("bug")
+            self.assertIn("无法打开浏览器", page.message.get())
+            browser.side_effect = OSError('Browser is unavailable')
+            page.link_buttons['bug'].invoke()
             self.assertIn("无法打开浏览器", page.message.get())
 
     def test_scheduled_job_updates_logs_and_results_without_system_actions(self):
