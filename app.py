@@ -13,3 +13,5 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
+
+# Purpose: Desktop, background and read-only analysis dispatch
