@@ -18,6 +18,7 @@ The repository contains the complete runtime source tree and its checked-in reso
 | `tools/verify_source_tree.py` | Read-only source/resource and manifest validation. |
 | `tools/prepare_source_release.py` | Export helper with explicit inclusion rules. |
 | `SOURCE-MANIFEST.json` | Exported file inventory with normalized-text/binary SHA-256 digests. |
+| `LICENSE` | MIT license for original project code and documentation. |
 
 See [the complete module guide](MODULES.md) for each Python file and [the resource guide](../assets/README.md) for image and rule purposes.
 
@@ -44,7 +45,7 @@ After deliberately editing source/resources, refresh the inventory with `python 
 
 ## Assets and rule provenance
 
-The C+ brand has editable SVG sources under `assets/brand/`. The static drive-cleanup and large-file illustrations are described in `assets/brand/HERO-ARTWORK.md`. Some category icons, layout artwork and rule definitions were recovered from third-party software during local research. Source archives, members and recorded hashes are retained in the accompanying JSON metadata; this does not claim those materials as original project assets or assign them a project license.
+The original project code and documentation are licensed under [MIT](../LICENSE). The C+ brand has editable SVG sources under `assets/brand/`. The static drive-cleanup and large-file illustrations are described in `assets/brand/HERO-ARTWORK.md`. Some category icons, layout artwork and rule definitions were recovered from third-party software during local research. Source archives, members and recorded hashes are retained in the accompanying JSON metadata; this does not claim those materials as original project assets or assign them the project's MIT license.
 
 Unused artwork is archived locally under ignored `dev/archive/assets/`; it is absent from the published tree. The 116 retained images/vectors are listed in `assets/runtime-assets.json`. Historical extraction records can reference earlier source material. Current exported bytes are covered by `SOURCE-MANIFEST.json`. References prefixed with `source-analysis/` identify historical, external research inputs; they are not runtime dependencies and are not included in this source tree.
 
