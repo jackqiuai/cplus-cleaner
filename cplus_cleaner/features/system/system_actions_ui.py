@@ -47,3 +47,5 @@ def run_system_action(self, action_id):
             finish(action_id, dict(ok=False, message=error))
         operation_status(self, error)
     self.app.start(label, work, done, failed)
+
+# Purpose: System maintenance action UI
