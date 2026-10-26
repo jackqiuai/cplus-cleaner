@@ -1,5 +1,4 @@
 {
-
   "schema_version": 1,
   "text_hashing": "UTF-8 bytes with CRLF normalized to LF",
   "files": [
@@ -47,20 +46,26 @@
     },
     {
       "path": "GITHUB-ABOUT.md",
-      "bytes": 1797,
-      "sha256": "50c97861247e093c24881a00d85d2f612c3c510e3c3785132d9b2eb20cdbe67c",
+      "bytes": 1855,
+      "sha256": "7ee764d558357a9c097c293bb8b425128e8ab3b681efaf448ce0bfa1ac268c94",
+      "text": true
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1066,
+      "sha256": "9a77fc366d5f6e9f9021d596ba7454ba49f1717794098c35bf62d156a745ff2a",
       "text": true
     },
     {
       "path": "README.md",
-      "bytes": 8123,
-      "sha256": "9506ad5a8c64e06fbd2f98a8248f2f12478e87f16e3dd2a96d7f3cecb5215ed8",
+      "bytes": 8559,
+      "sha256": "d25ce48b75ebc93928b96a796600eee6c933ac8733657b34221ffe658ebbf09a",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 7106,
-      "sha256": "b9c154b46ced8350ee19637b73debce73a73c027c11a46f9049277f83552bea5",
+      "bytes": 7493,
+      "sha256": "c40b92641096ca802b3230ee45fd6fd3ebd6ab8320e1fb71d581cca35af5b155",
       "text": true
     },
     {
@@ -1283,14 +1288,14 @@
     },
     {
       "path": "docs/README.md",
-      "bytes": 333,
-      "sha256": "175973f26280656a917a1698cfa50c02bed66707183617c980a49bb0afafdf79",
+      "bytes": 503,
+      "sha256": "7bc11f73251fea18d405095a80608fb2bd8e23dbc830be246e03bc5c52c744e3",
       "text": true
     },
     {
       "path": "docs/SOURCE_LAYOUT.md",
-      "bytes": 4335,
-      "sha256": "2f61908ef11731279cfa1d32e27b63b3e3391671ebfa2e7ea1729f8022fa3e9a",
+      "bytes": 4498,
+      "sha256": "04d3b8b5b385d7e2d74d07e936988057dd7fe1ef058df9ce29b69aaa903f97ce",
       "text": true
     },
     {
@@ -1553,20 +1558,20 @@
     },
     {
       "path": "tools/README.md",
-      "bytes": 323,
-      "sha256": "cb367bb898f3953f8e1c04cea35953baa2f0dbc6248af1005a4f8c7d38af7825",
+      "bytes": 459,
+      "sha256": "5034d1b399caaea1576889888577df59bfc0e8fc9a99862a0e5d2ffa77ce85d6",
       "text": true
     },
     {
       "path": "tools/prepare_source_release.py",
-      "bytes": 6493,
-      "sha256": "f12a21862f0c8b1e7911b69d56a108b20e09d9d3d88d8fe2da14974469f8a4d9",
+      "bytes": 6515,
+      "sha256": "9bb0c7e50e4dba6b4c20277c8a3f6fe8d7040d246938e87463ba75b84d95c2d8",
       "text": true
     },
     {
       "path": "tools/verify_source_tree.py",
-      "bytes": 6628,
-      "sha256": "8f21b8ca80e0a6c691127620fdd46135644c6cebe86da8e4333a0f17dae12b1c",
+      "bytes": 6639,
+      "sha256": "7d77e98880128dc6f6254b06e5e747bc06fc0f5a67fd18e8f35caf3a85cb9f16",
       "text": true
     }
   ]
