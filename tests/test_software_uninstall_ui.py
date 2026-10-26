@@ -149,3 +149,5 @@ class UninstallPageTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+# Purpose: Regression tests for app Uninstaller page, search and selection
