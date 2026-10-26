@@ -2,7 +2,7 @@
 
 **清理磁盘、搬移软件、整理聊天缓存，在一个中英文桌面界面中管理存储空间。**
 
-**简体中文** · [English](README.md) · [问题反馈](https://github.com/jackqiuai/cplus-cleaner/issues) · [参与贡献](CONTRIBUTING.md)
+**简体中文** · [English](README.md) · [问题反馈](https://github.com/jackqiuai/cplus-cleaner/issues) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)
 
 CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理、软件搬家、软件压缩、聊天清理、隐私清理、大文件搬家、重复文件清理、软件卸载、弹窗拦截与系统管理。
 
@@ -95,10 +95,14 @@ C盘和聊天清理按类型汇总，不逐个展示文件。大文件搬家与�
 
 开发和测试约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。Windows 回归测试可执行 `python -m unittest discover -s tests -v`。
 
-## 项目状态与许可
+## 项目状态
 
 当前本地开发版本号为 **1.1.0**，不代表本仓库已经发布可下载版本；目前尚未上传安装包或独立可执行文件。
 
-项目许可证尚未选定。第三方素材、规则数据和软件名称不作为本项目原创资产声明，分发时需保留其来源及适用权利信息。本项目独立开发，与微软、腾讯、火绒及其他文中提及的软件厂商无隶属关系。
+## 许可证
+
+本项目原创代码与文档采用 [MIT 许可证](LICENSE)。允许免费使用、修改和分发，也允许商业使用；分发时须保留版权声明与许可声明。软件按“原样”提供，不附带任何担保，完整条款见许可证文件。
+
+第三方素材、规则数据和软件名称保留其适用权利，不因本项目采用 MIT 而自动获得 MIT 授权。分发时应保留来源记录，并遵守其原始分发条款，具体见[资源说明](assets/README.md)及对应来源记录。本项目独立开发，与微软、腾讯、火绒及其他文中提及的软件厂商无隶属关系。
 
 <!-- Purpose: Chinese project overview and source launch instructions -->
