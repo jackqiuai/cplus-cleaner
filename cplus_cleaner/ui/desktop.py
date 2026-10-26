@@ -1090,3 +1090,5 @@ if __name__ == "__main__":
     import sys
     from cplus_cleaner.application.single_instance import run
     run(background='--background' in sys.argv)
+
+# Purpose: Main window, navigation, feature composition and settings dialog
