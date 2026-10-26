@@ -41,3 +41,5 @@ body:
     attributes:
       label: 截图或补充信息
       description: 可粘贴截图。请先遮盖用户名、个人文件路径等隐私信息。
+
+# Purpose: Bug report form and reproduction details
