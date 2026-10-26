@@ -6,7 +6,7 @@
 
 CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Chinese/English interface.
 
-**Repository status:** Initial documentation setup. The runtime source tree and packaged downloads have not been published in this repository yet. The instructions below describe running the complete source distribution once it is available.
+**Project status:** The complete Python source tree, images, cleanup rules and language resources are included. Run from source with the instructions below. A packaged EXE and an automated EXE build workflow are not available yet.
 
 ## Screenshot
 
@@ -42,10 +42,10 @@ Additional settings include daily scheduled cleanup, startup with Windows, close
 
 ## Run from source
 
-These steps require the **complete source tree**, including `app.py`, `start.bat`, `assets/`, `rules/` and `locales/`. A documentation-only checkout cannot launch the application.
+Keep the complete source tree together, including `app.py`, `start.bat`, `assets/`, `rules/` and `locales/`. See [Source layout](docs/SOURCE_LAYOUT.md) for resource paths and publication checks.
 
 1. Install Python with **Tcl/Tk and IDLE** enabled.
-2. Open the directory containing `app.py`.
+2. Clone this repository or download its source ZIP, then open the directory containing `app.py`.
 3. Double-click `start.bat`, or run:
 
 ```powershell
@@ -53,6 +53,12 @@ python app.py
 ```
 
 Repeated launches restore the existing window instead of opening another instance. After replacing source files, fully exit the old process before starting the updated application.
+
+To check the source files and resource inventory without scanning or changing user files:
+
+```powershell
+python tools/verify_source_tree.py
+```
 
 ## Typical workflow
 
@@ -90,7 +96,7 @@ The internal directory name is retained for compatibility. Cleaning works locall
 
 Use [GitHub Issues](https://github.com/jackqiuai/cplus-cleaner/issues) for reproducible problems and feature requests. Include the application version, Windows version, affected feature, reproduction steps, expected behavior and actual result. Redact personal paths and account information from screenshots and logs.
 
-For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). Source-specific instructions apply once the complete source is available.
+For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). Run the included Windows regression suite with `python -m unittest discover -s tests -v`.
 
 ## Project status and licensing
 

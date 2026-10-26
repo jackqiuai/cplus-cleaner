@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-26",
+  "generator": "built-in image_gen",
+  "animation": false,
+  "prompts": "assets/brand/hero-prompts.json",
+  "assets": [
+    {
+      "path": "assets\\hero-clean.png",
+      "dimensions": [
+        1196,
+        1315
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "73c1eb83f6edac10a2fabbbb5b763de8163b2113cf126476552856c285e8c27c",
+      "bytes": 1250537
+    },
+    {
+      "path": "assets\\hero-large.png",
+      "dimensions": [
+        1196,
+        1315
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "ae107c341ec13bf0c4104816a4ee8fd0724e4653f146512d58fd37d034dc0e52",
+      "bytes": 981246
+    }
+  ],
+  "display_opacity": 0.6,
+  "display_method": "Integer-alpha scaling after Tk downsampling; source RGBA bytes remain unchanged."
+}

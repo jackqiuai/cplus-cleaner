@@ -1,6 +1,6 @@
 # Contributing to CPlus Cleaner
 
-English and Chinese issues are welcome. The repository is in its initial documentation stage; source-specific instructions apply when the full source tree is published.
+English and Chinese issues are welcome. The repository includes runtime source, resources and isolated tests; a packaged EXE is not available yet.
 
 ## Report a problem
 

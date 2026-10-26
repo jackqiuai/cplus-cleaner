@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "applications": [
+    {"id":"wechat","name":"微信","aliases":["wechat","weixin","微信"],"executables":["wechat.exe","weixin.exe"],"color":"#28c15e","initial":"微",
+     "locations":[["documents","WeChat Files"],["documents","xwechat_files"]],"accounts":true,
+     "rules":[["FileStorage/Cache","缓存文件",true],["FileStorage/Temp","临时文件",true],["FileStorage/Image","聊天图片",false],["FileStorage/Video","聊天视频",false],["FileStorage/File","接收文件",false],["FileStorage/TempFromPhone","接收文件",false],["FileStorage/CustomEmotion","表情文件",false]]},
+    {"id":"qq","name":"QQ","aliases":["腾讯qq","qq"],"executables":["qq.exe"],"color":"#3aace5","initial":"Q",
+     "locations":[["documents","Tencent Files"],["roaming","Tencent/QQ"],["local","Tencent/QQ"]],"accounts":true,"chromium":[""],
+     "rules":[["Image/Group2","聊天图片",false],["Image/C2C","聊天图片",false],["Video","聊天视频",false],["Audio","聊天音频",false],["FileRecv","接收文件",false],["nt_qq/nt_data/Pic","聊天图片",false],["nt_qq/nt_data/Video","聊天视频",false],["nt_qq/nt_data/File","接收文件",false]]},
+    {"id":"whatsapp","name":"WhatsApp","aliases":["whatsapp"],"executables":["whatsapp.exe"],"color":"#25b96b","initial":"W",
+     "locations":[["roaming","WhatsApp"]],"packages":["5319275A.WhatsAppDesktop_"],
+     "chromium":["","LocalCache/Roaming/WhatsApp","LocalState/EBWebView/Default","LocalState/WebView2/EBWebView/Default","LocalState/WebView2/Default"],"rules":[],"media_pending":true},
+    {"id":"telegram","name":"Telegram","aliases":["telegram"],"executables":["telegram.exe"],"color":"#299ed8","initial":"T",
+     "locations":[["roaming","Telegram Desktop"]],"rules":[["tdata/user_data/cache","媒体缓存",false],["tdata/user_data/media_cache","媒体缓存",false],["user_data/cache","媒体缓存",false],["user_data/media_cache","媒体缓存",false]]},
+    {"id":"discord","name":"Discord","aliases":["discord"],"executables":["discord.exe","discordptb.exe","discordcanary.exe"],"color":"#5865f2","initial":"D",
+     "locations":[["roaming","discord"],["roaming","discordptb"],["roaming","discordcanary"]],"chromium":[""],"rules":[]},
+    {"id":"slack","name":"Slack","aliases":["slack"],"executables":["slack.exe"],"color":"#612c63","initial":"S",
+     "locations":[["roaming","Slack"]],"chromium":[""],"rules":[]},
+    {"id":"teams","name":"Microsoft Teams","aliases":["microsoft teams","msteams"],"executables":["teams.exe","ms-teams.exe"],"color":"#6c65c5","initial":"T",
+     "locations":[["roaming","Microsoft/Teams"]],"packages":["MSTeams_"],"chromium":["","LocalCache/Microsoft/MSTeams","LocalCache/Microsoft/MSTeams/EBWebView/Default"],"rules":[]},
+    {"id":"signal","name":"Signal","aliases":["signal"],"executables":["signal.exe"],"color":"#3b7cf5","initial":"S",
+     "locations":[["roaming","Signal"]],"chromium":[""],"rules":[],"media_protected":true}
+  ]
+}

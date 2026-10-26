@@ -1,0 +1,2673 @@
+{
+  "messages": {
+    "头条信息迷你": "Mini Headline Information",
+    "暴风屏保": "Storm Screensaver",
+    "东方输入法": "DongFangInput",
+    "视频推荐": "Video recommendations",
+    "金山毒霸": "Kingsoft Antivirus",
+    "每日焦点": "Daily focus",
+    "QQ浏览器": "QQ Browser",
+    "热点推荐": "Trending recommendations",
+    "功能推荐": "Feature recommendations",
+    "小威隐私管家": "XiaoWei Privacy",
+    "每日新词": "Daily new words",
+    "驱动人生": "DriveTheLife",
+    "天翼校园客户端": "Tianyi Campus Client",
+    "360企业安全云": "360 Enterprise Security Cloud",
+    "万象预览": "WanXiang Preview",
+    "东方新闻": "Dongfang News",
+    "小鱼便签": "Xiaoyu Notes",
+    "YY语音": "YY Voice",
+    "每日新闻": "Daily news",
+    "爱奇艺": "iQIYI",
+    "飞压": "FeiRar",
+    "2345看图王": "2345Pic",
+    "猎豹轻桌面": "Cheetah Light Desktop",
+    "广告推荐": "Advertisement",
+    "迅雷影音": "Thunder Media",
+    "小象壁紙": "CalfWallpaper",
+    "虎牙直播": "Huya Live",
+    "喜马拉雅": "ximalaya-pc",
+    "Zip解压缩": "NetPoweZip",
+    "按键精灵": "anjian",
+    "开机小助手": "Boot Assistant",
+    "美图画报": "Meitu Pictorial",
+    "芒果TV": "Mango TV",
+    "推送新闻": "News notifications",
+    "升级提示": "Update notifications",
+    "边锋游戏": "Gameabc",
+    "腾讯视频": "Tencent Video",
+    "网易发烧游戏": "Netease Fever Games",
+    "2345安全卫士": "2345 PCSafe",
+    "新速压缩": "XinSuZIP",
+    "值购助手": "Worth Assistant",
+    "筑业资料上海版": "Zhuye Documentation (Shanghai)",
+    "热门资讯": "Trending news",
+    "蝴蝶看图": "ButterflyImage",
+    "米哈游启动器": "HoYoPlay",
+    "QQ音乐": "QQ Music",
+    "Windows优化大师": "Windows Optimizer Master",
+    "米哈游弹窗": "HoYoverse ads",
+    "布丁桌面": "Pudding desktop",
+    "360安全浏览器": "360 Security Browser",
+    "极风搜索": "PolarWindSearch",
+    "预立闹钟": "YuLiClock",
+    "广告与新闻": "Ads and news",
+    "众享WIFI": "ZXWIFI",
+    "QQ游戏": "QQ Game",
+    "弈城围棋2.0": "Eweiqi 2.0",
+    "打字通精选": "TypeEasy selection",
+    "鲁大师": "Ludashi",
+    "腾讯电脑管家": "Tencent PC Manager",
+    "雷电模拟器": "LDPlayer",
+    "好图看看": "HaotuKanKan",
+    "搜狗输入法": "Sogou Input Method",
+    "2345好压": "2345 HaoZip",
+    "DirectX强力修复": "DirectX Repair",
+    "小鸟壁纸": "Bird Wallpaper",
+    "逗游游戏盒": "doyo game box",
+    "快玩": "Kuaiwan",
+    "巧压": "Clever ZIP",
+    "云上PDF": "PDF on Cloud",
+    "极速输入法": "Jisu Input Method",
+    "360安全桌面": "360 Security Desktop",
+    "游戏推荐": "Game recommendations",
+    "小树PDF": "SmallTreesPDF",
+    "搜狐影音": "Sohu Video",
+    "PP视频Windows客户端": "PP Video Windows Client",
+    "360每日趣玩": "360 Daily Fun",
+    "海螺桌面": "Halo Desktop",
+    "云压缩": "CloudZip",
+    "腾讯游戏": "Tencent Games",
+    "猎豹安全浏览器": "Cheetah Security Browser",
+    "驱动精灵": "DriverGenius",
+    "简桌面": "JianDesk",
+    "活动通知": "Event notifications",
+    "向日葵控制端": "Sunlogin Controller",
+    "USB宝盒": "USB Box",
+    "今日热点": "Today's trending topics",
+    "央视影音": "CCTV Video",
+    "智能云五笔输入法": "SmartCloudWBInput",
+    "腾讯应用宝": "Tencent AppStore",
+    "金山词霸": "Kingsoft PowerWord",
+    "资讯头条": "Information headlines",
+    "360安全卫士": "360 Safe Guard",
+    "傲游": "Maxthon",
+    "小鲁温度监控": "LdsLite",
+    "腾讯手游助手": "GameLoop",
+    "360游戏大厅": "360 Game Hall",
+    "爱拍": "AiPai",
+    "雷电圈": "LD Store",
+    "人生日历": "Calendar of Life",
+    "Eyes保护师": "EyesGuardCn",
+    "简压压缩": "jyzip",
+    "爱记事": "iNote",
+    "迷你看图王": "Mini Picture",
+    "美图秀秀": "Meitu Xiuxiu",
+    "暴风影音": "StormPlayer",
+    "蒲公英WiFi": "Dandelion WiFi",
+    "ACDSee 官方免费版": "ACDSee Free",
+    "金山打字通": "Kingsoft TypeEasy",
+    "同步助手": "Sync assistant",
+    "提示弹窗": "Notification popup",
+    "中华办公模板": "China Office Template",
+    "旋风pdf": "WhirlwindPdf",
+    "今日推荐": "Today's recommendations",
+    "下载器": "Downloader",
+    "AK加速器": "AKJiaSu",
+    "好看壁纸": "Nice wallpaper",
+    "会员推荐": "Membership offers",
+    "大象PDF": "ElephantPDF",
+    "QQ游戏中心": "QQ Game Center",
+    "登录问候": "Login greeting",
+    "360手机助手": "360 Mobile Assistant",
+    "RaiDrive 广告弹窗": "RaiDrive ads",
+    "逍遥安卓": "MEmu Android",
+    "应用推广": "APP Promotion",
+    "91助手V6": "91Mobile V6",
+    "小黑记事本": "Xiao Hei's Notebook",
+    "焦点资讯": "Focus information",
+    "2345安全中心": "2345SafeCenter",
+    "熊猫PDF": "Panda PDF",
+    "迅读PDF大师": "Quick Read PDF Master",
+    "护眼精灵": "QYDesktopRest",
+    "360极速浏览器": "360Chrome",
+    "金山WPS": "WPS Office",
+    "每日精选": "Daily Featured",
+    "逍遥模拟器": "MEmu Emulator",
+    "暴风资讯": "Storm information",
+    "2345加速浏览器": "2345Explorer",
+    "WiFi共享大师": "WiFi Master",
+    "易剪贴": "EasyClip",
+    "360压缩": "360 ZIP",
+    "6789压缩": "6789Zip",
+    "迷你版": "Mini version",
+    "360 极速浏览器X": "360ChromeX",
+    "Green压缩": "GreenZip",
+    "腾讯QQ": "Tencent QQ",
+    "分享爱剪辑": "Sharing aijianji",
+    "内网通": "51nwt",
+    "桌面助手": "360DesktopLite",
+    "云上压缩": "Compression on the cloud",
+    "微信小程序": "WeChat Mini Programs",
+    "搜狐微门户/头条新闻": "Sohu Micro Portal/Headline News",
+    "联想驱动管理": "Lenovo Driver Manager",
+    "360随身WiFi": "360 Portable WiFi",
+    "百度影音": "Baidu Player",
+    "简压缩": "Simple Zip",
+    "维棠FLV视频下载软件": "ViDown FLV Video Download Software",
+    "西瓜影音": "Xigua Player",
+    "快搜桌面": "KSDesk",
+    "向日葵": "Sunlogin",
+    "迷你新闻热点": "Mini News Hotspots",
+    "爱剪辑": "aijianji",
+    "布丁压缩": "PuddingZip",
+    "迅游": "Xunyou",
+    "极速看图": "Fastpic",
+    "360安全卫士的国际版": "360 Total Security",
+    "QQ拼音输入法": "QQPinyin",
+    "2345输入法": "2345Pinyin",
+    "发现好电影": "Discover a good movie",
+    "易极数据恢复": "DataRecovery",
+    "游戏录像专家": "Game Recorder",
+    "豆麦笔记": "DouMai Notes",
+    "豌豆快搜": "PeaFSearch",
+    "密齿私人文件柜": "McSafeBox",
+    "桌面日历": "Desktop calendar",
+    "新记事本": "XNPNotePad",
+    "MuMu模拟器": "MuMu Player",
+    "微软电脑管家": "Microsoft PC Manager",
+    "5E对战平台": "5E battle platform",
+    "视频编辑专家": "VideoEditor",
+    "快速软件助手": "Quick Software Assistant",
+    "驱动人生-160WiFi": "DriveTheLife-160WiFi",
+    "手机模拟大师": "Phone Simulator",
+    "易歪歪客服聊天助手": "EYY Customer Chat Assistant",
+    "坦克世界盒子": "WotBox",
+    "游窝游戏盒": "YouWoBox",
+    "一米压缩": "yimizip",
+    "光速搜索": "Light speed search",
+    "火蜂精灵模拟器": "ApkMagicEmu",
+    "猎豹免费WiFi": "Cheetah Free WiFi",
+    "推荐信息": "Recommendations",
+    "夸克网盘": "QuarkCloudDrive",
+    "快压": "KuaiZip",
+    "坚果云": "Nutstore",
+    "影视大全": "VideoPlayer",
+    "广联达": "Glodon",
+    "今日新闻": "Today's news",
+    "资讯": "Information",
+    "福昕阅读器": "Foxit Reader",
+    "蘑菇壁纸": "MGWallpaper",
+    "推荐QQ浏览器": "Recommend QQ browser",
+    "有道云笔记": "YoudaoNote",
+    "ABC看图": "PhotoViewer",
+    "微酷PDF": "MicroCool",
+    "轻映录屏": "QY Screen Recorder",
+    "百图秀": "baitushow",
+    "WiFi共享精灵": "WiFiShare",
+    "中华PDF阅读器": "ZHPDFReader",
+    "iZip压缩": "iZip",
+    "软媒魔方": "RuanMei",
+    "百度网盘": "BaiduNetdisk",
+    "iDesk助手": "iDesk",
+    "空间不足提示": "Low disk space notification",
+    "网易云音乐": "NetEase Cloud Music",
+    "清理推荐": "Cleanup recommendations",
+    "360日历": "360 calendar",
+    "会员充值": "Membership renewal",
+    "购物热点": "Shopping hotspots",
+    "今日爆点": "Today's top stories",
+    "对战平台": "battle platform",
+    "今日资讯": "News Today",
+    "会员提醒": "Membership reminders",
+    "YY弹窗": "YY popups",
+    "大师资讯": "Master Information",
+    "热点快讯": "Hot News",
+    "红包": "Red envelope",
+    "迷你新闻": "Mini News",
+    "热点头条": "Trending headlines",
+    "猜你喜欢": "You may also like",
+    "游戏活动": "Game Promotions",
+    "软件推荐": "App recommendations",
+    "今日迷你版": "Today's Mini Edition",
+    "猎豹热点": "liebao hotspot",
+    "电子相册推荐,社区热门推荐等": "Photo album and trending community recommendations",
+    "热点": "Trending topics",
+    "每日答题": "Daily quiz",
+    "搜狐新闻": "Sohu News",
+    "FF新推荐": "FF new recommendation",
+    "WiFi快报": "WiFi News",
+    "热点资讯": "Trending news",
+    "智能头条": "Smart headlines",
+    "特效推荐": "Effect recommendations",
+    "热点提醒": "Trending alerts",
+    "鲁讯迷你新闻页": "Luxun mini news page",
+    "游戏热点": "Game hotspots",
+    "暴风新闻": "Storm News",
+    "今日新词": "Today's new words",
+    "记事·头条": "Notes. Headlines",
+    "视频推荐(图标弹窗)": "Video recommendations (icon popup)",
+    "迷你页": "Mini Page",
+    "热门推荐": "Popular recommendations",
+    "迷你腾讯视频": "Mini Tencent Video",
+    "性能小助手": "Performance Assistant",
+    "午间推荐": "Midday recommendations",
+    "勋章墙": "Medal wall",
+    "开机助手": "Boot Assistant",
+    "热点新闻": "Breaking News",
+    "消息盒子": "Message Box",
+    "头条新闻": "Headlines",
+    "300英雄盒子": "300 Hero Box",
+    "快吧游戏": "kuai8 Game",
+    "迅雷游戏": "Thunder Game",
+    "PC小助手": "PC Assistant",
+    "浏览器主页锁定": "Browser homepage lock",
+    "浏览器主页篡改": "Browser homepage changes",
+    "修复老照片": "Retouch Pilot",
+    "双色球开奖": "Double Color Ball lottery results",
+    "墨鱼丸推荐": "Moyuwan recommendations",
+    "今日精选": "Today's Selection",
+    "360弹窗": "360 popups",
+    "360浏览器老版本备份": "360 Browser old-version backups",
+    "阿里旺旺老版本备份": "AliWangWang old-version backups",
+    "Chrome浏览器老版本备份": "Chrome old-version backups",
+    "Opera浏览器老版本备份": "Opera old-version backups",
+    "PPLive老版本备份": "PPLive old-version backups",
+    "酷狗音乐老版本备份": "KuGou Music old-version backups",
+    "2345拼音输入法老版本备份": "2345 Pinyin old-version backups",
+    "WPS老版本备份": "WPS old-version backups",
+    "企业微信": "WeCom",
+    "钉钉": "DingTalk",
+    "爱奇异": "iQIYI",
+    "IE浏览器": "Internet Explorer",
+    "Metro通讯": "Metro communications",
+    "苹果iTunes备份": "iTunes device backups",
+    "请你确保暂时不需要使用恢复功能，如果你现在需要恢复苹果设备，请勿勾选此项目！": "Select this only if you do not need to restore an Apple device from these backups.",
+    "联想应用商店": "Lenovo App Store",
+    "应用日志和临时文件": "Application logs and temporary files",
+    "Package Cache目录": "Package Cache folder",
+    "清理后基于WIX的安装程序例如VS可以正常卸载；但升级、修复、增添组件需要联网或者备好安装镜像": "After cleanup, WiX-based applications such as Visual Studio can still be uninstalled. Upgrading, repairing or adding components requires an internet connection or installation media.",
+    "Windows Defender保护历史记录": "Windows Defender protection history",
+    "清理后无法还原被隔离文件": "Quarantined files cannot be restored after cleanup.",
+    "WebPI缓存": "WebPI cache",
+    "新版Visual Studio安装源缓存": "Modern Visual Studio installation source cache",
+    "清理后升级、修复、增添组件、卸载Visual Studio 2017及之后的版本需要联网": "After cleanup, upgrading, repairing, adding components or uninstalling Visual Studio 2017 and later requires an internet connection.",
+    "Office安装源": "Office installation source files",
+    "清理后将无法卸载只能升级安装或者强行删除，Office 2007以下版本（包含）删除后还影响安装更新。": "After cleanup, normal uninstallation is unavailable; only an upgrade installation or forced removal remains. For Office 2007 and earlier, installing updates is also affected.",
+    "以前的Windows系统": "Previous Windows installation",
+    "删除后你将无法回滚到以前安装的系统。": "You cannot roll back to the previous Windows installation after deletion.",
+    "系统自带Appx应用": "Built-in Appx applications",
+    "Installer基线缓存": "Windows Installer baseline cache",
+    "可能导致卸载Office、VM等应用程序需要安装包。": "Uninstalling applications such as Office or VM software may require their installation packages.",
+    "Windows报告": "Windows reports",
+    "Windows Defender病毒隔离文件": "Windows Defender quarantined files",
+    "Windows Defender扫描历史": "Windows Defender scan history",
+    "Windows Defender备份文件": "Windows Defender backup files",
+    "Windows事件": "Windows events",
+    "Windows更新安装记录": "Windows Update installation history",
+    "删除后更新历史记录将被清空。": "Deleting this clears the update history.",
+    "Installer目录": "Windows Installer folder",
+    "(这是一个实验性功能)清理后将无法卸载被取代的msp更新，如果有卸载更新需求请勿使用此选项。": "Experimental feature: superseded MSP updates cannot be uninstalled after cleanup. Do not select this if you need to uninstall those updates.",
+    "损坏的Appx": "Corrupted Appx packages",
+    "零售演示离线内容": "Retail demo offline content",
+    "NuGet包缓存": "NuGet package cache",
+    "如果未在Visual Studio的首选项中打开“允许NuGet下载缺少的程序包”，则应用生成将会失败。": "Application builds will fail unless \"Allow NuGet to download missing packages\" is enabled in Visual Studio preferences.",
+    ".NET程序集缓存": ".NET assembly cache",
+    "Windows下载缓存": "Windows download cache",
+    "传递优化缓存": "Delivery Optimization cache",
+    "Windows字体缓存": "Windows font cache",
+    "Terminal Server Client缓存": "Terminal Server Client cache",
+    "XDE缓存文件": "XDE cache files",
+    "PDB缓存文件": "PDB cache files",
+    "Visual Studio智能跟踪": "Visual Studio IntelliTrace",
+    "Windows预读取文件": "Windows prefetch files",
+    "WinINet网页缓存": "WinINet web cache",
+    "Boot备份信息": "Boot backup data",
+    "WinSxs备份文件": "WinSxS backup files",
+    "硬链接备份": "Hard-link consolidation backups",
+    "请你确保硬链接合并后系统正常，删除此文件将导致硬链接合并操作无法回滚！": "Make sure Windows works correctly after hard-link consolidation. Deleting this backup prevents the consolidation from being undone.",
+    "会声会影素材存档": "Corel VideoStudio media archives",
+    "请确保所有编辑的视频已经保存！": "Make sure all edited videos have been saved.",
+    "最后一次正确配置": "Last Known Good Configuration",
+    "WinSxS临时文件": "WinSxS temporary files",
+    "Windows日志": "Windows logs",
+    "最近打开的文件": "Recently opened files",
+    "常见的驱动临时解压目录": "Temporary driver extraction folders",
+    "Windows临时安装文件": "Windows temporary installation files",
+    "QQ临时数据": "QQ temporary data",
+    "YY临时文件": "YY temporary files",
+    "腾讯相关软件下载目录": "Tencent software download folders",
+    "微软拼音": "Microsoft Pinyin",
+    "飞信日志": "Fetion logs",
+    "回收站垃圾文件": "Recycle Bin files",
+    "系统以及程序崩溃dmp文件": "System and application crash dump files",
+    "微软系安软无用文件": "Microsoft security software leftover files",
+    "Visual Studio日志": "Visual Studio logs",
+    "IDM临时文件": "IDM temporary files",
+    "清理IDM临时文件可能导致正在下载的任务需要重新下载！": "Cleaning IDM temporary files may require active downloads to be downloaded again.",
+    "瑞昱声卡驱动安装源缓存": "Realtek audio driver installation source cache",
+    "此条目可能影响瑞昱声卡驱动的卸载。": "Deleting this may affect Realtek audio driver uninstallation.",
+    "Java安装源缓存": "Java installation source cache",
+    "此条目可能影响Java的卸载。": "Deleting this may affect Java uninstallation.",
+    "Intel驱动安装源缓存": "Intel driver installation source cache",
+    "此条目可能影响Intel驱动的卸载。": "Deleting this may affect Intel driver uninstallation.",
+    "英伟达驱动安装源缓存": "NVIDIA driver installation source cache",
+    "此条目可能影响英伟达驱动的卸载。": "Deleting this may affect NVIDIA driver uninstallation.",
+    "英伟达驱动安装包": "NVIDIA driver installation packages",
+    "Microsoft SQL Server更新缓存": "Microsoft SQL Server update cache",
+    "此条目最新添加，可能引发意外问题！": "This newly added item may cause unexpected issues.",
+    "Adobe Acrobat安装源缓存": "Adobe Acrobat installation source cache",
+    "删除此条目可能导致Adobe Acrobat无法正常卸载！": "Deleting this may prevent Adobe Acrobat from uninstalling normally.",
+    "小红伞临时文件": "Avira temporary files",
+    "Microsoft .NET安装缓存": "Microsoft .NET installation cache",
+    "搜索引擎缓存": "Search engine cache",
+    "Download目录下载的文件": "Files in the Downloads folder",
+    "日文输入法": "Japanese input method",
+    "不常用输入法": "Rarely used input methods",
+    "韩文输入法": "Korean input method",
+    "繁体输入法": "Traditional Chinese input methods",
+    "回收站": "Recycle Bin",
+    "优效日历": "Youxiao Calendar",
+    "表情文件": "Sticker files",
+    "媒体缓存": "Media cache",
+    "微": "W",
+    "组件备份由独立 DISM 组件清理操作管理": "Component backups are managed by the separate DISM component cleanup action.",
+    "独立的系统盘回收站操作": "Separate Recycle Bin action for the system drive",
+    "旧系统文件未实现清理，应通过 Windows 存储设置管理": "Old Windows files are not deleted here. Manage them in Windows Storage settings.",
+    "尚未实现更新下载缓存清理，需处理更新服务及重启状态；DISM 组件清理不等价于清空 Download": "Windows Update download cleanup is not implemented; update services and pending restarts must be handled. DISM component cleanup does not empty the Download folder.",
+    "尚未实现传递优化缓存清理，需处理服务状态；不直接清空更新 DataStore": "Delivery Optimization cache cleanup is not implemented; service state must be handled. The update DataStore is not emptied directly.",
+    "采用恢复路径；递归列出普通文件，日期阈值由本程序选择": "Uses recovered paths to list regular files recursively; the application applies the age filter.",
+    "缓存文件": "Cache files",
+    "临时文件": "Temporary files",
+    "日志文件": "Log files",
+    "系统报告": "System reports",
+    "应用缓存": "Application cache",
+    "备份文件": "Backup files",
+    "日志": "Logs",
+    "采用 WPS 缓存/日志路径；排除 office6/backup 文档恢复备份": "Uses WPS cache and log paths; excludes document recovery backups in office6/backup.",
+    "仅 NuGet packages；保留 .nuget 下配置（包需重新下载）": "NuGet packages only; preserves configuration under .nuget. Packages will need to be downloaded again.",
+    "仅缩略图/图标数据库，保留同目录其他文件": "Thumbnail and icon databases only; preserves other files in the same folder.",
+    "仅日志及其归档，保留其他扩展名；不清除事件数据库": "Logs and archived logs only; preserves other extensions and event databases.",
+    "仅最近访问快捷方式及 Jump List；可能重置最近访问和固定项": "Recent shortcuts and Jump Lists only; recent and pinned items may be reset.",
+    "来源": "Source",
+    "恢复项目数": "Recovered items",
+    "恢复路径规则数": "Recovered path rules",
+    "当前可生成文件规则的项目数": "Items with available file rules",
+    "解释范围": "Coverage",
+    "系统项目": "System items",
+    "逐项支持与未实现原因": "Support status and reasons for unsupported items",
+    "恢复 XML 的路径规则经过逐项审核与缩小范围；不是完整原生 DSL 复现。仅系统盘当前用户；默认全部时间，可选择时间筛选；不执行动态表达式、不忽略未知排除条件。": "Recovered XML path rules have been reviewed and narrowed individually; this is not a complete native DSL implementation. Only the current user on the system drive is included. All time is the default, with optional age filters. Dynamic expressions are not executed and unknown exclusions are not ignored.",
+    "回收站、休眠、分页和组件存储在独立面板操作；不会进入文件全选/直接删除。": "The Recycle Bin, hibernation, paging and component store are managed separately and are excluded from file selection and direct deletion.",
+    "恢复规则清单不完整": "The recovered rule inventory is incomplete.",
+    "Data 目录可能含配置，未作为缓存全部删除": "The Data folder may contain configuration and is not deleted entirely as cache.",
+    "浏览历史数据库由隐私功能处理，未作为普通缓存删除": "Browsing history databases are handled by Privacy Cleanup, not ordinary cache deletion.",
+    "Office 更新安装包未作为普通缓存删除": "Office update installers are not deleted as ordinary cache.",
+    "仅当前用户的缩略图/图标缓存；占用项跳过，不重启 Explorer": "Only the current user's thumbnail and icon cache; skips locked items without restarting Explorer.",
+    "WinSxS 元数据不直接删除，使用独立 DISM 操作": "WinSxS metadata is not deleted directly. Use the separate DISM action.",
+    "系统 TEMP 分支限定 Windows\\Temp，不执行任意注册表表达式": "System TEMP is restricted to Windows\\Temp; arbitrary registry expressions are not executed.",
+    "系统账户 Tencent 根目录过宽，未启用": "The system account's Tencent root is too broad and is disabled.",
+    "未实现的动态路径表达式": "Unsupported dynamic path expression",
+    "扫描天数必须大于等于 0": "The scan age must be zero or greater.",
+    "C 盘清理规则不存在，请重新扫描": "Drive cleanup rules are missing. Please scan again.",
+    "系统相关": "System",
+    "应用程序": "Applications",
+    "程序安装文件或浏览器广泛 .log/.old 扫描未启用": "Broad scanning of installed application folders or browser .log/.old files is disabled.",
+    "IndexedDB 含站点离线数据，未自动作为垃圾": "IndexedDB contains offline website data and is not automatically treated as junk.",
+    "原规则安装目录路径未启用（包括原有拼写问题）": "Original installation-directory paths are disabled, including paths with spelling errors.",
+    "仅列出 Service Worker 的 CacheStorage 和 ScriptCache": "Only Service Worker CacheStorage and ScriptCache are listed.",
+    "所有用户分支合并为当前用户，避免重复": "All-user branches are restricted to the current user to avoid duplicates.",
+    "卷系统信息目录未启用": "System Volume Information is excluded.",
+    "Found.* 恢复文件未作为临时文件删除": "Found.* recovery files are not deleted as temporary files.",
+    "动态版本/INI/注册表表达式尚未实现，不忽略排除条件": "Dynamic version, INI and registry expressions are unsupported; exclusions are not ignored.",
+    "未启用": "Disabled",
+    "系统管理/独立操作": "System-managed / separate action",
+    "部分支持": "Partially supported",
+    "文件扫描已实现": "File scanning available",
+    "未实现的路径变量：": "Unsupported path variable:",
+    "原项目涉及安装/系统状态、个人数据或原生自定义处理器；未作为普通文件删除": "The original item involves installation or system state, personal data, or a native custom handler, and is not deleted as ordinary files.",
+    "路径通配符当前没有命中目录": "The path wildcard currently matches no folders.",
+    "不在系统盘或根目录过宽": "Outside the system drive, or the root is too broad",
+    "永久清空系统盘回收站": "Permanently empty the system drive's Recycle Bin",
+    "关闭休眠并释放休眠文件": "Disable hibernation and free the hibernation file",
+    "启用休眠": "Enable hibernation",
+    "分析 Windows 组件存储": "Analyze the Windows component store",
+    "清理 Windows 已替代组件": "Clean superseded Windows components",
+    "打开分页文件设置": "Open paging file settings",
+    "此功能仅支持 Windows": "This feature requires Windows.",
+    "无法确定 Windows 系统盘": "Cannot determine the Windows system drive.",
+    "不是普通文件；不提供直接删除": "Not a regular file; direct deletion is unavailable.",
+    "系统休眠文件": "System hibernation file",
+    "关闭休眠会释放此文件，也会关闭休眠及依赖休眠的快速启动；可重新启用。": "Disabling hibernation frees this file and also disables hibernation and Fast Startup. It can be enabled again.",
+    "系统虚拟内存": "System virtual memory",
+    "由 Windows 管理。打开高级系统设置 → 性能设置 → 高级 → 虚拟内存；本程序不直接删除或改配置。": "Managed by Windows. Open Advanced System Settings > Performance Settings > Advanced > Virtual Memory. This application does not delete the file or change its settings directly.",
+    "应用交换文件": "Application swap file",
+    "由 Windows 管理，不直接删除；通过 Windows 虚拟内存设置管理。": "Managed by Windows; not deleted directly. Use Windows virtual memory settings.",
+    "系统盘回收站": "System drive Recycle Bin",
+    "永久清空当前用户在系统盘的回收站文件。": "Permanently empty the current user's Recycle Bin on the system drive.",
+    "当前系统盘分页文件实际占用；不含其他盘分页文件和 swapfile.sys；由 Windows 管理": "Actual paging file usage on the system drive, excluding paging files on other drives and swapfile.sys; managed by Windows.",
+    "Windows 更新与组件存储": "Windows Update and component store",
+    "需管理员使用 DISM 分析实际占用；不递归累加含硬链接的目录体积": "Use DISM as administrator to analyze usage; directories containing hard links are not added recursively.",
+    "分析组件存储，或通过 Windows 清理已替代组件；不会使用 /ResetBase。": "Analyze the component store or clean superseded components through Windows. /ResetBase is not used.",
+    "系统管理文件；通过下列系统功能管理": "System-managed file; use the system actions below.",
+    "文件不存在或对应功能未启用": "File not found, or the related feature is disabled.",
+    "此操作需要管理员权限。请以管理员身份启动 CCLEANNER 后重试；本次未执行。": "Administrator privileges are required. Run CPlus Cleaner as administrator and try again. No action was performed.",
+    "需要 Windows 系统 API": "Requires Windows system APIs",
+    "已打开高级系统设置；选择 性能设置 → 高级 → 虚拟内存。": "Advanced System Settings opened. Select Performance Settings > Advanced > Virtual Memory.",
+    "未知聊天软件": "Unknown chat application",
+    "部分安装信息无法读取；仍会继续检测已知聊天数据目录": "Some installation information could not be read. Known chat data folders will still be checked.",
+    "扫描天数无效": "Invalid scan age",
+    "聊天数据目录不存在": "The chat data folder does not exist.",
+    "无法确认聊天软件运行状态，已跳过": "Cannot determine whether the chat application is running; skipped.",
+    "扫描凭据无效或文件不在本次聊天清理范围，请重新扫描": "Invalid scan authorization, or the file is outside this chat scan. Please scan again.",
+    "受保护的聊天数据": "Protected chat data",
+    "网页版": "Web version",
+    "软件正在运行，已跳过；退出该聊天软件后可重试": "The application is running; skipped. Close it and try again.",
+    "未检测到安装或数据": "No installation or data detected",
+    "已检测到软件或数据，目录结构待适配": "Application or data detected; folder layout is not yet supported",
+    "部分目录无法访问": "Some folders are inaccessible",
+    "已检测到数据": "Data detected",
+    "已识别支持的数据目录": "Supported data folder identified",
+    "发现本地数据，安装状态未确认": "Local data found; installation status is unconfirmed",
+    "扫描完成": "Scan complete",
+    "扫描": "Scan",
+    "开始扫描": "Scan",
+    "立即清理": "Delete",
+    "全选": "Select all",
+    "正在检测聊天软件和数据目录…": "Detecting chat applications and data folders...",
+    "聊天清理扫描": "Scan chat data",
+    "聊天清理": "Chat Cleanup",
+    "按软件和类型整理聊天数据，扫描后自动勾选有容量的分类": "Group chat data by application and type; categories with data are selected automatically after scanning.",
+    "支持微信、QQ、WhatsApp、Telegram、Discord、Slack、Microsoft Teams、Signal。": "Supports WeChat, QQ, WhatsApp, Telegram, Discord, Slack, Microsoft Teams and Signal.",
+    "进入页面不会自动扫描；可在各软件分组中指定数据目录。": "Scanning does not start automatically. Set a data folder within each application's group.",
+    "已恢复自动检测目录，重新扫描后生效。": "Automatic folder detection restored. Scan again to apply it.",
+    "尚未扫描": "Not scanned",
+    "检测到网页版，独立缓存规则待适配；不清理浏览器共享数据": "Web version detected; dedicated cache rules are not available. Shared browser data is excluded.",
+    "指定目录": "Set folder",
+    "恢复自动目录": "Restore automatic folder",
+    "未发现可清理文件；未安装、无法访问和待适配的状态在各软件下方显示。": "No cleanable files found. Installation, access and compatibility details appear under each application.",
+    "扫描未完成": "Scan incomplete",
+    "全不选": "Deselect all",
+    "数据目录已保存，重新扫描后生效；只扫描受支持的子目录。": "Data folder saved. Scan again to apply it; only supported subfolders are scanned.",
+    "可清理空间：": "Cleanable space:",
+    "正在扫描…": "Scanning...",
+    " · 部分安装信息不可读，已按数据目录继续检测": "; some installation information is unavailable. Detection continued using data folders.",
+    "扫描已取消，保留部分结果": "Scan cancelled; partial results retained.",
+    "扫描已取消": "Scan cancelled",
+    "正在清理所选聊天类型…": "Deleting selected chat categories...",
+    "运行中的软件或变化的文件会跳过，退出软件后可重试。": "Running applications and changed files are skipped. Close the application and try again.",
+    "未识别到可清理目录；聊天记录、登录信息和附件存储保持原样。": "No cleanable folder identified. Chat history, sign-in information and attachment storage are unchanged.",
+    "只接受扫描得到的普通文件候选；系统管理项目必须单独展示": "Only scanned regular-file candidates are accepted; system-managed items must be shown separately.",
+    "垃圾清理": "Junk Cleanup",
+    "不能操作磁盘根目录或整个用户目录": "A drive root or an entire user profile cannot be processed.",
+    "已取消": "Cancelled",
+    "最近访问快捷方式": "Recent-item shortcuts",
+    "隐私痕迹": "Privacy traces",
+    "Jump List 自动访问记录": "Automatic Jump List history",
+    "Jump List 自定义访问记录": "Custom Jump List history",
+    "用户临时文件": "User temporary files",
+    "系统临时文件": "System temporary files",
+    "崩溃转储": "Crash dumps",
+    "Windows 错误报告缓存": "Windows Error Reporting cache",
+    "缩略图缓存": "Thumbnail cache",
+    "文件超出扫描目录": "The file is outside the scanned folder.",
+    "不是普通文件": "Not a regular file",
+    "文件在扫描后已改变，请重新扫描": "The file changed after scanning. Please scan again.",
+    "目标不能位于源目录内，且不能覆盖已有同名文件": "The destination cannot be inside the source folder or overwrite an existing file.",
+    "仅支持 Windows": "Windows only",
+    "请选择目录": "Select a folder.",
+    "Junction 仅支持 Windows": "Junctions require Windows.",
+    "目录联接搬家仅支持 Windows": "Migration with directory junctions requires Windows.",
+    "源目录和目标父目录必须存在": "The source folder and destination parent must exist.",
+    "源和目标目录不能相互包含": "Source and destination folders cannot contain one another.",
+    "目标或备份目录已存在；不会覆盖": "The destination or backup folder already exists and will not be overwritten.",
+    "目标盘空间不足": "Not enough space on the destination drive.",
+    "备份不存在或源位置不是 Junction，不能自动还原": "The backup is missing or the source is not a junction; automatic restoration is unavailable.",
+    "Junction 目标已改变，不能自动还原": "The junction target changed; automatic restoration is unavailable.",
+    "搬家后的文件已有变化。请先手动同步目标与备份，避免用旧备份覆盖新数据。": "Migrated files have changed. Synchronize the destination and backup manually before restoring to avoid overwriting newer data.",
+    "文件超出 C 盘清理规则授权范围": "The file is outside the authorized drive cleanup rules.",
+    "扫描中": "Scanning",
+    "目录不存在": "Folder not found",
+    "无法扫描": "Cannot scan",
+    "部分无法读取": "Some items could not be read",
+    "完成": "Complete",
+    "C 盘清理规则的根目录已变化，请重新扫描": "The drive cleanup rule root changed. Please scan again.",
+    "重复文件": "Duplicate files",
+    "复制后的校验失败": "Copy verification failed.",
+    "扫描路径不是目录": "The scan path is not a folder.",
+    "目录内存在链接，请移除链接或选择更小的目录": "The folder contains links. Remove them or choose a narrower folder.",
+    "聊天专清": "Chat Cleanup",
+    "内容已变化，跳过删除": "Content changed; deletion skipped.",
+    "大文件": "Large files",
+    "盘": " drive",
+    "全部时间": "All time",
+    "7天前": "Older than 7 days",
+    "30天前": "Older than 30 days",
+    "180天前": "Older than 180 days",
+    "清空回收站": "Empty Recycle Bin",
+    "关闭休眠": "Disable hibernation",
+    "恢复休眠": "Enable hibernation",
+    "组件分析": "Analyze components",
+    "组件清理": "Clean components",
+    "虚拟内存设置": "Virtual memory settings",
+    "读取系统项目": "Read system items",
+    "正在归类并计算占用空间，请稍候": "Grouping files and calculating space usage. Please wait.",
+    "扫描中，只读取文件信息。可点击底部“取消任务”保留已找到的类型。": "Scanning reads file information only. Click Cancel task to stop and keep the categories already found.",
+    "正在扫描清理类型…": "Scanning cleanup categories...",
+    "已恢复默认勾选；扫描范围修改在重新扫描后生效": "Default selections restored. Scan again to apply changes to the scan range.",
+    "清理所选类型…": "Deleting selected categories...",
+    "首页": "Home",
+    "C盘清理": "Drive Cleanup",
+    "大文件搬家": "Large File Mover",
+    "软件搬家": "App Mover",
+    "软件压缩": "App Compression",
+    "重复文件清理": "Duplicate Cleanup",
+    "隐私清理": "Privacy Cleanup",
+    "软件卸载": "App Uninstaller",
+    "弹窗拦截": "Popup Blocker",
+    "CPlus Cleaner · C盘清理助手": "CPlus Cleaner · Drive Cleanup Assistant",
+    "定时清理默认常规类型": "Scheduled cleanup of default categories",
+    "临时": "Temporary",
+    "报告": "Reports",
+    "回收": "Recycle Bin",
+    "缓存": "Cache",
+    "虚拟内存设置  ›": "Virtual memory settings ›",
+    "C盘": "Drive C",
+    "微信": "WeChat",
+    "扫描只读取文件信息；清理所选类型将永久删除对应文件。": "Scanning reads file information only; deleting selected categories permanently removes their files.",
+    "默认未勾选。": "Not selected by default.",
+    "请重试，或调整扫描范围。": "Try again, or change the scan range.",
+    "未知": "Unknown",
+    "先勾选要清理的类型": "Select cleanup categories first.",
+    "清理未完成，请检查错误信息后重试。": "Cleanup incomplete. Review the errors and try again.",
+    "就绪": "Ready",
+    "首页一键扫描": "Home scan",
+    "请等待当前任务结束后再保存设置": "Wait for the current task to finish before saving settings.",
+    "任务仍在运行": "A task is still running",
+    "请先取消并等待任务结束，再退出软件。": "Cancel the task and wait for it to finish before exiting.",
+    "系统虚拟内存由 Windows 管理；点击打开设置，调整后需重启。": "System virtual memory is managed by Windows. Open settings to adjust it; a restart is required.",
+    "垃圾清理，释放 C 盘空间": "Clean junk and free space on Drive C",
+    "全面扫描，按类型整理系统盘中的缓存、临时文件与日志": "Scan and group system-drive cache, temporary files and logs by category.",
+    "全选类型": "Select all categories",
+    "最近访问": "Recent items",
+    "自动 Jump List": "Automatic Jump Lists",
+    "自定义 Jump List": "Custom Jump Lists",
+    "聊天图片": "Chat images",
+    "聊天视频": "Chat videos",
+    "接收文件": "Received files",
+    "表情缓存": "Sticker cache",
+    "聊天音频": "Chat audio",
+    "聊天数据目录不存在，请先选择实际账户或聊天数据目录": "Chat data folder not found. Select an actual account or chat data folder.",
+    "没有找到支持的聊天附件目录，请重新选择账户目录": "No supported chat attachment folder found. Select another account folder.",
+    "专清": "Cleanup",
+    "扫描范围": "Scan range",
+    "请输入大于等于 0 的天数": "Enter a number of days equal to or greater than zero.",
+    "设置": "Settings",
+    "问题反馈": "Feedback",
+    "退出软件": "Exit",
+    "操作记录": "Activity Log",
+    "取消任务": "Cancel task",
+    "无法创建系统托盘图标": "Cannot create the system tray icon.",
+    "开始定时清理默认常规类型": "Starting scheduled cleanup of default categories",
+    "整理最近访问记录；清理 Jump List 可能重置固定项": "Organize recent history; cleaning Jump Lists may reset pinned items.",
+    "选择聊天数据目录，按图片、视频、附件等类型汇总": "Choose chat data folders and group images, videos, attachments and other data.",
+    "恢复默认": "Restore defaults",
+    "选择聊天数据目录": "Select chat data folder",
+    "选择目录": "Choose folder",
+    "扫描结果按类型汇总，清理前由你选择": "Results are grouped by category; choose what to delete.",
+    "虚拟内存": "Virtual memory",
+    "调整后需重启生效": "Restart required after changes",
+    "系统管理项目，单独调整，不计入普通缓存可清理总数。": "Managed separately by the system; excluded from ordinary cache totals.",
+    "系统管理": "System Management",
+    "以下由 Windows 管理，未计入可清理空间。": "The following items are managed by Windows and excluded from cleanable space.",
+    "正在扫描": "Scanning",
+    "发现可释放": "Space available to free",
+    "正在清理所选类型…": "Deleting selected categories...",
+    "任务已取消。": "Task cancelled.",
+    "可重新扫描查看剩余内容。": "Scan again to view the remaining contents.",
+    "C盘清理助手": "Drive Cleanup Assistant",
+    "天前": " days ago",
+    "数据目录": "Data folder",
+    "{i['name']}：{'未知' if i.get('size') is None else size_text(i['size'])}": "{0}: {1}",
+    "扫描已取消，显示已完成部分。": "Scan cancelled; completed results are shown.",
+    "扫描完成。": "Scan complete.",
+    "；任务已取消": "; task cancelled",
+    "文件清理": "File cleanup",
+    "卸载残留清理": "Uninstall leftover cleanup",
+    "压缩还原": "Compression restore",
+    "定时清理": "Scheduled cleanup",
+    "本地反馈": "Local feedback",
+    "删除大文件": "Delete large files",
+    "修改设置": "Change settings",
+    "开启休眠": "Enable hibernation",
+    "查看最近 500 条清理、系统操作及定时任务记录。": "View the latest 500 cleanup, system action and scheduled task records.",
+    "按你的习惯安排清理时间与窗口关闭行为。": "Set your cleanup schedule and window closing behavior.",
+    "开机自启动": "Launch at startup",
+    "登录 Windows 后启动软件，并驻留系统托盘。": "Start the application when you sign in to Windows and keep it in the system tray.",
+    "每天按指定时间清理 C盘的默认常规类型；包含直接删除操作。": "Clean default categories on the system drive at the specified time each day, including direct file deletion.",
+    "点击关闭时隐藏到系统托盘": "Minimize to the system tray when closing",
+    "关闭主窗口后继续运行；点击托盘图标打开，右键可退出软件。": "Keep running after the main window closes. Click the tray icon to open it or right-click to exit.",
+    "保存设置": "Save settings",
+    "关闭": "Close",
+    "设置已保存，立即生效。": "Settings saved and applied.",
+    "通过 GitHub 报告问题、提出建议，并跟踪处理进度。": "Report problems, suggest features and track progress on GitHub.",
+    "复制环境信息": "Copy system info",
+    "全部": "All",
+    "删除": "Delete",
+    "全部清空": "Clear all",
+    "时间": "Time",
+    "操作": "Action",
+    "结果": "Result",
+    "内容": "Details",
+    "已完成": "Completed",
+    "失败": "Failed",
+    "部分完成": "Partially completed",
+    "已启动": "Started",
+    "任务运行中，请完成后再删除记录": "A task is running. Wait for it to finish before deleting records.",
+    "任务运行中，请完成后再清空记录": "A task is running. Wait for it to finish before clearing records.",
+    "0 条记录 · 已全部清空": "0 records · All records cleared",
+    "报告问题": "Report a bug",
+    "遇到功能异常？请描述问题和复现步骤。": "Describe the problem and the steps needed to reproduce it.",
+    "功能建议": "Suggest a feature",
+    "分享使用场景和你希望增加或改进的功能。": "Describe your use case and the features or improvements you would like.",
+    "查看已有反馈": "View existing issues",
+    "查看是否已有相同问题，以及处理进度。": "Check for similar reports and follow their progress.",
+    "GitHub 链接待配置，暂时无法在线提交。": "The GitHub link is not configured. Online submission is unavailable.",
+    "已复制环境信息，可粘贴到 GitHub 反馈表单。": "System information copied. Paste it into the GitHub feedback form.",
+    "返回": "Back",
+    "成功": "Success",
+    " · 部分记录无法读取": "; some records could not be read",
+    "清空未完成 · ": "Clearing incomplete ·",
+    "每天": "Daily",
+    "24小时制，例如 20:00": "24-hour time, for example 20:00",
+    "软件运行或驻留托盘时执行；退出软件后暂停。忙碌时延后，手动停止后当天不重试。": "Runs while the application is open or in the tray; paused after exit. Delayed while busy. A manually stopped task is not retried that day.",
+    "反馈将公开显示，请勿提交个人隐私信息。提交需登录 GitHub。": "Feedback is public. Do not include private information. A GitHub account is required to submit feedback.",
+    "已在浏览器打开 GitHub，请在网页中完成操作。": "GitHub opened in your browser. Complete the form there.",
+    "无法打开浏览器，请稍后重试。": "Cannot open the browser. Please try again later.",
+    "无法复制环境信息，请稍后重试。": "Cannot copy system information. Please try again.",
+    "记录": "Record",
+    "正在按文件大小和SHA-256核对内容，可取消扫描。": "Checking file sizes and SHA-256 content hashes. You can cancel the scan.",
+    "扫描重复文件": "Scan duplicate files",
+    "删除重复文件": "Delete duplicate files",
+    "尚未扫描，扫描结果默认不勾选。": "Not scanned. Scan results are not selected automatically.",
+    "每组保留第一份": "Keep the first copy in each group",
+    "勾选": "Select",
+    "大小": "Size",
+    "重复组": "Duplicate group",
+    "文件路径": "File path",
+    "选择重复文件扫描目录": "Choose a folder to scan for duplicates",
+    "保留副本": "Keep a copy",
+    "每组重复文件至少保留一份。请取消勾选一份，或使用智能选择。": "Keep at least one copy in each group. Deselect a copy or use smart selection.",
+    "打开位置": "Open location",
+    "扫描已取消，保留已找到的重复组。": "Scan cancelled; duplicate groups already found are retained.",
+    "扫描目录": "Scan folder",
+    "永久删除，不经过回收站。": "Permanently delete without using the Recycle Bin.",
+    "扫描完成，每组至少保留一份文件。": "Scan complete. Keep at least one file in each group.",
+    "未发现重复文件。": "No duplicate files found.",
+    "扫描中 · ": "Scanning ·",
+    "保留副本已改变，请重新扫描重复文件": "The retained copy changed. Please scan duplicates again.",
+    "首页扫描完成": "Home scan complete",
+    "取消": "Cancel",
+    "扫描已取消，保留已找到的结果。": "Scan cancelled; results already found are retained.",
+    "条": " entries",
+    "项": " items",
+    "扫描已取消，保留已找到的结果": "Scan cancelled; results already found are retained.",
+    "款": " apps",
+    "未知首页功能：": "Unknown Home feature:",
+    "等待扫描": "Waiting to scan",
+    "释放磁盘空间": "Free disk space",
+    "整理多款聊天软件空间": "Clean Chat relative",
+    "大文件分区迁移": "Move large files",
+    "清理使用痕迹": "Delete usage history",
+    "软件智能压缩": "Compress applications",
+    "自动拦截软件弹窗": "Automatically block",
+    "软件智能迁移": "Move installed APP",
+    "管理已安装的软件": "Manage installed applications",
+    "可清理": "Can delete ",
+    "可搬家": "Can move ",
+    "可压缩": "Can compress ",
+    "可拦截": "Can block ",
+    "可卸载": "Can uninstall ",
+    "取消扫描": "Cancel scan",
+    "立即处理": "Manage now",
+    "↻ 扫描": "↻ Scan",
+    "选择目录 ›": "Choose folder ›",
+    "一键扫描": "Scan",
+    "正在取消": "Cancelling",
+    "正在扫描，只读取信息": "Scanning; reading information only",
+    "未找到": "Not found",
+    "发现更多可清理的磁盘空间": "Find more disk space to free",
+    "请先勾选要扫描的功能。": "Select features to scan first.",
+    "磁盘空间暂时无法读取": "Disk space information is unavailable.",
+    "未找到目录": "Folder not found",
+    "部分结果 ›": "Partial results ›",
+    "前往处理 ›": "Open ›",
+    "前往 ›": "Open ›",
+    "重试 ›": "Retry ›",
+    "正在读取信息": "Reading information",
+    "未发现可处理项目，可重新扫描或进入各功能查看。": "No items found to process. Scan again or open a feature page for details.",
+    "扫描 ›": "Scan ›",
+    "正在扫描，已发现": "Scanning; space found",
+    "发现共计": "Total space found",
+    "原版>30MB": "Original rule: >30MB",
+    "压缩包": "Archives",
+    "安装包": "Installers",
+    "视频文件": "Videos",
+    "音频文件": "Audio",
+    "办公文档": "Documents",
+    "原版阈值：单文件大于30MB": "Original threshold: individual files larger than 30MB",
+    "已安装软件目录，请使用软件搬家": "Installed application folder; use App Mover.",
+    "硬链接文件，仅展示逻辑大小": "Hard-linked file; logical size shown only.",
+    "程序正在运行，请先关闭": "The application is running. Close it first.",
+    "文件已超出扫描范围或类型已变化，请重新扫描": "The file is outside the scan range or its type changed. Please scan again.",
+    "跳过非普通文件或硬链接": "Skipping non-regular files and hard links",
+    "请先选择其他磁盘上的搬家位置": "Choose a destination on another drive first.",
+    "请选择本机磁盘目录": "Choose a folder on a local drive.",
+    "搬家目标必须位于其他磁盘分区": "The destination must be on a different partition.",
+    "搬家目标不能位于源目录内": "The destination cannot be inside the source folder.",
+    "目标已存在同名文件，不会覆盖": "A file with the same name already exists at the destination and will not be overwritten.",
+    "目标磁盘剩余空间不足": "Not enough free space on the destination drive.",
+    "未知文件操作": "Unknown file action",
+    "内容校验失败，原文件保留": "Content verification failed; the original file was retained.",
+    "已取消，原文件保留": "Cancelled; the original file was retained.",
+    "已复制，等待移除原文件": "Copied; waiting to remove the original file.",
+    "搬家成功": "Move successful",
+    "最终记录未更新，可根据已复制记录查看目标": "The final record could not be updated. Use the copied-file record to locate the destination.",
+    "立即搬家": "Move",
+    "删除所选": "Delete selected",
+    "正在扫描C盘全部时间的大文件…": "Scanning all-time large files on the system drive...",
+    "正在查找可搬家的大文件…": "Finding large files that can be moved...",
+    "扫描C盘大文件": "Scan large files on the system drive",
+    "大文件搬家记录": "Large file move history",
+    "按原版目录规则扫描C盘全部时间的大文件，包含AppData；受保护文件会标明原因。": "Scan all-time large files using the original folder rules, including AppData. Protected files include a reason.",
+    "一键转移大文件，为C盘瘦身": "Move large files to free space on the system drive",
+    "名称": "Name",
+    "数量": "Count",
+    "搬家": "Move",
+    "位置": "Location",
+    "发现大文件共": "Total large file size",
+    "选择其他磁盘上的大文件搬家目录": "Choose a large-file destination on another drive",
+    "正在搬家…": "Moving...",
+    "正在删除所选文件…": "Deleting selected files...",
+    "操作未完成": "Action incomplete",
+    "文件名": "File name",
+    "选择记录查看原位置和目标位置": "Select a record to view the original and destination locations.",
+    "搬家记录": "Move history",
+    "选择其他位置": "Choose folder",
+    "电脑安装包": "Application installers",
+    "系统压缩包": "System archives",
+    "总计": "Total",
+    "磁盘总容量": "Total disk capacity",
+    "扫描已取消，保留已发现结果": "Scan cancelled; discovered results retained.",
+    "正在展开…": "Expanding...",
+    "搬家此类别全部文件": "Move all files in this category",
+    "搬家此文件": "Move this file",
+    "删除此类别全部文件": "Delete all files in this category",
+    "删除此文件": "Delete this file",
+    "这些文件当前不能操作": "These files cannot be processed right now.",
+    "永久删除文件": "Permanently delete files",
+    "搬家到：": "Move to:",
+    "深度扫描，智能识别各类大文件": "Scan for large files by type",
+    "打开": "Open",
+    "此项目不能操作": "This item cannot be processed.",
+    "受保护": "Protected",
+    "正在读取已安装软件信息…": "Reading installed application information...",
+    "正在核对软件弹窗规则…": "Checking application popup rules...",
+    "处理动作开关无效": "Invalid action switch",
+    "弹窗设置格式无效": "Invalid popup settings format",
+    "弹窗开关格式无效": "Invalid popup switch format",
+    "弹窗计数格式无效": "Invalid popup count format",
+    "弹窗设置版本无效": "Invalid popup settings version",
+    "弹窗处理动作开关格式无效": "Invalid popup action switch format",
+    "请先单独允许此处理动作": "Allow this action individually first.",
+    "隐藏": "Hide",
+    "结束进程": "End process",
+    "关闭并隐藏": "Close and hide",
+    "火绒规则库格式无效": "Invalid Huorong rule database format",
+    "路径/匹配值不是字符串": "Path or match value is not a string.",
+    "尺寸条件格式无效": "Invalid size condition format",
+    "尺寸条件维数无效": "Invalid number of size-condition dimensions",
+    "尺寸条件超出范围": "Size condition is out of range.",
+    "尺寸范围上下界颠倒": "Size range minimum exceeds its maximum.",
+    "正则过长或包含空字符": "Regular expression is too long or contains a null character.",
+    "正则含尚未适配的扩展或反向引用": "Regular expression contains unsupported extensions or backreferences.",
+    "缺少窗口匹配条件": "Window matching conditions are missing.",
+    "未知图像匹配条件": "Unknown image matching condition",
+    "图像点条件无效": "Invalid image-point condition",
+    "无法确认软件目录": "Cannot confirm the application folder.",
+    "安装目录注册表条件无效": "Invalid installation-directory registry condition",
+    "未知应用规则字段：": "Unknown application rule fields:",
+    "安装目录条件不是对象": "Installation-directory condition is not an object.",
+    " 数值无效": "Invalid numeric value",
+    "未知匹配条件：": "Unknown matching conditions:",
+    "图像点字段缺失或未知": "Missing or unknown image-point fields",
+    "未知窗口规则字段": "Unknown window rule fields",
+    "规则进程位于已确认的软件目录之外": "The rule's process is outside the confirmed application folder.",
+    "不支持的注册表位置": "Unsupported registry location",
+    "未知安装目录条件": "Unknown installation-directory condition",
+    "无法解析路径变量 ": "Cannot resolve path variable:",
+    "正则无法编译：": "Cannot compile regular expression:",
+    "未知处理动作：": "Unknown action:",
+    "安装目录注册表值不是字符串": "The installation-directory registry value is not a string.",
+    " 不是列表": "Not a list",
+    "进程路径不是绝对路径": "The process path is not absolute.",
+    "暂未适配应用存在条件：": "Unsupported application-presence condition:",
+    "正则转义语义尚未适配：\\": "Unsupported regular-expression escape semantics: \\",
+    "弹窗软件索引仅支持Windows": "The popup application index requires Windows.",
+    "广告弹窗": "Advertising popup",
+    "无法设置显示器 DPI 上下文": "Cannot set the monitor DPI context.",
+    "未知位置": "Unknown position",
+    "全部拦截": "Block all",
+    "拦截记录": "Block history",
+    "扫描软件弹窗规则": "Scan application popup rules",
+    "个软件分组": "app groups",
+    "款软件": "apps",
+    "告别弹窗骚扰": "Keep distracting popups away",
+    "全部取消": "Disable all",
+    "清空记录": "Clear history",
+    "不限位置": "Any position",
+    "近似全屏": "Near full screen",
+    "左上窗口": "Top-left window",
+    "左下窗口": "Bottom-left window",
+    "中间窗口": "Center window",
+    "右上窗口": "Top-right window",
+    "右下窗口": "Bottom-right window",
+    "发现 0 款软件 0 项广告弹窗": "Application groups found: 0; advertising popups: 0",
+    "弹窗来源": "Popup source",
+    "弹窗位置": "Popup position",
+    "拦截次数": "Times blocked",
+    "正在准备弹窗规则…": "Preparing popup rules...",
+    "读取中": "Reading",
+    "正在扫描软件行为…": "Scanning application behavior...",
+    "正在扫描，请等扫描完成后再设置规则。": "Scanning is in progress. Wait for it to finish before changing rules.",
+    "累计为您拦截弹窗 0 次（最近30天）": "Popups blocked: 0 (last 30 days)",
+    "拦截时间": "Blocked at",
+    "暂无可拦截对象": "No blockable items found",
+    "规则条件无法完整核对": "Rule conditions cannot be fully verified.",
+    "暂无拦截记录": "No block history",
+    "当前系统不支持 Windows 窗口检测": "This system does not support Windows window detection.",
+    "当前系统缺少显示器/DPI 检测接口": "Monitor or DPI detection APIs are unavailable on this system.",
+    "请输入有效的每日时间，例如 20:00（24小时制）": "Enter a valid daily time, for example 20:00 (24-hour format).",
+    "启动路径过长，无法注册开机自启动": "The startup path is too long to register automatic startup.",
+    "请先填写问题描述": "Enter a problem description first.",
+    "设置开关必须为布尔值": "Settings switches must be Boolean values.",
+    "开机自启动仅支持 Windows": "Automatic startup requires Windows.",
+    "记录已变化，请重新打开操作记录后重试": "Records changed. Reopen Activity Log and try again.",
+    "无效的操作记录来源": "Invalid activity record source",
+    "上次清理日期无效": "Invalid last cleanup date",
+    "有新记录写入，请重新打开操作记录后重试": "New records were added. Reopen Activity Log and try again.",
+    "Windows运行痕迹": "Windows activity",
+    "软件使用痕迹": "Application activity",
+    "浏览器记录": "Browser history",
+    "高危隐私": "Sensitive privacy data",
+    "Win+R 运行痕迹": "Run dialog history",
+    "开始菜单最近运行的程序": "Recent programs in the Start menu",
+    "最近访问的文件": "Recently accessed files",
+    "文件扩展名记录": "File extension history",
+    "最近运行的程序": "Recently run programs",
+    "注册表最后一次位置": "Last registry location",
+    "迅雷下载历史": "Xunlei download history",
+    "Chrome浏览历史记录": "Chrome browsing history",
+    "Chrome下载记录": "Chrome download history",
+    "Edge浏览历史记录": "Edge browsing history",
+    "Edge下载记录": "Edge download history",
+    "文件敏感隐私": "Sensitive file traces",
+    "网购痕迹": "Shopping history",
+    "清理 Windows 运行痕迹": "Delete Windows activity history",
+    "清理迅雷下载历史": "Delete Xunlei download history",
+    "清理浏览器记录": "Delete browser history",
+    "浏览器资料不是独立普通文件": "The browser data is not an independent regular file.",
+    "WAL快照缺少共享内存文件，请先退出浏览器后重试": "The WAL snapshot is missing its shared-memory file. Close the browser and try again.",
+    "不支持的浏览器": "Unsupported browser",
+    "浏览器资料路径包含链接或重解析目录": "The browser profile path contains a link or reparse-point folder.",
+    "资料库含未知触发器，已保留记录": "The database contains unknown triggers; records were retained.",
+    "浏览器资料繁忙，请稍后重试": "The browser database is busy. Try again later.",
+    "不是本次扫描授权的记录，请重新扫描": "The record is not authorized by this scan. Please scan again.",
+    "请先退出对应浏览器（包括后台进程）再清理": "Close the corresponding browser, including background processes, before deleting its history.",
+    "资料库已替换，请重新扫描": "The database was replaced. Please scan again.",
+    "资料库表结构已变化，请重新扫描": "The database schema changed. Please scan again.",
+    "浏览器已启动或资料库被替换，已回滚": "The browser started or the database was replaced; changes were rolled back.",
+    "记录或关联记录已变化，已保留；请重新扫描": "The record or related records changed and were retained. Please scan again.",
+    "资料库不存在": "Database not found",
+    "清理所选浏览器记录": "Delete selected browser history",
+    "记录ID格式不支持": "Unsupported record ID format",
+    "查看": "View",
+    "正在扫描隐私记录…": "Scanning privacy records...",
+    "扫描隐私记录": "Scan privacy records",
+    "清理隐私记录": "Delete privacy records",
+    "隐私扫描说明": "Privacy scan details",
+    "扫描范围：全部时间。每条浏览URL、下载记录、Windows运行记录分别计数。": "Range: all time. Each visited URL, download and Windows activity entry is counted separately.",
+    "网购痕迹：从浏览历史匹配8个原版网购域名，按完整URL去重。": "Shopping history: matches eight original shopping domains against browsing history and deduplicates complete URLs.",
+    "文件敏感隐私：下载历史中的11类文档后缀，按文件名去重。": "Sensitive file traces: matches 11 document extensions in download history and deduplicates file names.",
+    "这两类是浏览器记录的子集，分类合计可能重复；清理时同一条记录只处理一次。": "These categories are subsets of browser history, so category totals can overlap. Each record is processed only once during cleanup.",
+    "开始菜单最近运行的程序：点击“查看”打开最近项目。": "Recent Start menu programs: click View to open Recent Items.",
+    "清理只移除选中历史条目；保留下载文件、文档、书签、密码及账号资料。": "Only selected history entries are removed. Downloaded files, documents, bookmarks, passwords and account data are retained.",
+    "清理浏览器/迅雷记录前请先退出对应程序。": "Close the corresponding browser or Xunlei before deleting its records.",
+    "待扫描": "Scan pending",
+    "全部时间 · 按隐私记录条数统计": "All time · Counted by privacy records",
+    "全面扫描 Windows、软件和浏览器使用痕迹": "Scan Windows, application and browser activity",
+    "读取失败": "Cannot read",
+    "扫描失败：": "Scan failed:",
+    "正在处理隐私记录": "Processing privacy records",
+    "清理失败：": "Cleanup failed:",
+    "无法打开最近项目": "Cannot open Recent Items.",
+    "清理保留：": "Cleanup retained:",
+    "扫描已取消 · 已读取部分记录": "Scan cancelled · Partial records read",
+    "全部时间 · 扫描完成": "All time · Scan complete",
+    " · 按记录条数统计": "; counted by records",
+    "：查看": ": View",
+    "未知错误": "Unknown error",
+    "暂无记录": "No records",
+    "迅雷": "Xunlei",
+    "读取 Windows 运行痕迹": "Read Windows activity history",
+    "不支持的迅雷历史表结构": "Unsupported Xunlei history table schema",
+    "暂无迅雷历史资料": "No Xunlei history data",
+    "记录不属于本次扫描或超出隐私范围": "The record is not part of this scan or is outside the privacy scope.",
+    "记录不属于本次扫描": "The record is not part of this scan.",
+    "请先退出迅雷再清理": "Close Xunlei before deleting its history.",
+    "读取迅雷下载历史": "Read Xunlei download history",
+    "记录已变化，请重新扫描": "The record changed. Please scan again.",
+    "迅雷资料库包含未知触发器，已保留": "The Xunlei database contains unknown triggers; records were retained.",
+    "软件安装目录不存在": "The application installation folder does not exist.",
+    "系统、共享组件或当前运行程序目录受保护": "System folders, shared components and the currently running application are protected.",
+    "软件压缩仅支持 NTFS 分区": "Application compression requires an NTFS partition.",
+    "压缩记录格式无效": "Invalid compression record format",
+    "压缩记录标识无效": "Invalid compression record ID",
+    "目录未完整读取，请重新扫描": "The folder could not be read completely. Please scan again.",
+    "需要以管理员身份运行后操作": "Run as administrator to perform this action.",
+    "软件不属于本次扫描，请重新扫描": "The application is not part of this scan. Please scan again.",
+    "软件安装信息已变化，请重新扫描": "Application installation information changed. Please scan again.",
+    "软件目录已被替换，请重新扫描": "The application folder was replaced. Please scan again.",
+    "文件超出压缩清单范围": "The file is outside the compression manifest.",
+    "文件超出软件目录": "The file is outside the application folder.",
+    "文件身份、大小或修改时间已变化，已保留": "File identity, size or modification time changed; retained.",
+    "Windows compact 不可用": "Windows compact is unavailable.",
+    "部分文件仍处于压缩状态，已保留还原记录": "Some files remain compressed; the restore record was retained.",
+    "压缩记录目录不匹配": "The compression record folder does not match.",
+    "软件路径包含链接或重解析目录": "The application path contains a link or reparse-point folder.",
+    "文件父目录已变成链接": "The file's parent folder became a link.",
+    "该压缩记录已还原、已更新或不可用": "This compression record has been restored, superseded or is unavailable.",
+    "目录内包含链接或重解析项": "The folder contains links or reparse points.",
+    "Windows compact 返回失败": "Windows compact reported a failure.",
+    "压缩": "Compress",
+    "还原": "Restore",
+    "目录内包含共享硬链接文件": "The folder contains shared hard-linked files.",
+    "正在扫描可压缩软件…": "Scanning compressible applications...",
+    "扫描可压缩软件": "Scan compressible applications",
+    "压缩记录": "Compression history",
+    "发现可压缩软件 0 款，已选择 0 款": "Compressible apps found: 0; selected: 0",
+    "点击“扫描”读取可压缩的软件列表。": "Click Scan to find compressible applications.",
+    "节省磁盘空间，不影响软件使用": "Save disk space while keeping applications usable",
+    "搜索软件": "Search applications",
+    "软件名称": "Application name",
+    "压缩前大小": "Size before",
+    "压缩后大小": "Size after",
+    "尚未扫描，请点击“扫描”。": "Not scanned. Click Scan.",
+    "软件": "Application",
+    "还原中…": "Restoring...",
+    "压缩中…": "Compressing...",
+    "等待处理": "Waiting",
+    "正在处理…": "Processing...",
+    "正在扫描软件…": "Scanning applications...",
+    "扫描已取消，保留已找到的软件。": "Scan cancelled; discovered applications retained.",
+    "未完成": "Incomplete",
+    "软件压缩记录": "Application compression history",
+    "记录已更新": "Record updated",
+    "没有找到匹配的软件": "No matching applications found",
+    "暂无可压缩软件": "No compressible applications",
+    "任务已取消；": "Task cancelled;",
+    "已还原": "Restored",
+    "暂无压缩记录": "No compression history",
+    "切换中": "Switching paths",
+    "仅扫描 Windows 系统盘上的软件": "Only applications on the Windows system drive are scanned.",
+    "不扫描其他用户的软件": "Applications belonging to other users are excluded.",
+    "系统、共享组件或程序自身目录不可搬家": "System folders, shared components and this application's own folder cannot be moved.",
+    "软件目录不存在": "The application folder does not exist.",
+    "目标必须是其他磁盘上的独立子目录": "The destination must be a separate subfolder on another drive.",
+    "目标必须位于另一个磁盘分区": "The destination must be on another partition.",
+    "目标磁盘需为 NTFS": "The destination drive must use NTFS.",
+    "软件目录已变化，请重新扫描": "The application folder changed. Please scan again.",
+    "软件安装位置已变化，请重新扫描": "The application installation location changed. Please scan again.",
+    "源磁盘需为 NTFS": "The source drive must use NTFS.",
+    "该安装目录需要管理员权限，请以管理员身份启动后重新扫描": "This installation folder requires administrator privileges. Run as administrator and scan again.",
+    "软件仍在运行，请先退出相关软件后重新扫描": "The application is still running. Close it and scan again.",
+    "软件包含系统服务，不支持自动搬家": "The application contains system services and cannot be moved automatically.",
+    "目标磁盘空间不足": "Not enough space on the destination drive.",
+    "目标或临时备份已存在，不会覆盖；请更换位置或查看搬家记录": "The destination or temporary backup already exists and will not be overwritten. Choose another location or view move history.",
+    "准备中": "Preparing",
+    "只能还原有效的本机搬家记录": "Only valid move records from this computer can be restored.",
+    "原位置联接已变化，不能自动还原": "The original junction changed; automatic restoration is unavailable.",
+    "软件仍在运行，请先关闭": "The application is still running. Close it first.",
+    "原磁盘空间不足": "Not enough space on the original drive.",
+    "已取消，原联接未改动": "Cancelled; the original junction is unchanged.",
+    "复制期间原位置联接发生变化，未切换": "The original junction changed during copying; paths were not switched.",
+    "已还原，目标副本保留": "Restored; the destination copy was retained.",
+    "目录已搬家或包含链接": "The folder has already been moved or contains links.",
+    "源盘需为 NTFS": "The source drive must use NTFS.",
+    "目标路径不能包含链接": "The destination path cannot contain links.",
+    "已搬家，清除旧副本中": "Moved; removing the old copy",
+    "复制校验失败，源软件保持原样；目标副本已保留": "Copy verification failed. The source application is unchanged; the destination copy was retained.",
+    "已取消，源软件保持原样；目标副本已保留": "Cancelled. The source application is unchanged; the destination copy was retained.",
+    "旧副本路径校验失败，已保留": "Old-copy path verification failed; the old copy was retained.",
+    "切换后内容变化，旧副本已保留": "Contents changed after switching paths; the old copy was retained.",
+    "搬家完成": "Move complete",
+    "目录内含链接，暂不支持搬家": "The folder contains links and cannot be moved.",
+    "正在读取软件安装信息…": "Reading application installation information...",
+    "运行中，请先关闭": "Running; close the application first.",
+    "软件扫描完成": "Application scan complete",
+    "文件变成了链接，已停止": "The file became a link; processing stopped.",
+    "需管理员权限": "Administrator privileges required",
+    "搬家完成，旧副本保留": "Move complete; old copy retained",
+    "未完成，源位置未切换": "Incomplete; the source path was not switched.",
+    "最近一周": "Within the last week",
+    "一月之内": "Within the last month",
+    "三月之内": "Within the last three months",
+    "正在扫描可搬家的软件…": "Scanning applications that can be moved...",
+    "正在计算软件占用空间，只读取信息。可以取消并保留已找到的结果。": "Calculating application disk usage; reading information only. You can cancel and keep the results already found.",
+    "扫描可搬家的软件": "Scan movable applications",
+    "正在复制和校验；原路径切换期间请勿启动相关软件。": "Copying and verifying files. Do not launch these applications while their original paths are being switched.",
+    "软件搬家及完整校验": "Move applications and fully verify their contents",
+    "软件搬家记录": "App move history",
+    "暂不可搬": "Cannot move now",
+    "已选择 0 项，可释放空间：0KB": "Selected items: 0; space that can be freed: 0KB",
+    "点击“扫描”查找可搬家的软件。": "Click Scan to find applications that can be moved.",
+    "修改时间 ↕": "Modified ↕",
+    "大小 ↕": "Size ↕",
+    "选择其他磁盘上的软件搬家目录": "Choose an app destination on another drive",
+    "已更换目标位置；点击立即搬家后会检查磁盘格式、剩余空间及软件运行状态。": "Destination changed. Click Move to check the drive format, free space and whether the application is running.",
+    "搬家未完成": "Move incomplete",
+    "状态": "Status",
+    "释放空间": "Space freed",
+    "选择记录查看原位置和目标；还原会复制目标中的当前数据，目标副本保留。": "Select a record to view its source and destination. Restore copies current destination data back to the source and keeps the destination copy.",
+    "校验并还原软件": "Verify and restore application",
+    "搬家已取消": "Move cancelled",
+    "软件已还原，可重新扫描。": "Application restored. Scan again to update the list.",
+    "正在读取已安装软件…": "Reading installed applications...",
+    "未发现可搬家的软件。可检查权限，或重新扫描。": "No movable applications found. Check permissions or scan again.",
+    "原路径可继续访问。": "The original path remains accessible.",
+    "已还原当前数据到原位置；目标副本保留。": "Current data restored to the original location; the destination copy was retained.",
+    "还原选中软件": "Restore selected application",
+    "请先退出待搬家的软件；复制校验后保留原路径入口，并清除已校验的旧副本。": "Close the applications before moving them. After copy verification, the original paths remain accessible and verified old copies are removed.",
+    "安装信息不属于本次扫描，请重新扫描": "Installation information is not part of this scan. Please scan again.",
+    "安装信息来源无效": "Invalid installation information source",
+    "安装信息已变化，请重新扫描": "Installation information changed. Please scan again.",
+    "卸载程序已变化，请重新扫描": "The uninstaller changed. Please scan again.",
+    "软件卸载仅支持Windows": "App Uninstaller requires Windows.",
+    "用户取消了卸载": "The user cancelled uninstallation.",
+    "卸载程序已结束，安装信息仍存在；请重新扫描核实": "The uninstaller exited, but installation information still exists. Scan again to verify.",
+    "卸载": "Uninstall",
+    "等待卸载": "Waiting to uninstall",
+    "卸载中…": "Uninstalling...",
+    "重新卸载": "Retry uninstall",
+    "不可卸载": "Cannot uninstall",
+    "软件卸载残留": "Application uninstall leftovers",
+    "清理残留": "Delete leftovers",
+    "跳过": "Skip",
+    "正在清理所列未受保护的残留…": "Deleting the listed unprotected leftovers...",
+    "清理卸载残留": "Delete uninstall leftovers",
+    "一键卸载": "Uninstall selected",
+    "正在读取已安装的软件…": "Reading installed applications...",
+    "扫描已安装软件": "Scan installed applications",
+    "残留文件": "Leftover files",
+    "残留注册表": "Leftover registry entries",
+    "正在停止残留清理，完成当前操作后关闭…": "Stopping leftover cleanup. This window will close when the current action finishes...",
+    "共 0 款软件，占用 0KB，已选择 0KB": "Apps: 0; disk usage: 0KB; selected size: 0KB",
+    "正在准备软件列表…": "Preparing the application list...",
+    "搜索软件或应用": "Search applications",
+    "安装时间 ↓": "Installed ↓",
+    "卸载任务已取消；": "Uninstall task cancelled;",
+    "卸载队列已处理完成；": "Uninstall queue completed;",
+    "残留清理完成": "Leftover cleanup complete",
+    "安装时间 ": "Installed",
+    "扫描已取消，显示已找到的软件。": "Scan cancelled; discovered applications are shown.",
+    "  （受保护：": "(Protected:",
+    "暂无可卸载软件": "No uninstallable applications",
+    "卸载完成": "Uninstallation complete",
+    "卸载失败": "Uninstallation failed",
+    "卸载状态待核实，请重新扫描": "Uninstall status needs verification. Please scan again.",
+    "清空系统盘回收站 · 永久删除": "Empty system drive Recycle Bin · Permanent deletion",
+    "永久删除系统盘回收站中的全部项目，无法从回收站恢复。": "Permanently delete all items in the system drive Recycle Bin. They cannot be recovered from the Recycle Bin.",
+    "关闭休眠 · 管理员": "Disable hibernation · Administrator",
+    "删除休眠文件并关闭休眠；也会关闭快速启动。需要管理员权限。": "Delete the hibernation file and disable hibernation and Fast Startup. Administrator privileges are required.",
+    "恢复休眠 · 管理员": "Enable hibernation · Administrator",
+    "启用休眠并重新分配休眠文件空间；恢复快速启动所需的休眠支持。需要管理员权限。": "Enable hibernation and allocate its file space again, restoring support required for Fast Startup. Administrator privileges are required.",
+    "DISM 分析组件存储 · 管理员": "Analyze DISM component store · Administrator",
+    "仅分析 Windows 组件存储，不删除文件。需要管理员权限，可能耗时较长。": "Analyze the Windows component store without deleting files. Administrator privileges are required; this may take some time.",
+    "DISM 组件清理 · 管理员": "DISM component cleanup · Administrator",
+    "通过 Windows DISM 清理被替代的组件，可能影响旧组件回退。需要管理员权限，可能耗时较长。": "Use Windows DISM to clean superseded components. This may affect rollback to older components. Administrator privileges are required; this may take some time.",
+    "打开虚拟内存设置": "Open virtual memory settings",
+    "打开 Windows 虚拟内存设置，由您手动调整；本工具不会删除 pagefile.sys。保存系统设置可能需要管理员权限及重启。": "Open Windows virtual memory settings for manual adjustment. This application does not delete pagefile.sys. Saving system settings may require administrator privileges and a restart.",
+    "请先只读刷新系统项，查看当前可用操作": "Refresh system items first to view the available actions.",
+    "\n\n确认执行此系统操作？": "\n\nRun this system action?",
+    "系统托盘仅支持 Windows": "The system tray requires Windows.",
+    "系统托盘未响应": "The system tray did not respond.",
+    "CPlus Cleaner · 点击打开，右键设置或退出": "CPlus Cleaner · Click to open, right-click for settings or exit",
+    "打开 CPlus Cleaner": "Open CPlus Cleaner",
+    "已有任务正在运行，请等待或取消": "Another task is running. Wait for it to finish or cancel it.",
+    "任务未完成": "Task incomplete",
+    "任务失败": "Task failed",
+    "已取消；保留已完成结果": "Cancelled; completed results retained.",
+    "显示结果失败": "Cannot display results",
+    "属于当前运行程序": "Belongs to the currently running application",
+    "与其他已安装软件共享路径": "Path shared with another installed application",
+    "只能清理本次已确认卸载软件的残留": "Only leftovers from an application confirmed uninstalled in this session can be deleted.",
+    "安装信息已变化或软件已重新安装，已保留残留": "Installation information changed or the application was reinstalled; leftovers retained.",
+    "软件安装信息仍存在或软件已重新安装，已保留残留": "Application installation information still exists or the application was reinstalled; leftovers retained.",
+    "路径包含链接或重解析项": "The path contains links or reparse points.",
+    "文件有其他硬链接": "The file has other hard links.",
+    "卸载目录名称不适合作为残留范围": "The uninstall folder name is unsuitable for identifying leftovers.",
+    "残留清单已过期，请重新扫描": "The leftover manifest expired. Please scan again.",
+    "文件不属于已扫描残留清单": "The file is not in the scanned leftover manifest.",
+    "文件已变化，已保留": "The file changed and was retained.",
+    "注册表键不属于已扫描残留清单": "The registry key is not in the scanned leftover manifest.",
+    "注册表键已变化，已保留": "The registry key changed and was retained.",
+    "扫描关联目录：": "Scanning associated folder:",
+    "同名软件仍已安装，保留共享配置": "An application with the same name is still installed; shared configuration retained.",
+    "清理卸载残留文件": "Delete uninstall leftover files",
+    "包含子键，按非递归方式保留": "Contains subkeys; retained without recursive deletion.",
+    "仅展示，不递归删除": "Shown for reference only; not deleted recursively.",
+    "发布者程序未返回可等待的进程句柄，请重新扫描核实": "The publisher's program did not return a waitable process handle. Scan again to verify.",
+    "卸载程序仅支持Windows": "The uninstaller requires Windows.",
+    "卸载命令没有有效的绝对EXE路径": "The uninstall command has no valid absolute EXE path.",
+    "卸载命令引号不完整": "The uninstall command contains an unmatched quotation mark.",
+    "已取消后续卸载，等待当前发布者程序结束…": "Remaining uninstallations cancelled; waiting for the current publisher program to exit...",
+    "语言": "Language",
+    "中文": "Chinese",
+    "英文": "English",
+    "选择界面语言；保存后立即生效。": "Choose the display language. Changes apply when saved.",
+    "语言选项无效": "Invalid language selection.",
+    "刷新": "Refresh",
+    "管理回收站、休眠、虚拟内存与 Windows 组件存储。": "Manage the Recycle Bin, hibernation, virtual memory and the Windows component store.",
+    "待读取": "Not read yet",
+    "读取中…": "Reading…",
+    "未读取到此系统项目": "No information was returned for this system item.",
+    "当前任务结束后，请点击刷新。": "Click Refresh after the current task finishes.",
+    "等待 Windows 管理员授权…": "Waiting for Windows administrator approval…",
+    "正在分析 Windows 组件存储…": "Analyzing the Windows component store…",
+    "组件分析需要管理员权限。": "Component analysis requires administrator privileges.",
+    "已取消管理员授权，组件分析未执行。": "Administrator approval was cancelled. Component analysis was not run.",
+    "无法等待组件分析进程": "Cannot monitor the component analysis process.",
+    "组件分析已完成。": "Component analysis completed.",
+    "组件分析已完成，需要重启 Windows。": "Component analysis completed. Restart Windows to finish.",
+    "组件分析失败，退出码 ": "Component analysis failed; exit code ",
+    "组件分析未返回结果，请重试。": "Component analysis returned no result. Please try again.",
+    "系统操作已完成": "System operation completed",
+    "系统操作未完成": "System operation did not complete",
+    "组件分析结果": "Component analysis report",
+    "已分析": "Analyzed",
+    "7天内": "Within 7 days",
+    "30天内": "Within 30 days",
+    "180天内": "Within 180 days",
+    "空间": " space",
+    "系统盘": "System drive",
+    "次": " times"
+  },
+  "templates": [
+    {
+      "parts": [
+        "当前用户在 ",
+        null,
+        " 的回收站：",
+        null,
+        " 个项目"
+      ],
+      "english": "Current user's Recycle Bin on {0}: {1} items"
+    },
+    {
+      "parts": [
+        "查询回收站失败（HRESULT 0x",
+        null,
+        "）"
+      ],
+      "english": "Cannot query the Recycle Bin (HRESULT 0x{0})."
+    },
+    {
+      "parts": [
+        "无法读取体积：",
+        null
+      ],
+      "english": "Cannot read size: {0}"
+    },
+    {
+      "parts": [
+        "无法创建操作日志，操作未执行：",
+        null
+      ],
+      "english": "Cannot create the operation log. No action was performed: {0}"
+    },
+    {
+      "parts": [
+        "；写入操作日志失败：",
+        null
+      ],
+      "english": "; cannot write the operation log: {0}"
+    },
+    {
+      "parts": [
+        "未知系统操作：",
+        null
+      ],
+      "english": "Unknown system action: {0}"
+    },
+    {
+      "parts": [
+        "已永久清空当前用户在 ",
+        null,
+        " 的回收站"
+      ],
+      "english": "Permanently emptied the current user's Recycle Bin on {0}."
+    },
+    {
+      "parts": [
+        "清空失败（HRESULT 0x",
+        null,
+        "）"
+      ],
+      "english": "Cannot empty the Recycle Bin (HRESULT 0x{0})."
+    },
+    {
+      "parts": [
+        null,
+        "完成"
+      ],
+      "english": "{0} completed"
+    },
+    {
+      "parts": [
+        null,
+        "失败，退出码 ",
+        null
+      ],
+      "english": "{0} failed; exit code {1}"
+    },
+    {
+      "parts": [
+        null,
+        "完成，需要重启 Windows"
+      ],
+      "english": "{0} completed; Windows must restart."
+    },
+    {
+      "parts": [
+        "正在扫描 ",
+        null,
+        "…"
+      ],
+      "english": "Scanning {0}..."
+    },
+    {
+      "parts": [
+        "已核对 ",
+        null
+      ],
+      "english": "Checked {0}"
+    },
+    {
+      "parts": [
+        "聊天清理：删除 ",
+        null,
+        " 项，释放 ",
+        null,
+        " 字节，跳过 ",
+        null,
+        " 项"
+      ],
+      "english": "Chat Cleanup: deleted {0} items, freed {1} bytes, skipped {2} items."
+    },
+    {
+      "parts": [
+        "发现可清理 ",
+        null
+      ],
+      "english": "Cleanable space found: {0}"
+    },
+    {
+      "parts": [
+        "已选 ",
+        null,
+        " · 扫描后自动勾选有容量的分类，可自行取消"
+      ],
+      "english": "Selected: {0}. Categories with data are selected automatically after scanning; you can change the selection."
+    },
+    {
+      "parts": [
+        "选择",
+        null,
+        "数据目录"
+      ],
+      "english": "Select the data folder for {0}"
+    },
+    {
+      "parts": [
+        "已清理 ",
+        null,
+        "，跳过/失败 ",
+        null,
+        " 项。"
+      ],
+      "english": "Freed {0}; skipped or failed: {1} items."
+    },
+    {
+      "parts": [
+        "共 ",
+        null,
+        "，已选 ",
+        null
+      ],
+      "english": "Total: {0}; selected: {1}"
+    },
+    {
+      "parts": [
+        " · ",
+        null,
+        "项无法读取或已跳过"
+      ],
+      "english": "; unreadable or skipped: {0} items"
+    },
+    {
+      "parts": [
+        null,
+        "盘 ",
+        null
+      ],
+      "english": "Drive {0}: {1}"
+    },
+    {
+      "parts": [
+        "文件校验失败；源目录未改动，目标副本保留在 ",
+        null
+      ],
+      "english": "File verification failed. The source is unchanged; the destination copy remains at {0}."
+    },
+    {
+      "parts": [
+        "跳过链接或重解析目录：",
+        null
+      ],
+      "english": "Skipping link or reparse-point folder: {0}"
+    },
+    {
+      "parts": [
+        "受保护的位置：",
+        null
+      ],
+      "english": "Protected location: {0}"
+    },
+    {
+      "parts": [
+        "目录内含链接，不支持搬家：",
+        null
+      ],
+      "english": "The folder contains a link and cannot be moved: {0}"
+    },
+    {
+      "parts": [
+        null,
+        "：已检查 ",
+        null,
+        " 个，累计找到 ",
+        null,
+        " 个文件"
+      ],
+      "english": "{0}: checked {1} items; found {2} files in total."
+    },
+    {
+      "parts": [
+        "聊天附件 ",
+        null,
+        "/",
+        null
+      ],
+      "english": "Chat attachments: {0}/{1}"
+    },
+    {
+      "parts": [
+        "正在扫描",
+        null,
+        "…"
+      ],
+      "english": "Scanning {0}..."
+    },
+    {
+      "parts": [
+        "已选 ",
+        null,
+        "    ·    ",
+        null,
+        " 个类型    ·    按类型选择后清理对应内容"
+      ],
+      "english": "Selected: {0}; categories: {1}. Select categories to delete their contents."
+    },
+    {
+      "parts": [
+        "占用 ",
+        null
+      ],
+      "english": "Used: {0}"
+    },
+    {
+      "parts": [
+        "已默认勾选 ",
+        null,
+        " 个常规类型，可自行调整。"
+      ],
+      "english": "Default categories selected: {0}. You can change the selection."
+    },
+    {
+      "parts": [
+        "已选 ",
+        null,
+        "    ·    虚拟内存占用 ",
+        null,
+        "（单独管理）"
+      ],
+      "english": "Selected: {0}; virtual memory usage: {1} (managed separately)."
+    },
+    {
+      "parts": [
+        "本次清理完成 · 计划 ",
+        null,
+        " · 已处理 ",
+        null
+      ],
+      "english": "Cleanup complete. Planned: {0}; processed: {1}."
+    },
+    {
+      "parts": [
+        "定时清理",
+        null,
+        "：释放 ",
+        null,
+        "，",
+        null,
+        " 项失败"
+      ],
+      "english": "Scheduled cleanup {0}: freed {1}; failures: {2}."
+    },
+    {
+      "parts": [
+        null,
+        "空间"
+      ],
+      "english": "{0} space"
+    },
+    {
+      "parts": [
+        null,
+        " · ",
+        null,
+        " 项 · ",
+        null
+      ],
+      "english": "{0} · {1} items · {2}"
+    },
+    {
+      "parts": [
+        null,
+        "专清，按类型整理空间"
+      ],
+      "english": "{0} Cleanup: organize space by category"
+    },
+    {
+      "parts": [
+        "共 ",
+        null,
+        "    已选 ",
+        null
+      ],
+      "english": "Total: {0}; selected: {1}"
+    },
+    {
+      "parts": [
+        "已清理 ",
+        null,
+        "，失败/跳过 ",
+        null,
+        " 项。"
+      ],
+      "english": "Freed {0}; failed or skipped: {1} items."
+    },
+    {
+      "parts": [
+        "版本号  v",
+        null
+      ],
+      "english": "Version v{0}"
+    },
+    {
+      "parts": [
+        "隐藏失败：",
+        null
+      ],
+      "english": "Cannot hide the window: {0}"
+    },
+    {
+      "parts": [
+        "定时清理未开始：",
+        null
+      ],
+      "english": "Scheduled cleanup did not start: {0}"
+    },
+    {
+      "parts": [
+        "全面扫描，按类型整理",
+        null,
+        "内容"
+      ],
+      "english": "Scan and group {0} contents by category."
+    },
+    {
+      "parts": [
+        "发现 ",
+        null,
+        " 种可清理内容，",
+        null
+      ],
+      "english": "Cleanable categories found: {0}. {1}"
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        " 项无法读取，已跳过。"
+      ],
+      "english": "Unreadable items skipped: {0}."
+    },
+    {
+      "parts": [
+        "删除 ",
+        null,
+        " 项，释放 ",
+        null
+      ],
+      "english": "Deleted {0} items; freed {1}."
+    },
+    {
+      "parts": [
+        null,
+        " 条记录"
+      ],
+      "english": "Records: {0}"
+    },
+    {
+      "parts": [
+        " · 处理 ",
+        null,
+        " 个文件"
+      ],
+      "english": "; files processed: {0}"
+    },
+    {
+      "parts": [
+        "下次清理：",
+        null
+      ],
+      "english": "Next cleanup: {0}"
+    },
+    {
+      "parts": [
+        "删除未完成：",
+        null
+      ],
+      "english": "Deletion incomplete: {0}"
+    },
+    {
+      "parts": [
+        " · 已删除 ",
+        null,
+        " 条"
+      ],
+      "english": "; records deleted: {0}"
+    },
+    {
+      "parts": [
+        "设置未保存：",
+        null
+      ],
+      "english": "Settings not saved: {0}"
+    },
+    {
+      "parts": [
+        null,
+        "发现 ",
+        null,
+        " 个文件　|　勾选 ",
+        null,
+        " 个　|　逻辑大小 ",
+        null
+      ],
+      "english": "{0}Files found: {1} | Selected: {2} | Logical size: {3}"
+    },
+    {
+      "parts": [
+        "扫描未完成：",
+        null
+      ],
+      "english": "Scan incomplete: {0}"
+    },
+    {
+      "parts": [
+        "组 ",
+        null,
+        " · SHA-256"
+      ],
+      "english": "Group {0} · SHA-256"
+    },
+    {
+      "parts": [
+        "已删除 ",
+        null,
+        " 个文件，释放 ",
+        null,
+        "。跳过/失败 ",
+        null,
+        " 项。"
+      ],
+      "english": "Files deleted: {0}; space freed: {1}. Skipped or failed: {2}."
+    },
+    {
+      "parts": [
+        "CPlus Cleaner v",
+        null,
+        "\n操作系统：",
+        null,
+        " ",
+        null,
+        " (",
+        null,
+        ")\n系统架构：",
+        null
+      ],
+      "english": "CPlus Cleaner v{0}\nOperating system: {1} {2} ({3})\nArchitecture: {4}"
+    },
+    {
+      "parts": [
+        null,
+        "共 ",
+        null,
+        "，可用 ",
+        null
+      ],
+      "english": "{0}: total {1}, available {2}"
+    },
+    {
+      "parts": [
+        null,
+        "空间暂时无法读取"
+      ],
+      "english": "Cannot read space on {0} right now."
+    },
+    {
+      "parts": [
+        " · ",
+        null,
+        "项资料无法完整读取，已跳过"
+      ],
+      "english": "; incomplete data sources skipped: {0}"
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        "项无法读取或已跳过。"
+      ],
+      "english": "Unreadable or skipped items: {0}."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        "个目录无法完整读取或含链接，已跳过。"
+      ],
+      "english": "Folders that could not be read completely or contain links were skipped: {0}."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        "项软件资料无法读取。"
+      ],
+      "english": "Applications with unreadable information: {0}."
+    },
+    {
+      "parts": [
+        " 自动开启设置未保存：",
+        null
+      ],
+      "english": "Automatic enabling settings were not saved: {0}"
+    },
+    {
+      "parts": [
+        "全部时间 · ",
+        null,
+        "；"
+      ],
+      "english": "All time · {0};"
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        "项受保护或运行中，仅展示。"
+      ],
+      "english": "Protected or running items shown for reference only: {0}."
+    },
+    {
+      "parts": [
+        " 已排除",
+        null,
+        "个含系统服务的软件。"
+      ],
+      "english": "Applications containing system services excluded: {0}."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        "项软件信息或图标无法读取，已跳过。"
+      ],
+      "english": "Unreadable application information or icons skipped: {0}."
+    },
+    {
+      "parts": [
+        "扫描完成，",
+        null,
+        " 项无法读取"
+      ],
+      "english": "Scan complete; unreadable items: {0}."
+    },
+    {
+      "parts": [
+        "已发现 ",
+        null,
+        " 个文件"
+      ],
+      "english": "Files found: {0}"
+    },
+    {
+      "parts": [
+        "可用 ",
+        null,
+        "  /  共 ",
+        null
+      ],
+      "english": "Available {0} / Total {1}"
+    },
+    {
+      "parts": [
+        "正在扫描电脑，已完成 ",
+        null,
+        " / ",
+        null,
+        " 项"
+      ],
+      "english": "Scanning your computer; completed {0} of {1} features."
+    },
+    {
+      "parts": [
+        null,
+        " ",
+        null,
+        " 可清理磁盘空间"
+      ],
+      "english": "{0}: {1} of cleanable disk space"
+    },
+    {
+      "parts": [
+        "，",
+        null,
+        "项未完成，可进入对应页面重试"
+      ],
+      "english": "; incomplete features: {0}. Open the relevant page to retry."
+    },
+    {
+      "parts": [
+        "单文件至少 ",
+        null,
+        "MB"
+      ],
+      "english": "Minimum file size: {0}MB"
+    },
+    {
+      "parts": [
+        "正在校验 ",
+        null
+      ],
+      "english": "Verifying {0}"
+    },
+    {
+      "parts": [
+        "正在复制 ",
+        null
+      ],
+      "english": "Copying {0}"
+    },
+    {
+      "parts": [
+        "已处理 ",
+        null,
+        "/",
+        null,
+        " 个文件"
+      ],
+      "english": "Files processed: {0}/{1}"
+    },
+    {
+      "parts": [
+        "记录写入失败：",
+        null
+      ],
+      "english": "Cannot write the record: {0}"
+    },
+    {
+      "parts": [
+        "已检查 ",
+        null,
+        " 个文件，发现 ",
+        null,
+        " 个大文件"
+      ],
+      "english": "Files checked: {0}; large files found: {1}."
+    },
+    {
+      "parts": [
+        "已选择 ",
+        null,
+        " 项，可释放空间：",
+        null
+      ],
+      "english": "Items selected: {0}; space that can be freed: {1}."
+    },
+    {
+      "parts": [
+        "永久删除 ",
+        null,
+        " 个文件，共 ",
+        null,
+        "？\n这些文件不会进入回收站。"
+      ],
+      "english": "Permanently delete {0} files totaling {1}?\nThese files will not go to the Recycle Bin."
+    },
+    {
+      "parts": [
+        null,
+        "成功 ",
+        null,
+        " 项，释放 ",
+        null,
+        "。"
+      ],
+      "english": "{0}: successful items {1}; space freed {2}."
+    },
+    {
+      "parts": [
+        "原位置：",
+        null,
+        "\n目标：",
+        null
+      ],
+      "english": "Original location: {0}\nDestination: {1}"
+    },
+    {
+      "parts": [
+        "全部时间 · ",
+        null,
+        "；按原版目录规则扫描。"
+      ],
+      "english": "All time · {0}; scanned using the original folder rules."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        " 项无法读取或已跳过。"
+      ],
+      "english": "Unreadable or skipped items: {0}."
+    },
+    {
+      "parts": [
+        null,
+        "项"
+      ],
+      "english": "Items: {0}"
+    },
+    {
+      "parts": [
+        "目标位置保存失败：",
+        null
+      ],
+      "english": "Destination could not be saved: {0}"
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        " 项未完成：",
+        null
+      ],
+      "english": "Incomplete items: {0}; {1}"
+    },
+    {
+      "parts": [
+        "已核对 ",
+        null,
+        "/",
+        null,
+        " 个规则分组"
+      ],
+      "english": "Rule groups checked: {0}/{1}"
+    },
+    {
+      "parts": [
+        "弹窗设置未载入：",
+        null
+      ],
+      "english": "Popup settings could not be loaded: {0}"
+    },
+    {
+      "parts": [
+        "已发现 ",
+        null,
+        " 个软件分组、",
+        null,
+        " 项弹窗规则"
+      ],
+      "english": "Application groups found: {0}; popup rules: {1}."
+    },
+    {
+      "parts": [
+        null,
+        " ",
+        null,
+        "位弹窗软件索引：",
+        null
+      ],
+      "english": "{0} {1}-bit popup application index: {2}"
+    },
+    {
+      "parts": [
+        null,
+        " ",
+        null,
+        "位\\",
+        null,
+        "：",
+        null
+      ],
+      "english": "{0} {1}-bit\\{2}: {3}"
+    },
+    {
+      "parts": [
+        null,
+        "项弹窗"
+      ],
+      "english": "Popup rules: {0}"
+    },
+    {
+      "parts": [
+        null,
+        "次"
+      ],
+      "english": "{0} times"
+    },
+    {
+      "parts": [
+        null,
+        "项软件信息或图标无法读取，已跳过。"
+      ],
+      "english": "Unreadable application information or icons skipped: {0}."
+    },
+    {
+      "parts": [
+        "发现 ",
+        null,
+        " ",
+        null,
+        " ",
+        null,
+        " 项广告弹窗"
+      ],
+      "english": "Found {0} {1}; advertising popups: {2}."
+    },
+    {
+      "parts": [
+        "自动开启设置未保存：",
+        null
+      ],
+      "english": "Automatic enabling settings were not saved: {0}"
+    },
+    {
+      "parts": [
+        null,
+        "：暂不支持，",
+        null
+      ],
+      "english": "{0}: unsupported; {1}"
+    },
+    {
+      "parts": [
+        "弹窗拦截未完成：",
+        null
+      ],
+      "english": "Popup blocking incomplete: {0}"
+    },
+    {
+      "parts": [
+        "清空拦截记录失败：",
+        null
+      ],
+      "english": "Cannot clear block history: {0}"
+    },
+    {
+      "parts": [
+        "累计为您拦截弹窗 ",
+        null,
+        " 次（最近30天）"
+      ],
+      "english": "Popups blocked: {0} (last 30 days)"
+    },
+    {
+      "parts": [
+        "读取拦截记录失败：",
+        null
+      ],
+      "english": "Cannot read block history: {0}"
+    },
+    {
+      "parts": [
+        "CPlus Cleaner v",
+        null,
+        "\n时间：",
+        null,
+        "\n\n",
+        null,
+        "\n"
+      ],
+      "english": "CPlus Cleaner v{0}\nTime: {1}\n\n{2}\n"
+    },
+    {
+      "parts": [
+        null,
+        " 中存在不完整记录，已跳过"
+      ],
+      "english": "Incomplete records in {0} were skipped."
+    },
+    {
+      "parts": [
+        null,
+        " 临时记录清理失败：",
+        null
+      ],
+      "english": "Cannot remove temporary records in {0}: {1}"
+    },
+    {
+      "parts": [
+        "不支持的关联表结构：",
+        null
+      ],
+      "english": "Unsupported related table schema: {0}"
+    },
+    {
+      "parts": [
+        "未知关联表：",
+        null
+      ],
+      "english": "Unknown related table: {0}"
+    },
+    {
+      "parts": [
+        "读取 ",
+        null,
+        " 隐私记录"
+      ],
+      "english": "Reading {0} privacy records"
+    },
+    {
+      "parts": [
+        "不支持的表结构：",
+        null
+      ],
+      "english": "Unsupported table schema: {0}"
+    },
+    {
+      "parts": [
+        "已选择",
+        null,
+        "条隐私，清理后隐私更安全！"
+      ],
+      "english": "Privacy records selected: {0}. Delete them to protect your privacy."
+    },
+    {
+      "parts": [
+        null,
+        "条"
+      ],
+      "english": "Records: {0}"
+    },
+    {
+      "parts": [
+        "发现隐私 ",
+        null,
+        " 条，已选 ",
+        null,
+        " 条"
+      ],
+      "english": "Privacy records found: {0}; selected: {1}."
+    },
+    {
+      "parts": [
+        "已清理",
+        null,
+        "条分类记录"
+      ],
+      "english": "Categorized records deleted: {0}"
+    },
+    {
+      "parts": [
+        "已清理",
+        null,
+        "条分类记录，",
+        null,
+        "项保留"
+      ],
+      "english": "Categorized records deleted: {0}; retained: {1}."
+    },
+    {
+      "parts": [
+        "共 ",
+        null,
+        "条，已选 ",
+        null,
+        "条"
+      ],
+      "english": "Total records: {0}; selected: {1}."
+    },
+    {
+      "parts": [
+        " · ",
+        null,
+        "项未能清理，已保留"
+      ],
+      "english": "; records not deleted and retained: {0}"
+    },
+    {
+      "parts": [
+        "：",
+        null,
+        "条"
+      ],
+      "english": ": {0} records"
+    },
+    {
+      "parts": [
+        "；另有",
+        null,
+        "项"
+      ],
+      "english": "; additional items: {0}"
+    },
+    {
+      "parts": [
+        "正在",
+        null,
+        " ",
+        null,
+        "/",
+        null,
+        " 款 · ",
+        null
+      ],
+      "english": "{0} {1}/{2} apps · {3}"
+    },
+    {
+      "parts": [
+        " · ",
+        null,
+        "/",
+        null,
+        " 个文件"
+      ],
+      "english": "; files: {0}/{1}"
+    },
+    {
+      "parts": [
+        "正在",
+        null,
+        " ",
+        null,
+        "…"
+      ],
+      "english": "{0} {1}..."
+    },
+    {
+      "parts": [
+        "发现可压缩软件 ",
+        null,
+        " 款，已选择 ",
+        null,
+        " 款"
+      ],
+      "english": "Compressible apps found: {0}; selected: {1}."
+    },
+    {
+      "parts": [
+        null,
+        null,
+        " · 完成 ",
+        null,
+        "/",
+        null,
+        " 款"
+      ],
+      "english": "{0}{1} · Apps completed: {2}/{3}"
+    },
+    {
+      "parts": [
+        "压缩前 ",
+        null,
+        "  ·  压缩后 ",
+        null,
+        "  ·  节省 ",
+        null
+      ],
+      "english": "Before compression: {0}; after compression: {1}; saved: {2}."
+    },
+    {
+      "parts": [
+        "完成 ",
+        null,
+        " 款，部分完成 ",
+        null,
+        " 款，失败 ",
+        null,
+        " 款。"
+      ],
+      "english": "Apps completed: {0}; partial: {1}; failed: {2}."
+    },
+    {
+      "parts": [
+        "读取记录失败：",
+        null
+      ],
+      "english": "Cannot read records: {0}"
+    },
+    {
+      "parts": [
+        "正在检查 ",
+        null,
+        " 的安装位置与运行状态…"
+      ],
+      "english": "Checking the installation location and running state of {0}..."
+    },
+    {
+      "parts": [
+        "正在读取并校验 ",
+        null,
+        " 的源文件…"
+      ],
+      "english": "Reading and verifying source files for {0}..."
+    },
+    {
+      "parts": [
+        "正在校验 ",
+        null,
+        "…"
+      ],
+      "english": "Verifying {0}..."
+    },
+    {
+      "parts": [
+        "正在校验 ",
+        null,
+        " 的复制结果…"
+      ],
+      "english": "Verifying the copied files for {0}..."
+    },
+    {
+      "parts": [
+        "正在切换 ",
+        null,
+        " 的原路径入口…"
+      ],
+      "english": "Switching the original path for {0}..."
+    },
+    {
+      "parts": [
+        "正在复核并清理 ",
+        null,
+        " 的旧副本…"
+      ],
+      "english": "Rechecking and removing the old copy of {0}..."
+    },
+    {
+      "parts": [
+        null,
+        " 搬家完成"
+      ],
+      "english": "{0} moved successfully"
+    },
+    {
+      "parts": [
+        "搬家已完成，但记录写入失败：",
+        null
+      ],
+      "english": "The move completed, but the record could not be written: {0}"
+    },
+    {
+      "parts": [
+        "还原校验失败，原联接未改动，副本保留于 ",
+        null
+      ],
+      "english": "Restore verification failed. The original junction is unchanged; the copy remains at {0}."
+    },
+    {
+      "parts": [
+        "还原已完成，但记录写入失败：",
+        null
+      ],
+      "english": "Restoration completed, but the record could not be written: {0}"
+    },
+    {
+      "parts": [
+        "正在计算 ",
+        null,
+        " 的占用空间…"
+      ],
+      "english": "Calculating disk usage for {0}..."
+    },
+    {
+      "parts": [
+        "正在复制 ",
+        null,
+        "…"
+      ],
+      "english": "Copying {0}..."
+    },
+    {
+      "parts": [
+        "；记录写入失败：",
+        null
+      ],
+      "english": "; cannot write the record: {0}"
+    },
+    {
+      "parts": [
+        "已检查 ",
+        null,
+        "/",
+        null,
+        " 个软件目录"
+      ],
+      "english": "Application folders checked: {0}/{1}"
+    },
+    {
+      "parts": [
+        "已排除含系统服务的软件：",
+        null
+      ],
+      "english": "Application containing system services excluded: {0}"
+    },
+    {
+      "parts": [
+        "第 ",
+        null,
+        "/",
+        null,
+        " 款 · "
+      ],
+      "english": "App {0}/{1} ·"
+    },
+    {
+      "parts": [
+        "准备搬家，共 ",
+        null,
+        " 款软件…"
+      ],
+      "english": "Preparing to move {0} apps..."
+    },
+    {
+      "parts": [
+        "发现可搬家软件 ",
+        null,
+        " 款，已选择 ",
+        null,
+        " 款"
+      ],
+      "english": "Movable apps found: {0}; selected: {1}."
+    },
+    {
+      "parts": [
+        "搬家未完成：",
+        null
+      ],
+      "english": "Move incomplete: {0}"
+    },
+    {
+      "parts": [
+        "扫描完成：发现 ",
+        null,
+        " 款可搬软件"
+      ],
+      "english": "Scan complete; movable apps found: {0}."
+    },
+    {
+      "parts": [
+        "搬家",
+        null,
+        "：成功 ",
+        null,
+        " 款，释放 ",
+        null,
+        "。"
+      ],
+      "english": "Move {0}: successful apps {1}; space freed {2}."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        " 个目录无法完整读取或含链接，已跳过。"
+      ],
+      "english": "Folders skipped because they could not be read completely or contain links: {0}."
+    },
+    {
+      "parts": [
+        "无法保存目标位置：",
+        null
+      ],
+      "english": "Cannot save the destination: {0}"
+    },
+    {
+      "parts": [
+        "搬家完成：成功 ",
+        null,
+        " 款"
+      ],
+      "english": "Move complete; successful apps: {0}."
+    },
+    {
+      "parts": [
+        " ",
+        null,
+        " 项需处理：",
+        null,
+        "。可查看搬家记录。"
+      ],
+      "english": "Items requiring attention: {0}; {1}. See move history."
+    },
+    {
+      "parts": [
+        "记录读取失败：",
+        null
+      ],
+      "english": "Cannot read records: {0}"
+    },
+    {
+      "parts": [
+        " 已排除 ",
+        null,
+        " 个含系统服务的软件。"
+      ],
+      "english": "Applications containing system services excluded: {0}."
+    },
+    {
+      "parts": [
+        "，",
+        null,
+        " 项需处理"
+      ],
+      "english": "; items requiring attention: {0}"
+    },
+    {
+      "parts": [
+        "卸载程序返回 ",
+        null,
+        "，安装信息仍存在"
+      ],
+      "english": "The uninstaller returned {0}, but installation information still exists."
+    },
+    {
+      "parts": [
+        null,
+        " ",
+        null,
+        "位卸载信息：",
+        null
+      ],
+      "english": "{0} {1}-bit uninstall information: {2}"
+    },
+    {
+      "parts": [
+        "读取软件 ",
+        null,
+        "/",
+        null,
+        "：",
+        null
+      ],
+      "english": "Reading application {0}/{1}: {2}"
+    },
+    {
+      "parts": [
+        "共 ",
+        null,
+        " 款软件，占用 ",
+        null,
+        "，已选择 ",
+        null
+      ],
+      "english": "Apps: {0}; disk usage: {1}; selected size: {2}."
+    },
+    {
+      "parts": [
+        "完成 ",
+        null,
+        " 款，失败 ",
+        null,
+        " 款，取消 ",
+        null,
+        " 款，待重扫 ",
+        null,
+        " 款。"
+      ],
+      "english": "Apps completed: {0}; failed: {1}; cancelled: {2}; awaiting another scan: {3}."
+    },
+    {
+      "parts": [
+        "正在卸载 ",
+        null,
+        "…"
+      ],
+      "english": "Uninstalling {0}..."
+    },
+    {
+      "parts": [
+        "卸载 ",
+        null
+      ],
+      "english": "Uninstall {0}"
+    },
+    {
+      "parts": [
+        null,
+        " 已卸载，正在扫描残留…"
+      ],
+      "english": "{0} was uninstalled. Scanning for leftovers..."
+    },
+    {
+      "parts": [
+        "扫描 ",
+        null,
+        " 的卸载残留"
+      ],
+      "english": "Scan uninstall leftovers for {0}"
+    },
+    {
+      "parts": [
+        null,
+        " 残留清理：",
+        null
+      ],
+      "english": "{0} leftover cleanup: {1}"
+    },
+    {
+      "parts": [
+        "可清理 ",
+        null,
+        " 项"
+      ],
+      "english": "Items available for deletion: {0}"
+    },
+    {
+      "parts": [
+        null,
+        "（",
+        null,
+        " 项）"
+      ],
+      "english": "{0} ({1} items)"
+    },
+    {
+      "parts": [
+        null,
+        " 残留扫描：",
+        null
+      ],
+      "english": "{0} leftover scan: {1}"
+    },
+    {
+      "parts": [
+        null,
+        " 已卸载，发现以下残留"
+      ],
+      "english": "{0} was uninstalled. The following leftovers were found."
+    },
+    {
+      "parts": [
+        "，另有 ",
+        null,
+        " 项受保护，清理时跳过。"
+      ],
+      "english": "; protected items to skip: {0}."
+    },
+    {
+      "parts": [
+        null,
+        " 残留扫描未完成：",
+        null
+      ],
+      "english": "Leftover scan for {0} incomplete: {1}"
+    },
+    {
+      "parts": [
+        null,
+        "：清理",
+        null,
+        "项残留，",
+        null,
+        "项保留"
+      ],
+      "english": "{0}: leftovers deleted {1}; retained {2}."
+    }
+  ]
+}

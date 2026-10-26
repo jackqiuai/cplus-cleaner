@@ -1,0 +1,26 @@
+name: 功能建议
+description: 为 CPlus Cleaner 提出新功能或改进建议
+title: "[建议] "
+body:
+  - type: markdown
+    attributes:
+      value: 请先查看已有建议。反馈将公开显示，请勿包含个人隐私信息。
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 使用场景
+      description: 你在什么情况下遇到了什么需求？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 期望功能
+      description: 你希望增加或改进什么功能？
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: 补充说明
+      description: 可提供示例或截图。

@@ -1,0 +1,369 @@
+{
+  "sources": [
+    {
+      "source": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "size": 1824522,
+      "sha256": "85c762b32f6bd5c1a67b0da0e6ad4d59dea233c8eb49e4b34142dc4a36b4a8eb"
+    },
+    {
+      "source": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "size": 679007,
+      "sha256": "d7af3faeb7afb7339f5ad39c45bd279abf114819af610f41d077d7065d6cecfc"
+    },
+    {
+      "source": "C:/Program Files (x86)/FanQieClean/skin.zip",
+      "size": 36884,
+      "sha256": "f465213e1c149d03527ac9f837136381ce5798abb838b50434870b1ef08f4f57"
+    }
+  ],
+  "assets": [
+    {
+      "path": "assets/hero-large.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "files-bg.png",
+      "sha256": "c1879bf241f7947d3109698e73f36733b2d60fd104468b20bb4a14991221842a",
+      "transformation": "original PNG, unchanged"
+    },
+    {
+      "path": "assets/hero-clean.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "clean-bg.png",
+      "sourceSize": [
+        300,
+        330
+      ],
+      "size": [
+        300,
+        330
+      ],
+      "sha256": "3ba0007a96a4cd5a878f829b3e9bf68cdef271f538c29d74978726f045b49338",
+      "transformation": "Lanczos resize"
+    },
+    {
+      "path": "assets/hero-home.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "img/trash.29360dd3.png",
+      "sourceSize": [
+        155,
+        170
+      ],
+      "size": [
+        215,
+        236
+      ],
+      "sha256": "10fe28e1f20ee7a764a056aa17fdfacf808cfc285f5d540c9a6d9d287934b49f",
+      "transformation": "Lanczos resize"
+    },
+    {
+      "path": "assets/hero-glow.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "img/trash-bg.43913d5f.png",
+      "sourceSize": [
+        520,
+        410
+      ],
+      "size": [
+        520,
+        410
+      ],
+      "sha256": "66d67a2892731cbe57abe499822806c02cf4588e6bfbcb8ac086b7293b27b6e9",
+      "transformation": "Lanczos resize"
+    },
+    {
+      "path": "assets/home-panel-bg.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "img/home-bg.a0390f68.png",
+      "sourceSize": [
+        1360,
+        972
+      ],
+      "size": [
+        1000,
+        715
+      ],
+      "sha256": "d76fbc0515c05e59526a5b041c8f6b6e49e48b386d9c73349409d2854abd36cc",
+      "transformation": "Lanczos resize"
+    },
+    {
+      "path": "assets/app-icon.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "img/trash.29360dd3.png",
+      "sourceSize": [
+        155,
+        170
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "d0ec7c7061706c45bb5d24946bdc3f273c88a9b5519098e53191faa9f5fd436c",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-apps.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "200.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "b2f352fd0f5e20a1be5434ab8ea322031a25408db23114d75c378ae0857e5d4f",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-system.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "100.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "036065d68bb637741edcadc65ffa19414f11f1250e6cfd4f36c5df7e47b0c97b",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-cache.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "104.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "c85391bece8dfa146624666ad14d56a2f21f9d493da459be493217a4268316bf",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-logs.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "101.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "4cf03546065a9959c2a85b353fce8f60b92852730093e6c8d8e7f82649c5c609",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-backup.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "102.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "f19687267b72918e58ee56a972e5aa2b8a6f79388397af97ebcae3699ee220b2",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-temp.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "106.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "5ccd96888a16929ef8bbe2347d8057f790287794a7d92ff1bc6d7a4bf2b517a0",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-recycle.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "108.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "44287b9079fb80f39c0a372f218a2402c66a56992742a72512e92575cd4a43cd",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-qq.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "208.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "821bb87be6ea13f479d4d6af18f920166ee6d9ab4bcb2807aa6781fb3376f59f",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-chrome.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "217.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "acf46b78dec93fc1ab010d37bf382696c34e60da4cf598ab1d9e6c3344e84672",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-edge.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "218.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "a956b4364a22ed8b057f849c2942dcdb94f49d9021938f321a63702fe9b344d2",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-wps.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "205.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "01279544bf5d3d75b7fe77edd5380b80c987b5d86d5c31e954b11f9d7df943bb",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/icon-wechat.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
+      "sourceRelativePath": "20030.png",
+      "sourceSize": [
+        48,
+        48
+      ],
+      "size": [
+        48,
+        48
+      ],
+      "sha256": "b16211197d0ed9d72425ad3cfc9c0b52c7687e608f2e8c5763675416cdf8f0e0",
+      "transformation": "fit to transparent canvas with Lanczos"
+    },
+    {
+      "path": "assets/large-c-azb.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "js/app.f03c996a.js#icon-c-azb",
+      "sha256": "031c2cf8e9521431f156168ee6e5b4ecf485a8cfb6c4a65adc24e2ce55338d98",
+      "sourceJsSha256": "7154b1ae0093fe4c2316391816c96dd66803af7e542650180ced2b8f2d46b426",
+      "transformation": "static SVG symbol rendered to transparent 20x20 PNG"
+    },
+    {
+      "path": "assets/large-c-ysb.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "js/app.f03c996a.js#icon-c-ysb",
+      "sha256": "2a4d80aa955086514759b9b66dbf3501b22d43406e9914fc03427a457a623a74",
+      "sourceJsSha256": "7154b1ae0093fe4c2316391816c96dd66803af7e542650180ced2b8f2d46b426",
+      "transformation": "static SVG symbol rendered to transparent 20x20 PNG"
+    },
+    {
+      "path": "assets/large-c-bgwd.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "js/app.f03c996a.js#icon-c-bgwd",
+      "sha256": "5fc63f28789ecee991a6cd3bae02bcf927f61a3d19115185c7c91a8589125912",
+      "sourceJsSha256": "7154b1ae0093fe4c2316391816c96dd66803af7e542650180ced2b8f2d46b426",
+      "transformation": "static SVG symbol rendered to transparent 20x20 PNG"
+    },
+    {
+      "path": "assets/large-c-file.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "js/app.f03c996a.js#icon-c-file",
+      "sha256": "f9afef9bf62debab3e1a876732d8c46206d9f56d9eaaec737e2c3ed1d4d70b8c",
+      "sourceJsSha256": "7154b1ae0093fe4c2316391816c96dd66803af7e542650180ced2b8f2d46b426",
+      "transformation": "static SVG symbol rendered to transparent 20x20 PNG"
+    },
+    {
+      "path": "assets/large-c-play.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+      "sourceRelativePath": "js/app.f03c996a.js#icon-c-play",
+      "sha256": "5d37e60d3f5a380080ff8672543aebaed327877e377d58236de24b7522c26c57",
+      "sourceJsSha256": "7154b1ae0093fe4c2316391816c96dd66803af7e542650180ced2b8f2d46b426",
+      "transformation": "static SVG symbol rendered to transparent 20x20 PNG"
+    },
+    {
+      "path": "assets/check-off.png",
+      "source": "CCCLEANER large_files_ui.py original 16x16 checkmark artwork",
+      "sourceRelativePath": "ui_widgets.py/check_images",
+      "sha256": "c7a709598ca2a40ef610737e51c7abf251355dcca02182140d8b1db92240d098",
+      "size": [
+        16,
+        16
+      ],
+      "transformation": "existing large-file checkmark pixels exported unchanged to PNG; shared by all selection widgets"
+    },
+    {
+      "path": "assets/check-on.png",
+      "source": "CCCLEANER large_files_ui.py original 16x16 checkmark artwork",
+      "sourceRelativePath": "ui_widgets.py/check_images",
+      "sha256": "9476c34dfc49dbfa5f54949076abdf74edc9906cc0e179eb85db421f35f79f2d",
+      "size": [
+        16,
+        16
+      ],
+      "transformation": "existing large-file checkmark pixels exported unchanged to PNG; shared by all selection widgets"
+    },
+    {
+      "path": "assets/check-mixed.png",
+      "source": "CCCLEANER large_files_ui.py original 16x16 checkmark artwork",
+      "sourceRelativePath": "ui_widgets.py/check_images",
+      "sha256": "9b01acadcadedf5fedffbcae9f54f028dc4c4e146aeb0ba8d7cef4b62a95d051",
+      "size": [
+        16,
+        16
+      ],
+      "transformation": "existing large-file checkmark pixels exported unchanged to PNG; shared by all selection widgets"
+    },
+    {
+      "path": "assets/status-warning.png",
+      "source": "FanQieClean webdata SVG sprite icon-warning",
+      "sourceRelativePath": "../rea-fanqie/ui-assets/svg-sprites/icon-warning.svg",
+      "sourceSha256": "bf72350dbf8563c8433d658b2c9eb545d0a94306d7a4afde34cb78f5ceeb8665",
+      "sha256": "bd15a11a2225722d21d61eaf6fee50993beb5dcce8426ae18985eb8970f92d13",
+      "size": [
+        44,
+        44
+      ],
+      "transformation": "existing sharp SVG renderer, density192, transparent 44x44 PNG; original pink radial gradient and white exclamation preserved",
+      "evidence": "../rea-fanqie/compression-analysis/warning-asset.json"
+    }
+  ]
+}

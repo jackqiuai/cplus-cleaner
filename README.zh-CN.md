@@ -6,7 +6,7 @@
 
 CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理、软件搬家、软件压缩、聊天清理、隐私清理、大文件搬家、重复文件清理、软件卸载、弹窗拦截与系统管理。
 
-**仓库状态：** 当前正在建立项目文档，运行源码和安装包尚未上传到本仓库。下方启动说明适用于后续完整源码发布后的目录；仅有文档的仓库暂时无法运行软件。
+**项目状态：** 已包含完整 Python 源码、图片、清理规则及语言资源，可按下方说明从源码启动。尚未提供 EXE 安装包或自动构建 EXE 的流程。
 
 ## 功能一览
 
@@ -36,10 +36,10 @@ CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理�
 
 ## 从源码启动
 
-需要包含 `app.py`、`start.bat`、`assets/`、`rules/`、`locales/` 的**完整源码目录**。当前仅有项目文档时，不能通过以下命令启动。
+请保留包含 `app.py`、`start.bat`、`assets/`、`rules/`、`locales/` 的**完整源码目录**，资源位置和发布检查见[源码目录说明](docs/SOURCE_LAYOUT.md)。
 
 1. 安装 Python，保留 **Tcl/Tk and IDLE** 组件。
-2. 打开 `app.py` 所在目录。
+2. 克隆本仓库或下载源码 ZIP，打开 `app.py` 所在目录。
 3. 双击 `start.bat`，或执行：
 
 ```powershell
@@ -47,6 +47,12 @@ python app.py
 ```
 
 重复启动会唤起已有窗口，不会打开多个实例。更新源码后，应先完全退出旧进程，再启动新版本。
+
+可以先执行以下命令核对源码和运行资源完整性；该检查不会扫描或处理用户文件：
+
+```powershell
+python tools/verify_source_tree.py
+```
 
 ## 基本使用
 
@@ -84,7 +90,7 @@ C盘和聊天清理按类型汇总，不逐个展示文件。大文件搬家与�
 
 请通过 [GitHub Issues](https://github.com/jackqiuai/cplus-cleaner/issues) 提交问题或建议，提供软件版本、Windows 版本、所属功能、复现步骤、预期结果和实际结果。上传日志和截图前，请遮盖用户名、个人路径等信息。
 
-开发和测试约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。涉及源码的说明需待完整源码上传后使用。
+开发和测试约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。Windows 回归测试可执行 `python -m unittest discover -s tests -v`。
 
 ## 项目状态与许可
 

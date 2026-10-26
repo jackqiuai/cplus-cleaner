@@ -1,0 +1,43 @@
+name: 报告问题
+description: 报告 CPlus Cleaner 的功能异常
+title: "[问题] "
+body:
+  - type: markdown
+    attributes:
+      value: 请先查看已有反馈，避免重复提交。反馈将公开显示，请勿包含个人隐私信息。
+  - type: input
+    id: feature
+    attributes:
+      label: 所属功能
+      placeholder: 例如：C盘清理、软件搬家、弹窗拦截
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 实际出现了什么问题？
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: "1. 打开……\n2. 点击……\n3. 出现……"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+      description: 你期望软件如何运行？
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: 可在软件的问题反馈页点击“复制环境信息”，然后粘贴到这里。
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图或补充信息
+      description: 可粘贴截图。请先遮盖用户名、个人文件路径等隐私信息。

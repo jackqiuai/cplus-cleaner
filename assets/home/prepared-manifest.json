@@ -1,0 +1,32 @@
+[
+  {
+    "path": "background.png",
+    "source": "background-original.png",
+    "transformation": "Lanczos cover fit to 1024x800; original gradient colors",
+    "sha256": "1ccb5fa4a08a7ad84acd857c857f7bd6aaeff28a38ae82c9572d3df697ec2ee2"
+  },
+  {
+    "path": "logo.png",
+    "source": "../brand/logo.svg",
+    "transformation": "CPlus Cleaner C+ brand, antialiased 28x28 export",
+    "sha256": "9a3f3e5706381e7b787b476b2e60d65ac09e83844bc9fa8a5a53b6cbaab4e6be"
+  },
+  {
+    "path": "glow-display.png",
+    "source": "glow.png",
+    "transformation": "Original CSS opacity .75",
+    "sha256": "cfee195d1c3d29a043d351b5b35172610f468a3ecde3ee44c07222198822e2ec"
+  },
+  {
+    "path": "paper-frames.png",
+    "source": "paper.png",
+    "transformation": "4 rotations/sizes, 32 opacity frames each, 48x48 cells; CSS 2s cycle",
+    "sha256": "52235e66756f27bd35354d8cb9accd520be12046200ac798bfa97cdbb72c5f26"
+  },
+  {
+    "path": "search.png",
+    "source": "search.svg",
+    "transformation": "Mint background and yellow magnifying glass, antialiased 28x28 export",
+    "sha256": "8e3e4d5680284dc4dec7f5342864b82b353637631e8ea09e62cf3fa76d0a541d"
+  }
+]

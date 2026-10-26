@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-26",
+  "mode": "built-in image_gen edit",
+  "requested_opacity": 0.6,
+  "transparent_background": true,
+  "applied_to_assets": false,
+  "outcome": "Generated edits did not preserve exact alpha and pixels; unused. Exact opacity is applied by the desktop renderer."
+}

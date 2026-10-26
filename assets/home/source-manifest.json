@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
+  "notes": [
+    "Static original PNG bytes copied unchanged.",
+    "Broom recovered as inert SVG literal by the existing sprite extractor; rendered offline with installed sharp.",
+    "No original application or bundle was executed; no CCLEANNER files were modified."
+  ],
+  "assets": [
+    {
+      "name": "home-bg.png",
+      "input": "source-analysis/rea-fanqie/webdata/img/home-bg.a0390f68.png",
+      "originalMember": "img/home-bg.a0390f68.png",
+      "sourceSha256": "524c7b5f2b31d89e6dece932de21e961dae3f58e2d80d8d9e91d7c6102a241f7",
+      "output": "source-analysis/rea-fanqie/home-analysis/assets/home-bg.png",
+      "outputSha256": "524c7b5f2b31d89e6dece932de21e961dae3f58e2d80d8d9e91d7c6102a241f7",
+      "width": 1360,
+      "height": 972,
+      "channels": 4,
+      "transformation": "unchanged PNG bytes"
+    },
+    {
+      "name": "trash-bg.png",
+      "input": "source-analysis/rea-fanqie/webdata/img/trash-bg.43913d5f.png",
+      "originalMember": "img/trash-bg.43913d5f.png",
+      "sourceSha256": "c7103287271aea53065721d2cbd276c6b559abf5d34d0f740bb88ed66f5ede3b",
+      "output": "source-analysis/rea-fanqie/home-analysis/assets/trash-bg.png",
+      "outputSha256": "c7103287271aea53065721d2cbd276c6b559abf5d34d0f740bb88ed66f5ede3b",
+      "width": 520,
+      "height": 410,
+      "channels": 4,
+      "transformation": "unchanged PNG bytes"
+    },
+    {
+      "name": "trash.png",
+      "input": "source-analysis/rea-fanqie/webdata/img/trash.29360dd3.png",
+      "originalMember": "img/trash.29360dd3.png",
+      "sourceSha256": "36c24aae9abedb3661677bb79464adcf03dabd5c31a032ccd97a75a838b7591e",
+      "output": "source-analysis/rea-fanqie/home-analysis/assets/trash.png",
+      "outputSha256": "36c24aae9abedb3661677bb79464adcf03dabd5c31a032ccd97a75a838b7591e",
+      "width": 155,
+      "height": 170,
+      "channels": 4,
+      "transformation": "unchanged PNG bytes"
+    },
+    {
+      "name": "paper.png",
+      "input": "source-analysis/rea-fanqie/home-analysis/paper-original.png",
+      "originalMember": "js/chunk-10a57950.72c38a37.js::c079 inline PNG",
+      "sourceSha256": "9f3e71bc4a89f9599d6e9ed23a02b53076033432bf3f826bba648158acf267b5",
+      "output": "source-analysis/rea-fanqie/home-analysis/assets/paper.png",
+      "outputSha256": "9f3e71bc4a89f9599d6e9ed23a02b53076033432bf3f826bba648158acf267b5",
+      "width": 30,
+      "height": 30,
+      "channels": 4,
+      "transformation": "unchanged PNG bytes"
+    },
+    {
+      "name": "broom.png",
+      "input": "source-analysis/rea-fanqie/ui-assets/svg-sprites/icon-broom.svg",
+      "originalMember": "js/app.f03c996a.js::icon-broom",
+      "sourceSha256": "fb8f6967311b7359292086765e04fcd04868fd978133e8a49f1e61614339da7a",
+      "sourceJsCharacterOffset": 40261,
+      "sourceJsByteOffset": 40261,
+      "sourceSvg": "source-analysis/rea-fanqie/home-analysis/assets/broom.svg",
+      "output": "source-analysis/rea-fanqie/home-analysis/assets/broom.png",
+      "outputSha256": "c0fe5a0821d61fed338868e8092e16c74295fc32182b2318d934ce1df2a7fcb8",
+      "width": 63,
+      "height": 63,
+      "channels": 4,
+      "transformation": "offline SVG render to 63x63 transparent PNG"
+    },
+    {
+      "name": "logo-original.png",
+      "sourceArchive": "C:/Program Files (x86)/FanQieClean/skin.zip",
+      "originalMember": "image/logo.png",
+      "sourceSha256": "1ba18978123ebbbb8c6b3b0be661f78402102469ac94032fb20063880baf9874",
+      "output": "assets/home/logo-original.png",
+      "outputSha256": "1ba18978123ebbbb8c6b3b0be661f78402102469ac94032fb20063880baf9874",
+      "width": 256,
+      "height": 256,
+      "transformation": "unchanged PNG bytes"
+    }
+  ]
+}
