@@ -12,11 +12,11 @@ from verify_source_tree import verify
 
 ROOT_FILES = (
     '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md',
-    'GITHUB-ABOUT.md', 'CONTRIBUTING.md', 'LICENSE',
+    'GITHUB-ABOUT.md', 'CONTRIBUTING.md', 'LICENSE', 'CPlusCleaner.spec', 'requirements-build.txt',
 )
 DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github')
-TOOLS = ('prepare_source_release.py', 'verify_source_tree.py', 'README.md')
-TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.svg', '.bat'}
+TOOLS = ('prepare_source_release.py', 'verify_source_tree.py', 'build_windows.py', 'README.md')
+TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.svg', '.bat', '.spec'}
 PROVENANCE = {'assets/asset-sources.json', 'assets/home/source-manifest.json', 'assets/privacy/sources.json'}
 
 
