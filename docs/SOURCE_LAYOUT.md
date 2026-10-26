@@ -22,6 +22,8 @@ The repository contains the complete runtime source tree and its checked-in reso
 
 See [the complete module guide](MODULES.md) for each Python file and [the resource guide](../assets/README.md) for image and rule purposes.
 
+Keep the default English project overview in the root `README.md`. The `.github/` directory guide is named `PURPOSE.md`: a README in that directory would take priority over the root overview on GitHub and hide its screenshot from the repository landing page. The source verifier checks for this conflict.
+
 ## Run and verify
 
 Install Python 3.10+ with Tcl/Tk. No third-party runtime packages are required.
