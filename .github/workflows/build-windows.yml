@@ -56,12 +56,12 @@ jobs:
               if data.startswith(b'PK'):
                   with zipfile.ZipFile(io.BytesIO(data)) as archive:
                       data=b'\n'.join(archive.read(name) for name in archive.namelist() if not name.endswith('/'))
-              log=data.decode('utf-8',errors='replace')
+              log=data.decode('utf-8',errors='replace').replace('\r','')
               # Downloaded logs prefix every line with a UTC timestamp.
               log=re.sub(r'(?m)^\d{4}-\d\d-\d\dT[\d:.]+Z ', '',log)
               blocks=re.findall(r'(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\Z)',log)
               for block in blocks:
-                  message=block[-3000:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+                  message=block[:3000].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
                   print('::notice title=Previous regression failure::'+message,flush=True)
               if not blocks:
                   message=log[-2500:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
@@ -102,14 +102,14 @@ jobs:
           $testExit = $LASTEXITCODE
           Get-Content build/test-output.log
           if ($testExit -ne 0) {
-            $output = Get-Content build/test-output.log -Raw
+            $output = (Get-Content build/test-output.log -Raw).Replace("`r", "")
             $blocks = [regex]::Matches($output, '(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\z)')
             if ($blocks.Count -eq 0) {
               $blocks = @([pscustomobject]@{ Value = $output })
             }
             foreach ($block in $blocks) {
               $failure = $block.Value
-              if ($failure.Length -gt 3000) { $failure = $failure.Substring($failure.Length - 3000) }
+              if ($failure.Length -gt 3000) { $failure = $failure.Substring(0, 3000) }
               $escaped = $failure.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
               Write-Output "::error title=Windows regression test failure::$escaped"
             }
