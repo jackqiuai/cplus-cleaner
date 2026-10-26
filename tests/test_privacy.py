@@ -209,3 +209,5 @@ class PrivacyTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for privacy category orchestration, scanning and deletion
