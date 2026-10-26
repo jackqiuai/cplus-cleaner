@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: windows-exe-${{ github.event_name }}-${{ github.ref }}
@@ -41,6 +42,43 @@ jobs:
           cache-dependency-path: requirements-build.txt
       - name: Verify source and resources
         run: python tools/verify_source_tree.py
+      - name: Summarize previous failed regression run
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          @'
+          import json,os,re,urllib.request,urllib.error
+          base='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'User-Agent':'CPlus-Cleaner-CI-Diagnostics'}
+          def get(url):
+              with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=30) as response:
+                  return json.load(response)
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args):
+                  return None
+          try:
+              jobs=get(base+'/actions/runs/40373910774/jobs')['jobs']
+              job=next(j for j in jobs if j['conclusion']=='failure')
+              request=urllib.request.Request(base+'/actions/jobs/'+str(job['id'])+'/logs',headers=headers)
+              try:
+                  with urllib.request.build_opener(NoRedirect).open(request,timeout=30) as response:
+                      log=response.read().decode('utf-8',errors='replace')
+              except urllib.error.HTTPError as redirect:
+                  if redirect.code not in (301,302,303,307,308):
+                      raise
+                  with urllib.request.urlopen(redirect.headers['Location'],timeout=30) as response:
+                      log=response.read().decode('utf-8',errors='replace')
+              # Downloaded logs prefix every line with a UTC timestamp.
+              log=re.sub(r'(?m)^\d{4}-\d\d-\d\dT[\d:.]+Z ', '',log)
+              blocks=re.findall(r'(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\Z)',log)
+              for block in blocks:
+                  message=block[-3000:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+                  print('::notice title=Previous regression failure::'+message,flush=True)
+              print('Previous failure blocks:',len(blocks),flush=True)
+          except (OSError,StopIteration) as error:
+              print('Previous-run diagnostics unavailable:',type(error).__name__,flush=True)
+          '@ | python -
       - name: Run Windows regression tests
         run: |
           $PSNativeCommandUseErrorActionPreference = $false
@@ -49,10 +87,17 @@ jobs:
           $testExit = $LASTEXITCODE
           Get-Content build/test-output.log
           if ($testExit -ne 0) {
-            $failure = (Get-Content build/test-output.log -Tail 220) -join "`n"
-            if ($failure.Length -gt 50000) { $failure = $failure.Substring($failure.Length - 50000) }
-            $escaped = $failure.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
-            Write-Output "::error title=Windows regression tests failed::$escaped"
+            $output = Get-Content build/test-output.log -Raw
+            $blocks = [regex]::Matches($output, '(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\z)')
+            if ($blocks.Count -eq 0) {
+              $blocks = @([pscustomobject]@{ Value = $output })
+            }
+            foreach ($block in $blocks) {
+              $failure = $block.Value
+              if ($failure.Length -gt 3000) { $failure = $failure.Substring($failure.Length - 3000) }
+              $escaped = $failure.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
+              Write-Output "::error title=Windows regression test failure::$escaped"
+            }
             exit $testExit
           }
       - name: Install build dependencies
