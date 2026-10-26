@@ -6,5 +6,6 @@ The verifier also rejects a `.github/README` that would override the root projec
 
 | Path | Purpose |
 | --- | --- |
+| [build_windows.py](build_windows.py) | Windows executable building, isolated smoke checks and distribution archives |
 | [prepare_source_release.py](prepare_source_release.py) | Allowlisted export, integrity manifest and managed obsolete-file pruning |
 | [verify_source_tree.py](verify_source_tree.py) | Read-only import, rule, asset and manifest validation |
