@@ -10,7 +10,7 @@ import sys
 
 
 REQUIRED = (
-    'app.py', 'cplus_cleaner/__main__.py', 'cplus_cleaner/common/core.py',
+    'app.py', 'LICENSE', 'cplus_cleaner/__main__.py', 'cplus_cleaner/common/core.py',
     'cplus_cleaner/ui/desktop.py', 'cplus_cleaner/application/single_instance.py', 'start.bat',
     'cplus_cleaner/features/system/system_analysis_helper.py', 'assets/app-icon.png', 'assets/tray.ico',
     'assets/runtime-assets.json',
