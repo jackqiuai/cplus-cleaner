@@ -569,3 +569,5 @@ class PopupPage(tk.Frame):
         self.warning_image = None
         for attribute in ("heading", "summary", "note", "progress_text", "progress_percent", "progress_value"):
             setattr(self, attribute, None)
+
+# Purpose: Popup groups, expansion, switches and history
