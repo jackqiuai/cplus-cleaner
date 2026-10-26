@@ -394,3 +394,5 @@ def clean(items, cancel=None, progress=None):
                     connection.rollback()
                 connection.close()
     return {"cleaned_ids": list(dict.fromkeys(cleaned)), "errors": errors, "cancelled": cancelled}
+
+# Purpose: Browser history and download records
