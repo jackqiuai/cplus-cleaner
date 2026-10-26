@@ -568,3 +568,5 @@ class SoftwareUninstallPage(tk.Frame):
         self.icons.clear()
         for attribute in ("heading", "disk", "note", "search", "select_all_value"):
             setattr(self, attribute, None)
+
+# Purpose: App Uninstaller page, search and selection
