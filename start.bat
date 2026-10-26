@@ -31,3 +31,5 @@ echo Python 3.10 or newer with Tcl/Tk is required.
 echo Install Python, then run start.bat again.
 pause
 exit /b 1
+
+rem Purpose: Windows launcher and Python runtime discovery
