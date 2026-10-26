@@ -469,3 +469,5 @@ class LargeFilesPage(tk.Frame):
         window.reload_records = reload
         reload()
         return window
+
+# Purpose: Large-file groups and file list UI
