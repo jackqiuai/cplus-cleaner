@@ -234,3 +234,5 @@ class PreferenceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for settings, autostart and scheduling
