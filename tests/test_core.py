@@ -281,3 +281,5 @@ class CoreTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for shared scanning, file checks, deletion, duplicate detection and history
