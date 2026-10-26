@@ -141,3 +141,5 @@ def extract_icon(path, index=0):
             gdi.DeleteDC(dc)
         if icon.value:
             user.DestroyIcon(icon)
+
+# Purpose: Windows installed software, locations and icons
