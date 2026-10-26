@@ -103,3 +103,5 @@ def run(background=False, *, name=INSTANCE_NAME):
         window = DesktopApplication(background=background)
         instance.attach(window, window.restore_window)
         window.mainloop()
+
+# Purpose: Single-instance launch and activation
