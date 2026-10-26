@@ -226,3 +226,5 @@ class SystemManagementPage(tk.Frame):
     def wheel(self, event):
         if self.canvas.winfo_ismapped() and self.inner.winfo_reqheight() > self.canvas.winfo_height():
             self.canvas.yview_scroll(-int(event.delta/120), 'units')
+
+# Purpose: System Management page
