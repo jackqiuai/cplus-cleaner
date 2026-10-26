@@ -12,7 +12,7 @@ import threading
 import time
 import uuid
 
-from cplus_cleaner.common import core
+from cplus_cleaner.common import core, runtime
 from cplus_cleaner.platforms import software_windows as windows
 
 MIB = 1024 * 1024
@@ -87,7 +87,7 @@ def action_exclusions():
 def exclusions():
     # Original scanner filters directory names at every depth. The current
     # application's source is an explicit additional independent exclusion.
-    return [core.canonical(core.APP_DIR)]
+    return list(map(core.canonical, runtime.protected_paths(core.APP_DIR)))
 
 
 def directory_excluded(name):
