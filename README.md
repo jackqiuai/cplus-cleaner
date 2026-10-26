@@ -6,7 +6,7 @@
 
 CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Chinese/English interface.
 
-**Project status:** The complete Python source tree, images, cleanup rules and language resources are included. Run from source with the instructions below. A packaged EXE and an automated EXE build workflow are not available yet.
+**Project status:** Complete Python source, images, rules and language resources are included. Windows x64 EXE builds are configured in [GitHub Actions](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml). Successful runs provide executable artifacts; published GitHub Releases receive the EXE, portable ZIP and checksums. See [Build instructions](docs/BUILDING.md).
 
 ## Screenshot
 
@@ -32,10 +32,14 @@ CPlus Cleaner is a Windows desktop utility for disk cleanup, application migrati
 
 Additional settings include daily scheduled cleanup, startup with Windows, close-to-tray behavior and a persistent language choice. Operation history opens in a separate window.
 
+## Download the Windows EXE
+
+Download `CPlusCleaner.exe` or the portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases) when a version is published. For the latest commit build, open a successful [Actions run](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml) and download `CPlusCleaner-windows-x64`. The packaged Windows x64 application does not require Python.
+
 ## Requirements
 
 - Windows desktop environment; intended for Windows 10 and Windows 11.
-- Python 3.10 or newer with Tkinter. Local regression tests currently run with Python 3.13.
+- When running from source: Python 3.10 or newer with Tkinter. Automated EXE builds and regression tests use Python 3.13.
 - No third-party Python packages are required at runtime.
 - Application migration requires different source/destination NTFS volumes; compression requires NTFS support.
 - Some protected locations and Windows maintenance actions require administrator permission. Read-only component analysis can request Windows UAC approval.
@@ -103,7 +107,7 @@ For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). R
 
 ## Project status
 
-The local development build identifies itself as **1.1.0**. This does not indicate that a downloadable GitHub release is available. No installer or standalone executable is currently published here.
+The current application version is **1.1.0**. Windows x64 builds are available through successful Actions runs. A GitHub Release is published separately; publishing it triggers attachment of the verified binaries. An installer is not generated.
 
 ## License
 
