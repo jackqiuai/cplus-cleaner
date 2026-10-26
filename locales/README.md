@@ -21,3 +21,5 @@
 | 立即搬家 | Move |
 
 发布目录直接附带可用的 `en.json`，不依赖本地分析报告或翻译生成工具。修改文案时同步维护该文件和对应动态模板，可执行 `python tools/verify_source_tree.py` 及语言测试核对。运行程序不依赖任何第三方翻译服务。
+
+<!-- Purpose: Interface language resources -->
