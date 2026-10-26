@@ -144,3 +144,5 @@ class CleanupModelTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for cleanup categories, selection and totals
