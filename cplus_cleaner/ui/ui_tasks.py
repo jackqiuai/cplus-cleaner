@@ -66,3 +66,5 @@ class TaskRunner:
         except queue.Empty:
             pass
         self.after(100, self.poll)
+
+# Purpose: Background task progress and UI delivery
