@@ -267,3 +267,5 @@ class FeedbackPanel(Panel):
             self.message.set("已复制环境信息，可粘贴到 GitHub 反馈表单。")
         except tk.TclError:
             self.message.set("无法复制环境信息，请稍后重试。")
+
+# Purpose: Shared result panels and activity log dialog
