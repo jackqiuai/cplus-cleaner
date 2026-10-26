@@ -316,3 +316,5 @@ class HuorongBlockerTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+# Purpose: Regression tests for huorong rule parsing and capability checks
