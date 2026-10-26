@@ -294,3 +294,5 @@ class SoftwareTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+# Purpose: Regression tests for uninstall candidates, batch flow and results
