@@ -607,3 +607,5 @@ class SoftwareCompressionPage(tk.Frame):
         self.warning_image = None
         for attribute in ("heading", "note", "search", "select_all_value", "progress_value"):
             setattr(self, attribute, None)
+
+# Purpose: App Compression page and progress
