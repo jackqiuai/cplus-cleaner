@@ -14,8 +14,8 @@ ROOT_FILES = (
     '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md',
     'GITHUB-ABOUT.md', 'CONTRIBUTING.md',
 )
-DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github/ISSUE_TEMPLATE')
-TOOLS = ('prepare_source_release.py', 'verify_source_tree.py')
+DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github')
+TOOLS = ('prepare_source_release.py', 'verify_source_tree.py', 'README.md')
 TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.svg', '.bat'}
 PROVENANCE = {'assets/asset-sources.json', 'assets/home/source-manifest.json', 'assets/privacy/sources.json'}
 
@@ -139,3 +139,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# Purpose: Allowlisted export, integrity manifest and managed obsolete-file pruning
