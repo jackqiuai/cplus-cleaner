@@ -128,3 +128,5 @@ class SystemAnalysisTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for component analysis, progress and elevated read-only jobs
