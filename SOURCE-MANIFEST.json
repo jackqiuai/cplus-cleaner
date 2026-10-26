@@ -27,7 +27,7 @@
       "text": true
     },
     {
-      "path": ".github/README.md",
+      "path": ".github/PURPOSE.md",
       "bytes": 161,
       "sha256": "e9a1779ff5369adb9fd149ec84038d7c83971b57192c3aef1dbc536e9daf5645",
       "text": true
@@ -1288,14 +1288,14 @@
     },
     {
       "path": "docs/README.md",
-      "bytes": 503,
-      "sha256": "7bc11f73251fea18d405095a80608fb2bd8e23dbc830be246e03bc5c52c744e3",
+      "bytes": 670,
+      "sha256": "74a8a642b81d0882a286a71645704833e9b6e5c71c1c8c182d5d7d1e616c357c",
       "text": true
     },
     {
       "path": "docs/SOURCE_LAYOUT.md",
-      "bytes": 4498,
-      "sha256": "04d3b8b5b385d7e2d74d07e936988057dd7fe1ef058df9ce29b69aaa903f97ce",
+      "bytes": 4804,
+      "sha256": "89d8126b113ba4373b851366b36137d91d1643f21eeb8715f39c0067e970d4e9",
       "text": true
     },
     {
@@ -1558,8 +1558,8 @@
     },
     {
       "path": "tools/README.md",
-      "bytes": 459,
-      "sha256": "5034d1b399caaea1576889888577df59bfc0e8fc9a99862a0e5d2ffa77ce85d6",
+      "bytes": 627,
+      "sha256": "22919abbd43c4a3a5ef126ac107f4d41ee299cb7ce796fc422d15a2ac192e61e",
       "text": true
     },
     {
@@ -1570,8 +1570,8 @@
     },
     {
       "path": "tools/verify_source_tree.py",
-      "bytes": 6639,
-      "sha256": "7d77e98880128dc6f6254b06e5e747bc06fc0f5a67fd18e8f35caf3a85cb9f16",
+      "bytes": 7027,
+      "sha256": "eaa764e9188feb8e224b21965fca7f827f9b0c78a11bb01eb0c95641ae5887ac",
       "text": true
     }
   ]
