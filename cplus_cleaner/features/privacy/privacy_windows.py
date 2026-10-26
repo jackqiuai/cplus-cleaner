@@ -254,3 +254,5 @@ def clean_thunder(items, cancel=None):
         except (OSError, ValueError, sqlite3.Error) as exc:
             errors.append(dict(id=item.get('id'), error=str(exc)))
     return dict(cleaned_ids=cleaned, errors=errors, cancelled=_cancelled(cancel))
+
+# Purpose: Windows and application usage traces
