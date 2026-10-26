@@ -14,8 +14,9 @@ import subprocess
 import threading
 import time
 from dataclasses import asdict, dataclass
+from cplus_cleaner.common import runtime
 
-APP_DIR = Path(__file__).resolve().parents[2]
+APP_DIR = runtime.resource_root()
 DATA_DIR = Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "CCLEANNER"
 
 
@@ -38,8 +39,14 @@ def canonical(path: Path) -> Path:
     return Path(os.path.abspath(path))
 
 
+def application_roots() -> list[Path]:
+    # A portable EXE can live in Downloads: protect the file, not every
+    # unrelated file in its parent folder.
+    return runtime.protected_paths(APP_DIR)
+
+
 def protected_roots() -> list[Path]:
-    roots = [APP_DIR]
+    roots = application_roots()
     for key in ("SystemRoot", "ProgramFiles", "ProgramFiles(x86)", "ProgramData"):
         if os.environ.get(key):
             roots.append(canonical(Path(os.environ[key])))
@@ -62,9 +69,9 @@ def check_path(path: Path, allow_system_temp: bool = False, scope_id: str = "") 
             raise ValueError("文件超出 C 盘清理规则授权范围")
     for root in protected_roots():
         if inside(path, root):
-            if scoped and root != APP_DIR:
+            if scoped and root not in application_roots():
                 continue
-            if allow_system_temp and root != APP_DIR and inside(path, win_temp):
+            if allow_system_temp and root not in application_roots() and inside(path, win_temp):
                 continue
             raise ValueError(f"受保护的位置：{path}")
     return path
