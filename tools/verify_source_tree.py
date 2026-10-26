@@ -10,8 +10,10 @@ import sys
 
 
 REQUIRED = (
-    'app.py', 'core.py', 'desktop.py', 'single_instance.py', 'start.bat',
-    'system_analysis_helper.py', 'assets/app-icon.png', 'assets/tray.ico',
+    'app.py', 'cplus_cleaner/__main__.py', 'cplus_cleaner/common/core.py',
+    'cplus_cleaner/ui/desktop.py', 'cplus_cleaner/application/single_instance.py', 'start.bat',
+    'cplus_cleaner/features/system/system_analysis_helper.py', 'assets/app-icon.png', 'assets/tray.ico',
+    'assets/runtime-assets.json',
     'assets/category-icons.json', 'assets/chat-rules.json', 'assets/popup-huorong.json',
     'rules/cdrive-private.json', 'locales/en.json',
 )
@@ -24,8 +26,9 @@ def verify(root, *, require_manifest=True):
         if not (root / relative).is_file():
             problems.append(f'Missing required file: {relative}')
 
-    modules = {path.stem for path in root.glob('*.py')}
-    for path in root.glob('*.py'):
+    modules = {'app', 'cplus_cleaner'}
+    runtime = [root/'app.py', *(root/'cplus_cleaner').rglob('*.py')]
+    for path in runtime:
         try:
             tree = ast.parse(path.read_text(encoding='utf-8-sig'), filename=str(path))
             for node in ast.walk(tree):
@@ -35,6 +38,10 @@ def verify(root, *, require_manifest=True):
                     module = name.split('.')[0]
                     if module not in modules and module not in sys.stdlib_module_names:
                         problems.append(f'{path.name}: missing or third-party module {module}')
+                    if module == 'cplus_cleaner':
+                        relative = root.joinpath(*name.split('.'))
+                        if not relative.with_suffix('.py').is_file() and not (relative/'__init__.py').is_file():
+                            problems.append(f'{path.name}: unresolved project import {name}')
         except (OSError, SyntaxError, UnicodeError) as error:
             problems.append(f'{path.name}: {error}')
 
@@ -61,6 +68,27 @@ def verify(root, *, require_manifest=True):
             check(json.loads(mapping.read_text(encoding='utf-8')))
         except (OSError, ValueError) as error:
             problems.append(f'Icon mapping: {error}')
+
+    asset_manifest = root / 'assets/runtime-assets.json'
+    if asset_manifest.is_file():
+        try:
+            entries = json.loads(asset_manifest.read_text(encoding='utf-8'))['files']
+            expected = set()
+            asset_root = (root/'assets').resolve()
+            for entry in entries:
+                relative = entry['path']
+                target = (asset_root/relative).resolve()
+                if not target.is_relative_to(asset_root) or relative in expected:
+                    raise ValueError(f'Invalid or repeated asset path: {relative}')
+                expected.add(relative)
+                if not target.is_file():
+                    problems.append(f'Missing runtime/editable asset: {relative}')
+            actual = {p.relative_to(root/'assets').as_posix() for p in (root/'assets').rglob('*')
+                      if p.is_file() and p.suffix.lower() in {'.png', '.ico', '.svg', '.gif'}}
+            for relative in sorted(actual - expected):
+                problems.append(f'Unlisted image asset: {relative}')
+        except (OSError, ValueError, TypeError, KeyError) as error:
+            problems.append(f'Asset inventory: {error}')
 
     manifest = root / 'SOURCE-MANIFEST.json'
     if require_manifest and not manifest.is_file():

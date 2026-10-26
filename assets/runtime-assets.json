@@ -1,0 +1,585 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "app-icon.png",
+      "kind": "runtime",
+      "purpose": "程序品牌、窗口或托盘图标 / Application brand, window or tray icon"
+    },
+    {
+      "path": "brand/logo.svg",
+      "kind": "editable",
+      "purpose": "程序品牌、窗口或托盘图标 / Application brand, window or tray icon"
+    },
+    {
+      "path": "brand/sidebar.png",
+      "kind": "runtime",
+      "purpose": "程序品牌、窗口或托盘图标 / Application brand, window or tray icon"
+    },
+    {
+      "path": "categories/100.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/101.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/102.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/103.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/104.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/105.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/106.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/107.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/109.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/200.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/202.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/203.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/204.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/205.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/208.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/209.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/211.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/212.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/214.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/216.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/217.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/218.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40000.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40002.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40003.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40004.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40005.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40006.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40007.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40008.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40009.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40010.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40011.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40012.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40013.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40014.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40015.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40016.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40017.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40018.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40019.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40020.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40021.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40022.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40023.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40024.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "categories/40029.png",
+      "kind": "runtime",
+      "purpose": "C盘分类及系统项目图标 / Drive Cleanup category and system item icons"
+    },
+    {
+      "path": "check-mixed.png",
+      "kind": "runtime",
+      "purpose": "统一勾选控件 / Shared selection controls"
+    },
+    {
+      "path": "check-off.png",
+      "kind": "runtime",
+      "purpose": "统一勾选控件 / Shared selection controls"
+    },
+    {
+      "path": "check-on.png",
+      "kind": "runtime",
+      "purpose": "统一勾选控件 / Shared selection controls"
+    },
+    {
+      "path": "hero-clean.png",
+      "kind": "runtime",
+      "purpose": "C盘清理或大文件搬家静态插画 / Cleanup or large-file illustration"
+    },
+    {
+      "path": "hero-large.png",
+      "kind": "runtime",
+      "purpose": "C盘清理或大文件搬家静态插画 / Cleanup or large-file illustration"
+    },
+    {
+      "path": "home/background.png",
+      "kind": "runtime",
+      "purpose": "首页背景与扫描标识 / Home background and scan mark"
+    },
+    {
+      "path": "home/search.png",
+      "kind": "runtime",
+      "purpose": "首页背景与扫描标识 / Home background and scan mark"
+    },
+    {
+      "path": "home/search.svg",
+      "kind": "editable",
+      "purpose": "首页背景与扫描标识 / Home background and scan mark"
+    },
+    {
+      "path": "icon-cache.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-chrome.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-edge.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-logs.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-qq.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-recycle.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-system.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-temp.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-wechat.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "icon-wps.png",
+      "kind": "runtime",
+      "purpose": "应用与缓存类型的图标回退 / Application and category icon fallback"
+    },
+    {
+      "path": "large-c-azb.png",
+      "kind": "runtime",
+      "purpose": "大文件类型图标 / Large File Mover type icons"
+    },
+    {
+      "path": "large-c-bgwd.png",
+      "kind": "runtime",
+      "purpose": "大文件类型图标 / Large File Mover type icons"
+    },
+    {
+      "path": "large-c-file.png",
+      "kind": "runtime",
+      "purpose": "大文件类型图标 / Large File Mover type icons"
+    },
+    {
+      "path": "large-c-play.png",
+      "kind": "runtime",
+      "purpose": "大文件类型图标 / Large File Mover type icons"
+    },
+    {
+      "path": "large-c-ysb.png",
+      "kind": "runtime",
+      "purpose": "大文件类型图标 / Large File Mover type icons"
+    },
+    {
+      "path": "nav-cdrive-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-cdrive.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-compress-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-compress.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-duplicates-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-duplicates.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-home-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-home.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-large-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-large.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-migrate-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-migrate.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-popup-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-popup.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-privacy-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-privacy.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-system-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-system-active.svg",
+      "kind": "editable",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-system.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-system.svg",
+      "kind": "editable",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-uninstall-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-uninstall.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-wechat-active.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "nav-wechat.png",
+      "kind": "runtime",
+      "purpose": "左侧功能导航图标 / Sidebar navigation"
+    },
+    {
+      "path": "privacy/app_switched.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/browsers.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/chrome_downloads.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/chrome_history.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/edge_downloads.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/edge_history.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/extensions.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/recent_docs.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/regedit.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/risk.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/run.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/sensitive.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/shopping.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/software.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/start_recent.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/thunder.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "privacy/windows.png",
+      "kind": "runtime",
+      "purpose": "隐私清理分类与分组图标 / Privacy Cleanup cards and groups"
+    },
+    {
+      "path": "status-warning.png",
+      "kind": "runtime",
+      "purpose": "扫描结果警告图标 / Scan-result warning indicator"
+    },
+    {
+      "path": "tray.ico",
+      "kind": "runtime",
+      "purpose": "程序品牌、窗口或托盘图标 / Application brand, window or tray icon"
+    }
+  ]
+}

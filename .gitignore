@@ -15,3 +15,41 @@ publication/
 *.ccleanner-part
 *.ccc-move-*
 *.ccc-restore-*
+
+# Local experiments, manual captures and private test material.
+dev/
+.tools/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+tests/output/
+tests/manual/
+tests/fixtures/private/
+# Only the portable release/verification tools are publication inputs.
+tools/*.py
+!tools/prepare_source_release.py
+!tools/verify_source_tree.py
+assets/**/*-original.png
+assets/**/*-preview.png
+
+# Workstation-only implementation notes and research reports.
+/BRANDING.md
+/CHAT-CLEANUP.md
+/COMPRESSION.md
+/DEVELOPMENT.zh-CN.md
+/HOME.md
+/naming-research-*.md
+/POPUP-HUORONG.md
+/POPUP.md
+/PRIVACY.md
+/UNINSTALL.md
+/VALIDATION.md
+
+# Local editor/OS metadata.
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

@@ -8,12 +8,12 @@ import tkinter as tk
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import preferences
-import software_migration as migration
-import software_migration_ui as ui
-from ui_widgets import check_images
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.application import preferences
+from cplus_cleaner.features.app_mover import software_migration as migration
+from cplus_cleaner.features.app_mover import software_migration_ui as ui
+from cplus_cleaner.ui.ui_widgets import check_images
 
 
 class SoftwarePageTests(unittest.TestCase):

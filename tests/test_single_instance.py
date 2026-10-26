@@ -7,7 +7,7 @@ import tkinter as tk
 import unittest
 import uuid
 
-from single_instance import SingleInstance
+from cplus_cleaner.application.single_instance import SingleInstance
 
 
 @unittest.skipUnless(os.name == 'nt', 'Windows named kernel objects')
@@ -18,7 +18,7 @@ class SingleInstanceTests(unittest.TestCase):
     def test_repeated_process_launch_exits_before_desktop_import_and_signals_primary(self):
         with SingleInstance(self.name) as primary:
             self.assertTrue(primary.primary)
-            script = "import sys; from single_instance import run; run(name=sys.argv[1]); print('desktop' in sys.modules)"
+            script = "import sys; from cplus_cleaner.application.single_instance import run; run(name=sys.argv[1]); print('cplus_cleaner.ui.desktop' in sys.modules)"
             children = [subprocess.Popen([sys.executable, '-c', script, self.name],
                 cwd=Path(__file__).resolve().parents[1], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 text=True, creationflags=subprocess.CREATE_NO_WINDOW) for _ in range(6)]

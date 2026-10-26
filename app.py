@@ -3,8 +3,11 @@ import sys
 
 
 def main(argv=None):
-    from single_instance import run
     arguments = sys.argv[1:] if argv is None else argv
+    if arguments and arguments[0] == '--component-analysis-job':
+        from cplus_cleaner.features.system.system_analysis_helper import main as analyze
+        return analyze(arguments[1:])
+    from cplus_cleaner.application.single_instance import run
     run(background="--background" in arguments)
 
 

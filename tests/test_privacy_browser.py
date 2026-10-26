@@ -7,8 +7,8 @@ import threading
 import unittest
 from unittest.mock import patch
 
-import core
-import privacy_browser as browser
+from cplus_cleaner.common import core
+from cplus_cleaner.features.privacy import privacy_browser as browser
 
 
 class BrowserPrivacyTests(unittest.TestCase):

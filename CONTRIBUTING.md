@@ -22,6 +22,19 @@ Describe the user problem, desired behavior and an example workflow. For a new c
 
 The runtime uses Python's standard library and Tkinter. Keep authoring-only dependencies out of runtime modules. Use isolated workspace fixtures for filesystem tests; mock operations that would affect real installed applications, registry settings or other windows.
 
+Use `cplus_cleaner/features/<feature>/` for feature engines and UI modules; shared responsibilities belong in `application/`, `common/`, `ui/`, `localization/` or `platforms/`. See [MODULES.md](docs/MODULES.md). Keep only the public `app.py` Python launcher at the root.
+
+Keep project regression tests in `tests/`. Local experiments, screenshots, logs and private fixture data belong in ignored `dev/`, `previews/`, `tests/manual/` or `tests/fixtures/private/`; they are not publication inputs. Add runtime images to [the asset inventory](assets/runtime-assets.json) with a purpose.
+
+After intentional edits, refresh and verify the source inventory:
+
+```powershell
+python tools/prepare_source_release.py --manifest-only
+python tools/verify_source_tree.py
+```
+
+The release exporter uses an explicit inclusion list. Its optional `--prune-managed` removes only unchanged obsolete files listed in a destination's previous manifest; it refuses to remove modified obsolete files. Unknown destination files are untouched.
+
 From a complete source checkout, run:
 
 ```powershell

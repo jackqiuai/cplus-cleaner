@@ -1,4 +1,4 @@
-"""Export a source tree using an explicit allowlist, without deleting files."""
+"""Export an explicit source allowlist; optionally prune unchanged managed files."""
 from __future__ import annotations
 
 import argparse
@@ -14,7 +14,7 @@ ROOT_FILES = (
     '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md',
     'GITHUB-ABOUT.md', 'CONTRIBUTING.md',
 )
-DIRECTORIES = ('assets', 'rules', 'locales', 'tests', 'docs', '.github/ISSUE_TEMPLATE')
+DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github/ISSUE_TEMPLATE')
 TOOLS = ('prepare_source_release.py', 'verify_source_tree.py')
 TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.svg', '.bat'}
 PROVENANCE = {'assets/asset-sources.json', 'assets/home/source-manifest.json', 'assets/privacy/sources.json'}
@@ -22,12 +22,14 @@ PROVENANCE = {'assets/asset-sources.json', 'assets/home/source-manifest.json', '
 
 def selected_files(root):
     root = Path(root).resolve()
-    paths = {path.name for path in root.glob('*.py')}
+    paths = {'app.py'}
     paths.update(ROOT_FILES)
     paths.update('tools/' + name for name in TOOLS)
     for directory in DIRECTORIES:
         for path in (root / directory).rglob('*'):
-            if path.is_file() and not any(part in {'__pycache__', '.git'} for part in path.parts):
+            relative_parts = path.relative_to(root).parts
+            excluded = {'__pycache__', '.git', 'output', 'manual', 'private'}
+            if path.is_file() and not any(part in excluded for part in relative_parts):
                 if path.suffix not in {'.pyc', '.pyo', '.log', '.jsonl'}:
                     paths.add(path.relative_to(root).as_posix())
     return sorted(paths)
@@ -52,7 +54,7 @@ def portable_metadata(data, source_root):
     return convert(data)
 
 
-def export(source, destination):
+def export(source, destination, *, prune_managed=False):
     source, destination = Path(source).resolve(), Path(destination).resolve()
     if source == destination or destination in source.parents:
         raise ValueError('Destination must be a separate source checkout or export directory')
@@ -65,6 +67,22 @@ def export(source, destination):
             raise ValueError(f'Invalid source file: {relative}')
         if not target.resolve().is_relative_to(destination):
             raise ValueError(f'Destination escapes the export directory: {relative}')
+    obsolete = []
+    previous = destination/'SOURCE-MANIFEST.json'
+    if prune_managed and previous.is_file():
+        for entry in json.loads(previous.read_text(encoding='utf-8'))['files']:
+            relative = entry['path']
+            path = destination/relative
+            if relative in paths or not path.exists():
+                continue
+            if not path.resolve().is_relative_to(destination):
+                raise ValueError(f'Obsolete path escapes destination: {relative}')
+            data = path.read_bytes()
+            if entry['text']:
+                data = data.replace(b'\r\n', b'\n')
+            if hashlib.sha256(data).hexdigest() != entry['sha256']:
+                raise ValueError(f'Refusing to remove a locally modified obsolete file: {relative}')
+            obsolete.append(path)
     destination.mkdir(parents=True, exist_ok=True)
     for relative in paths:
         path, target = source / relative, destination / relative
@@ -74,6 +92,8 @@ def export(source, destination):
             target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         else:
             shutil.copyfile(path, target)
+    for path in obsolete:
+        path.unlink()  # Only unchanged files owned by the previous manifest.
     entries = write_manifest(destination, paths)
     problems = verify(destination)
     if problems:
@@ -104,6 +124,7 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--destination', type=Path)
     mode.add_argument('--manifest-only', action='store_true', help='Refresh hashes after intentional source edits')
+    parser.add_argument('--prune-managed', action='store_true', help='Remove unchanged obsolete files listed in the destination manifest')
     args = parser.parse_args()
     if args.manifest_only:
         entries = write_manifest(args.source, selected_files(args.source))
@@ -111,7 +132,7 @@ def main():
         if problems:
             parser.exit(1, '\n'.join(problems) + '\n')
     else:
-        entries = export(args.source, args.destination)
+        entries = export(args.source, args.destination, prune_managed=args.prune_managed)
     action = 'Refreshed' if args.manifest_only else 'Exported'
     print(f'{action} and verified {len(entries)} source/resource files and SOURCE-MANIFEST.json.')
 

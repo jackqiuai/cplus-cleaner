@@ -6,12 +6,12 @@ import tkinter as tk
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import preferences
-import software_uninstall as backend
-import software_uninstall_ui as ui
-from ui_widgets import check_images
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.application import preferences
+from cplus_cleaner.features.uninstall import software_uninstall as backend
+from cplus_cleaner.features.uninstall import software_uninstall_ui as ui
+from cplus_cleaner.ui.ui_widgets import check_images
 
 
 class UninstallPageTests(unittest.TestCase):

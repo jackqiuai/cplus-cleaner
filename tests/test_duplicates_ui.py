@@ -8,10 +8,10 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import duplicates_ui
-import preferences
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.features.duplicates import duplicates_ui
+from cplus_cleaner.application import preferences
 
 
 class DuplicatesPageTests(unittest.TestCase):

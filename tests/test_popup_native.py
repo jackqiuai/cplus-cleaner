@@ -4,8 +4,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
-import popup_native as extended
-import popup_windows as windows
+from cplus_cleaner.features.popup import popup_native as extended
+from cplus_cleaner.features.popup import popup_windows as windows
 from test_popup_windows import FakeWin32
 
 

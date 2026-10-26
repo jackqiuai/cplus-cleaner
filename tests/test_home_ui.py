@@ -9,19 +9,19 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import home_scan
-import home_results
-import home_ui
-import i18n
-import large_files
-import popup
-import preferences
-import privacy
-import software_compression
-import software_migration
-import software_uninstall
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.features.home import home_scan
+from cplus_cleaner.features.home import home_results
+from cplus_cleaner.features.home import home_ui
+from cplus_cleaner.localization import i18n
+from cplus_cleaner.features.large_files import large_files
+from cplus_cleaner.features.popup import popup
+from cplus_cleaner.application import preferences
+from cplus_cleaner.features.privacy import privacy
+from cplus_cleaner.features.app_compression import software_compression
+from cplus_cleaner.features.app_mover import software_migration
+from cplus_cleaner.features.uninstall import software_uninstall
 from tests.popup_fixtures import groups as fixture_groups
 
 

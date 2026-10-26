@@ -193,7 +193,6 @@
     "home": "nav-home.png",
     "cdrive": "nav-cdrive.png",
     "wechat": "nav-wechat.png",
-    "qq": "nav-qq.png",
     "large": "nav-large.png",
     "migrate": "nav-migrate.png",
     "compress": "nav-compress.png",
@@ -206,7 +205,6 @@
     "home": "nav-home-active.png",
     "cdrive": "nav-cdrive-active.png",
     "wechat": "nav-wechat-active.png",
-    "qq": "nav-qq-active.png",
     "large": "nav-large-active.png",
     "migrate": "nav-migrate-active.png",
     "compress": "nav-compress-active.png",
@@ -232,8 +230,8 @@
     "categoryKeyCollisions": 1,
     "uniqueCategoryIcos": 47,
     "mappedSystem": 2,
-    "mappedNavigation": 11,
-    "mappedNavigationActive": 11,
+    "mappedNavigation": 10,
+    "mappedNavigationActive": 10,
     "missing": 0,
     "conversionFailures": 0
   }

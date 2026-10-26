@@ -7,8 +7,8 @@ import time
 import unittest
 from unittest.mock import patch
 
-import cdrive
-import core
+from cplus_cleaner.features.drive_cleanup import cdrive
+from cplus_cleaner.common import core
 
 
 class CDriveRuleTests(unittest.TestCase):

@@ -8,11 +8,11 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import popup as backend
-import popup_ui as ui
-import preferences
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.features.popup import popup as backend
+from cplus_cleaner.features.popup import popup_ui as ui
+from cplus_cleaner.application import preferences
 from tests.test_popup_huorong import vendor_rule
 from tests.popup_fixtures import groups as fixture_groups
 

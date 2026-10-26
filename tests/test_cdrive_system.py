@@ -9,8 +9,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import cdrive_system as system
+from cplus_cleaner.common import core
+from cplus_cleaner.features.system import cdrive_system as system
 
 
 class CDriveSystemTests(unittest.TestCase):

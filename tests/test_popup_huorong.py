@@ -5,10 +5,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-import core
-import popup
-import popup_huorong as h
-from popup_models import Rule, Software
+from cplus_cleaner.common import core
+from cplus_cleaner.features.popup import popup
+from cplus_cleaner.features.popup import popup_huorong as h
+from cplus_cleaner.features.popup.popup_models import Rule, Software
 
 
 def vendor_rule(scan=None, action='close', identity='vendor-fixture'):

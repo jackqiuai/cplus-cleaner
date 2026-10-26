@@ -8,10 +8,10 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import cdrive_system
-import system_analysis as analysis
-import uninstall_windows
+from cplus_cleaner.common import core
+from cplus_cleaner.features.system import cdrive_system
+from cplus_cleaner.features.system import system_analysis as analysis
+from cplus_cleaner.features.uninstall import uninstall_windows
 
 
 class SystemAnalysisTests(unittest.TestCase):

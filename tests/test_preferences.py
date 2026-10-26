@@ -6,8 +6,8 @@ import tempfile
 import threading
 import unittest
 
-import core
-import preferences
+from cplus_cleaner.common import core
+from cplus_cleaner.application import preferences
 
 
 class PreferenceTests(unittest.TestCase):
@@ -97,7 +97,7 @@ class PreferenceTests(unittest.TestCase):
             file.write_bytes(name.encode("utf-8"))
             files.append(file)
             rules.append(core.Rule(f"{group} / {name}", root, group, days=0))
-        with patch("cdrive.build_rules", return_value=rules) as build:
+        with patch('cplus_cleaner.features.drive_cleanup.cdrive.build_rules', return_value=rules) as build:
             result = preferences.scheduled_cleanup(threading.Event())
         build.assert_called_once_with(days=0)
         self.assertEqual(result["deleted"], 2)
@@ -109,7 +109,7 @@ class PreferenceTests(unittest.TestCase):
     def test_cancellation_during_scan_does_not_begin_deletion(self):
         cancel = threading.Event()
         cancel.set()
-        with patch("cdrive.build_rules", return_value=[]), patch.object(core, "delete_files") as delete:
+        with patch('cplus_cleaner.features.drive_cleanup.cdrive.build_rules', return_value=[]), patch.object(core, "delete_files") as delete:
             result = preferences.scheduled_cleanup(cancel)
         self.assertTrue(result["cancelled"])
         delete.assert_not_called()

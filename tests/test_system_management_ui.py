@@ -8,11 +8,11 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import i18n
-import preferences
-from system_management_ui import SystemManagementPage
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.localization import i18n
+from cplus_cleaner.application import preferences
+from cplus_cleaner.features.system.system_management_ui import SystemManagementPage
 
 
 def fixture_items():

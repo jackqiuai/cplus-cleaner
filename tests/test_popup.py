@@ -7,8 +7,8 @@ import threading
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import popup
+from cplus_cleaner.common import core
+from cplus_cleaner.features.popup import popup
 from tests.popup_fixtures import definition as fixture_definition
 
 

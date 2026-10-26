@@ -40,51 +40,6 @@
       "transformation": "Lanczos resize"
     },
     {
-      "path": "assets/hero-home.png",
-      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
-      "sourceRelativePath": "img/trash.29360dd3.png",
-      "sourceSize": [
-        155,
-        170
-      ],
-      "size": [
-        215,
-        236
-      ],
-      "sha256": "10fe28e1f20ee7a764a056aa17fdfacf808cfc285f5d540c9a6d9d287934b49f",
-      "transformation": "Lanczos resize"
-    },
-    {
-      "path": "assets/hero-glow.png",
-      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
-      "sourceRelativePath": "img/trash-bg.43913d5f.png",
-      "sourceSize": [
-        520,
-        410
-      ],
-      "size": [
-        520,
-        410
-      ],
-      "sha256": "66d67a2892731cbe57abe499822806c02cf4588e6bfbcb8ac086b7293b27b6e9",
-      "transformation": "Lanczos resize"
-    },
-    {
-      "path": "assets/home-panel-bg.png",
-      "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
-      "sourceRelativePath": "img/home-bg.a0390f68.png",
-      "sourceSize": [
-        1360,
-        972
-      ],
-      "size": [
-        1000,
-        715
-      ],
-      "sha256": "d76fbc0515c05e59526a5b041c8f6b6e49e48b386d9c73349409d2854abd36cc",
-      "transformation": "Lanczos resize"
-    },
-    {
       "path": "assets/app-icon.png",
       "sourceArchive": "C:/Program Files (x86)/FanQieClean/webdata.7z",
       "sourceRelativePath": "img/trash.29360dd3.png",
@@ -97,21 +52,6 @@
         48
       ],
       "sha256": "d0ec7c7061706c45bb5d24946bdc3f273c88a9b5519098e53191faa9f5fd436c",
-      "transformation": "fit to transparent canvas with Lanczos"
-    },
-    {
-      "path": "assets/icon-apps.png",
-      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
-      "sourceRelativePath": "200.png",
-      "sourceSize": [
-        48,
-        48
-      ],
-      "size": [
-        48,
-        48
-      ],
-      "sha256": "b2f352fd0f5e20a1be5434ab8ea322031a25408db23114d75c378ae0857e5d4f",
       "transformation": "fit to transparent canvas with Lanczos"
     },
     {
@@ -157,21 +97,6 @@
         48
       ],
       "sha256": "4cf03546065a9959c2a85b353fce8f60b92852730093e6c8d8e7f82649c5c609",
-      "transformation": "fit to transparent canvas with Lanczos"
-    },
-    {
-      "path": "assets/icon-backup.png",
-      "sourceArchive": "C:/Program Files (x86)/FanQieClean/icon.7z",
-      "sourceRelativePath": "102.png",
-      "sourceSize": [
-        48,
-        48
-      ],
-      "size": [
-        48,
-        48
-      ],
-      "sha256": "f19687267b72918e58ee56a972e5aa2b8a6f79388397af97ebcae3699ee220b2",
       "transformation": "fit to transparent canvas with Lanczos"
     },
     {
@@ -365,5 +290,6 @@
       "transformation": "existing sharp SVG renderer, density192, transparent 44x44 PNG; original pink radial gradient and white exclamation preserved",
       "evidence": "../rea-fanqie/compression-analysis/warning-asset.json"
     }
-  ]
+  ],
+  "note": "Historical recovery provenance for retained asset names. Current bytes are described by SOURCE-MANIFEST.json; generated logos and hero images have separate source records."
 }

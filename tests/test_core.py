@@ -6,7 +6,7 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
+from cplus_cleaner.common import core
 
 
 class CoreTests(unittest.TestCase):
@@ -157,7 +157,7 @@ class CoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             core.check_path(Path.home())
         with self.assertRaises(ValueError):
-            core.check_path(core.APP_DIR / "core.py")
+            core.check_path(Path(core.__file__))
 
     def test_scope_escape(self):
         outside = self.base / "outside"

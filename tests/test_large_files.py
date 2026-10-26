@@ -5,8 +5,8 @@ import threading
 import unittest
 from unittest.mock import patch
 
-import core
-import large_files as files
+from cplus_cleaner.common import core
+from cplus_cleaner.features.large_files import large_files as files
 
 
 class LargeFilesTests(unittest.TestCase):

@@ -7,9 +7,9 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import home_scan as home
-import privacy
+from cplus_cleaner.common import core
+from cplus_cleaner.features.home import home_scan as home
+from cplus_cleaner.features.privacy import privacy
 
 
 class HomeScanTests(unittest.TestCase):

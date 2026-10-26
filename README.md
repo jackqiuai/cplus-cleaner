@@ -42,7 +42,7 @@ Additional settings include daily scheduled cleanup, startup with Windows, close
 
 ## Run from source
 
-Keep the complete source tree together, including `app.py`, `start.bat`, `assets/`, `rules/` and `locales/`. See [Source layout](docs/SOURCE_LAYOUT.md) for resource paths and publication checks.
+Keep the complete source tree together, including `app.py`, `start.bat`, `cplus_cleaner/`, `assets/`, `rules/` and `locales/`. See [Source layout](docs/SOURCE_LAYOUT.md) for resource paths and publication checks.
 
 1. Install Python with **Tcl/Tk and IDLE** enabled.
 2. Clone this repository or download its source ZIP, then open the directory containing `app.py`.
@@ -59,6 +59,9 @@ To check the source files and resource inventory without scanning or changing us
 ```powershell
 python tools/verify_source_tree.py
 ```
+
+
+Python code is organized under `cplus_cleaner/` by feature and shared responsibility. The root keeps only `app.py` as its Python launcher. See the [module purpose guide](docs/MODULES.md) and [image/rule resource guide](assets/README.md).
 
 ## Typical workflow
 

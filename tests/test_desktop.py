@@ -14,10 +14,10 @@ from tkinter import ttk
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import preferences
-from ui_widgets import Checkbutton, check_images
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.application import preferences
+from cplus_cleaner.ui.ui_widgets import Checkbutton, check_images
 
 
 class DesktopWorkflowTests(unittest.TestCase):
@@ -208,7 +208,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertEqual(self.window.nav_metrics["duplicates"]["value"], len(data), "One copy must remain")
         page.smart_select()
         self.assertEqual(self.window.nav_metrics["duplicates"]["value"], len(data))
-        import software_compression as compression
+        from cplus_cleaner.features.app_compression import software_compression as compression
         sample = compression.Software('sample','Sample app',str(folder),2*len(data)+5)
         with patch.object(compression,"scan",return_value=dict(items=[sample],errors=[],cancelled=False)) as scan, \
                 patch.object(compression,"compress") as compact:
@@ -222,7 +222,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertEqual(self.window.nav_metrics["compress"]["value"], 2 * len(data) + 5)
 
     def test_uninstall_badge_matches_visible_apps_and_refreshes_to_zero(self):
-        import software_uninstall as uninstall_backend
+        from cplus_cleaner.features.uninstall import software_uninstall as uninstall_backend
         self.window.navigate("uninstall")
         page = self.window.views["uninstall"]
         apps = [uninstall_backend.Software('visible','Visible app',1024,'20261023',str(self.base),'never-run')]
@@ -503,7 +503,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertTrue(self.window._settings_window.winfo_ismapped())
 
     def test_feedback_panel_empty_links_and_environment_copy(self):
-        import feedback
+        from cplus_cleaner.application import feedback
         self.window.geometry("980x650+20+20")
         self.window.navigate("feedback")
         page = self.window.views["feedback"]
@@ -512,7 +512,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         labels = [widget.cget("text") for widget in self.descendants(page) if isinstance(widget, tk.Label)]
         self.assertIn(f"CPlus Cleaner v{preferences.VERSION}", labels)
         self.assertFalse(any(isinstance(widget, tk.Text) for widget in self.descendants(page)))
-        with patch("desktop_panels.webbrowser.open_new_tab") as browser:
+        with patch('cplus_cleaner.ui.desktop_panels.webbrowser.open_new_tab') as browser:
             for key, button in page.link_buttons.items():
                 self.assertEqual(feedback.FEEDBACK_URLS[key], "")
                 self.assertFalse(button.enabled)
@@ -535,11 +535,11 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertIs(self.window.views["feedback"], page)
 
     def test_feedback_configured_link_uses_browser_and_reports_failure(self):
-        import feedback
+        from cplus_cleaner.application import feedback
         self.window.navigate("feedback")
         page = self.window.views["feedback"]
         with patch.dict(feedback.FEEDBACK_URLS, bug="https://github.com/example/example/issues/new"), \
-                patch("desktop_panels.webbrowser.open_new_tab", return_value=True) as browser:
+                patch('cplus_cleaner.ui.desktop_panels.webbrowser.open_new_tab', return_value=True) as browser:
             page.open_link("bug")
             browser.assert_called_once_with(feedback.FEEDBACK_URLS["bug"])
             self.assertIn("已在浏览器打开", page.message.get())
@@ -706,8 +706,8 @@ class DesktopWorkflowTests(unittest.TestCase):
             self.assertIn("权限不足", page.note.get())
 
     def test_privacy_uses_type_cards_without_system_operations(self):
-        import privacy
-        import privacy_ui
+        from cplus_cleaner.features.privacy import privacy
+        from cplus_cleaner.features.privacy import privacy_ui
         session = privacy.Session()
         session.scanned = True
         session.categories['chrome_history'].records = [dict(id='one'), dict(id='two')]
@@ -730,7 +730,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.system_read.assert_not_called()
 
     def test_privacy_clean_updates_count_and_records_summary_without_private_metadata(self):
-        import privacy
+        from cplus_cleaner.features.privacy import privacy
         session = privacy.Session()
         session.scanned = True
         session.categories['chrome_history'].records = [dict(id='sample', kind='browser', url='private history')]
@@ -754,7 +754,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertNotIn('private history', data)
 
     def test_privacy_group_toggle_shared_checks_without_diagnostics_entry(self):
-        import privacy
+        from cplus_cleaner.features.privacy import privacy
         self.window.navigate('privacy')
         page = self.window.views['privacy']
         self.assertIs(page.checks, check_images(self.window))
@@ -781,7 +781,7 @@ class DesktopWorkflowTests(unittest.TestCase):
             folder = self.base / account / "FileStorage/Image"
             folder.mkdir(parents=True)
             (folder / "private-photo.jpg").write_bytes(b"x" * size)
-        import chat_cleanup
+        from cplus_cleaner.features.chat import chat_cleanup
         self.window.navigate("chat")
         page = self.window.views["chat"]
         chat_cleanup.save_path('wechat', self.base)

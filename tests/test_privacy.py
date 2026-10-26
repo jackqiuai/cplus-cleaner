@@ -6,9 +6,9 @@ import threading
 import unittest
 from unittest.mock import patch
 
-import core
-import privacy
-import privacy_windows as windows
+from cplus_cleaner.common import core
+from cplus_cleaner.features.privacy import privacy
+from cplus_cleaner.features.privacy import privacy_windows as windows
 
 
 class Key:

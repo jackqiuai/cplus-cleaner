@@ -6,11 +6,11 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import desktop
-import large_files as files
-import large_files_ui as ui
-import preferences
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.features.large_files import large_files as files
+from cplus_cleaner.features.large_files import large_files_ui as ui
+from cplus_cleaner.application import preferences
 
 
 class LargePageTests(unittest.TestCase):

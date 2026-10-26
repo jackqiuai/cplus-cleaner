@@ -36,7 +36,7 @@ CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理�
 
 ## 从源码启动
 
-请保留包含 `app.py`、`start.bat`、`assets/`、`rules/`、`locales/` 的**完整源码目录**，资源位置和发布检查见[源码目录说明](docs/SOURCE_LAYOUT.md)。
+请保留包含 `app.py`、`start.bat`、`cplus_cleaner/`、`assets/`、`rules/`、`locales/` 的**完整源码目录**，资源位置和发布检查见[源码目录说明](docs/SOURCE_LAYOUT.md)。
 
 1. 安装 Python，保留 **Tcl/Tk and IDLE** 组件。
 2. 克隆本仓库或下载源码 ZIP，打开 `app.py` 所在目录。
@@ -53,6 +53,9 @@ python app.py
 ```powershell
 python tools/verify_source_tree.py
 ```
+
+
+Python 源码按功能整理到 `cplus_cleaner/`，根目录仅保留 `app.py`。每个文件的用途见 [Python 模块说明](docs/MODULES.md)，图片和规则用途见[资源说明](assets/README.md)。
 
 ## 基本使用
 

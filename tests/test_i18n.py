@@ -10,11 +10,11 @@ from unittest.mock import patch
 from contextlib import ExitStack
 from dataclasses import replace
 
-import core
-import i18n
-import localized_tk as tk
-import preferences
-from ui_widgets import MetricLabel
+from cplus_cleaner.common import core
+from cplus_cleaner.localization import i18n
+from cplus_cleaner.localization import localized_tk as tk
+from cplus_cleaner.application import preferences
+from cplus_cleaner.ui.ui_widgets import MetricLabel
 
 
 class LanguageTests(unittest.TestCase):
@@ -191,7 +191,7 @@ class PresentationTests(unittest.TestCase):
 
 class DesktopLanguageTests(unittest.TestCase):
     def test_settings_switch_existing_pages_and_preserve_selection_and_popup_names(self):
-        import desktop
+        from cplus_cleaner.ui import desktop
         from tests.popup_fixtures import groups
         with tempfile.TemporaryDirectory(dir=core.APP_DIR.parent) as directory, ExitStack() as stack:
             base = Path(directory)

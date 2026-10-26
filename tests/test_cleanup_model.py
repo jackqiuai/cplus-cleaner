@@ -5,8 +5,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-import core
-from cleanup_model import CleanupSession
+from cplus_cleaner.common import core
+from cplus_cleaner.features.drive_cleanup.cleanup_model import CleanupSession
 
 
 class CleanupModelTests(unittest.TestCase):
@@ -45,8 +45,8 @@ class CleanupModelTests(unittest.TestCase):
         self.assertFalse(self.session.group_totals["系统"]["selected"])
 
     def test_default_constructor_uses_manifest_and_enabled_rules(self):
-        with patch("cdrive.build_rules", return_value=self.rules), \
-                patch("cdrive.manifest", return_value={"items": self.manifest}):
+        with patch('cplus_cleaner.features.drive_cleanup.cdrive.build_rules', return_value=self.rules), \
+                patch('cplus_cleaner.features.drive_cleanup.cdrive.manifest', return_value={"items": self.manifest}):
             session = CleanupSession()
         self.assertEqual([category.name for category in session.categories], ["浏览器缓存", "临时文件", "缩略图"])
 
@@ -123,7 +123,7 @@ class CleanupModelTests(unittest.TestCase):
         failed = self.candidate("failed", b"12345", "系统 / 临时文件")
         self.session.consume([successful, failed])
         self.session.select_all()
-        with patch("cleanup_model.os.lstat", side_effect=FileNotFoundError()):
+        with patch('cplus_cleaner.features.drive_cleanup.cleanup_model.os.lstat', side_effect=FileNotFoundError()):
             removed = self.session.apply_delete_result(dict(deleted=1, errors=[{"path": failed.path, "error": "busy"}]))
         self.assertEqual(removed, 1)
         self.assertEqual(self.session.total_files, 1)
@@ -136,7 +136,7 @@ class CleanupModelTests(unittest.TestCase):
         second = self.candidate("changed", b"12345")
         self.session.consume([first, second])
         self.session.select_all()
-        with patch("cleanup_model.os.lstat", side_effect=[PermissionError("denied"), object()]):
+        with patch('cplus_cleaner.features.drive_cleanup.cleanup_model.os.lstat', side_effect=[PermissionError("denied"), object()]):
             self.assertEqual(self.session.refresh_after_delete(), 0)
         self.assertEqual(self.session.total_bytes, 8)
         self.assertEqual(self.session.selected_items(), [first, second])

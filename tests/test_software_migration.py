@@ -8,8 +8,8 @@ import unittest
 from unittest.mock import patch
 import json
 
-import core
-import software_migration as migration
+from cplus_cleaner.common import core
+from cplus_cleaner.features.app_mover import software_migration as migration
 
 
 class SoftwareMigrationTests(unittest.TestCase):

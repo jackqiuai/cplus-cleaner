@@ -1,7 +1,7 @@
 """Synthetic Huorong-shaped groups; no retired catalog data is retained here."""
 from pathlib import Path
 
-import popup
+from cplus_cleaner.features.popup import popup
 
 
 def definition(name, key, count=1, pattern=None):

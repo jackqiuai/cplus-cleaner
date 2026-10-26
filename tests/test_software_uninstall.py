@@ -8,10 +8,10 @@ import time
 import unittest
 from unittest.mock import patch
 
-import core
-import software_uninstall as software
-import uninstall_residue as residue
-import uninstall_windows
+from cplus_cleaner.common import core
+from cplus_cleaner.features.uninstall import software_uninstall as software
+from cplus_cleaner.features.uninstall import uninstall_residue as residue
+from cplus_cleaner.features.uninstall import uninstall_windows
 
 
 class Key:

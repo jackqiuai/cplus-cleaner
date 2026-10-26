@@ -11,11 +11,11 @@ from tkinter import ttk
 import unittest
 from unittest.mock import patch
 
-import chat_cleanup
-import core
-import desktop
-import home_results
-import preferences
+from cplus_cleaner.features.chat import chat_cleanup
+from cplus_cleaner.common import core
+from cplus_cleaner.ui import desktop
+from cplus_cleaner.features.home import home_results
+from cplus_cleaner.application import preferences
 from tests.test_chat_cleanup import fixtures
 
 

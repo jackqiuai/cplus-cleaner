@@ -6,10 +6,10 @@ import threading
 import unittest
 from unittest.mock import patch
 
-import core
-import popup
-import popup_huorong as h
-import popup_inventory as inventory
+from cplus_cleaner.common import core
+from cplus_cleaner.features.popup import popup
+from cplus_cleaner.features.popup import popup_huorong as h
+from cplus_cleaner.features.popup import popup_inventory as inventory
 from tests.test_software_uninstall import Registry
 
 
@@ -145,7 +145,7 @@ class PopupInventoryTests(unittest.TestCase):
 
     def test_hide_fallback_never_selects_termination_or_unsupported_conditions(self):
         from tests.test_popup_huorong import vendor_rule
-        from popup_models import Software
+        from cplus_cleaner.features.popup.popup_models import Software
         hide=vendor_rule(action='hide',identity='index-hide')
         kill=vendor_rule(action='kill',identity='index-kill')
         bad=replace(hide,id='index-bad',supported=False,matcher=None,reason='unknown field')

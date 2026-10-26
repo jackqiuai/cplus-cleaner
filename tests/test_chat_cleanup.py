@@ -7,9 +7,9 @@ import threading
 import unittest
 from unittest.mock import patch
 
-import core
-import chat_cleanup as chat
-import home_scan
+from cplus_cleaner.common import core
+from cplus_cleaner.features.chat import chat_cleanup as chat
+from cplus_cleaner.features.home import home_scan
 
 
 def fixtures(root):

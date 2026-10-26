@@ -6,10 +6,10 @@ import tempfile
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import home_results
-import popup
-import privacy
+from cplus_cleaner.common import core
+from cplus_cleaner.features.home import home_results
+from cplus_cleaner.features.popup import popup
+from cplus_cleaner.features.privacy import privacy
 from tests.test_popup_huorong import vendor_rule
 
 

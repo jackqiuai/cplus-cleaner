@@ -9,9 +9,9 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
-import core
-import software_compression as compression
-import software_uninstall as inventory
+from cplus_cleaner.common import core
+from cplus_cleaner.features.app_compression import software_compression as compression
+from cplus_cleaner.features.uninstall import software_uninstall as inventory
 from test_software_uninstall import Registry
 
 
