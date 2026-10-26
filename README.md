@@ -106,3 +106,5 @@ For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). R
 The local development build identifies itself as **1.1.0**. This does not indicate that a downloadable GitHub release is available. No installer or standalone executable is currently published here.
 
 A project license has not been selected yet. Third-party artwork, rule data and software names are not claimed as original project assets; their provenance and applicable rights must be retained when distributing them. The project is independent and is not affiliated with Microsoft, Tencent, Huorong or the other software vendors named above.
+
+<!-- Purpose: Project overview, features and source launch instructions -->
