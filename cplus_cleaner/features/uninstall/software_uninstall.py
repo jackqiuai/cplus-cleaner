@@ -348,3 +348,5 @@ def scan_residue(item, cancel=None, progress=None):
 def clean_residue(manifest, cancel=None, progress=None):
     from cplus_cleaner.features.uninstall.uninstall_residue import clean_residue as operation
     return operation(manifest, cancel, progress)
+
+# Purpose: Uninstall candidates, batch flow and results
