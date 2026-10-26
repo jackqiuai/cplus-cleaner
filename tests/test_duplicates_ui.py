@@ -145,3 +145,5 @@ class DuplicatesPageTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for duplicate scan, retention and deletion UI
