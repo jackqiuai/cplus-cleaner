@@ -337,3 +337,5 @@ def delete(snapshot, items, cancel=None, progress=None):
                                 summary=f"聊天清理：删除 {result['deleted']} 项，释放 {result['bytes']} 字节，跳过 {len(result['errors'])} 项",
                                 count=result['deleted'], bytes=result['bytes'])
     return result
+
+# Purpose: Chat data discovery, category scan and cleanup
