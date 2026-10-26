@@ -145,3 +145,5 @@ def launch(command, executable):
         for handle in (process.thread, process.process, job):
             if handle:
                 kernel.CloseHandle(handle)
+
+# Purpose: Windows uninstallers, processes and elevation
