@@ -177,3 +177,5 @@ class CDriveSystemTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for recycle bin, hibernation, pagefile and component-store interfaces
