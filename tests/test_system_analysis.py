@@ -15,6 +15,22 @@ from cplus_cleaner.features.uninstall import uninstall_windows
 
 
 class SystemAnalysisTests(unittest.TestCase):
+    def test_frozen_elevation_relaunches_the_exe_without_a_python_script(self):
+        from cplus_cleaner.common import runtime
+        exe = self.base/'portable/CPlusCleaner.exe'
+        error = OSError('UAC cancelled in fixture')
+        error.winerror = 1223
+        with patch.object(runtime.sys, 'frozen', True, create=True), \
+                patch.object(runtime.sys, 'executable', str(exe)), \
+                patch.object(uninstall_windows, '_kernel'), \
+                patch.object(uninstall_windows, '_elevated', side_effect=error) as launch:
+            result = analysis.run_elevated(None)
+        self.assertTrue(result['cancelled'])
+        self.assertEqual(launch.call_args.args[1], exe)
+        self.assertTrue(launch.call_args.args[2].startswith('--component-analysis-job '))
+        self.assertNotIn('app.py', launch.call_args.args[2])
+        self.assertEqual(launch.call_args.kwargs['show'], 0)
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory(dir=core.APP_DIR.parent)
         self.base = Path(self.directory.name)
