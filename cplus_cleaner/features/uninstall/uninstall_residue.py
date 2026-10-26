@@ -10,7 +10,7 @@ import stat
 import sys
 import threading
 
-from cplus_cleaner.common import core
+from cplus_cleaner.common import core, runtime
 from cplus_cleaner.features.uninstall import software_uninstall as installed
 
 _MANIFESTS = {}
@@ -55,7 +55,9 @@ def _completed(item):
 
 def _path_guard(path, other_roots):
     path = core.canonical(path)
-    protected = [core.canonical(core.APP_DIR), core.canonical(Path(sys.executable).parent)]
+    protected = list(map(core.canonical, runtime.protected_paths(core.APP_DIR)))
+    if not runtime.frozen():
+        protected.append(core.canonical(Path(sys.executable).parent))
     if any(core.inside(path, root) or core.inside(root, path) for root in protected):
         return '属于当前运行程序'
     if any(core.inside(path, root) or core.inside(root, path) for root in other_roots):
