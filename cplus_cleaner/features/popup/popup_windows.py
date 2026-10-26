@@ -272,3 +272,5 @@ def apply_vendor(item, action, validator, points=()):
         return backend().apply(api, expected, action)
     except (OSError, AttributeError, ValueError):
         return False
+
+# Purpose: Windows window enumeration, process identity and actions
