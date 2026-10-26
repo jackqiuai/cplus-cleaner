@@ -23,3 +23,7 @@ Forty unused images or vectors, including the old Home animation, replaced butto
 Source/provenance records (`asset-sources.json`, `home/*manifest.json`, `privacy/sources.json`, and `brand/` metadata) document retained artwork and its history. Historical archive/member paths are research references, not files required to run the program. `SOURCE-MANIFEST.json` at the project root covers the current published bytes. See [`brand/HERO-ARTWORK.md`](brand/HERO-ARTWORK.md) for the static illustration behavior.
 
 Retain third-party resource provenance; reorganizing directories does not change ownership or distribution terms. When adding images, update the purpose inventory, mappings and source integrity manifest. Keep preview screenshots and unused experimental artwork outside runtime resource directories.
+
+PNG files and the PNG images embedded in the tray ICO contain an English `Purpose` text field. This metadata does not change image pixels or dimensions. Historical source digests describe the pre-annotation files; the root source manifest records current file bytes.
+
+<!-- Purpose: Application icons, illustrations and cleanup rule resources -->
