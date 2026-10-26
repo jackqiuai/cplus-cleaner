@@ -1,0 +1,51 @@
+# Drive Cleanup category icons
+
+| Path | Purpose |
+| --- | --- |
+| [100.png](100.png) | Drive Cleanup category and system item icons |
+| [101.png](101.png) | Drive Cleanup category and system item icons |
+| [102.png](102.png) | Drive Cleanup category and system item icons |
+| [103.png](103.png) | Drive Cleanup category and system item icons |
+| [104.png](104.png) | Drive Cleanup category and system item icons |
+| [105.png](105.png) | Drive Cleanup category and system item icons |
+| [106.png](106.png) | Drive Cleanup category and system item icons |
+| [107.png](107.png) | Drive Cleanup category and system item icons |
+| [109.png](109.png) | Drive Cleanup category and system item icons |
+| [200.png](200.png) | Drive Cleanup category and system item icons |
+| [202.png](202.png) | Drive Cleanup category and system item icons |
+| [203.png](203.png) | Drive Cleanup category and system item icons |
+| [204.png](204.png) | Drive Cleanup category and system item icons |
+| [205.png](205.png) | Drive Cleanup category and system item icons |
+| [208.png](208.png) | Drive Cleanup category and system item icons |
+| [209.png](209.png) | Drive Cleanup category and system item icons |
+| [211.png](211.png) | Drive Cleanup category and system item icons |
+| [212.png](212.png) | Drive Cleanup category and system item icons |
+| [214.png](214.png) | Drive Cleanup category and system item icons |
+| [216.png](216.png) | Drive Cleanup category and system item icons |
+| [217.png](217.png) | Drive Cleanup category and system item icons |
+| [218.png](218.png) | Drive Cleanup category and system item icons |
+| [40000.png](40000.png) | Drive Cleanup category and system item icons |
+| [40002.png](40002.png) | Drive Cleanup category and system item icons |
+| [40003.png](40003.png) | Drive Cleanup category and system item icons |
+| [40004.png](40004.png) | Drive Cleanup category and system item icons |
+| [40005.png](40005.png) | Drive Cleanup category and system item icons |
+| [40006.png](40006.png) | Drive Cleanup category and system item icons |
+| [40007.png](40007.png) | Drive Cleanup category and system item icons |
+| [40008.png](40008.png) | Drive Cleanup category and system item icons |
+| [40009.png](40009.png) | Drive Cleanup category and system item icons |
+| [40010.png](40010.png) | Drive Cleanup category and system item icons |
+| [40011.png](40011.png) | Drive Cleanup category and system item icons |
+| [40012.png](40012.png) | Drive Cleanup category and system item icons |
+| [40013.png](40013.png) | Drive Cleanup category and system item icons |
+| [40014.png](40014.png) | Drive Cleanup category and system item icons |
+| [40015.png](40015.png) | Drive Cleanup category and system item icons |
+| [40016.png](40016.png) | Drive Cleanup category and system item icons |
+| [40017.png](40017.png) | Drive Cleanup category and system item icons |
+| [40018.png](40018.png) | Drive Cleanup category and system item icons |
+| [40019.png](40019.png) | Drive Cleanup category and system item icons |
+| [40020.png](40020.png) | Drive Cleanup category and system item icons |
+| [40021.png](40021.png) | Drive Cleanup category and system item icons |
+| [40022.png](40022.png) | Drive Cleanup category and system item icons |
+| [40023.png](40023.png) | Drive Cleanup category and system item icons |
+| [40024.png](40024.png) | Drive Cleanup category and system item icons |
+| [40029.png](40029.png) | Drive Cleanup category and system item icons |
