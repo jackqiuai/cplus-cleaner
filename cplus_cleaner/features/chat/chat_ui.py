@@ -339,3 +339,5 @@ class ChatPage(tk.Frame):
         if self._wheel_binding:
             self._root()._unbind(('bind', 'all', '<MouseWheel>'), self._wheel_binding)
         super().destroy()
+
+# Purpose: Chat Cleanup page
