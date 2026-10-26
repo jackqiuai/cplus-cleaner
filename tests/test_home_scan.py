@@ -191,3 +191,5 @@ class HomeScanTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for home scan sequence and progress
