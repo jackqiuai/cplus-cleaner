@@ -13,6 +13,7 @@ import sys
 import tempfile
 
 from cplus_cleaner.common import core
+from cplus_cleaner.common.runtime import launch_command
 
 VERSION = "1.1.0"
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
@@ -60,11 +61,7 @@ def save(values):
 
 
 def startup_command():
-    executable = Path(sys.executable)
-    windowed = executable.with_name("pythonw.exe")
-    if windowed.exists():
-        executable = windowed
-    return subprocess.list2cmdline([str(executable), str(core.APP_DIR / "app.py"), "--background"])
+    return subprocess.list2cmdline(launch_command('--background'))
 
 
 def read_autostart():
