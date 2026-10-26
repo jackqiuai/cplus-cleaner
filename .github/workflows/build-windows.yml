@@ -19,6 +19,58 @@ concurrency:
   cancel-in-progress: ${{ github.event_name != 'release' }}
 
 jobs:
+  diagnostics:
+    name: Previous regression failure details
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    steps:
+      - name: Summarize previous failed tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import io,json,os,re,urllib.request,urllib.error,zipfile
+          base='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'User-Agent':'CPlus-Cleaner-CI-Diagnostics'}
+          def get(url):
+              with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=30) as response:
+                  return json.load(response)
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*args):
+                  return None
+          try:
+              jobs=get(base+'/actions/runs/40373910774/jobs')['jobs']
+              job=next(j for j in jobs if j['conclusion']=='failure')
+              request=urllib.request.Request(base+'/actions/jobs/'+str(job['id'])+'/logs',headers=headers)
+              try:
+                  with urllib.request.build_opener(NoRedirect).open(request,timeout=30) as response:
+                      data=response.read()
+              except urllib.error.HTTPError as redirect:
+                  if redirect.code not in (301,302,303,307,308):
+                      raise
+                  with urllib.request.urlopen(redirect.headers['Location'],timeout=30) as response:
+                      data=response.read()
+              if data.startswith(b'PK'):
+                  with zipfile.ZipFile(io.BytesIO(data)) as archive:
+                      data=b'\n'.join(archive.read(name) for name in archive.namelist() if not name.endswith('/'))
+              log=data.decode('utf-8',errors='replace')
+              # Downloaded logs prefix every line with a UTC timestamp.
+              log=re.sub(r'(?m)^\d{4}-\d\d-\d\dT[\d:.]+Z ', '',log)
+              blocks=re.findall(r'(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\Z)',log)
+              for block in blocks:
+                  message=block[-3000:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+                  print('::notice title=Previous regression failure::'+message,flush=True)
+              if not blocks:
+                  message=log[-2500:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+                  print('::notice title=Previous regression log tail::'+message,flush=True)
+              print('::notice title=Previous diagnostics status::Failure blocks: '+str(len(blocks)),flush=True)
+          except (OSError,StopIteration) as error:
+              print('::notice title=Previous diagnostics unavailable::'+type(error).__name__+' '+str(getattr(error,'code','')),flush=True)
+          PY
+
   build:
     name: Test and build Windows x64
     runs-on: windows-2022
@@ -42,43 +94,6 @@ jobs:
           cache-dependency-path: requirements-build.txt
       - name: Verify source and resources
         run: python tools/verify_source_tree.py
-      - name: Summarize previous failed regression run
-        if: github.event_name == 'push'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          @'
-          import json,os,re,urllib.request,urllib.error
-          base='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']
-          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'User-Agent':'CPlus-Cleaner-CI-Diagnostics'}
-          def get(url):
-              with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=30) as response:
-                  return json.load(response)
-          class NoRedirect(urllib.request.HTTPRedirectHandler):
-              def redirect_request(self,*args):
-                  return None
-          try:
-              jobs=get(base+'/actions/runs/40373910774/jobs')['jobs']
-              job=next(j for j in jobs if j['conclusion']=='failure')
-              request=urllib.request.Request(base+'/actions/jobs/'+str(job['id'])+'/logs',headers=headers)
-              try:
-                  with urllib.request.build_opener(NoRedirect).open(request,timeout=30) as response:
-                      log=response.read().decode('utf-8',errors='replace')
-              except urllib.error.HTTPError as redirect:
-                  if redirect.code not in (301,302,303,307,308):
-                      raise
-                  with urllib.request.urlopen(redirect.headers['Location'],timeout=30) as response:
-                      log=response.read().decode('utf-8',errors='replace')
-              # Downloaded logs prefix every line with a UTC timestamp.
-              log=re.sub(r'(?m)^\d{4}-\d\d-\d\dT[\d:.]+Z ', '',log)
-              blocks=re.findall(r'(?ms)^={10,}\r?\n(?:FAIL|ERROR):.*?(?=^={10,}|\Z)',log)
-              for block in blocks:
-                  message=block[-3000:].replace('%','%25').replace('\r','%0D').replace('\n','%0A')
-                  print('::notice title=Previous regression failure::'+message,flush=True)
-              print('Previous failure blocks:',len(blocks),flush=True)
-          except (OSError,StopIteration) as error:
-              print('Previous-run diagnostics unavailable:',type(error).__name__,flush=True)
-          '@ | python -
       - name: Run Windows regression tests
         run: |
           $PSNativeCommandUseErrorActionPreference = $false
