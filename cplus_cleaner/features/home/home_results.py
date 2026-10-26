@@ -220,3 +220,5 @@ def refresh_cleanup(app):
             payload['items'] = remaining
             feature['value'] = _unique_bytes(remaining)
             app.set_nav_metric(key, feature['value'])
+
+# Purpose: Home scan result handoff
