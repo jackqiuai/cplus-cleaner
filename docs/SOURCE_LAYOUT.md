@@ -1,6 +1,6 @@
 # Source layout
 
-The repository contains the complete runtime source tree and its checked-in resources. It currently runs from Python; an EXE build workflow has not been configured yet.
+The repository contains the complete runtime source tree and its checked-in resources. It supports source execution and automated Windows x64 EXE builds.
 
 | Path | Purpose |
 | --- | --- |
@@ -19,6 +19,8 @@ The repository contains the complete runtime source tree and its checked-in reso
 | `tools/prepare_source_release.py` | Export helper with explicit inclusion rules. |
 | `SOURCE-MANIFEST.json` | Exported file inventory with normalized-text/binary SHA-256 digests. |
 | `LICENSE` | MIT license for original project code and documentation. |
+| `CPlusCleaner.spec`, `requirements-build.txt` | Windows single-file bundle and pinned build dependencies. |
+| `.github/workflows/build-windows.yml` | Windows tests, EXE builds, artifacts and release attachments. |
 
 See [the complete module guide](MODULES.md) for each Python file and [the resource guide](../assets/README.md) for image and rule purposes.
 
@@ -53,8 +55,8 @@ Unused artwork is archived locally under ignored `dev/archive/assets/`; it is ab
 
 Do not include local operation logs, personal settings, browser data, credentials, raw research directories, test previews, generated EXEs or temporary recovery copies in a source commit. The export allowlist and `.gitignore` exclude those categories.
 
-## Future EXE packaging
+## EXE packaging
 
-A future build must include the `cplus_cleaner/` package, `assets/`, `rules/`, `locales/` and the component-analysis helper, and adapt helper launching and autostart for a frozen executable. The current source export does not claim that an EXE is already available.
+[Build instructions](BUILDING.md) describe the Windows workflow, portable artifacts, resource bundling and safe executable checks. The build includes all runtime resources; frozen startup and component analysis call the EXE directly. Settings remain outside the temporary resource directory.
 
 <!-- Purpose: Source layout, resource paths and publication checks -->
