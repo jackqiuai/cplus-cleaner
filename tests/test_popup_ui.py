@@ -471,3 +471,5 @@ class PopupPageTests(unittest.TestCase):
         self.assertIsNot(image, self.window.images.navigation('popup'))
         self.assertEqual((image.width(),image.height()),(32,32))
         self.assertEqual(self.page.rows[item.key].icon.cget('image'),str(image))
+
+# Purpose: Regression tests for popup groups, expansion, switches and history
