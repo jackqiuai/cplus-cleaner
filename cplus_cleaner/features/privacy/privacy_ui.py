@@ -247,3 +247,5 @@ class PrivacyPage(tk.Frame):
             lines.append('清理保留：' + error.get('error', '未知错误'))
         text.insert('1.0', '\n'.join(lines))
         text.configure(state='disabled')
+
+# Purpose: Privacy Cleanup page
