@@ -205,3 +205,5 @@ def single_window(owner, attribute, title):
                 setattr(owner, attribute, None)
     window.bind("<Destroy>", release, add="+")
     return window, True
+
+# Purpose: Shared buttons, selection, scrolling and icons
