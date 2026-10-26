@@ -8,6 +8,7 @@ import tempfile
 import time
 
 from cplus_cleaner.common import core
+from cplus_cleaner.common.runtime import launch_command
 
 
 def emit_output(data, progress, last):
@@ -60,15 +61,11 @@ def run_elevated(progress):
     core.DATA_DIR.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='component-analysis-', dir=core.DATA_DIR) as directory:
         job = Path(directory).resolve()
-        executable = Path(sys.executable)
-        windowed = executable.with_name('pythonw.exe')
-        if windowed.is_file():
-            executable = windowed
-        helper = core.APP_DIR / 'app.py'
+        executable, *arguments = launch_command('--component-analysis-job', job)
         if progress:
             progress('等待 Windows 管理员授权…')
         try:
-            process = _elevated(_kernel(), executable, subprocess.list2cmdline([str(helper), '--component-analysis-job', str(job)]), show=0)
+            process = _elevated(_kernel(), Path(executable), subprocess.list2cmdline(arguments), show=0)
         except OSError as error:
             if getattr(error, 'winerror', None) == 1223:
                 return dict(ok=False, cancelled=True, message='已取消管理员授权，组件分析未执行。', output='')
