@@ -992,3 +992,5 @@ class DesktopWorkflowTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for main window, navigation, feature composition and settings dialog
