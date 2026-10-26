@@ -191,3 +191,5 @@ class ChatCleanupTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+# Purpose: Regression tests for chat data discovery, category scan and cleanup
