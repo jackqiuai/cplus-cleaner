@@ -6,6 +6,7 @@ The repository landing page uses the root English README and its screenshot. The
 
 | Path | Purpose |
 | --- | --- |
+| [BUILDING.md](BUILDING.md) | Automated and local Windows executable build instructions |
 | [MODULES.md](MODULES.md) | Python module and entry-point purpose guide |
 | [SOURCE_LAYOUT.md](SOURCE_LAYOUT.md) | Source layout, resource paths and publication checks |
 | [images](images) | Application screenshots for project documentation |
