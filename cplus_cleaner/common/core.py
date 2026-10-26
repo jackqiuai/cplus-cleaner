@@ -575,3 +575,5 @@ def restore_folder(record: dict):
         create_junction(source, target)
         raise
     return {"restored": str(source), "retained_target_copy": str(target)}
+
+# Purpose: Shared scanning, file checks, deletion, duplicate detection and history
