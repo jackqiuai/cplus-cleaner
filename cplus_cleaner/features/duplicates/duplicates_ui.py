@@ -212,3 +212,5 @@ class DuplicatesPage(tk.Frame):
         selected = self.tree.selection()
         if selected and os.name == "nt":
             os.startfile(str(Path(self.records[selected[0]].path).parent))
+
+# Purpose: Duplicate scan, retention and deletion UI
