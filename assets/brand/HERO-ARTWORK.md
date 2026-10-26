@@ -12,3 +12,5 @@
 显示不透明度为60%：缩小后仅在显示层将原Alpha乘以3/5（取最近整数），最大Alpha为153/255，RGB保持不变。使用标准库PNG处理并缓存显示结果，原始高清文件的像素和摘要不变；没有新增运行依赖。
 
 980×650与1160×760页面预览位于`../../previews/static-hero-{cdrive,large}-{980,1160}.png`，容量数字使用隔离测试样本，未扫描或处理真实磁盘文件。
+
+<!-- Purpose: Static illustration behavior and rendering notes -->
