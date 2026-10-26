@@ -28,3 +28,5 @@ def groups(root):
                       tuple(popup.huorong.bind_rule(rule, (folder,)) for rule in item.rules),
                       source='huorong', definition=item.definition))
     return result
+
+# Purpose: Isolated software inventory fixtures for popup tests
