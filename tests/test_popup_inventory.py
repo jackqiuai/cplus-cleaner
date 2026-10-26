@@ -162,3 +162,5 @@ class PopupInventoryTests(unittest.TestCase):
 
 if __name__=='__main__':
     unittest.main()
+
+# Purpose: Regression tests for popup software inventory and path matching
