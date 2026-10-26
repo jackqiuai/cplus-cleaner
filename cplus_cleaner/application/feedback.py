@@ -4,8 +4,12 @@ import platform
 from cplus_cleaner.application import preferences
 
 
-# Fill these with the repository's Issue Form / Issues URLs after publication.
-FEEDBACK_URLS = {"bug": "", "feature": "", "issues": ""}
+ISSUES_URL = "https://github.com/jackqiuai/cplus-cleaner/issues"
+FEEDBACK_URLS = {
+    "bug": f"{ISSUES_URL}/new?template=bug_report.yml",
+    "feature": f"{ISSUES_URL}/new?template=feature_request.yml",
+    "issues": ISSUES_URL,
+}
 
 
 def environment_info():
