@@ -12,7 +12,7 @@ from verify_source_tree import verify
 
 ROOT_FILES = (
     '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md',
-    'GITHUB-ABOUT.md', 'CONTRIBUTING.md',
+    'GITHUB-ABOUT.md', 'CONTRIBUTING.md', 'LICENSE',
 )
 DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github')
 TOOLS = ('prepare_source_release.py', 'verify_source_tree.py', 'README.md')
@@ -106,7 +106,7 @@ def write_manifest(root, paths):
     entries = []
     for relative in paths:
         path = root / relative
-        is_text = path.suffix.lower() in TEXT_SUFFIXES or path.name in {'.gitignore', '.gitattributes'}
+        is_text = path.suffix.lower() in TEXT_SUFFIXES or path.name in {'.gitignore', '.gitattributes', 'LICENSE'}
         data = path.read_bytes()
         if is_text:
             data = data.replace(b'\r\n', b'\n')
