@@ -92,3 +92,5 @@ class HomeResultTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for home scan result handoff
