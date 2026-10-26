@@ -252,3 +252,5 @@ def save_feedback(text):
     target = directory / (datetime.now().strftime("feedback-%Y%m%d-%H%M%S-%f") + ".txt")
     target.write_text(f"CPlus Cleaner v{VERSION}\n时间：{datetime.now():%Y-%m-%d %H:%M:%S}\n\n{text}\n", encoding="utf-8")
     return target
+
+# Purpose: Settings, autostart and scheduling
