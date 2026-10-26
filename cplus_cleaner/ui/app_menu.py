@@ -151,3 +151,5 @@ class HeaderMenu:
             window.destroy()
             if restore_focus and self.anchor.winfo_exists():
                 self.anchor.focus_set()
+
+# Purpose: Application dropdown menu
