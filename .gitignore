@@ -32,6 +32,7 @@ tests/fixtures/private/
 tools/*.py
 !tools/prepare_source_release.py
 !tools/verify_source_tree.py
+!tools/build_windows.py
 assets/**/*-original.png
 assets/**/*-preview.png
 
