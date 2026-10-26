@@ -53,3 +53,5 @@ Do not include local operation logs, personal settings, browser data, credential
 ## Future EXE packaging
 
 A future build must include the `cplus_cleaner/` package, `assets/`, `rules/`, `locales/` and the component-analysis helper, and adapt helper launching and autostart for a frozen executable. The current source export does not claim that an EXE is already available.
+
+<!-- Purpose: Source layout, resource paths and publication checks -->
