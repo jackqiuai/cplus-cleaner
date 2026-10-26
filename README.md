@@ -2,7 +2,7 @@
 
 **Free up disk space and manage installed applications.**
 
-**English** · [简体中文](README.zh-CN.md) · [Report an issue](https://github.com/jackqiuai/cplus-cleaner/issues) · [Contributing](CONTRIBUTING.md)
+**English** · [简体中文](README.zh-CN.md) · [Report an issue](https://github.com/jackqiuai/cplus-cleaner/issues) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)
 
 CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Chinese/English interface.
 
@@ -101,10 +101,14 @@ Use [GitHub Issues](https://github.com/jackqiuai/cplus-cleaner/issues) for repro
 
 For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). Run the included Windows regression suite with `python -m unittest discover -s tests -v`.
 
-## Project status and licensing
+## Project status
 
 The local development build identifies itself as **1.1.0**. This does not indicate that a downloadable GitHub release is available. No installer or standalone executable is currently published here.
 
-A project license has not been selected yet. Third-party artwork, rule data and software names are not claimed as original project assets; their provenance and applicable rights must be retained when distributing them. The project is independent and is not affiliated with Microsoft, Tencent, Huorong or the other software vendors named above.
+## License
+
+The original project code and documentation are licensed under the [MIT License](LICENSE). You may use, modify and distribute them free of charge, including for commercial purposes, provided that the copyright and permission notices are retained. The software is provided "AS IS", without warranty; see the license for the complete terms.
+
+Third-party artwork, rule data and software names retain their applicable rights and are not automatically licensed under MIT by this project. Preserve their provenance and follow their original distribution terms; see the [resource guide](assets/README.md) and accompanying source records. The project is independent and is not affiliated with Microsoft, Tencent, Huorong or the other software vendors named above.
 
 <!-- Purpose: Project overview, features and source launch instructions -->
