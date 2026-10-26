@@ -16,7 +16,7 @@ import shutil
 import time
 import uuid
 
-from cplus_cleaner.common import core
+from cplus_cleaner.common import core, runtime
 from cplus_cleaner.platforms import software_windows as windows
 
 
@@ -90,11 +90,11 @@ def eligible_path(path, allow_junction=False):
         raise ValueError("仅扫描 Windows 系统盘上的软件")
     # Never admit a whole shared root, OS-managed package store, other profile,
     # our own checkout, or a parent containing it.
-    roots = [system_drive(), core.canonical(Path.home()), core.canonical(core.APP_DIR)]
+    roots = [system_drive(), core.canonical(Path.home()), *map(core.canonical, runtime.protected_paths(core.APP_DIR))]
     for variable in ("SystemRoot", "ProgramData", "ProgramFiles", "ProgramFiles(x86)", "LOCALAPPDATA", "APPDATA"):
         if os.environ.get(variable):
             roots.append(core.canonical(Path(os.environ[variable])))
-    forbidden = [core.canonical(core.APP_DIR)]
+    forbidden = list(map(core.canonical, runtime.protected_paths(core.APP_DIR)))
     for variable in ("SystemRoot", "ProgramData"):
         if os.environ.get(variable):
             forbidden.append(core.canonical(Path(os.environ[variable])))
