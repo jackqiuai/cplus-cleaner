@@ -465,3 +465,5 @@ def restore(record, cancel=None):
     except OSError as exc:
         result["error"] = f"还原已完成，但记录写入失败：{exc}"
     return result
+
+# Purpose: App eligibility, verified copying, junctions and restore
