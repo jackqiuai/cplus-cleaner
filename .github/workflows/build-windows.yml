@@ -42,7 +42,19 @@ jobs:
       - name: Verify source and resources
         run: python tools/verify_source_tree.py
       - name: Run Windows regression tests
-        run: python -m unittest discover -s tests -v
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $false
+          New-Item -ItemType Directory -Path build -Force | Out-Null
+          python -m unittest discover -s tests -v > build/test-output.log 2>&1
+          $testExit = $LASTEXITCODE
+          Get-Content build/test-output.log
+          if ($testExit -ne 0) {
+            $failure = (Get-Content build/test-output.log -Tail 220) -join "`n"
+            if ($failure.Length -gt 50000) { $failure = $failure.Substring($failure.Length - 50000) }
+            $escaped = $failure.Replace('%', '%25').Replace("`r", '%0D').Replace("`n", '%0A')
+            Write-Output "::error title=Windows regression tests failed::$escaped"
+            exit $testExit
+          }
       - name: Install build dependencies
         run: python -m pip install -r requirements-build.txt
       - name: Build and smoke-test standalone EXE
@@ -63,6 +75,7 @@ jobs:
         with:
           name: Windows-build-diagnostics
           path: |
+            build/test-output.log
             build/smoke-test.json
             build/CPlusCleaner/warn-CPlusCleaner.txt
           if-no-files-found: ignore
