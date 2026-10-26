@@ -243,7 +243,7 @@ class FeedbackPanel(Panel):
                  font=(FONT, 9), justify="left", anchor="w").pack(side="left", fill="x", expand=True)
         label(self.body, "反馈将公开显示，请勿提交个人隐私信息。提交需登录 GitHub。", 9, MUTED,
               wraplength=650, justify="left").pack(anchor="w")
-        self.message = tk.StringVar(value="GitHub 链接待配置，暂时无法在线提交。")
+        self.message = tk.StringVar()
         tk.Label(self.body, textvariable=self.message, bg=WHITE, fg="#229f78", font=(FONT, 9),
                  wraplength=650, justify="left", anchor="w").pack(fill="x", pady=(8, 0))
 
