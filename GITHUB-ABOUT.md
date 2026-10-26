@@ -41,3 +41,5 @@ CPlus Cleaner is a Windows desktop utility for disk cleanup and application migr
 ## 发布状态
 
 完整 Python 源码、图片、规则和语言资源已经整理，可从源码运行。独立 EXE、安装包和自动 EXE 构建流程尚未提供；许可证待选定。不要提前声明已经提供便携版、安装版、完整系统兼容验证或某个开源许可证。
+
+<!-- Purpose: Repository description and topic suggestions -->
