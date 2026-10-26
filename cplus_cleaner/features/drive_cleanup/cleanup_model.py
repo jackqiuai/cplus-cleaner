@@ -177,3 +177,5 @@ class CleanupSession:
 
     def apply_delete_result(self, result: dict) -> int:
         return self.refresh_after_delete(result)
+
+# Purpose: Cleanup categories, selection and totals
