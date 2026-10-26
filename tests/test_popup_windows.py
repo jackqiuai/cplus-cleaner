@@ -267,3 +267,5 @@ class WindowAdapterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# Purpose: Regression tests for windows window enumeration, process identity and actions
