@@ -10,3 +10,6 @@ The repository landing page uses the root English README and its screenshot. The
 | [MODULES.md](MODULES.md) | Python module and entry-point purpose guide |
 | [SOURCE_LAYOUT.md](SOURCE_LAYOUT.md) | Source layout, resource paths and publication checks |
 | [images](images) | Application screenshots for project documentation |
+| [images/home-zh.png](images/home-zh.png) | Chinese Home dashboard after scanning |
+| [images/drive-cleanup-zh.png](images/drive-cleanup-zh.png) | Chinese Drive Cleanup category results |
+| [images/app-mover-zh.png](images/app-mover-zh.png) | Chinese App Mover results and destination folder |
