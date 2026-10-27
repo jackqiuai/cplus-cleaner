@@ -8,6 +8,22 @@ CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理�
 
 **项目状态：** 已包含完整 Python 源码、图片、清理规则及语言资源，并配置 [GitHub Actions 自动构建 Windows x64 EXE](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)。构建成功后可下载产物，发布 GitHub Release 时会自动附加 EXE、便携 ZIP 和校验文件，详见[构建说明](docs/BUILDING.md)。
 
+## 软件截图
+
+以下为中文版实际界面截图，容量与扫描结果随电脑环境变化。
+
+### 首页扫描结果
+
+![CPlus Cleaner 中文版首页扫描结果](docs/images/home-zh.png)
+
+### C盘清理
+
+![CPlus Cleaner 中文版 C盘清理扫描结果及分类](docs/images/drive-cleanup-zh.png)
+
+### 软件搬家
+
+![CPlus Cleaner 中文版软件搬家列表与目标目录](docs/images/app-mover-zh.png)
+
 ## 功能一览
 
 | 功能 | 说明 |
