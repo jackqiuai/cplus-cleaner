@@ -40,8 +40,8 @@
     },
     {
       "path": ".github/workflows/build-windows.yml",
-      "bytes": 7021,
-      "sha256": "6892a2aa4257c204df0eec3c00ca02d6b126facec12b255d80c17424f79c0133",
+      "bytes": 4349,
+      "sha256": "df8b12f62fd35a3940eb0f25ccfa3a741df029381bc0910d6f4f3394893bca37",
       "text": true
     },
     {
@@ -1312,8 +1312,8 @@
     },
     {
       "path": "docs/BUILDING.md",
-      "bytes": 3520,
-      "sha256": "090fa5fb9d85394f429f963b64bb20a2fa0a16623b58d71c8555be5bfe11f7b1",
+      "bytes": 3834,
+      "sha256": "45765129e17b89f2b54d70be692d8491b0e51076016cd0795712d39b0e2f4583",
       "text": true
     },
     {
@@ -1558,8 +1558,8 @@
     },
     {
       "path": "tests/test_software_compression.py",
-      "bytes": 11353,
-      "sha256": "4f76db03783ca372c5e26858e161cd17b78e5dbbb0a7d6c93ad14687cbfccb60",
+      "bytes": 11679,
+      "sha256": "a4a3f18d794e7e86340a357196deaa613d781e360c9b6ee40d03247397b5464c",
       "text": true
     },
     {
