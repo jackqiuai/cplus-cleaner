@@ -4,8 +4,8 @@
   "files": [
     {
       "path": ".gitattributes",
-      "bytes": 317,
-      "sha256": "89d578499113b03ef8a93d7ca608ee3380e5d425bbfdce8ba3ca6b5f110af7fd",
+      "bytes": 330,
+      "sha256": "c7fa5ac908ce8211a841de5df63cdec341e5de4ab4ca842ec281d15c7bf949c1",
       "text": true
     },
     {
@@ -76,14 +76,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 9219,
-      "sha256": "762ec7dd9bd23af7e5381d05d6d666a9d72ad1084d3f973b20dc941fe208441d",
+      "bytes": 9830,
+      "sha256": "a6c8ca095bdfde6df51aecfee38ea02287e5212888d9400deaa449522297ecfc",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 8625,
-      "sha256": "df751e5079519e0cfcd39cb7d071a8ea5ac1622f83ca16fe41a3245576b077dd",
+      "bytes": 9210,
+      "sha256": "dece988673a3f0c3f94ee5cd17d3e11e10f2080a80068d44fe59bb15a7bd5674",
       "text": true
     },
     {
@@ -1362,6 +1362,30 @@
       "path": "docs/images/home-zh.png",
       "bytes": 88695,
       "sha256": "94ea54fed9f55038ae69a838df1ae54e31a6e932128cad78d2dae69da0168c7b",
+      "text": false
+    },
+    {
+      "path": "docs/images/video-cover-en.png",
+      "bytes": 1130082,
+      "sha256": "a9ebaabc8e7ecaf81b4f0f090b9aa3a7bbf47a7632e52a4f6830c9eded30a7c0",
+      "text": false
+    },
+    {
+      "path": "docs/images/video-cover-zh.png",
+      "bytes": 1098124,
+      "sha256": "6aabbd1bc5d03d409f37f51780cc9f8f16c0afe8814b059243b0b95924a8ea48",
+      "text": false
+    },
+    {
+      "path": "docs/videos/CPlus-Cleaner-intro-en.mp4",
+      "bytes": 22297743,
+      "sha256": "7e67ecaf23fb6109bfeb4c12b7be0ba3d63404804e5459114e24cceba2cf54d0",
+      "text": false
+    },
+    {
+      "path": "docs/videos/CPlus-Cleaner-intro-zh.mp4",
+      "bytes": 20650011,
+      "sha256": "4939b20561a35ed8b2b482e6a341c8ff8f971aa0733d3ce081ecc26e16ef7dcc",
       "text": false
     },
     {

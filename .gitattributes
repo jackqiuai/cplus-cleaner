@@ -11,6 +11,7 @@
 *.svg text eol=lf
 *.bat text eol=crlf
 *.png binary
+*.mp4 binary
 *.ico binary
 
 # Purpose: Repository line endings and binary asset attributes

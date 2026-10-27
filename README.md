@@ -8,6 +8,14 @@ CPlus Cleaner is a Windows desktop utility for disk cleanup, application migrati
 
 **Project status:** Complete Python source, images, rules and language resources are included. Windows x64 EXE builds are configured in [GitHub Actions](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml). Successful runs provide executable artifacts; published GitHub Releases receive the EXE, portable ZIP and checksums. See [Build instructions](docs/BUILDING.md).
 
+## Introduction video
+
+[![Watch the CPlus Cleaner introduction in English](docs/images/video-cover-en.png)](https://github.com/jackqiuai/cplus-cleaner/raw/refs/heads/main/docs/videos/CPlus-Cleaner-intro-en.mp4)
+
+**[Watch or download the English video (MP4)](https://github.com/jackqiuai/cplus-cleaner/raw/refs/heads/main/docs/videos/CPlus-Cleaner-intro-en.mp4)**
+
+*80 seconds · 1080p · English interface screenshots, English synthesized narration and subtitles. Covers scanning, Drive Cleanup, App Mover, Large File Mover, App Compression and more. Personal paths are hidden; scan results vary by computer.*
+
 ## Screenshot
 
 ![CPlus Cleaner Home screen in English after a scan](docs/images/home-en.png)
