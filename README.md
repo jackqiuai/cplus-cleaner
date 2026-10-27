@@ -46,6 +46,13 @@ Additional settings include daily scheduled cleanup, startup with Windows, close
 
 Download `CPlusCleaner.exe` or `CPlusCleaner-windows-x64.zip` from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases). Both are **portable Windows x64 editions that require no installation**: run the EXE directly, or extract the ZIP and run `CPlusCleaner.exe`. Python is included. For the latest commit build, open a successful [Actions run](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml) and download `CPlusCleaner-windows-x64`.
 
+| Release file | Choose it when | How to use it |
+| --- | --- | --- |
+| `CPlusCleaner.exe` | You want to use the application directly. | Download and run it; no installation or separate Python runtime is required. |
+| `CPlusCleaner-windows-x64.zip` | You prefer the portable bundle with its license and usage notes. | Extract it into a folder, then run the included `CPlusCleaner.exe`. |
+| `Source code (zip)` / `Source code (tar.gz)` | You want to inspect, modify or run the Python source. | These are source archives; follow [Run from source](#run-from-source). |
+| `SHA256SUMS.txt` | You want to verify the downloaded EXE or portable ZIP. | Compare the file's SHA-256 digest with the corresponding entry. |
+
 ## Requirements
 
 - Windows desktop environment; intended for Windows 10 and Windows 11.
@@ -86,6 +93,43 @@ Python code is organized under `cplus_cleaner/` by feature and shared responsibi
 
 Drive and chat cleanup summarize categories rather than listing every file. Large File Mover and Duplicate Cleanup expose individual file selections.
 
+## Frequently asked questions
+
+<details>
+<summary>Why does clicking × leave the application running?</summary>
+
+When **Settings → Minimize to the system tray when closing** is enabled, × hides the main window while the application continues running. To fully quit, choose **Exit** from the top-right menu or the tray icon's right-click menu. Wait for active operations to finish first.
+
+</details>
+
+<details>
+<summary>Why are some applications missing or unavailable in App Mover or App Compression?</summary>
+
+App Mover considers eligible installations on the Windows system drive and excludes applications containing system services. System directories, shared components and unsupported linked or unreadable paths are also excluded. App Compression excludes protected installations and requires NTFS. Running applications or insufficient permissions can make an operation unavailable; review the status shown for the entry.
+
+</details>
+
+<details>
+<summary>Why is the original application folder still visible after moving it?</summary>
+
+App Mover creates a Windows directory junction at the original path, pointing to the destination folder. This keeps the original path accessible. Use **App Mover → Move history** to restore a supported move; retain the destination files while the application uses them.
+
+</details>
+
+<details>
+<summary>Why does the space actually freed differ from the scan total?</summary>
+
+Cleanup and large-file totals mainly describe logical file sizes. Actual disk space depends on allocation and which files can be processed. Changed, locked or inaccessible files may be skipped. App migration and compression candidates are reported separately from ordinary cleanup totals.
+
+</details>
+
+<details>
+<summary>Does scheduled cleanup run after I exit the application?</summary>
+
+The application must remain open or in the system tray. At the scheduled time, it runs a fresh all-time Drive Cleanup scan and deletes the default ordinary categories; it does not run every feature. A busy application defers the task, and fully exiting the process stops scheduling.
+
+</details>
+
 ## Behavior to understand before cleaning
 
 - **Delete permanently removes selected files; it does not send them to the Recycle Bin.** Scan and review selections before deleting.
@@ -96,6 +140,15 @@ Drive and chat cleanup summarize categories rather than listing every file. Larg
 - File operations recheck supported paths and file identities. Changes, access errors, active applications and unsupported data layouts can cause items to be skipped.
 - File-size totals are logical sizes; they are not a guarantee of physical space reclaimed. Migration capacity and compression candidates are not added to the ordinary garbage total.
 - Recovery history is not a backup of file contents. Applications may update or modify files after an operation.
+
+## Restore moved or compressed applications
+
+Close the affected application before restoring it and ensure the drive has enough free space for the restored data.
+
+1. **App Mover:** Open **App Mover → Move history**, select the relevant record and click **Restore selected application**. Restoration copies and verifies the destination's current data back to the original location, replaces the junction with the restored folder and retains the destination copy. A valid local record and an unchanged junction/destination relationship are required.
+2. **App Compression:** Open **App Compression → Compression history** and click **Restore** for the relevant entry. Restoration decompresses recorded files that still pass the path and file-identity checks. Replaced, changed or inaccessible files may be skipped; review the result and retain the records if restoration is incomplete.
+
+Keep `%LOCALAPPDATA%\CCLEANNER\`, including `software-migrations.jsonl` and the complete `compression/` directory, for as long as you need these recovery features. Keep the actual migrated files too. Recovery records describe operations and file identities; they do not contain a backup of application contents or recover permanently deleted files. Clearing **Activity Log** removes audit entries without restoring files or deleting the separate migration/compression recovery records.
 
 ## Language and local data
 
@@ -108,6 +161,24 @@ The program stores settings, history and recovery manifests under:
 ```
 
 The internal directory name is retained for compatibility. Cleaning works locally without an account or cloud service. Opening a feedback link uses your browser; no diagnostic report is uploaded automatically. File-operation logs may contain local paths.
+
+## Update or remove the portable application
+
+The EXE and ZIP need no installation. Settings, logs and recovery records are stored in the Windows user-data directory above, rather than beside the EXE; moving the EXE alone does not transfer that data to another Windows account or computer.
+
+### Update
+
+1. Let active operations finish. If you will change the EXE's location, first turn off **Settings → Launch at startup** and click **Save settings** in the old copy.
+2. Fully quit using **Exit** from the application menu or tray menu. Download the new release and replace the old EXE, or extract the new portable ZIP into your chosen application folder.
+3. Preserve the existing `%LOCALAPPDATA%\CCLEANNER\` directory and migrated application folders. Back up the data directory if you need to retain settings and recovery records, then launch the new version. If its location changed, re-enable **Launch at startup** from the new copy when desired.
+
+### Remove
+
+1. In **Settings**, turn off **Launch at startup** and **Scheduled cleanup**, then click **Save settings**. Let active operations finish and fully quit using **Exit**.
+2. Delete CPlus Cleaner's own EXE and the files supplied with its portable bundle. Keep any unrelated files and migrated application folders.
+3. You may remove `%LOCALAPPDATA%\CCLEANNER\` once you no longer need its settings, logs or recovery records. If you still need supported restoration, complete it first or retain both the recovery data and the actual application files.
+
+Removing CPlus Cleaner does not undo previous application moves or compression, and it does not recover deleted files.
 
 ## Feedback and contributions
 
