@@ -1,6 +1,6 @@
 # Contributing to CPlus Cleaner
 
-English and Chinese issues are welcome. The repository includes runtime source, resources and isolated tests; a packaged EXE is not available yet.
+English and Chinese issues are welcome. The repository includes runtime source, resources and isolated tests. Packaged Windows x64 EXE and portable ZIP downloads are available on [GitHub Releases](https://github.com/jackqiuai/cplus-cleaner/releases). The packaged application does not require a separate Python installation.
 
 ## Report a problem
 
