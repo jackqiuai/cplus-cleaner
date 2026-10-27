@@ -6,6 +6,8 @@
 
 CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Chinese/English interface.
 
+**Portable, no installation required.** Run the downloaded EXE directly, or extract the portable ZIP and launch `CPlusCleaner.exe`. No separate Python installation is needed.
+
 **Project status:** Complete Python source, images, rules and language resources are included. Windows x64 EXE builds are configured in [GitHub Actions](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml). Successful runs provide executable artifacts; published GitHub Releases receive the EXE, portable ZIP and checksums. See [Build instructions](docs/BUILDING.md).
 
 ## Introduction video
@@ -42,7 +44,7 @@ Additional settings include daily scheduled cleanup, startup with Windows, close
 
 ## Download the Windows EXE
 
-Download `CPlusCleaner.exe` or the portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases) when a version is published. For the latest commit build, open a successful [Actions run](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml) and download `CPlusCleaner-windows-x64`. The packaged Windows x64 application does not require Python.
+Download `CPlusCleaner.exe` or `CPlusCleaner-windows-x64.zip` from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases). Both are **portable Windows x64 editions that require no installation**: run the EXE directly, or extract the ZIP and run `CPlusCleaner.exe`. Python is included. For the latest commit build, open a successful [Actions run](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml) and download `CPlusCleaner-windows-x64`.
 
 ## Requirements
 

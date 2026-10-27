@@ -6,6 +6,8 @@
 
 CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理、软件搬家、软件压缩、聊天清理、隐私清理、大文件搬家、重复文件清理、软件卸载、弹窗拦截与系统管理。
 
+**绿色版本，无需安装。** 下载 EXE 即可直接运行，也可解压便携 ZIP 后启动 `CPlusCleaner.exe`，无需另行安装 Python。
+
 **项目状态：** 已包含完整 Python 源码、图片、清理规则及语言资源，并配置 [GitHub Actions 自动构建 Windows x64 EXE](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)。构建成功后可下载产物，发布 GitHub Release 时会自动附加 EXE、便携 ZIP 和校验文件，详见[构建说明](docs/BUILDING.md)。
 
 ## 项目介绍视频
@@ -52,7 +54,7 @@ https://github.com/user-attachments/assets/c5228662-efab-49e4-b8d6-7b64b010f335
 
 ## 下载 Windows EXE
 
-版本发布后，可从 [Releases](https://github.com/jackqiuai/cplus-cleaner/releases) 下载 `CPlusCleaner.exe` 或便携 ZIP。需要最新提交的构建版本时，打开成功的 [Actions 构建记录](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)，下载 `CPlusCleaner-windows-x64` 产物。打包后的 Windows x64 程序无需额外安装 Python。
+从 [Releases](https://github.com/jackqiuai/cplus-cleaner/releases) 下载 `CPlusCleaner.exe` 或 `CPlusCleaner-windows-x64.zip`。两者均为 **Windows x64 绿色便携版本，无需安装**：EXE 下载后直接运行，ZIP 解压后启动 `CPlusCleaner.exe`，无需额外安装 Python。需要最新提交的构建版本时，打开成功的 [Actions 构建记录](https://github.com/jackqiuai/cplus-cleaner/actions/workflows/build-windows.yml)，下载 `CPlusCleaner-windows-x64` 产物。
 
 ## 运行要求
 
