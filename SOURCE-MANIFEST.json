@@ -82,8 +82,8 @@
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 8208,
-      "sha256": "b601da5783f511fa5147f5495f0e2d0c7aef66998272df992194feaaf9921435",
+      "bytes": 8625,
+      "sha256": "df751e5079519e0cfcd39cb7d071a8ea5ac1622f83ca16fe41a3245576b077dd",
       "text": true
     },
     {
@@ -1324,8 +1324,8 @@
     },
     {
       "path": "docs/README.md",
-      "bytes": 761,
-      "sha256": "6b0b7ed8cbec36ac5aa2e43d52732f3a9462652271525cd3c099d309f8ef1460",
+      "bytes": 1056,
+      "sha256": "842578cda9c355808c1f95359e423e9af852dde5ff477c925fd7d7adce347331",
       "text": true
     },
     {
@@ -1341,9 +1341,27 @@
       "text": true
     },
     {
+      "path": "docs/images/app-mover-zh.png",
+      "bytes": 90322,
+      "sha256": "f055e2d81eae3b501d97480f51a7d4ae2c15250b0c2e986ba596b6fee9b1ac97",
+      "text": false
+    },
+    {
+      "path": "docs/images/drive-cleanup-zh.png",
+      "bytes": 89932,
+      "sha256": "d474ceadfd1964d7a42ddcc8a8bd3ae971dd86ecf894e0c020f5039e769b2372",
+      "text": false
+    },
+    {
       "path": "docs/images/home-en.png",
       "bytes": 86546,
       "sha256": "77604ce6dbe8f25e21cfb7d91d7931f904c70fdf002c720c8b5904e69b1ad665",
+      "text": false
+    },
+    {
+      "path": "docs/images/home-zh.png",
+      "bytes": 88695,
+      "sha256": "94ea54fed9f55038ae69a838df1ae54e31a6e932128cad78d2dae69da0168c7b",
       "text": false
     },
     {
