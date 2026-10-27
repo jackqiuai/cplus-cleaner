@@ -40,6 +40,8 @@ The spec includes the `cplus_cleaner` modules, `assets/`, `rules/`, `locales/`, 
 
 Frozen launches use the executable itself for background startup and the read-only component-analysis helper. Resources load from the extraction directory; settings and history remain in the user's existing application-data directory. Self-protection excludes the running EXE without excluding unrelated files in its parent directory.
 
+The native compression round-trip test uses a dedicated workspace on the CI system drive and checks that its real filesystem is NTFS before verifying compression, restoration and unchanged file hashes. For local tests on another filesystem, set `CPLUS_NATIVE_TEST_ROOT` to an existing, owned NTFS test directory.
+
 Component-analysis tests validate command construction without running Windows servicing or requesting UAC on CI. Actual maintenance actions retain the source application's user interaction and permission requirements.
 
 <!-- Purpose: Automated and local Windows executable build instructions -->
