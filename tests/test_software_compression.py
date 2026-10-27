@@ -17,7 +17,8 @@ from test_software_uninstall import Registry
 
 class CompressionTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='compression-fixture-',dir=core.APP_DIR.parent)
+        fixture_root = Path(os.environ.get('CPLUS_NATIVE_TEST_ROOT', str(core.APP_DIR.parent)))
+        self.temp = tempfile.TemporaryDirectory(prefix='compression-fixture-',dir=fixture_root)
         self.base = Path(self.temp.name)
         self.root = self.base/'Demo';self.root.mkdir()
         self.exe = self.root/'uninstall.exe';self.exe.write_bytes(b'exe'*1024)
@@ -28,6 +29,7 @@ class CompressionTests(unittest.TestCase):
             _source=dict(hive='HKCU',view=64,subkey='compression-fixture'))
         self.registry.put('HKCU',inventory.UNINSTALL+'\\compression-fixture',
             {key:self.record.get(key,'') for key in inventory.FIELDS})
+        self.real_filesystem = compression.windows.filesystem
         self.patches = [patch.object(core,'DATA_DIR',self.base/'state'),
             patch.dict(inventory._ISSUED,{},clear=True),
             patch.object(inventory,'winreg',self.registry),
@@ -171,6 +173,8 @@ class CompressionTests(unittest.TestCase):
 
     @unittest.skipUnless(os.name=='nt','Windows transparent compression')
     def test_real_compact_and_record_restore_preserve_workspace_sample_hashes(self):
+        self.assertEqual(self.real_filesystem(self.root), 'NTFS',
+            'Native compression requires NTFS; set CPLUS_NATIVE_TEST_ROOT to an owned NTFS test workspace.')
         item=self.item();hashes={path.name:core.sha256_file(path) for path in (self.exe,self.file)}
         outcomes=[]
         def runner(paths,mode):
