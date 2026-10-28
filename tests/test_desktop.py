@@ -269,7 +269,8 @@ class DesktopWorkflowTests(unittest.TestCase):
     def test_three_line_menu_and_operations_window_preserves_current_tool(self):
         labels = [label for label, _ in self.window.more_menu.entries]
         self.assertEqual(labels[:2], ["设置", "问题反馈"])
-        self.assertIn(preferences.VERSION, labels[2])
+        self.assertEqual(labels[2], "捐赠")
+        self.assertIn(preferences.VERSION, labels[3])
         self.assertEqual(len(self.window.menu_button.find_all()), 3)
         preferences.append_activity("scheduled_cleanup", ok=False, error="test-failure")
         preferences.append_activity("scheduled_cleanup", ok=True, summary="释放 1KB")
@@ -329,8 +330,10 @@ class DesktopWorkflowTests(unittest.TestCase):
         menu._step(1)
         self.assertEqual(menu.active, 1)
         menu._step(1)
-        self.assertEqual(menu.active, 3)  # Informational version skips keyboard selection.
-        menu.invoke(2)
+        self.assertEqual(menu.active, 2)
+        menu._step(1)
+        self.assertEqual(menu.active, 4)  # Informational version skips keyboard selection.
+        menu.invoke(3)
         self.assertTrue(menu.visible)
         menu.canvas.event_generate("<Button-1>", x=30, y=menu.TOP+14)
         self.window.update()
@@ -505,6 +508,110 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertEqual(self.window.current_page,'cdrive')
         self.assertIsNotNone(self.window._settings_window)
         self.assertTrue(self.window._settings_window.winfo_ismapped())
+
+    def test_donation_menu_reuses_one_window_without_changing_the_current_tool(self):
+        from cplus_cleaner.application import donations
+        self.window.navigate('cdrive')
+        self.window.update()
+        selected, tabs = self.window.notebook.select(), self.window.notebook.tabs()
+        with patch('cplus_cleaner.ui.donation_panel.webbrowser.open_new_tab') as browser:
+            self.window.open_menu()
+            self.window.update()
+            self.window.more_menu.invoke(2)
+            self.window.update()
+            dialog, page = self.window._donation_window, self.window.views['donation']
+            self.assertEqual(page.current_view, 'china')
+            self.assertTrue(page.domestic.winfo_ismapped())
+            self.assertFalse(page.international.winfo_ismapped())
+            self.assertEqual(set(page.qr_images), {'wechat'})
+            self.assertEqual(set(page.qr_buttons), {'wechat'})
+            card = page.domestic.winfo_children()[0]
+            self.assertAlmostEqual(card.winfo_rootx()+card.winfo_width()/2,
+                                   page.domestic.winfo_rootx()+page.domestic.winfo_width()/2, delta=2)
+            self.assertFalse((core.APP_DIR/'assets/donation/alipay.png').exists())
+            for image in page.preview_images.values():
+                self.assertLessEqual(image.width(), 290)
+                self.assertLessEqual(image.height(), 290)
+            for _ in range(3):
+                self.assertIs(self.window.open_donation(), dialog)
+            self.assertEqual(self.window.current_page, 'cdrive')
+            self.assertEqual(self.window.notebook.select(), selected)
+            self.assertEqual(self.window.notebook.tabs(), tabs)
+            self.assertIsNone(self.window.grab_current())
+            browser.assert_not_called()
+        page.return_button.invoke()
+        self.window.update()
+        self.assertIsNone(self.window._donation_window)
+        self.assertNotIn('donation', self.window.views)
+        self.assertIsNot(self.window.open_donation(), dialog)
+
+    def test_donation_live_language_switch_and_exact_coffee_link(self):
+        from cplus_cleaner.application import donations
+        self.window.open_donation()
+        page = self.window.views['donation']
+        desktop.i18n.set_language('en')
+        self.window.update()
+        self.assertEqual(page.current_view, 'international')
+        self.assertTrue(page.coffee_button.winfo_ismapped())
+        self.assertFalse(page.domestic.winfo_ismapped())
+        self.assertEqual(page.coffee_button.caption, 'Buy me a coffee')
+        self.assertEqual(page.switch_button.cget('text'), 'WeChat Pay')
+        captions = [str(widget.cget('text')) for widget in self.descendants(page) if 'text' in widget.keys()]
+        self.assertFalse(any('via Ko-fi' in caption for caption in captions))
+        self.assertFalse(any(desktop.i18n.HAN.search(caption) for caption in captions))
+        with patch('cplus_cleaner.ui.donation_panel.webbrowser.open_new_tab', return_value=True) as browser:
+            page.coffee_button.invoke()
+            browser.assert_called_once_with(donations.KOFI_URL)
+            self.assertEqual(donations.KOFI_URL, 'https://ko-fi.com/qiujack')
+        page.switch_button.invoke()
+        self.window.update()
+        self.assertTrue(page.domestic.winfo_ismapped())
+        desktop.i18n.set_language('zh')
+        self.window.update()
+        self.assertEqual(page.current_view, 'china')
+        with patch('cplus_cleaner.ui.donation_panel.webbrowser.open_new_tab', return_value=False):
+            page.open_kofi()
+            self.assertIn('无法打开浏览器', page.message.get())
+
+    def test_donation_save_preserves_supplied_images_and_handles_cancel(self):
+        from cplus_cleaner.application import donations
+        self.window.open_donation()
+        page = self.window.views['donation']
+        for code in donations.QR_CODES:
+            destination = self.base/(code.key+'.png')
+            with patch('cplus_cleaner.ui.donation_panel.filedialog.asksaveasfilename', return_value=str(destination)):
+                page.save_qr(code.key)
+            self.assertEqual(destination.read_bytes(), (core.APP_DIR/'assets'/code.asset).read_bytes())
+        with patch('cplus_cleaner.ui.donation_panel.filedialog.asksaveasfilename', return_value=''), \
+                patch('cplus_cleaner.ui.donation_panel.shutil.copyfile') as copy:
+            page.save_qr('wechat')
+            copy.assert_not_called()
+        with patch('cplus_cleaner.ui.donation_panel.filedialog.asksaveasfilename', return_value=str(self.base/'failed.png')), \
+                patch('cplus_cleaner.ui.donation_panel.shutil.copyfile', side_effect=OSError('denied')):
+            page.save_qr('wechat')
+            self.assertIn('无法保存二维码', page.message.get())
+
+    def test_donation_qr_enlargement_is_single_and_preserves_source_region(self):
+        from cplus_cleaner.application import donations
+        self.window.open_donation()
+        page = self.window.views['donation']
+        for code in donations.QR_CODES:
+            original = self.window.images.get(code.asset)
+            image = page.qr_images[code.key]
+            x1, y1, x2, y2 = code.viewport
+            self.assertEqual((image.width(), image.height()), (x2-x1, y2-y1))
+            for x, y in ((0, 0), (image.width()//2, image.height()//2), (image.width()-1, image.height()-1)):
+                self.assertEqual(image.get(x, y), original.get(x+x1, y+y1))
+            popup = page.open_qr(code.key)
+            self.window.update()
+            for _ in range(3):
+                self.assertIs(page.open_qr(code.key), popup)
+            self.assertGreaterEqual(popup.qr_image.width(), page.preview_images[code.key].width())
+        dialog = self.window._donation_window
+        dialog.destroy()
+        self.window.update()
+        self.assertIsNone(self.window._donation_window)
+        self.assertFalse(any(isinstance(widget, tk.Toplevel) for widget in self.descendants(self.window)))
 
     @patch.dict('cplus_cleaner.application.feedback.FEEDBACK_URLS', bug='', feature='', issues='')
     def test_feedback_panel_empty_links_and_environment_copy(self):

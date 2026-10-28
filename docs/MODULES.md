@@ -14,6 +14,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | [`single_instance.py`](../cplus_cleaner/application/single_instance.py) | Single-instance launch and activation |
 | [`preferences.py`](../cplus_cleaner/application/preferences.py) | Settings, autostart and scheduling |
 | [`feedback.py`](../cplus_cleaner/application/feedback.py) | Feedback dialog and issue link |
+| [`donations.py`](../cplus_cleaner/application/donations.py) | Public donation link and owner-supplied Chinese payment QR definitions |
 | [`tray.py`](../cplus_cleaner/application/tray.py) | Windows tray icon and menu |
 | [`bundle_check.py`](../cplus_cleaner/application/bundle_check.py) | Isolated executable resource and feature-page smoke checks |
 
@@ -29,6 +30,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 
 | File | Purpose |
 | --- | --- |
+| [`donation_panel.py`](../cplus_cleaner/ui/donation_panel.py) | Bilingual donation dialog, QR previews and the public Ko-fi link |
 | [`desktop.py`](../cplus_cleaner/ui/desktop.py) | Main window, navigation, feature composition and settings dialog |
 | [`desktop_panels.py`](../cplus_cleaner/ui/desktop_panels.py) | Shared result panels and activity log dialog |
 | [`app_menu.py`](../cplus_cleaner/ui/app_menu.py) | Application dropdown menu |

@@ -186,13 +186,17 @@ Use [GitHub Issues](https://github.com/jackqiuai/cplus-cleaner/issues) for repro
 
 For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). Run the included Windows regression suite with `python -m unittest discover -s tests -v`.
 
+## Donate
+
+Open the top-right menu and choose **Donate**. The Chinese interface displays a WeChat Pay QR code; the English interface provides a [Buy me a coffee](https://ko-fi.com/qiujack) button. Donations are entirely optional and support ongoing project maintenance.
+
 ## Project status
 
-The current application version is **1.1.0**. Windows x64 builds are available through successful Actions runs. A GitHub Release is published separately; publishing it triggers attachment of the verified binaries. An installer is not generated.
+The current application version is **1.1.1**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 
-Trusted signing is being prepared through the free SignPath Foundation program, subject to eligibility review. **Signing is not active, and the existing v1.1.0 EXE is unsigned.** See the [Code signing policy](docs/CODE_SIGNING.md) for the current status, third-party resource prerequisites and release verification steps.
+Trusted signing is being prepared through the free SignPath Foundation program, subject to eligibility review. **Signing is not active, and published EXEs are currently unsigned.** See the [Code signing policy](docs/CODE_SIGNING.md) for the current status, third-party resource prerequisites and release verification steps.
 
 ## License
 

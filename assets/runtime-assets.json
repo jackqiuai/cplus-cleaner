@@ -1,5 +1,4 @@
 {
-
   "schema_version": 1,
   "files": [
     {
@@ -266,6 +265,11 @@
       "path": "check-on.png",
       "kind": "runtime",
       "purpose": "Shared selection controls"
+    },
+    {
+      "path": "donation/wechat.png",
+      "kind": "runtime",
+      "purpose": "Owner-supplied WeChat donation QR image"
     },
     {
       "path": "hero-clean.png",

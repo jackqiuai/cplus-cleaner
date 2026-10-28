@@ -196,13 +196,17 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 开发和测试约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。Windows 回归测试可执行 `python -m unittest discover -s tests -v`。
 
+## 捐赠支持
+
+通过右上角三横菜单 → **捐赠**，可支持项目持续维护。中文界面默认展示微信收款码，英文界面提供 [Buy me a coffee](https://ko-fi.com/qiujack) 按钮。软件免费使用，捐赠完全自愿。
+
 ## 项目状态
 
-当前程序版本号为 **1.1.0**，可从成功的 Actions 构建中获取 Windows x64 版本。GitHub Release 需单独发布，发布后工作流会自动附加已验证的二进制文件；目前不生成安装程序。
+当前程序版本号为 **1.1.1**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
 
 ## 数字签名政策（Code signing policy）
 
-项目已准备接入 SignPath Foundation 开源免费签名方案，仍需申请并通过资格审核。**可信签名尚未启用，现有 v1.1.0 EXE 仍未签名。** 第三方资源授权前提、启用步骤及发布文件验证方法见[数字签名政策](docs/CODE_SIGNING.md)。
+项目已准备接入 SignPath Foundation 开源免费签名方案，仍需申请并通过资格审核。**可信签名尚未启用，当前发布的 EXE 尚未签名。** 第三方资源授权前提、启用步骤及发布文件验证方法见[数字签名政策](docs/CODE_SIGNING.md)。
 
 ## 许可证
 

@@ -1,13 +1,15 @@
 """Header dropdown styled from the original application's home_menu_list."""
 from cplus_cleaner.localization import localized_tk as tk
+from cplus_cleaner.localization import i18n
+from tkinter import font as tkfont
 
 
 class HeaderMenu:
-    BACKGROUND = "#f2f6fa"
+    BACKGROUND = "#ffffff"
     HOVER = "#e9f9f4"
     TEXT = "#6c8787"
-    WIDTH = 158
-    ROW_HEIGHT = 28
+    WIDTH = 208
+    ROW_HEIGHT = 36
     TOP = 13
 
     def __init__(self, owner, anchor, entries):
@@ -16,6 +18,7 @@ class HeaderMenu:
         self.window = None
         self.canvas = None
         self.active = None
+        self.width = self.WIDTH
         owner.bind("<Configure>", self._owner_changed, add="+")
         owner.bind("<Unmap>", self._owner_changed, add="+")
 
@@ -53,17 +56,19 @@ class HeaderMenu:
             window.attributes("-transparentcolor", transparent)
         except tk.TclError:
             transparent = "#ffffff"
+        metrics = tkfont.Font(self.owner, family="Microsoft YaHei UI", size=-14)
+        self.width = max(self.WIDTH, max((metrics.measure(i18n.tr(caption)) for caption, _ in self.entries), default=0)+72)
         height = self.TOP + len(self.entries)*self.ROW_HEIGHT + 12
-        self.canvas = tk.Canvas(window, width=self.WIDTH, height=height,
+        self.canvas = tk.Canvas(window, width=self.width, height=height,
                                 bg=transparent, bd=0, highlightthickness=0,
                                 takefocus=True)
         self.canvas.pack()
         anchor_x = self.anchor.winfo_rootx() + self.anchor.winfo_width()//2
-        x = max(0, min(anchor_x - (self.WIDTH-26), self.owner.winfo_screenwidth()-self.WIDTH))
+        x = max(0, min(anchor_x - (self.width-26), self.owner.winfo_screenwidth()-self.width))
         y = self.anchor.winfo_rooty() + self.anchor.winfo_height() + 1
         y = min(y, self.owner.winfo_screenheight()-height)
-        self._arrow_x = max(17, min(anchor_x-x, self.WIDTH-17))
-        window.geometry(f"{self.WIDTH}x{height}+{x}+{y}")
+        self._arrow_x = max(17, min(anchor_x-x, self.width-17))
+        window.geometry(f"{self.width}x{height}+{x}+{y}")
         self.active = next((i for i, (_, action) in enumerate(self.entries) if action), None) if keyboard else None
         self._paint()
         self.canvas.bind("<Motion>", self._motion)
@@ -85,8 +90,8 @@ class HeaderMenu:
         canvas.delete("all")
         bottom = self.TOP + len(self.entries)*self.ROW_HEIGHT + 4
         for inset, color in ((0, "#f4f5f6"), (2, "#eaedef"), (4, "#e1e5e8")):
-            self._rounded(canvas, (inset, 8+inset/2, self.WIDTH-inset, bottom+9-inset), fill=color, outline="")
-        self._rounded(canvas, (6, 9, self.WIDTH-6, bottom),
+            self._rounded(canvas, (inset, 8+inset/2, self.width-inset, bottom+9-inset), fill=color, outline="")
+        self._rounded(canvas, (6, 9, self.width-6, bottom),
                       fill=self.BACKGROUND, outline="#dadddf", width=1)
         ax = self._arrow_x
         canvas.create_polygon(ax-7, 9, ax, 2, ax+7, 9, fill="#ffffff", outline="#dadddf")
@@ -94,8 +99,13 @@ class HeaderMenu:
         for i, (caption, action) in enumerate(self.entries):
             top = self.TOP + i*self.ROW_HEIGHT
             if i == self.active and action:
-                canvas.create_rectangle(7, top, self.WIDTH-7, top+self.ROW_HEIGHT, fill=self.HOVER, outline="")
-            canvas.create_text(24, top+self.ROW_HEIGHT//2, anchor="w", text=caption,
+                canvas.create_rectangle(7, top, self.width-7, top+self.ROW_HEIGHT, fill=self.HOVER, outline="")
+            if action is None:
+                canvas.create_line(18, top, self.width-18, top, fill="#edf2f2")
+            glyph = {"设置": "⚙", "问题反馈": "✉", "捐赠": "♡", "退出软件": "⇥"}.get(caption, "ⓘ")
+            canvas.create_text(28, top+self.ROW_HEIGHT//2, text=glyph,
+                               font=("Segoe UI Symbol", -17), fill="#719397")
+            canvas.create_text(47, top+self.ROW_HEIGHT//2, anchor="w", text=caption,
                                font=("Microsoft YaHei UI", -14),
                                fill=self.TEXT if action else "#a7b3b7")
 
@@ -107,7 +117,7 @@ class HeaderMenu:
 
     def _row_at(self, x, y):
         index = (y-self.TOP)//self.ROW_HEIGHT
-        if 7 <= x < self.WIDTH-7 and self.TOP <= y and 0 <= index < len(self.entries):
+        if 7 <= x < self.width-7 and self.TOP <= y and 0 <= index < len(self.entries):
             return index
         return None
 
@@ -118,7 +128,7 @@ class HeaderMenu:
     def _click(self, event):
         x = event.x_root-self.window.winfo_rootx()
         y = event.y_root-self.window.winfo_rooty()
-        if not (6 <= x < self.WIDTH-6 and 2 <= y < self.canvas.winfo_height()-9):
+        if not (6 <= x < self.width-6 and 2 <= y < self.canvas.winfo_height()-9):
             self.close(restore_focus=True)
         else:
             self.invoke(self._row_at(x, y))

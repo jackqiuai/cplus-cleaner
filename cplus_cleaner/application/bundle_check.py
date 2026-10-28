@@ -53,10 +53,16 @@ def check():
                 app.update_idletasks()
                 assert app.current_page == key and app.notebook.select() == str(app.views[key]), key
                 pages.append(key)
+            donation = app.open_donation()
+            donation.withdraw()
+            assert set(donation.panel.qr_images) == {'wechat'}
             for language in ('zh', 'en'):
                 i18n.set_language(language)
                 app.update_language_layout()
                 app.update_idletasks()
+                assert donation.panel.current_view == ('china' if language == 'zh' else 'international')
+            assert donation.panel.coffee_button.caption == 'Buy me a coffee'
+            donation.destroy()
             assert i18n.tr('开始扫描') == 'Scan'
             assert not errors, errors
             command = runtime.launch_command('--background')
@@ -67,7 +73,7 @@ def check():
                 app.tk.call('after', 'cancel', timer)
             app.destroy()
     return dict(frozen=runtime.frozen(), version=preferences.VERSION, pages=pages,
-                image_count=len(images), languages=['zh', 'en'])
+                image_count=len(images), languages=['zh', 'en'], donation_dialog=True)
 
 
 def main(output):

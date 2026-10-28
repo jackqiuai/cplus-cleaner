@@ -1,6 +1,6 @@
 # Image and rule resources
 
-[`runtime-assets.json`](runtime-assets.json) lists every retained image or editable vector with its purpose in English. It contains 116 entries. Runtime PNG/ICO files are distinguished from editable SVG sources. The documentation screenshot lives separately at `docs/images/home-en.png`.
+[`runtime-assets.json`](runtime-assets.json) lists every retained image or editable vector with its purpose in English. It contains 117 entries. Runtime PNG/ICO files are distinguished from editable SVG sources. The documentation screenshot lives separately at `docs/images/home-en.png`.
 
 | Path | Purpose |
 | --- | --- |
@@ -15,6 +15,7 @@
 | `large-c-*.png` | Large-file category icons |
 | `icon-*.png` | Application and category fallback icons, including WeChat |
 | `status-warning.png` | Scan-result warning icon |
+| `donation/wechat.png`, `donation/sources.json` | Owner-supplied WeChat QR image with a pixel-preserving conversion record |
 | `chat-rules.json` | Chat cache and attachment location rules |
 | `popup-huorong.json` | Popup definitions and matching rules |
 

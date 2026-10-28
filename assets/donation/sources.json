@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "origin": "Images supplied by the project owner for the donation dialog",
+  "files": [
+    {
+      "path": "donation/wechat.png",
+      "source": "微信收款码.jpg",
+      "source_sha256": "2f372070ee7a12ce38c4d54b5dd1500b05e9b28e5000b2cbf3028eed822fb847",
+      "sha256": "857ff96d000e610479ae96b942b7424594c3b26f6701d733ada76ff0d14ebaf6",
+      "size": [
+        1118,
+        1524
+      ],
+      "purpose": "Owner-supplied WeChat donation QR image",
+      "transformation": "Lossless PNG encoding of the decoded, unchanged JPEG pixels",
+      "display_viewport": [
+        285,
+        358,
+        834,
+        907
+      ]
+    }
+  ]
+}

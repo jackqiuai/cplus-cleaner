@@ -18,6 +18,7 @@ from cplus_cleaner.application import preferences
 from cplus_cleaner.localization import i18n
 from cplus_cleaner.application import tray
 from cplus_cleaner.ui.desktop_panels import OperationsPanel, SettingsPanel, FeedbackPanel
+from cplus_cleaner.ui.donation_panel import DonationPanel
 from cplus_cleaner.ui.app_menu import HeaderMenu
 from cplus_cleaner.ui.ui_widgets import Checkbutton, check_images, MetricLabel, single_window, scroll_canvas
 from cplus_cleaner.features.drive_cleanup.cleanup_model import CleanupSession
@@ -669,6 +670,7 @@ class DesktopApplication(tk.Tk):
         self._closing, self._schedule_timer = False, None
         self._popup_resume = None
         self._settings_window = self._feedback_window = self._operations_window = None
+        self._donation_window = None
         try:
             self.settings["autostart"] = preferences.read_autostart()
         except OSError:
@@ -730,6 +732,7 @@ class DesktopApplication(tk.Tk):
         self.more_menu = HeaderMenu(self, self.menu_button, [
             ("设置", self.open_settings),
             ("问题反馈", self.open_feedback),
+            ("捐赠", self.open_donation),
             (f"版本号  v{preferences.VERSION}", None),
             ("退出软件", self.quit_app),
         ])
@@ -824,9 +827,13 @@ class DesktopApplication(tk.Tk):
     def open_feedback(self):
         return self.open_panel_window("feedback")
 
+    def open_donation(self):
+        return self.open_panel_window("donation")
+
     def open_panel_window(self, key):
         title, factory = {"settings": ("设置", SettingsPanel),
                           "feedback": ("问题反馈", FeedbackPanel),
+                          "donation": ("捐赠", DonationPanel),
                           "operations": ("操作记录", OperationsPanel)}[key]
         window, created = single_window(self, f"_{key}_window", f"CPlus Cleaner · {title}")
         if not created:
@@ -1001,7 +1008,7 @@ class DesktopApplication(tk.Tk):
         self.start("定时清理默认常规类型", work, done, failed)
 
     def ensure_view(self, key):
-        if key in {"settings", "feedback", "operations"}:
+        if key in {"settings", "feedback", "operations", "donation"}:
             return self.open_panel_window(key).panel
         if key not in self.views:
             def migration_view():

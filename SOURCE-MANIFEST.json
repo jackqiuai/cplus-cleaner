@@ -82,14 +82,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 16156,
-      "sha256": "29117a21cc6062e36ddc4660a1e5e3d52de4ca950dd72b251d708fbcce1b2f6d",
+      "bytes": 16491,
+      "sha256": "b25e60201c7d3de835c21d9d6544a87959344053cbcfca1e19353c578472c664",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 15017,
-      "sha256": "0d838d973aea4cab3b20f7b428df5472718fee236e5162150a34e8bd22f8c550",
+      "bytes": 15323,
+      "sha256": "c46b9513ef1f1de9ed1ff6de4a360c8f2c423c1657fe573c81ac817e19a71d8b",
       "text": true
     },
     {
@@ -100,8 +100,8 @@
     },
     {
       "path": "assets/README.md",
-      "bytes": 2634,
-      "sha256": "6c519f0c4dfcada9de507d74af4621a01ecc797a929c23a4054cfdc2d41e381d",
+      "bytes": 2760,
+      "sha256": "19d2cfe43e787328ba625ee5b00201cc2136f79d51705eb838c489678cb65e3f",
       "text": true
     },
     {
@@ -474,6 +474,18 @@
       "path": "assets/check-on.png",
       "bytes": 215,
       "sha256": "0a58f17f22e9b7da59ee70d432ae8490a69bce77a6a1b0665f2c80e3c200b785",
+      "text": false
+    },
+    {
+      "path": "assets/donation/sources.json",
+      "bytes": 669,
+      "sha256": "94abddda2d3ceff7dc2d1b63b85f68ee934d894a823c168d23f485fdca93f482",
+      "text": true
+    },
+    {
+      "path": "assets/donation/wechat.png",
+      "bytes": 346909,
+      "sha256": "857ff96d000e610479ae96b942b7424594c3b26f6701d733ada76ff0d14ebaf6",
       "text": false
     },
     {
@@ -880,8 +892,8 @@
     },
     {
       "path": "assets/runtime-assets.json",
-      "bytes": 14931,
-      "sha256": "7f3f7329c196842515a582e9421806e78ec20163e264fea86d5b20b2303438dd",
+      "bytes": 15064,
+      "sha256": "37f789e21541e935e32428e061d6856e9eda7af80596b650f11316d8a5729725",
       "text": true
     },
     {
@@ -916,8 +928,14 @@
     },
     {
       "path": "cplus_cleaner/application/bundle_check.py",
-      "bytes": 3575,
-      "sha256": "db2f9b8e09bfe5ebd88d0db50a3c5968f1cc9cf729aac3dbb48ada0650884e25",
+      "bytes": 3948,
+      "sha256": "0260e5d2f1f5066b4bf8bf90bac538cab62ab05e3a4057af6bdc54daf0497ef0",
+      "text": true
+    },
+    {
+      "path": "cplus_cleaner/application/donations.py",
+      "bytes": 549,
+      "sha256": "86184b5dc8fe8f83813c71f43ab7cc5e9aa50c6093f0065424754aaf2404fa14",
       "text": true
     },
     {
@@ -929,7 +947,7 @@
     {
       "path": "cplus_cleaner/application/preferences.py",
       "bytes": 10353,
-      "sha256": "c0a2245156e75eb455aaf93e0c0961a11666a12f59355fe2ea6234bf2428f98d",
+      "sha256": "9340de588ba8c62b70c9e6b77391692530f2b4afb1abebe0ddd0cf77d3e38d17",
       "text": true
     },
     {
@@ -1288,20 +1306,26 @@
     },
     {
       "path": "cplus_cleaner/ui/app_menu.py",
-      "bytes": 6479,
-      "sha256": "8733ac375eb3680af4a49b0c347ed6fbcccd40edf0e28b56140bf6232675baa5",
+      "bytes": 7176,
+      "sha256": "30bbdec4be180b872e4cb406f52b0b7389363b500a7b681e50922ca0590c0bbd",
       "text": true
     },
     {
       "path": "cplus_cleaner/ui/desktop.py",
-      "bytes": 54812,
-      "sha256": "bfae03817e26b2336e0b630efa4a9a6625f732f2882281cb1977858714b30808",
+      "bytes": 55108,
+      "sha256": "32fd5240909412ad2a0ed9db22c8d8694f43d7fef94611bda0702f220e577a68",
       "text": true
     },
     {
       "path": "cplus_cleaner/ui/desktop_panels.py",
       "bytes": 15657,
       "sha256": "16f21ec5d7a86459330cbf8c38de065c52c65e0bb3427081903b9a20fed99926",
+      "text": true
+    },
+    {
+      "path": "cplus_cleaner/ui/donation_panel.py",
+      "bytes": 8547,
+      "sha256": "a691ee8b535f385684826aadae53d9829fab0e24b50e983d763cdb0e018bc87d",
       "text": true
     },
     {
@@ -1324,14 +1348,14 @@
     },
     {
       "path": "docs/CODE_SIGNING.md",
-      "bytes": 8430,
-      "sha256": "9337e0b06934194fbbd4d58610c5156429312db6cf25090eb36b262798796393",
+      "bytes": 8790,
+      "sha256": "64e4092f21b2907b8144a73e31a1c41a20b29ddb6740a3458c4a9063dc0346c8",
       "text": true
     },
     {
       "path": "docs/MODULES.md",
-      "bytes": 8230,
-      "sha256": "e6cd3262ed4efe79ff12a2daacd4f59f377ce95dcd8263774d635dae5b2e028f",
+      "bytes": 8499,
+      "sha256": "5805e40ddd58d0afc7205d1f57940b45f658992ef7fb153c839f93777b1cce81",
       "text": true
     },
     {
@@ -1343,7 +1367,7 @@
     {
       "path": "docs/SOURCE_LAYOUT.md",
       "bytes": 5177,
-      "sha256": "425fef0321bb5606aeac2a7464cbe1949f49f6470ebf7134a2db6f05067acd58",
+      "sha256": "68e243de35ee3fb1d24076750d8c51542c1470bb35e4ae3f18141cd8d6d2b373",
       "text": true
     },
     {
@@ -1408,8 +1432,8 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 114762,
-      "sha256": "a55cd999238d27227183836997ecb881ebf2ae088bc3d17a276464684237ab11",
+      "bytes": 115511,
+      "sha256": "13619da9f156fb396e9fc7f379754681ca57767e21adcdbebfb10d37705b46f9",
       "text": true
     },
     {
@@ -1504,8 +1528,8 @@
     },
     {
       "path": "tests/test_desktop.py",
-      "bytes": 55898,
-      "sha256": "b87723de29195da6fcc710343e6d41e048b427634129e35eb82f2761fc5d101e",
+      "bytes": 62032,
+      "sha256": "047239affa529d531902d4b64061275d5dab154303117cdde215b9dadaed8e9c",
       "text": true
     },
     {

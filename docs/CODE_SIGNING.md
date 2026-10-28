@@ -2,7 +2,7 @@
 
 ## Current status
 
-**Signing integration is prepared, but trusted signing is not active.** The existing v1.1.0 download is unsigned. No SignPath Foundation approval, subscription or certificate is claimed. Adding this configuration does not change previously published EXEs, and a signature cannot guarantee that SmartScreen warnings disappear immediately.
+**Signing integration is prepared, but trusted signing is not active.** Published EXE downloads are currently unsigned. No SignPath Foundation approval, subscription or certificate is claimed. Adding this configuration does not change previously published EXEs, and a signature cannot guarantee that SmartScreen warnings disappear immediately.
 
 The intended free service is [SignPath Foundation](https://signpath.org/), subject to its [project eligibility and signing conditions](https://signpath.org/terms). This is a proposed integration; the foundation decides whether to accept the project. If approved, the required attribution will be: "Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/)."
 
@@ -22,6 +22,7 @@ The project has public source, MIT-licensed original code, documented Windows bu
 - Maintainer, reviewer and proposed signing approver: [jackqiuai](https://github.com/jackqiuai). Changes by outside contributors must be reviewed before release signing.
 - Signing is limited to `CPlusCleaner.exe`, built from this repository on GitHub-hosted Windows runners. It does not sign arbitrary uploads or third-party executables with this project's identity.
 - This application scans local files and Windows information on request. It does not automatically upload scan results, file contents, settings or history. Opening the GitHub feedback page is an explicit user action in the user's browser; the user decides which information to submit, under [GitHub's privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
+- The optional donation dialog displays owner-supplied QR images locally or opens the public Ko-fi page only when clicked. Overseas payments take place in the browser under [Ko-fi's privacy policy](https://more.ko-fi.com/privacy) and the selected payment provider's policies; this application does not receive payment credentials or transaction results.
 - The build workflow submits the public build artifact and source/build identifiers to SignPath only after signing is configured. It does not submit local application data or signing private keys. The signing provider manages the private key.
 
 ## Activate after acceptance

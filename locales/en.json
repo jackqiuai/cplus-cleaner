@@ -1,5 +1,4 @@
 {
-
   "messages": {
     "头条信息迷你": "Mini Headline Information",
     "暴风屏保": "Storm Screensaver",
@@ -1201,7 +1200,18 @@
     "180天内": "Within 180 days",
     "空间": " space",
     "系统盘": "System drive",
-    "次": " times"
+    "次": " times",
+    "捐赠": "Donate",
+    "捐赠支持 CPlus Cleaner": "Support CPlus Cleaner",
+    "软件免费使用，捐赠完全自愿。感谢支持项目的开发与维护。": "CPlus Cleaner is free to use. Donations are entirely optional. Thank you for supporting its development and maintenance.",
+    "微信支付": "WeChat Pay",
+    "收款二维码无法读取": "Unable to load the payment QR code.",
+    "放大": "Enlarge",
+    "保存图片": "Save image",
+    "支持 CPlus Cleaner 持续改进": "Help improve CPlus Cleaner",
+    "其他赞助方式": "Other ways to support",
+    "保存收款二维码": "Save payment QR code",
+    "无法保存二维码，请选择其他位置。": "Unable to save the QR code. Choose another location."
   },
   "templates": [
     {
