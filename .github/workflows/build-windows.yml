@@ -196,7 +196,7 @@ jobs:
   publish:
     name: Attach binaries to published release
     if: >-
-      always() && github.event_name == 'release' && needs.build.result == 'success' &&
+      always() && !cancelled() && github.event_name == 'release' && needs.build.result == 'success' &&
       (vars.SIGNPATH_ENABLED != 'true' || needs.sign.result == 'success')
     needs: [build, sign]
     runs-on: ubuntu-latest

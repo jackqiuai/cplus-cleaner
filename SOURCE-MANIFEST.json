@@ -46,8 +46,8 @@
     },
     {
       "path": ".github/workflows/build-windows.yml",
-      "bytes": 9217,
-      "sha256": "08fff79210a9d5af9554d8d9633d5e1be760b6fb88db50b991f080f41eec7482",
+      "bytes": 9233,
+      "sha256": "ba10799d1d1b03537ef721160b6b0afebdedbe261c6c6e6bbd8bd20caa99717f",
       "text": true
     },
     {
@@ -1462,8 +1462,8 @@
     },
     {
       "path": "tests/test_build_windows.py",
-      "bytes": 6363,
-      "sha256": "5ac7c668409922d9d993b9af1444d0a62f51b086a8933405d4d80b078d4eaa7d",
+      "bytes": 6372,
+      "sha256": "d73a0274f9cd46f84c372d8e1583b8f41fbb3ed4fde44f0d2fd325f86d52859b",
       "text": true
     },
     {

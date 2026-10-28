@@ -106,7 +106,7 @@ class WindowsDistributionTests(unittest.TestCase):
             build_windows.verify_signature(self.executable,
                                            expected_publisher='SignPath Foundation', root=self.root)
         arguments = run.call_args
-        self.assertEqual(arguments.kwargs['env']['CPLUS_SIGNATURE_FILE'], str(self.executable))
+        self.assertTrue(Path(arguments.kwargs['env']['CPLUS_SIGNATURE_FILE']).samefile(self.executable))
         self.assertNotIn(str(self.executable), arguments.args[0][-1])
         self.assertIn('Get-AuthenticodeSignature', arguments.args[0][-1])
 
