@@ -33,6 +33,7 @@ class UpdatePanel(tk.Frame):
         self.progress.pack(pady=(0, 18))
         from cplus_cleaner.ui.desktop import PillButton
         controls = tk.Frame(self, bg=WHITE)
+        self.controls = controls
         controls.pack(pady=(0, 25))
         self.check_button = PillButton(controls, '检查更新', self.check, width=155, height=40, font=(FONT, 10, 'bold'))
         self.download_button = PillButton(controls, '查看发布页', self.open_release, width=155, height=40,
@@ -52,6 +53,8 @@ class UpdatePanel(tk.Frame):
         self.checking = True
         self.check_button.set_enabled(False)
         self.status.set('正在检查更新…')
+        if not self.progress.winfo_manager():
+            self.progress.pack(pady=(0, 18), before=self.controls)
         self.progress.start(12)
         threading.Thread(target=self._fetch, args=(preferences.VERSION, self.results),
                          name='CPlus-update-check', daemon=True).start()
@@ -76,6 +79,7 @@ class UpdatePanel(tk.Frame):
             self._timer = self.after(100, self.poll)
             return
         self.progress.stop()
+        self.progress.pack_forget()
         self.checking = False
         self.check_button.set_enabled(True)
         if failure:
