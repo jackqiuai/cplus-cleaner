@@ -28,8 +28,14 @@
     },
     {
       "path": ".github/PURPOSE.md",
-      "bytes": 229,
-      "sha256": "a6ba23aca53e21bbfa909ffb2a44b4358e138574299b5853f01aa65556d29d83",
+      "bytes": 354,
+      "sha256": "bac9786406a6ac7fdde45450f5eae88acd1cf536b5cc1770c800af134435b74f",
+      "text": true
+    },
+    {
+      "path": ".github/signpath-artifact.xml",
+      "bytes": 735,
+      "sha256": "48c0f2864e0d602c8868f87727c7c411d61668fabbcc7f3f575efa02a5ee87b5",
       "text": true
     },
     {
@@ -40,8 +46,8 @@
     },
     {
       "path": ".github/workflows/build-windows.yml",
-      "bytes": 4349,
-      "sha256": "df8b12f62fd35a3940eb0f25ccfa3a741df029381bc0910d6f4f3394893bca37",
+      "bytes": 9217,
+      "sha256": "08fff79210a9d5af9554d8d9633d5e1be760b6fb88db50b991f080f41eec7482",
       "text": true
     },
     {
@@ -58,8 +64,8 @@
     },
     {
       "path": "CPlusCleaner.spec",
-      "bytes": 794,
-      "sha256": "00f1ea0322747d487893f1986e85e3294590f640eeb22bffa9d58eeaf71a39ff",
+      "bytes": 2380,
+      "sha256": "113431f09f31174c6c4d4dc4e3f8df3f1d8f93ef9f5dcef41361e30c97756e8d",
       "text": true
     },
     {
@@ -76,14 +82,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 15809,
-      "sha256": "e3a03e78d3cd8888efd0535dc25b0a0ed8533efcd7d9aa6f2ef613a1db9500d9",
+      "bytes": 16156,
+      "sha256": "29117a21cc6062e36ddc4660a1e5e3d52de4ca950dd72b251d708fbcce1b2f6d",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 14680,
-      "sha256": "a4d08e977083f0d7172769a8fc13131756ffc2b5e6a6f06f102d824c3a4b6383",
+      "bytes": 15017,
+      "sha256": "0d838d973aea4cab3b20f7b428df5472718fee236e5162150a34e8bd22f8c550",
       "text": true
     },
     {
@@ -1312,8 +1318,14 @@
     },
     {
       "path": "docs/BUILDING.md",
-      "bytes": 3834,
-      "sha256": "45765129e17b89f2b54d70be692d8491b0e51076016cd0795712d39b0e2f4583",
+      "bytes": 4174,
+      "sha256": "6f50cd49289333461150ad36b41f7f32e02263b8d2be6e8cbb0cc59a94a68dcc",
+      "text": true
+    },
+    {
+      "path": "docs/CODE_SIGNING.md",
+      "bytes": 8430,
+      "sha256": "9337e0b06934194fbbd4d58610c5156429312db6cf25090eb36b262798796393",
       "text": true
     },
     {
@@ -1330,8 +1342,8 @@
     },
     {
       "path": "docs/SOURCE_LAYOUT.md",
-      "bytes": 5024,
-      "sha256": "fa5660c549334fa5773204bf03a68aefe8e9a122e88a418391683ba8cad47bc7",
+      "bytes": 5177,
+      "sha256": "425fef0321bb5606aeac2a7464cbe1949f49f6470ebf7134a2db6f05067acd58",
       "text": true
     },
     {
@@ -1446,6 +1458,12 @@
       "path": "tests/test_app_launcher.py",
       "bytes": 2729,
       "sha256": "abe2f2831b305fd1f8569d3faffdeaf12161d262e44b2f0cb44946472da0a051",
+      "text": true
+    },
+    {
+      "path": "tests/test_build_windows.py",
+      "bytes": 6363,
+      "sha256": "5ac7c668409922d9d993b9af1444d0a62f51b086a8933405d4d80b078d4eaa7d",
       "text": true
     },
     {
@@ -1648,20 +1666,20 @@
     },
     {
       "path": "tools/README.md",
-      "bytes": 747,
-      "sha256": "eb33fe12086f6d9c59cd578fcd491454a5947740f18e45d2a3704f05aff889b1",
+      "bytes": 758,
+      "sha256": "407e52c23cd660a07322d7b5b16c62ad408e627cc2b19738bff1149630b0cb1f",
       "text": true
     },
     {
       "path": "tools/build_windows.py",
-      "bytes": 2602,
-      "sha256": "c3fd345971817d1340c4d86426cf6228a23a0c04848525b0205a03be5f93dcc1",
+      "bytes": 8670,
+      "sha256": "73ed94832786e2623e9fab534d6fb9356d1ed711edad4107879471e09d5c7ba5",
       "text": true
     },
     {
       "path": "tools/prepare_source_release.py",
-      "bytes": 6591,
-      "sha256": "bc19a65ec1d9b1bf1e892a53e46a4c0dbd65a90c420aa589ec3a8d50c3efd30e",
+      "bytes": 6599,
+      "sha256": "2f5949bddd28ee10acdae0733cc4af23834a98d306a26c1b5580a4490cbc0edb",
       "text": true
     },
     {

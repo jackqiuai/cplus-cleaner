@@ -16,7 +16,7 @@ ROOT_FILES = (
 )
 DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github')
 TOOLS = ('prepare_source_release.py', 'verify_source_tree.py', 'build_windows.py', 'README.md')
-TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.svg', '.bat', '.spec'}
+TEXT_SUFFIXES = {'.py', '.md', '.json', '.txt', '.yml', '.yaml', '.xml', '.svg', '.bat', '.spec'}
 PROVENANCE = {'assets/asset-sources.json', 'assets/home/source-manifest.json', 'assets/privacy/sources.json'}
 
 

@@ -190,6 +190,10 @@ For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). R
 
 The current application version is **1.1.0**. Windows x64 builds are available through successful Actions runs. A GitHub Release is published separately; publishing it triggers attachment of the verified binaries. An installer is not generated.
 
+## Code signing policy
+
+Trusted signing is being prepared through the free SignPath Foundation program, subject to eligibility review. **Signing is not active, and the existing v1.1.0 EXE is unsigned.** See the [Code signing policy](docs/CODE_SIGNING.md) for the current status, third-party resource prerequisites and release verification steps.
+
 ## License
 
 The original project code and documentation are licensed under the [MIT License](LICENSE). You may use, modify and distribute them free of charge, including for commercial purposes, provided that the copyright and permission notices are retained. The software is provided "AS IS", without warranty; see the license for the complete terms.

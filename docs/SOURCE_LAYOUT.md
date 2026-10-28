@@ -20,7 +20,8 @@ The repository contains the complete runtime source tree and its checked-in reso
 | `SOURCE-MANIFEST.json` | Exported file inventory with normalized-text/binary SHA-256 digests. |
 | `LICENSE` | MIT license for original project code and documentation. |
 | `CPlusCleaner.spec`, `requirements-build.txt` | Windows single-file bundle and pinned build dependencies. |
-| `.github/workflows/build-windows.yml` | Windows tests, EXE builds, artifacts and release attachments. |
+| `.github/workflows/build-windows.yml` | Windows tests, EXE builds, optional approved signing and release attachments. |
+| `.github/signpath-artifact.xml`, `docs/CODE_SIGNING.md` | Signing artifact restrictions, pending policy and activation instructions. |
 
 See [the complete module guide](MODULES.md) for each Python file and [the resource guide](../assets/README.md) for image and rule purposes.
 

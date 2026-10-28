@@ -18,7 +18,7 @@ Publish releases from tags containing the build configuration. Update `preferenc
 - For published versions, download `CPlusCleaner.exe` or `CPlusCleaner-windows-x64.zip` from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases).
 - `SHA256SUMS.txt` contains digests for the EXE and portable ZIP. The ZIP includes the executable, MIT license and usage/provenance notes.
 
-The workflow does not create an installer or sign the executable. Original code and documentation use MIT; third-party artwork and rules retain their applicable rights and provenance.
+The workflow does not create an installer. Builds remain unsigned until the optional SignPath integration has been approved and explicitly enabled. See the [Code signing policy](CODE_SIGNING.md) for eligibility, activation, verification and the current pending status. Once enabled, release signing must succeed before signed artifacts can be uploaded; the ZIP and checksums are regenerated after signing. Original code and documentation use MIT; third-party artwork and rules retain their applicable rights and provenance.
 
 ## Build locally
 

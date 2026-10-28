@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Purpose: Sign only the project's EXE and constrain its product/version metadata. -->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <parameters>
+    <parameter name="version" required="true" />
+  </parameters>
+  <zip-file>
+    <pe-file path="CPlusCleaner.exe" product-name="CPlus Cleaner"
+             product-version="${version}" file-version="${version}"
+             company-name="CPlus Cleaner" original-filename="CPlusCleaner.exe">
+      <authenticode-sign hash-algorithm="sha256" description="CPlus Cleaner"
+                         description-url="https://github.com/jackqiuai/cplus-cleaner" />
+    </pe-file>
+  </zip-file>
+</artifact-configuration>
