@@ -26,6 +26,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | [`core.py`](../cplus_cleaner/common/core.py) | Shared scanning, file checks, deletion, duplicate detection and history |
 | [`image_opacity.py`](../cplus_cleaner/common/image_opacity.py) | PNG opacity processing and caching |
 | [`runtime.py`](../cplus_cleaner/common/runtime.py) | Source and frozen resource paths and self-launch commands |
+| [`user_data.py`](../cplus_cleaner/common/user_data.py) | Canonical user-data path and lossless legacy profile directory migration |
 
 ## cplus_cleaner/ui
 

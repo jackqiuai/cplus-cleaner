@@ -1233,7 +1233,9 @@
     "暂未找到正式发布版本。": "No stable release is available yet.",
     "GitHub 请求受限，请稍后再试或查看发布页。": "GitHub's request limit was reached. Try again later or view the releases page.",
     "检查更新失败，请稍后重试。": "Unable to check for updates. Please try again later.",
-    "无法连接 GitHub，请检查网络后重试。": "Cannot connect to GitHub. Check your connection and try again."
+    "无法连接 GitHub，请检查网络后重试。": "Cannot connect to GitHub. Check your connection and try again.",
+    "用户数据迁移未完成": "User data migration did not complete",
+    "无法迁移用户数据。请关闭旧版程序，检查新旧数据目录及权限后重试。原有数据不会被覆盖。": "Unable to migrate user data. Close the old application, check both data folders and their permissions, then try again. Existing data will not be overwritten."
   },
   "templates": [
     {

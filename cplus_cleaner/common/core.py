@@ -1,4 +1,4 @@
-"""CCLEANNER: independent, standard-library-only Windows maintenance backend."""
+"""CPlus Cleaner: independent, standard-library-only Windows maintenance backend."""
 from __future__ import annotations
 
 import ctypes
@@ -15,9 +15,10 @@ import threading
 import time
 from dataclasses import asdict, dataclass
 from cplus_cleaner.common import runtime
+from cplus_cleaner.common.user_data import data_directory
 
 APP_DIR = runtime.resource_root()
-DATA_DIR = Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "CCLEANNER"
+DATA_DIR = data_directory()
 
 
 def is_link(path: Path) -> bool:

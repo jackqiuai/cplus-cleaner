@@ -82,14 +82,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 17455,
-      "sha256": "45334b26ecba3a510aaadf6f6872646dfeb0d9e3f8557bb3ae686c37ed8026b9",
+      "bytes": 17885,
+      "sha256": "401d20ba0f16aadfa7f5e70cc14fc92ebbc21cb9c5d84f576b9015bf325d3f88",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 16152,
-      "sha256": "368ed73a72e0b35b55b8f1813733881da4c58d8b831bb8d9057488d5d03b32a5",
+      "bytes": 16551,
+      "sha256": "6e633cad12a296eedd3d804ce69e93b9b9703642d13142b93e7efc17b2d29b0c",
       "text": true
     },
     {
@@ -928,8 +928,8 @@
     },
     {
       "path": "cplus_cleaner/application/bundle_check.py",
-      "bytes": 5621,
-      "sha256": "2b4f5d160ec4a02ab2e3a06d6b74c0c65b082bb4e2e74b0d1742e881efbeec6d",
+      "bytes": 5672,
+      "sha256": "7829bf47124a5b2b40b7a9083f87bbe75b8e6ebff46733241993794f575ea326",
       "text": true
     },
     {
@@ -952,8 +952,8 @@
     },
     {
       "path": "cplus_cleaner/application/single_instance.py",
-      "bytes": 4336,
-      "sha256": "387951ae27f5c40937fa0566043fd75284890f14a71c7ba93049c2faa2aebee9",
+      "bytes": 4872,
+      "sha256": "768d142ab4e3b2b45122ed04eb5c58ac76500000011d9eb134572b8d77bf1296",
       "text": true
     },
     {
@@ -976,8 +976,8 @@
     },
     {
       "path": "cplus_cleaner/common/core.py",
-      "bytes": 25261,
-      "sha256": "7fcdc273fa8f3c9936682aa20a57cb695ed75d184c64d572f6426e74fae2c57a",
+      "bytes": 25271,
+      "sha256": "075aad8ee8c85cee7218f51602a3366668e90d395064fb799a5b8949dedc0c55",
       "text": true
     },
     {
@@ -990,6 +990,12 @@
       "path": "cplus_cleaner/common/runtime.py",
       "bytes": 1032,
       "sha256": "309f289fb89f06fb47992d246d26014b957f440fcd71ea025afcb52a2ae1dac8",
+      "text": true
+    },
+    {
+      "path": "cplus_cleaner/common/user_data.py",
+      "bytes": 2043,
+      "sha256": "b3b3a048667014b1ffc8c06747fa92894790085b552ffdddfc09db0ab9cfb7a6",
       "text": true
     },
     {
@@ -1228,8 +1234,8 @@
     },
     {
       "path": "cplus_cleaner/features/system/system_analysis.py",
-      "bytes": 6301,
-      "sha256": "986c67a0e7b0c6283e59d31568e71e506aee9b9f978dc8f03a7f329bc29da1ed",
+      "bytes": 6377,
+      "sha256": "b2e911ddbbdff71a9bb3cb0f62c21f7eabdacf0e1ca96f7dcf8df5d90a090cae",
       "text": true
     },
     {
@@ -1372,8 +1378,8 @@
     },
     {
       "path": "docs/MODULES.md",
-      "bytes": 8935,
-      "sha256": "034a5f430060cfce74f6a5579d8ab24908f1509dd87009f4cc5ba4771bd39195",
+      "bytes": 9069,
+      "sha256": "70214f59443fe61e07526c82b5aeebae6142e84caea31a3d55f590d234719956",
       "text": true
     },
     {
@@ -1450,8 +1456,8 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 117485,
-      "sha256": "4368e562112d340f91d56a18ec8369b28bbb03f2fdbe8a50520010c969f5ae16",
+      "bytes": 117855,
+      "sha256": "43687a78fa2f150d33bb1b531ceb8f02548c576f8bc354e9ed6673fa25b6a581",
       "text": true
     },
     {
@@ -1702,8 +1708,8 @@
     },
     {
       "path": "tests/test_system_analysis.py",
-      "bytes": 7777,
-      "sha256": "6077416f7ea82af2ca243995b707b51865ded2ca9771677ec3ddc67957f33bd0",
+      "bytes": 7780,
+      "sha256": "03fe3987fb2e62fb09bec6d097361bd30d3aff4240b90b1d8158a844fafbffeb",
       "text": true
     },
     {
@@ -1716,6 +1722,12 @@
       "path": "tests/test_updates.py",
       "bytes": 3266,
       "sha256": "90106c7a5391a30f011af4b435ff8ce5e8207802716aeff55be071d4b550ceb9",
+      "text": true
+    },
+    {
+      "path": "tests/test_user_data.py",
+      "bytes": 7595,
+      "sha256": "a4f830ae818175f0bf00681596cd044bc62d23c4cb85b1825137b9500ecaf903",
       "text": true
     },
     {

@@ -65,7 +65,7 @@ Download `CPlusCleaner.exe` or `CPlusCleaner-windows-x64.zip` from [Releases](ht
 
 Keep the complete source tree together, including `app.py`, `start.bat`, `cplus_cleaner/`, `assets/`, `rules/` and `locales/`. See [Source layout](docs/SOURCE_LAYOUT.md) for resource paths and publication checks.
 
-The source folder can be named `CPLUSCLEANER`. The launcher and bundled resources resolve paths relative to the project, so renaming this folder does not require code changes. The existing user-data directory listed below keeps its original name to preserve settings and recovery records.
+The source folder can be named `CPLUSCLEANER`. The launcher and bundled resources resolve paths relative to the project, so renaming this folder does not require code changes. User settings, logs and recovery records are stored in `%LOCALAPPDATA%\CPLUSCLEANER\`.
 
 1. Install Python with **Tcl/Tk and IDLE** enabled.
 2. Clone this repository or download its source ZIP, then open the directory containing `app.py`.
@@ -150,7 +150,7 @@ Close the affected application before restoring it and ensure the drive has enou
 1. **App Mover:** Open **App Mover → Move history**, select the relevant record and click **Restore selected application**. Restoration copies and verifies the destination's current data back to the original location, replaces the junction with the restored folder and retains the destination copy. A valid local record and an unchanged junction/destination relationship are required.
 2. **App Compression:** Open **App Compression → Compression history** and click **Restore** for the relevant entry. Restoration decompresses recorded files that still pass the path and file-identity checks. Replaced, changed or inaccessible files may be skipped; review the result and retain the records if restoration is incomplete.
 
-Keep `%LOCALAPPDATA%\CCLEANNER\`, including `software-migrations.jsonl` and the complete `compression/` directory, for as long as you need these recovery features. Keep the actual migrated files too. Recovery records describe operations and file identities; they do not contain a backup of application contents or recover permanently deleted files. Clearing **Activity Log** removes audit entries without restoring files or deleting the separate migration/compression recovery records.
+Keep `%LOCALAPPDATA%\CPLUSCLEANER\`, including `software-migrations.jsonl` and the complete `compression/` directory, for as long as you need these recovery features. Keep the actual migrated files too. Recovery records describe operations and file identities; they do not contain a backup of application contents or recover permanently deleted files. Clearing **Activity Log** removes audit entries without restoring files or deleting the separate migration/compression recovery records.
 
 ## Language and local data
 
@@ -159,12 +159,14 @@ On first launch, a Chinese Windows display language selects Chinese; other displ
 The program stores settings, history and recovery manifests under:
 
 ```text
-%LOCALAPPDATA%\CCLEANNER\
+%LOCALAPPDATA%\CPLUSCLEANER\
 ```
 
 The internal directory name is retained for compatibility. Cleaning works locally without an account or cloud service. Opening a feedback link uses your browser; no diagnostic report is uploaded automatically. File-operation logs may contain local paths.
 
 ## Update or remove the portable application
+
+On the first normal launch, an existing `%LOCALAPPDATA%\CCLEANNER\` data folder is renamed to `%LOCALAPPDATA%\CPLUSCLEANER\` when the new folder is missing or empty. Its settings, popup rules, history and complete compression recovery manifests are preserved. An existing nonempty new folder takes priority and is never overwritten; the old folder is then left untouched. Duplicate launches and read-only helper processes do not migrate data.
 
 The EXE and ZIP need no installation. Settings, logs and recovery records are stored in the Windows user-data directory above, rather than beside the EXE; moving the EXE alone does not transfer that data to another Windows account or computer.
 
@@ -174,13 +176,13 @@ In current source builds, open the top-right **≡ → Check for updates** menu.
 
 1. Let active operations finish. If you will change the EXE's location, first turn off **Settings → Launch at startup** and click **Save settings** in the old copy.
 2. Fully quit using **Exit** from the application menu or tray menu. Download the new release and replace the old EXE, or extract the new portable ZIP into your chosen application folder.
-3. Preserve the existing `%LOCALAPPDATA%\CCLEANNER\` directory and migrated application folders. Back up the data directory if you need to retain settings and recovery records, then launch the new version. If its location changed, re-enable **Launch at startup** from the new copy when desired.
+3. Preserve the existing `%LOCALAPPDATA%\CPLUSCLEANER\` directory and migrated application folders. Back up the data directory if you need to retain settings and recovery records, then launch the new version. If its location changed, re-enable **Launch at startup** from the new copy when desired.
 
 ### Remove
 
 1. In **Settings**, turn off **Launch at startup** and **Scheduled cleanup**, then click **Save settings**. Let active operations finish and fully quit using **Exit**.
 2. Delete CPlus Cleaner's own EXE and the files supplied with its portable bundle. Keep any unrelated files and migrated application folders.
-3. You may remove `%LOCALAPPDATA%\CCLEANNER\` once you no longer need its settings, logs or recovery records. If you still need supported restoration, complete it first or retain both the recovery data and the actual application files.
+3. You may remove `%LOCALAPPDATA%\CPLUSCLEANER\` once you no longer need its settings, logs or recovery records. If you still need supported restoration, complete it first or retain both the recovery data and the actual application files.
 
 Removing CPlus Cleaner does not undo previous application moves or compression, and it does not recover deleted files.
 

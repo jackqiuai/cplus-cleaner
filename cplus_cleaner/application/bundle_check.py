@@ -25,6 +25,7 @@ def check():
     from cplus_cleaner.ui import desktop
     from cplus_cleaner.ui.ui_widgets import ASSETS
     assert ASSETS == core.APP_DIR/'assets'
+    assert core.DATA_DIR.name == 'CPLUSCLEANER'
     assert (core.APP_DIR/'LICENSE').is_file()
     for directory in ('assets', 'rules', 'locales'):
         for path in (core.APP_DIR/directory).rglob('*.json'):
@@ -35,7 +36,7 @@ def check():
     errors = []
     pages = []
     with tempfile.TemporaryDirectory(prefix='cplus-cleaner-check-') as directory, ExitStack() as stack:
-        stack.enter_context(temporary_attribute(core, 'DATA_DIR', Path(directory)/'CCLEANNER'))
+        stack.enter_context(temporary_attribute(core, 'DATA_DIR', Path(directory)/'CPLUSCLEANER'))
         stack.enter_context(temporary_attribute(preferences, 'read_autostart', lambda: False))
         stack.enter_context(temporary_attribute(updates, 'check_latest', lambda current:
             updates.ReleaseInfo(current, False, updates.RELEASES_URL)))

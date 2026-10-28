@@ -34,7 +34,7 @@ class SystemAnalysisTests(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory(dir=core.APP_DIR.parent)
         self.base = Path(self.directory.name)
-        self.patcher = patch.object(core, 'DATA_DIR', self.base/'CCLEANNER')
+        self.patcher = patch.object(core, 'DATA_DIR', self.base/'CPLUSCLEANER')
         self.patcher.start()
 
     def tearDown(self):

@@ -102,7 +102,8 @@ def helper_main(directory):
     job = Path(directory)
     if not job.is_absolute() or not job.is_dir() or not job.name.startswith('component-analysis-'):
         raise ValueError('Invalid component analysis job')
-    if job.parent.name.casefold() != 'ccleanner' or any(core.is_link(part) for part in (job, *job.parents)):
+    from cplus_cleaner.common.user_data import DIRECTORY_NAME
+    if job.parent.name.casefold() != DIRECTORY_NAME.casefold() or any(core.is_link(part) for part in (job, *job.parents)):
         raise ValueError('Invalid component analysis location')
     if any(job.iterdir()):
         raise ValueError('Component analysis job must be empty')

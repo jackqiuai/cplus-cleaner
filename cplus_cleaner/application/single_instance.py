@@ -99,6 +99,16 @@ def run(background=False, *, name=INSTANCE_NAME):
     with SingleInstance(name, activate=not background) as instance:
         if not instance.primary:
             return
+        from cplus_cleaner.common.user_data import migrate_legacy_data
+        try:
+            migrate_legacy_data()
+        except OSError:
+            from cplus_cleaner.localization import i18n
+            from cplus_cleaner.localization.localized_tk import messagebox
+            i18n.set_language('')
+            messagebox.showerror('用户数据迁移未完成',
+                '无法迁移用户数据。请关闭旧版程序，检查新旧数据目录及权限后重试。原有数据不会被覆盖。')
+            return
         from cplus_cleaner.ui.desktop import DesktopApplication
         window = DesktopApplication(background=background)
         instance.attach(window, window.restore_window)
