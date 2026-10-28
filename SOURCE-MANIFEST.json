@@ -82,14 +82,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 17382,
-      "sha256": "dab9a6c3b7ff5f11bf7f44f7488999dbeacbb33b79e948268b37bcdaa385dd89",
+      "bytes": 17356,
+      "sha256": "f7d899d435768042b89576b3ce1965dbe26344deec5a2d6d411b53a3fcff37fb",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 16102,
-      "sha256": "76b4529d2896e314bb03e90ae4dd9d94d7d38cc54ed9874c5e0757e4a959054f",
+      "bytes": 16081,
+      "sha256": "54504e5570ebd46c4b282a8ae272b9c3d88de03c18a83c531a1323b682360cf2",
       "text": true
     },
     {
@@ -947,7 +947,7 @@
     {
       "path": "cplus_cleaner/application/preferences.py",
       "bytes": 10353,
-      "sha256": "9340de588ba8c62b70c9e6b77391692530f2b4afb1abebe0ddd0cf77d3e38d17",
+      "sha256": "18840f1f7c32d5394301c3ac512620fa787083830e7d59ecba95b8c92a21c6a5",
       "text": true
     },
     {

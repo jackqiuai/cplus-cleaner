@@ -15,7 +15,7 @@ import tempfile
 from cplus_cleaner.common import core
 from cplus_cleaner.common.runtime import launch_command
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
 RUN_NAME = "CCCLEANER"
 DEFAULTS = dict(autostart=False, scheduled_cleanup=False, cleanup_time="20:00",

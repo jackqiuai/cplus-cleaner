@@ -170,7 +170,7 @@ The EXE and ZIP need no installation. Settings, logs and recovery records are st
 
 ### Update
 
-In current source builds, open the top-right **≡ → Check for updates** menu. The dialog compares the running version with the latest published stable [GitHub Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) and offers a download-page link when a newer version is available. Checks run only when requested and keep the interface responsive. They require access to GitHub, with no account or API key needed. Downloading and replacing the EXE remain manual steps; the checker does not overwrite a running program.
+Open the top-right **≡ → Check for updates** menu. The dialog compares the running version with the latest published stable [GitHub Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) and offers a download-page link when a newer version is available. Checks run only when requested and keep the interface responsive. They require access to GitHub, with no account or API key needed. Downloading and replacing the EXE remain manual steps; the checker does not overwrite a running program.
 
 1. Let active operations finish. If you will change the EXE's location, first turn off **Settings → Launch at startup** and click **Save settings** in the old copy.
 2. Fully quit using **Exit** from the application menu or tray menu. Download the new release and replace the old EXE, or extract the new portable ZIP into your chosen application folder.
@@ -198,7 +198,7 @@ The same menu includes **About Cplus Cleaner**, with the application logo, curre
 
 ## Project status
 
-The current application version is **1.1.1**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
+The current application version is **1.1.2**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 
