@@ -29,6 +29,8 @@ class PopupPageTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix='popup-ui-', dir=core.APP_DIR.parent)
         self.base = Path(self.temp.name)
         self.items = fixture_groups(self.base)
+        for item in self.items:
+            Path(item.roots[0]).mkdir()
         self.patches = [patch.object(core, 'DATA_DIR', self.base/'state'),
                         patch.object(preferences, 'load', return_value=dict(preferences.DEFAULTS)),
                         patch.object(preferences, 'read_autostart', return_value=False),
@@ -36,6 +38,8 @@ class PopupPageTests(unittest.TestCase):
                         patch.object(backend.windows, 'snapshot', return_value=[]),
                         patch.object(backend.windows, 'post_close', return_value=False),
                         patch.object(backend.windows, 'disappeared', return_value=False),
+                        patch.object(backend, 'catalog', return_value=self.items+backend.catalog()),
+                        patch.object(backend.windows, 'vendor_support_reason', return_value=''),
                         patch.object(desktop.messagebox, 'showerror')]
         self.mocks = [item.start() for item in self.patches]
         self.window = desktop.DesktopApplication()
@@ -45,6 +49,9 @@ class PopupPageTests(unittest.TestCase):
         self.window.report_callback_exception = lambda kind, error, trace: self.errors.append(str(error))
         self.window.navigate('popup')
         self.page = self.window.views['popup']
+        self.window.update()
+        self.mocks[3].assert_not_called()
+        self.page.scan_button.invoke()
         self.pump(lambda: self.page._loaded and not self.window.busy)
 
     def tearDown(self):
@@ -71,7 +78,7 @@ class PopupPageTests(unittest.TestCase):
         self.window.update()
         self.assertTrue(condition(), 'popup UI timed out')
 
-    def test_first_visit_enables_scanned_groups_and_saves_window_rule_selection(self):
+    def test_manual_scan_enables_scanned_groups_and_saves_window_rule_selection(self):
         self.assertIsInstance(self.page, ui.PopupPage)
         self.mocks[3].assert_called_once()
         self.assertEqual([len(item.rules) for item in self.page.items], [15, 2, 1])
@@ -205,6 +212,10 @@ class PopupPageTests(unittest.TestCase):
 
     def test_restart_restores_enabled_blocking_without_leaving_home(self):
         self.assertTrue(self.page.blocker.enabled)
+        off_rule = self.items[0].rules[0]
+        self.page.blocker.set_rule(off_rule, False)
+        self.page.blocker.set_software(self.items[1], False)
+        self.page.blocker._commit(lambda state: state['counts'].__setitem__(off_rule.id, 7))
         for timer in self.window.tk.call('after', 'info'):
             self.window.tk.call('after', 'cancel', timer)
         self.window.destroy()
@@ -214,8 +225,70 @@ class PopupPageTests(unittest.TestCase):
         self.page = self.window.views['popup']
         self.assertEqual(self.window.current_page, 'home')
         self.assertTrue(self.page.blocker.enabled)
+        self.assertFalse(self.page.blocker.rule_enabled(off_rule))
+        self.assertFalse(self.page.blocker.group_enabled(self.items[1]))
+        self.assertEqual(self.page.blocker.rule_count(off_rule), 7)
+        self.assertFalse(self.page.progress_frame.winfo_ismapped())
         self.assertEqual(self.window.nav_metrics['popup']['text'], '18项')
-        self.assertEqual(self.mocks[3].call_count, 2)
+        self.assertEqual(self.mocks[3].call_count, 1)
+
+    def test_restart_shows_saved_results_even_when_blocking_is_disabled(self):
+        self.page.blocker.set_all(False)
+        self.window.destroy()
+        self.window = desktop.DesktopApplication()
+        self.window.report_callback_exception = lambda kind, error, trace: self.errors.append(str(error))
+        self.pump(lambda: 'popup' in self.window.views)
+        self.page = self.window.views['popup']
+        self.assertEqual(len(self.page.items), 3)
+        self.assertFalse(self.page.blocker.enabled)
+        self.assertFalse(any(row.switch.value for row in self.page.rows.values()))
+        self.window.navigate('popup')
+        self.window.update()
+        self.assertFalse(self.window.busy)
+        self.assertEqual(self.mocks[3].call_count, 1)
+
+    def test_missing_or_corrupt_saved_results_never_trigger_automatic_scan(self):
+        path = self.base/'state/popup/results.json'
+        for contents in (None, '{broken json'):
+            self.window.destroy()
+            if contents is None:
+                path.unlink()
+            else:
+                path.write_text(contents, encoding='utf-8')
+            self.window = desktop.DesktopApplication()
+            self.window.report_callback_exception = lambda kind, error, trace: self.errors.append(str(error))
+            self.window.navigate('popup')
+            self.page = self.window.views['popup']
+            self.window.update()
+            self.assertFalse(self.window.busy)
+            self.assertFalse(self.page._loaded)
+            self.assertEqual(self.page.items, [])
+            self.assertEqual(self.mocks[3].call_count, 1)
+            self.assertIn('请点击扫描', self.page.empty.cget('text'))
+
+    def test_slow_window_observation_does_not_block_ui_or_shutdown(self):
+        entered, release, finished = threading.Event(), threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+        def slow_snapshot():
+            entered.set()
+            release.wait(5)
+            finished.set()
+            return []
+        self.mocks[4].side_effect = slow_snapshot
+        self.pump(entered.is_set)
+        heartbeat = []
+        self.window.after(10, lambda: heartbeat.append(True))
+        self.pump(lambda: bool(heartbeat), seconds=1)
+        started = time.monotonic()
+        self.window.destroy()
+        elapsed = time.monotonic()-started
+        self.assertTrue(self.page.blocker._stopped.is_set())
+        release.set()
+        self.assertTrue(finished.wait(2))
+        # Teardown still owns a live isolated root; no old Tk callback survives.
+        self.window = desktop.DesktopApplication()
+        self.window.report_callback_exception = lambda kind, error, trace: self.errors.append(str(error))
+        self.assertLess(elapsed, 1.5)
 
     def test_rescan_replaces_inventory_and_empty_result_clears_badge(self):
         self.mocks[3].return_value = dict(items=[], errors=[], cancelled=False)
@@ -266,6 +339,7 @@ class PopupPageTests(unittest.TestCase):
 
     def test_cancelled_rescan_keeps_partial_progress_and_reenables_actions(self):
         self.page.blocker.set_all(False)
+        saved = (self.base/'state/popup/results.json').read_bytes()
         def scan(*, cancel, progress, stage_progress):
             stage_progress(dict(message='已核对 6/15 款软件', completed=6, total=15))
             cancel.set()
@@ -279,6 +353,7 @@ class PopupPageTests(unittest.TestCase):
         self.assertTrue(self.page.block_button.enabled)
         self.assertFalse(self.page.blocker.enabled)
         self.assertEqual(self.page.blocker.selected_count(),0)
+        self.assertEqual((self.base/'state/popup/results.json').read_bytes(), saved)
 
     def test_rescan_enables_visible_results_and_hides_unsupported_rules(self):
         close=vendor_rule(identity='auto-close')
@@ -359,6 +434,7 @@ class PopupPageTests(unittest.TestCase):
             self.assertEqual(self.page.blocker.rule_count(rule),0)
             self.mocks[4].return_value=[];self.mocks[6].return_value=True
             self.pump(lambda:self.page.blocker.rule_count(rule)==1)
+            self.pump(lambda:self.page.rows[item.key].count.cget('text')=='1次')
         self.assertEqual(self.page.rows[item.key].count.cget('text'),'1次')
         self.assertEqual(self.window.nav_metrics['popup']['text'],'18项')
         self.assertEqual(len(self.page.blocker.history()),1)

@@ -13,6 +13,33 @@ from tests.popup_fixtures import definition as fixture_definition
 
 
 class PopupTests(unittest.TestCase):
+    def test_stopping_or_changing_rules_invalidates_in_flight_window_observations(self):
+        for action in ('stop', 'disable'):
+            with self.subTest(action=action):
+                blocker = self.blocker(active=True)
+                entered, release = threading.Event(), threading.Event()
+                results = []
+                def slow_snapshot():
+                    entered.set()
+                    release.wait(3)
+                    return [self.window]
+                self.snapshot.side_effect = slow_snapshot
+                self.close.reset_mock()
+                worker = threading.Thread(target=lambda: results.append(blocker.poll()))
+                worker.start()
+                try:
+                    self.assertTrue(entered.wait(2))
+                    if action == 'stop':
+                        blocker.stop()
+                    else:
+                        blocker.set_rule(self.rule, False)
+                finally:
+                    release.set()
+                    worker.join(3)
+                self.assertFalse(worker.is_alive())
+                self.assertEqual(results, [False])
+                self.close.assert_not_called()
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='popup-fixture-', dir=core.APP_DIR.parent)
         self.base = Path(self.temp.name)

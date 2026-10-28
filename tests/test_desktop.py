@@ -270,7 +270,8 @@ class DesktopWorkflowTests(unittest.TestCase):
         labels = [label for label, _ in self.window.more_menu.entries]
         self.assertEqual(labels[:2], ["设置", "问题反馈"])
         self.assertEqual(labels[2], "捐赠")
-        self.assertIn(preferences.VERSION, labels[3])
+        self.assertEqual(labels[3], "关于Cplus Cleaner")
+        self.assertEqual(labels[4], "检查更新")
         self.assertEqual(len(self.window.menu_button.find_all()), 3)
         preferences.append_activity("scheduled_cleanup", ok=False, error="test-failure")
         preferences.append_activity("scheduled_cleanup", ok=True, summary="释放 1KB")
@@ -332,8 +333,10 @@ class DesktopWorkflowTests(unittest.TestCase):
         menu._step(1)
         self.assertEqual(menu.active, 2)
         menu._step(1)
-        self.assertEqual(menu.active, 4)  # Informational version skips keyboard selection.
-        menu.invoke(3)
+        self.assertEqual(menu.active, 3)
+        menu._step(1)
+        self.assertEqual(menu.active, 4)
+        menu.invoke(None)
         self.assertTrue(menu.visible)
         menu.canvas.event_generate("<Button-1>", x=30, y=menu.TOP+14)
         self.window.update()
@@ -508,6 +511,208 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.assertEqual(self.window.current_page,'cdrive')
         self.assertIsNotNone(self.window._settings_window)
         self.assertTrue(self.window._settings_window.winfo_ismapped())
+
+    def test_about_menu_reuses_one_window_with_logo_and_current_version(self):
+        self.window.navigate('cdrive')
+        selected, tabs = self.window.notebook.select(), self.window.notebook.tabs()
+        with patch('cplus_cleaner.ui.about_panel.webbrowser.open_new_tab') as browser, \
+                patch.object(preferences, 'VERSION', '9.8.7'):
+            self.window.open_menu()
+            self.window.update()
+            self.window.more_menu.invoke(3)
+            self.window.update()
+            dialog, page = self.window._about_window, self.window.views['about']
+            self.assertEqual(dialog.title(), '关于Cplus Cleaner')
+            self.assertEqual(page.version_label.cget('text'), 'v9.8.7')
+            self.assertIs(page.logo_image, self.window.images.get('app-icon.png'))
+            self.assertGreater(page.logo_image.width(), 0)
+            self.assertEqual(page.logo_label.cget('image'), str(page.logo_image))
+            self.assertTrue(page.logo_label.winfo_ismapped())
+            for _ in range(3):
+                self.assertIs(self.window.open_about(), dialog)
+            self.assertIs(self.window.navigate('about'), dialog)
+            self.assertEqual(self.window.current_page, 'cdrive')
+            self.assertEqual(self.window.notebook.select(), selected)
+            self.assertEqual(self.window.notebook.tabs(), tabs)
+            self.assertIsNone(self.window.grab_current())
+            browser.assert_not_called()
+        page.return_button.invoke()
+        self.window.update()
+        self.assertIsNone(self.window._about_window)
+        self.assertNotIn('about', self.window.views)
+        reopened = self.window.open_about()
+        self.window.update()
+        self.assertIsNot(reopened, dialog)
+        self.assertEqual(reopened.panel.version_label.cget('text'), f'v{preferences.VERSION}')
+        reopened.focus_force()
+        reopened.event_generate('<Escape>')
+        self.window.update()
+        self.assertIsNone(self.window._about_window)
+
+    def test_close_hides_immediately_while_tray_startup_is_slow(self):
+        from types import SimpleNamespace
+        entered, release = threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+        candidate = SimpleNamespace(hwnd=None, error='', stop=lambda: None)
+        def start():
+            entered.set()
+            release.wait(3)
+            candidate.hwnd = 123
+            return True
+        candidate.start = start
+        self.window.settings['close_to_tray'] = True
+        with patch.object(desktop.tray, 'NativeTray', return_value=candidate) as factory:
+            started = time.monotonic()
+            self.window.close()
+            self.assertLess(time.monotonic()-started, .25)
+            self.assertEqual(self.window.state(), 'withdrawn')
+            self.assertTrue(entered.wait(1))
+            self.window.close()
+            factory.assert_called_once()
+            heartbeat = []
+            self.window.after(10, lambda: heartbeat.append(True))
+            self.pump(lambda: bool(heartbeat), seconds=1)
+            release.set()
+            self.pump(lambda: not self.window._tray_starting)
+            self.assertEqual(self.window.state(), 'withdrawn')
+            self.window.restore_window()
+            self.window.update()
+            self.assertEqual(self.window.state(), 'normal')
+
+    def test_failed_tray_startup_restores_the_window(self):
+        from types import SimpleNamespace
+        candidate = SimpleNamespace(hwnd=None, error='fixture failure', start=lambda: False, stop=lambda: None)
+        self.window.settings['close_to_tray'] = True
+        with patch.object(desktop.tray, 'NativeTray', return_value=candidate):
+            self.window.close()
+            self.pump(lambda: not self.window._tray_starting)
+        self.assertEqual(self.window.state(), 'normal')
+        self.assertIsNone(self.window.tray_icon)
+        self.assertIn('fixture failure', self.window.status.get())
+
+    def test_exit_does_not_wait_for_slow_tray_cleanup(self):
+        from types import SimpleNamespace
+        entered, release, finished = threading.Event(), threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+        def stop():
+            entered.set()
+            release.wait(3)
+            finished.set()
+        self.window.tray_icon = SimpleNamespace(stop=stop)
+        self.window.settings['close_to_tray'] = False
+        started = time.monotonic()
+        self.window.close()
+        elapsed = time.monotonic()-started
+        self.assertTrue(entered.wait(1))
+        release.set()
+        self.assertTrue(finished.wait(1))
+        self.window = desktop.DesktopApplication()
+        self.window.geometry('1160x760+20+20')
+        self.window.update()
+        self.assertLess(elapsed, 1.5)
+
+    def test_update_menu_checks_once_reuses_dialog_and_opens_exact_release(self):
+        from cplus_cleaner.application import updates
+        self.window.navigate('cdrive')
+        selected, tabs = self.window.notebook.select(), self.window.notebook.tabs()
+        release = updates.ReleaseInfo('1.2.0', True,
+                    'https://github.com/jackqiuai/cplus-cleaner/releases/tag/v1.2.0')
+        with patch.object(updates, 'check_latest', return_value=release) as check:
+            check.assert_not_called()
+            self.window.more_menu.invoke(4)
+            self.pump(lambda: not self.window.views['updates'].checking)
+            dialog, page = self.window._updates_window, self.window.views['updates']
+            self.assertEqual(page.latest.get(), 'v1.2.0')
+            self.assertIn('发现新版本', page.status.get())
+            for _ in range(3):
+                self.assertIs(self.window.open_updates(), dialog)
+            check.assert_called_once_with(preferences.VERSION)
+            self.assertEqual(self.window.current_page, 'cdrive')
+            self.assertEqual(self.window.notebook.select(), selected)
+            self.assertEqual(self.window.notebook.tabs(), tabs)
+            desktop.i18n.set_language('en')
+            self.window.update()
+            self.assertIn('Check for updates', dialog.title())
+            self.assertEqual(desktop.i18n.tr(page.download_button.caption), 'Download')
+            captions = [str(w.cget('text')) for w in self.descendants(page) if 'text' in w.keys()]
+            self.assertFalse(any(desktop.i18n.HAN.search(caption) for caption in captions))
+            with patch('cplus_cleaner.ui.update_panel.webbrowser.open_new_tab', return_value=True) as browser:
+                page.download_button.invoke()
+                browser.assert_called_once_with(release.url)
+            page.return_button.invoke()
+            self.window.update()
+            self.assertIsNone(self.window._updates_window)
+
+    def test_slow_update_request_keeps_ui_responsive_and_can_close_early(self):
+        from cplus_cleaner.application import updates
+        entered, release, finished = threading.Event(), threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+        def fetch(current):
+            entered.set()
+            release.wait(5)
+            finished.set()
+            return updates.ReleaseInfo(current, False, updates.RELEASES_URL)
+        with patch.object(updates, 'check_latest', side_effect=fetch):
+            dialog = self.window.open_updates()
+            self.assertTrue(entered.wait(1))
+            page = dialog.panel
+            heartbeat = []
+            self.window.after(10, lambda: heartbeat.append(True))
+            self.pump(lambda: bool(heartbeat), seconds=1)
+            self.assertTrue(page.checking)
+            page.return_button.invoke()
+            self.window.update()
+            self.assertIsNone(self.window._updates_window)
+            release.set()
+            self.assertTrue(finished.wait(1))
+            self.window.update()
+
+    def test_update_failure_can_retry_and_current_version_is_reported(self):
+        from cplus_cleaner.application import updates
+        with patch.object(updates, 'check_latest', side_effect=[updates.UpdateError('无法连接 GitHub，请检查网络后重试。'),
+                    updates.ReleaseInfo(preferences.VERSION, False, updates.RELEASES_URL)]):
+            page = self.window.open_updates().panel
+            self.pump(lambda: not page.checking)
+            self.assertIn('无法连接 GitHub', page.status.get())
+            self.assertTrue(page.check_button.enabled)
+            page.check_button.invoke()
+            self.pump(lambda: not page.checking)
+            self.assertEqual(page.status.get(), '当前已是最新版本。')
+            with patch('cplus_cleaner.ui.update_panel.webbrowser.open_new_tab', return_value=False):
+                page.download_button.invoke()
+                self.assertIn('无法打开浏览器', page.status.get())
+
+    def test_about_bilingual_copy_and_exact_project_link_handle_browser_failure(self):
+        from cplus_cleaner.ui.about_panel import PROJECT_URL
+        dialog = self.window.open_about()
+        page = dialog.panel
+        self.assertEqual(desktop.i18n.tr(page.star_button.caption), '给项目点个 Star')
+        desktop.i18n.set_language('en')
+        self.window.update()
+        self.assertEqual(dialog.title(), 'About Cplus Cleaner')
+        self.assertEqual(page.description.cget('text'), 'Clean up disk space and manage your apps.')
+        self.assertEqual(desktop.i18n.tr(page.star_button.caption), 'Give me a star')
+        captions = [str(widget.cget('text')) for widget in self.descendants(page) if 'text' in widget.keys()]
+        self.assertFalse(any(desktop.i18n.HAN.search(caption) for caption in captions))
+        for button in (page.star_button, page.return_button):
+            items = [button.itemcget(item, 'text') for item in button.find_all() if button.type(item) == 'text']
+            self.assertFalse(any(desktop.i18n.HAN.search(caption) for caption in items))
+        with patch('cplus_cleaner.ui.about_panel.webbrowser.open_new_tab', return_value=True) as browser:
+            page.star_button.invoke()
+            browser.assert_called_once_with('https://github.com/jackqiuai/cplus-cleaner')
+            self.assertEqual(PROJECT_URL, browser.call_args.args[0])
+            self.assertEqual(page.message.get(), '')
+        for result in (False, OSError('browser unavailable')):
+            options = {'side_effect': result} if isinstance(result, Exception) else {'return_value': result}
+            with patch('cplus_cleaner.ui.about_panel.webbrowser.open_new_tab', **options):
+                page.star_button.invoke()
+                self.window.update()
+                self.assertEqual(desktop.i18n.tr(page.message.get()),
+                                 'Cannot open the browser. Please try again later.')
+        desktop.i18n.set_language('zh')
+        self.window.update()
+        self.assertEqual(dialog.title(), '关于Cplus Cleaner')
+        self.assertEqual(desktop.i18n.tr(page.star_button.caption), '给项目点个 Star')
 
     def test_donation_menu_reuses_one_window_without_changing_the_current_tool(self):
         from cplus_cleaner.application import donations

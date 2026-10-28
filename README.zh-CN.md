@@ -75,6 +75,8 @@ https://github.com/user-attachments/assets/c5228662-efab-49e4-b8d6-7b64b010f335
 
 请保留包含 `app.py`、`start.bat`、`cplus_cleaner/`、`assets/`、`rules/`、`locales/` 的**完整源码目录**，资源位置和发布检查见[源码目录说明](docs/SOURCE_LAYOUT.md)。
 
+源码文件夹可命名为 `CPLUSCLEANER`。启动脚本和运行资源都相对于项目目录定位，改名无需修改代码。下文中的用户数据目录继续保留原名称，以兼容已有设置和恢复记录。
+
 1. 安装 Python，保留 **Tcl/Tk and IDLE** 组件。
 2. 克隆本仓库或下载源码 ZIP，打开 `app.py` 所在目录。
 3. 双击 `start.bat`，或执行：
@@ -178,6 +180,8 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ### 更新
 
+当前源码版本可通过右上角 **三横菜单 → 检查更新**，将正在运行的版本与 [GitHub 最新正式 Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) 比较，发现新版本时提供下载页入口。仅在主动点击时联网检查，检查过程不会阻塞界面；需要能够访问 GitHub，无需账号或 API key。下载后仍需按下列步骤手动替换 EXE，程序不会覆盖正在运行的文件。
+
 1. 等待正在执行的操作完成。如果准备更换 EXE 的存放位置，请先在旧版本中关闭“设置 → 开机自启动”，并点击“保存设置”。
 2. 通过程序菜单或托盘菜单中的“退出软件”完全退出。下载新版本后替换旧 EXE，或将新的便携 ZIP 解压到选定的软件目录。
 3. 保留已有的 `%LOCALAPPDATA%\CCLEANNER\` 和软件搬家目标目录。需要留存设置与恢复记录时，先备份数据目录，再运行新版本。如果 EXE 路径已改变，可按需在新版本中重新开启“开机自启动”。
@@ -199,6 +203,8 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 ## 捐赠支持
 
 通过右上角三横菜单 → **捐赠**，可支持项目持续维护。中文界面默认展示微信收款码，英文界面提供 [Buy me a coffee](https://ko-fi.com/qiujack) 按钮。软件免费使用，捐赠完全自愿。
+
+同一菜单中的 **关于Cplus Cleaner** 显示软件 LOGO、当前版本号，并提供“给项目点个 Star”的 GitHub 项目链接。
 
 ## 项目状态
 

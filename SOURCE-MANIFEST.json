@@ -82,14 +82,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 16491,
-      "sha256": "b25e60201c7d3de835c21d9d6544a87959344053cbcfca1e19353c578472c664",
+      "bytes": 17455,
+      "sha256": "45334b26ecba3a510aaadf6f6872646dfeb0d9e3f8557bb3ae686c37ed8026b9",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 15323,
-      "sha256": "c46b9513ef1f1de9ed1ff6de4a360c8f2c423c1657fe573c81ac817e19a71d8b",
+      "bytes": 16152,
+      "sha256": "368ed73a72e0b35b55b8f1813733881da4c58d8b831bb8d9057488d5d03b32a5",
       "text": true
     },
     {
@@ -928,8 +928,8 @@
     },
     {
       "path": "cplus_cleaner/application/bundle_check.py",
-      "bytes": 3948,
-      "sha256": "0260e5d2f1f5066b4bf8bf90bac538cab62ab05e3a4057af6bdc54daf0497ef0",
+      "bytes": 5621,
+      "sha256": "2b4f5d160ec4a02ab2e3a06d6b74c0c65b082bb4e2e74b0d1742e881efbeec6d",
       "text": true
     },
     {
@@ -958,8 +958,14 @@
     },
     {
       "path": "cplus_cleaner/application/tray.py",
-      "bytes": 8467,
-      "sha256": "754d466a72e7c784cdbba7d798d517f0d8ac07f51b846c8976cb5750c6101b8f",
+      "bytes": 8750,
+      "sha256": "8fc25924682a302feca9f16fd8fc7d1a38fdb333411d9af9ac8e59dc20bdc0ee",
+      "text": true
+    },
+    {
+      "path": "cplus_cleaner/application/updates.py",
+      "bytes": 2855,
+      "sha256": "976e0662ce12e9a770bdd1caa1aa50f9b2869ad43a8a9bebccbed5ba8cb5c6e1",
       "text": true
     },
     {
@@ -1090,8 +1096,8 @@
     },
     {
       "path": "cplus_cleaner/features/home/home_results.py",
-      "bytes": 8936,
-      "sha256": "4cbbc78c8a2ffca4941bbda8137ea8b28cea167a13a5fc1d83c4c1bd27b9c7f4",
+      "bytes": 9113,
+      "sha256": "412ef101b6fc985ac4da79af3f89bb12bb9c7406c2a00aadeb54c7c4eb9ec4fb",
       "text": true
     },
     {
@@ -1132,8 +1138,8 @@
     },
     {
       "path": "cplus_cleaner/features/popup/popup.py",
-      "bytes": 19491,
-      "sha256": "0de3c5663d6fd080598faab6e0964df0563987891ffbe7984a8b9915d293d431",
+      "bytes": 23631,
+      "sha256": "74919b82bb4cdff38f8748cb27cb9253e7cc09b45021d6fe4baddc9303bdb174",
       "text": true
     },
     {
@@ -1162,8 +1168,8 @@
     },
     {
       "path": "cplus_cleaner/features/popup/popup_ui.py",
-      "bytes": 28493,
-      "sha256": "e1b6285ac243efa3822780c8e20a5cc83958e1775a2de876a2b60a346507e36f",
+      "bytes": 29686,
+      "sha256": "5ab90d89d6fcb132f2211fe85d4a6d17144a41d4bb946e502624c94dfc083a1f",
       "text": true
     },
     {
@@ -1305,15 +1311,21 @@
       "text": true
     },
     {
+      "path": "cplus_cleaner/ui/about_panel.py",
+      "bytes": 2957,
+      "sha256": "cd8b43c4d5f8772326589bad84b7590a8e5ba8a8f985e75122210e02695606d2",
+      "text": true
+    },
+    {
       "path": "cplus_cleaner/ui/app_menu.py",
-      "bytes": 7176,
-      "sha256": "30bbdec4be180b872e4cb406f52b0b7389363b500a7b681e50922ca0590c0bbd",
+      "bytes": 7235,
+      "sha256": "71f59e7af211dae677d28c26f8edf8d38b5dfcb9f385a3afcaee68e5a09a03f6",
       "text": true
     },
     {
       "path": "cplus_cleaner/ui/desktop.py",
-      "bytes": 55108,
-      "sha256": "32fd5240909412ad2a0ed9db22c8d8694f43d7fef94611bda0702f220e577a68",
+      "bytes": 57609,
+      "sha256": "c8cf343a3b5346c14feef0ebf06eebecfac0ccfb8e8835213e92ca1c11638cf8",
       "text": true
     },
     {
@@ -1341,6 +1353,12 @@
       "text": true
     },
     {
+      "path": "cplus_cleaner/ui/update_panel.py",
+      "bytes": 4851,
+      "sha256": "96d36a43ed970e9230b8e41d94dbf369a45af3ac0fc78ca441c83001baca2898",
+      "text": true
+    },
+    {
       "path": "docs/BUILDING.md",
       "bytes": 4174,
       "sha256": "6f50cd49289333461150ad36b41f7f32e02263b8d2be6e8cbb0cc59a94a68dcc",
@@ -1354,8 +1372,8 @@
     },
     {
       "path": "docs/MODULES.md",
-      "bytes": 8499,
-      "sha256": "5805e40ddd58d0afc7205d1f57940b45f658992ef7fb153c839f93777b1cce81",
+      "bytes": 8935,
+      "sha256": "034a5f430060cfce74f6a5579d8ab24908f1509dd87009f4cc5ba4771bd39195",
       "text": true
     },
     {
@@ -1432,8 +1450,8 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 115511,
-      "sha256": "13619da9f156fb396e9fc7f379754681ca57767e21adcdbebfb10d37705b46f9",
+      "bytes": 117485,
+      "sha256": "4368e562112d340f91d56a18ec8369b28bbb03f2fdbe8a50520010c969f5ae16",
       "text": true
     },
     {
@@ -1528,8 +1546,8 @@
     },
     {
       "path": "tests/test_desktop.py",
-      "bytes": 62032,
-      "sha256": "047239affa529d531902d4b64061275d5dab154303117cdde215b9dadaed8e9c",
+      "bytes": 73086,
+      "sha256": "058f511516a1758739db5e29bd2eba04e7425eb2be6792dc93ea3b458468ecab",
       "text": true
     },
     {
@@ -1576,8 +1594,14 @@
     },
     {
       "path": "tests/test_popup.py",
-      "bytes": 21045,
-      "sha256": "15c0bf1dce886aef33d926c703d48c29855c115571cf0a9de659003fe367990f",
+      "bytes": 22226,
+      "sha256": "d6f56656b22b8ae05e94dd596d76be501d046c99de1e624873316cefe67c5f09",
+      "text": true
+    },
+    {
+      "path": "tests/test_popup_cache.py",
+      "bytes": 5237,
+      "sha256": "e63e45e71dbc6de7a1690278d5d7044bae3a449e6e3916e91974aca8c9a4617a",
       "text": true
     },
     {
@@ -1600,8 +1624,8 @@
     },
     {
       "path": "tests/test_popup_ui.py",
-      "bytes": 27246,
-      "sha256": "9c48734ec8511025cad88a21cd6a76efe4e48069e0949b3f504d4584458bc742",
+      "bytes": 31141,
+      "sha256": "19a454aafa37ae269793ebee0cff5a1bc21a854dcd55775d1396c1d420cea7be",
       "text": true
     },
     {
@@ -1686,6 +1710,12 @@
       "path": "tests/test_system_management_ui.py",
       "bytes": 10243,
       "sha256": "e0fa054ee0961a2ddddc7e8b07b55c4209d043ca878a4750505b5ba3877cfb02",
+      "text": true
+    },
+    {
+      "path": "tests/test_updates.py",
+      "bytes": 3266,
+      "sha256": "90106c7a5391a30f011af4b435ff8ce5e8207802716aeff55be071d4b550ceb9",
       "text": true
     },
     {

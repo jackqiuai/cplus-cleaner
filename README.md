@@ -65,6 +65,8 @@ Download `CPlusCleaner.exe` or `CPlusCleaner-windows-x64.zip` from [Releases](ht
 
 Keep the complete source tree together, including `app.py`, `start.bat`, `cplus_cleaner/`, `assets/`, `rules/` and `locales/`. See [Source layout](docs/SOURCE_LAYOUT.md) for resource paths and publication checks.
 
+The source folder can be named `CPLUSCLEANER`. The launcher and bundled resources resolve paths relative to the project, so renaming this folder does not require code changes. The existing user-data directory listed below keeps its original name to preserve settings and recovery records.
+
 1. Install Python with **Tcl/Tk and IDLE** enabled.
 2. Clone this repository or download its source ZIP, then open the directory containing `app.py`.
 3. Double-click `start.bat`, or run:
@@ -168,6 +170,8 @@ The EXE and ZIP need no installation. Settings, logs and recovery records are st
 
 ### Update
 
+In current source builds, open the top-right **≡ → Check for updates** menu. The dialog compares the running version with the latest published stable [GitHub Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) and offers a download-page link when a newer version is available. Checks run only when requested and keep the interface responsive. They require access to GitHub, with no account or API key needed. Downloading and replacing the EXE remain manual steps; the checker does not overwrite a running program.
+
 1. Let active operations finish. If you will change the EXE's location, first turn off **Settings → Launch at startup** and click **Save settings** in the old copy.
 2. Fully quit using **Exit** from the application menu or tray menu. Download the new release and replace the old EXE, or extract the new portable ZIP into your chosen application folder.
 3. Preserve the existing `%LOCALAPPDATA%\CCLEANNER\` directory and migrated application folders. Back up the data directory if you need to retain settings and recovery records, then launch the new version. If its location changed, re-enable **Launch at startup** from the new copy when desired.
@@ -189,6 +193,8 @@ For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). R
 ## Donate
 
 Open the top-right menu and choose **Donate**. The Chinese interface displays a WeChat Pay QR code; the English interface provides a [Buy me a coffee](https://ko-fi.com/qiujack) button. Donations are entirely optional and support ongoing project maintenance.
+
+The same menu includes **About Cplus Cleaner**, with the application logo, current version and a **Give me a star** link to the project.
 
 ## Project status
 

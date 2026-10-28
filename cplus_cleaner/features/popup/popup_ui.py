@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import base64
 import math
+import queue
+import threading
 import time
 from cplus_cleaner.localization import localized_tk as tk
 from tkinter import font
@@ -171,6 +173,8 @@ class PopupPage(tk.Frame):
         self.scanning = self._loaded = self._destroyed = False
         self._pending_open = self._tick_after = self._history_window = None
         self._last_error = ""
+        self._poll_worker = None
+        self._poll_results = queue.Queue()
         self.heading = tk.StringVar(value="发现 0 款软件 0 项广告弹窗")
         self.summary = tk.StringVar(value="告别弹窗骚扰")
         self.note = tk.StringVar(value="")
@@ -242,6 +246,7 @@ class PopupPage(tk.Frame):
         self.empty.pack(fill="x")
         self._wheel_binding = self.bind_all("<MouseWheel>", self.mousewheel, add="+")
         self.update_counter()
+        self.restore_saved_results()
         self._tick_after = self.after(250, self.tick)
 
     def fit_header(self, event):
@@ -292,19 +297,17 @@ class PopupPage(tk.Frame):
         return self.icons[item.key]
 
     def on_open(self):
-        if self._pending_open is not None:
-            self.after_cancel(self._pending_open)
-        def begin():
-            self._pending_open = None
-            if self._destroyed or getattr(self.app, "current_page", "popup") != "popup":
-                return
-            if self.app.busy:
-                self._pending_open = self.after(150, begin)
-            elif not self._loaded:
-                self.scan()
-            else:
-                self.update_counter()
-        self._pending_open = self.after_idle(begin)
+        self.update_counter()
+
+    def restore_saved_results(self):
+        try:
+            items = backend.load_results()
+        except (OSError, ValueError, TypeError):
+            self.note.set("上次扫描结果无法读取，请点击扫描。")
+            items = None
+        self._loaded = items is not None
+        self.items = items or []
+        self.render()
 
     def scan(self):
         if self._destroyed or self.scanning or self.app.busy:
@@ -332,6 +335,12 @@ class PopupPage(tk.Frame):
             self._loaded = True
             self.items = backend.visible_items(result.get("items", []))
             setting_error = ""
+            cache_error = ""
+            if not result.get("cancelled"):
+                try:
+                    backend.save_results(self.items)
+                except (OSError, ValueError):
+                    cache_error = "扫描结果未保存，请重新扫描。"
             try:
                 self.blocker.set_items(self.items)
                 if not result.get("cancelled"):
@@ -345,6 +354,8 @@ class PopupPage(tk.Frame):
                 details = "扫描已取消，保留已找到的结果。" + details
             if setting_error:
                 details += (" " if details else "") + setting_error
+            if cache_error:
+                details += (" " if details else "") + cache_error
             if details:
                 self.note.set(details)
             elif self.blocker.error:
@@ -399,7 +410,8 @@ class PopupPage(tk.Frame):
             row.pack(fill="x")
             self.rows[item.key] = row
         if not self.items:
-            self.empty.configure(text="正在扫描软件行为…" if self.scanning else "暂无可拦截对象")
+            self.empty.configure(text="正在扫描软件行为…" if self.scanning else
+                                 ("暂无可拦截对象" if self._loaded else "暂无扫描结果，请点击扫描。"))
             self.empty.pack(fill="x")
         self.update_counter()
         self.inner.update_idletasks()
@@ -467,19 +479,34 @@ class PopupPage(tk.Frame):
         if self._destroyed:
             return
         try:
-            if self.blocker.enabled or getattr(self.blocker, "pending", False):
-                if self.blocker.poll():
-                    self.update_counter()
-                    self._reload_history()
-                error = self.blocker.error or ""
-                if error and error != self._last_error:
-                    self.note.set(error)
-                self._last_error = error
-        except (OSError, ValueError) as error:
-            self.note.set(f"弹窗拦截未完成：{error}")
-        finally:
-            if not self._destroyed:
-                self._tick_after = self.after(250, self.tick)
+            changed, error = self._poll_results.get_nowait()
+        except queue.Empty:
+            pass
+        else:
+            self._poll_worker = None
+            if changed:
+                self.update_counter()
+                self._reload_history()
+            if error and error != self._last_error:
+                self.note.set(error)
+            self._last_error = error
+        if (self._poll_worker is None and not self.scanning
+                and (self.blocker.pending or self.blocker.enabled and self.items)):
+            self._poll_worker = threading.Thread(target=self._poll_background,
+                                                 args=(self.blocker, self._poll_results),
+                                                 name="CPlus-popup-check", daemon=True)
+            self._poll_worker.start()
+        self._tick_after = self.after(250, self.tick)
+
+    @staticmethod
+    def _poll_background(blocker, results):
+        # No Tk calls from this worker; an unresponsive foreign window cannot
+        # hold up navigation, closing the window, or hiding it to the tray.
+        try:
+            changed, error = blocker.poll(), blocker.error or ""
+        except Exception as exception:
+            changed, error = False, f"弹窗拦截未完成：{exception}"
+        results.put((changed, error))
 
     def show_history(self):
         window, created = single_window(self, "_history_window", "拦截记录")
@@ -553,6 +580,7 @@ class PopupPage(tk.Frame):
 
     def destroy(self):
         self._destroyed = True
+        self.blocker.stop()
         self.scan_progress.stop()
         for attribute in ("_pending_open", "_tick_after"):
             timer = getattr(self, attribute, None)

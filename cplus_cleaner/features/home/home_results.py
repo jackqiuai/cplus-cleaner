@@ -127,15 +127,19 @@ def _compression(page, payload, feature):
 def _popup(page, payload, feature):
     page.scanning = False
     page._loaded = True
-    from cplus_cleaner.features.popup.popup import visible_items
+    from cplus_cleaner.features.popup.popup import visible_items, save_results
     page.items = visible_items(payload["items"])
     page.blocker.set_items(page.items)
     setting_error = ''
     if not feature.get('cancelled') and not payload.get('cancelled'):
         try:
+            save_results(page.items)
+        except (OSError, ValueError):
+            setting_error = ' 扫描结果未保存，请重新扫描。'
+        try:
             page.blocker.enable_detected()
         except (OSError, ValueError) as error:
-            setting_error = f' 自动开启设置未保存：{error}'
+            setting_error += f' 自动开启设置未保存：{error}'
     page.render()
     page._scan_fraction = 0
     page.finish_scan_progress(_message(feature), complete=not feature.get("cancelled"))

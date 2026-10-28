@@ -13,9 +13,12 @@ class NativeTray:
     def __init__(self, events, icon_path):
         self.events, self.icon_path = events, str(icon_path)
         self.ready = threading.Event()
+        self.stopping = threading.Event()
         self.hwnd, self.error, self.thread = None, None, None
 
     def start(self):
+        if self.stopping.is_set():
+            return False
         if self.hwnd:
             return True
         if os.name != "nt":
@@ -28,9 +31,10 @@ class NativeTray:
         return bool(self.hwnd) and not self.error
 
     def stop(self):
+        self.stopping.set()
         if self.hwnd:
             ct.windll.user32.PostMessageW(wt.HWND(self.hwnd), 0x10, 0, 0)
-        if self.thread:
+        if self.thread and self.thread is not threading.current_thread():
             self.thread.join(timeout=2)
 
     def refresh_language(self):
@@ -157,6 +161,9 @@ class NativeTray:
             data.version = 4
             shell.Shell_NotifyIconW(4, ct.byref(data))
             self.hwnd = hwnd
+            if self.stopping.is_set():
+                user.DestroyWindow(hwnd)
+                return
             self.ready.set()
             message = wt.MSG()
             while user.GetMessageW(ct.byref(message), None, 0, 0) > 0:

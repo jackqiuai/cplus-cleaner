@@ -3,6 +3,7 @@ from contextlib import contextmanager, ExitStack
 import json
 from pathlib import Path
 import tempfile
+import time
 import traceback
 
 
@@ -18,7 +19,7 @@ def temporary_attribute(owner, name, value):
 
 def check():
     from cplus_cleaner.common import core, runtime
-    from cplus_cleaner.application import preferences
+    from cplus_cleaner.application import preferences, updates
     from cplus_cleaner.localization import i18n
     from cplus_cleaner.features.system import cdrive_system
     from cplus_cleaner.ui import desktop
@@ -36,6 +37,8 @@ def check():
     with tempfile.TemporaryDirectory(prefix='cplus-cleaner-check-') as directory, ExitStack() as stack:
         stack.enter_context(temporary_attribute(core, 'DATA_DIR', Path(directory)/'CCLEANNER'))
         stack.enter_context(temporary_attribute(preferences, 'read_autostart', lambda: False))
+        stack.enter_context(temporary_attribute(updates, 'check_latest', lambda current:
+            updates.ReleaseInfo(current, False, updates.RELEASES_URL)))
         stack.enter_context(temporary_attribute(cdrive_system, 'read_system_items', lambda: []))
         stack.enter_context(temporary_attribute(desktop, 'disk_snapshot',
             lambda: dict(root='C:\\', used=50, free=50, total=100)))
@@ -53,6 +56,9 @@ def check():
                 app.update_idletasks()
                 assert app.current_page == key and app.notebook.select() == str(app.views[key]), key
                 pages.append(key)
+            assert not app.views['popup'].scanning
+            assert not app.views['popup']._loaded
+            assert not app.busy
             donation = app.open_donation()
             donation.withdraw()
             assert set(donation.panel.qr_images) == {'wechat'}
@@ -63,6 +69,31 @@ def check():
                 assert donation.panel.current_view == ('china' if language == 'zh' else 'international')
             assert donation.panel.coffee_button.caption == 'Buy me a coffee'
             donation.destroy()
+            about = app.open_about()
+            about.withdraw()
+            assert about.panel.logo_image is not None
+            assert about.panel.logo_image.width() > 0
+            assert about.panel.version_label.cget('text') == f'v{preferences.VERSION}'
+            assert app.open_about() is about
+            about.withdraw()
+            for language, title, caption in (
+                    ('zh', '关于Cplus Cleaner', '给项目点个 Star'),
+                    ('en', 'About Cplus Cleaner', 'Give me a star')):
+                i18n.set_language(language)
+                app.update_idletasks()
+                assert about.title() == title
+                assert i18n.tr(about.panel.star_button.caption) == caption
+            about.destroy()
+            update_window = app.open_updates()
+            update_window.withdraw()
+            deadline = time.monotonic()+5
+            while update_window.panel.checking and time.monotonic() < deadline:
+                app.update()
+                time.sleep(.01)
+            assert not update_window.panel.checking
+            assert update_window.panel.latest.get() == f'v{preferences.VERSION}'
+            assert i18n.tr(update_window.panel.status.get()) == 'You are up to date.'
+            update_window.destroy()
             assert i18n.tr('开始扫描') == 'Scan'
             assert not errors, errors
             command = runtime.launch_command('--background')
@@ -73,7 +104,8 @@ def check():
                 app.tk.call('after', 'cancel', timer)
             app.destroy()
     return dict(frozen=runtime.frozen(), version=preferences.VERSION, pages=pages,
-                image_count=len(images), languages=['zh', 'en'], donation_dialog=True)
+                image_count=len(images), languages=['zh', 'en'], donation_dialog=True, about_dialog=True,
+                popup_auto_scan=False, update_dialog=True)
 
 
 def main(output):

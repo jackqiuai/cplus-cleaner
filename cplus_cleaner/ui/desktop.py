@@ -19,6 +19,8 @@ from cplus_cleaner.localization import i18n
 from cplus_cleaner.application import tray
 from cplus_cleaner.ui.desktop_panels import OperationsPanel, SettingsPanel, FeedbackPanel
 from cplus_cleaner.ui.donation_panel import DonationPanel
+from cplus_cleaner.ui.about_panel import AboutPanel
+from cplus_cleaner.ui.update_panel import UpdatePanel
 from cplus_cleaner.ui.app_menu import HeaderMenu
 from cplus_cleaner.ui.ui_widgets import Checkbutton, check_images, MetricLabel, single_window, scroll_canvas
 from cplus_cleaner.features.drive_cleanup.cleanup_model import CleanupSession
@@ -667,10 +669,12 @@ class DesktopApplication(tk.Tk):
         self.busy, self.cancel = False, threading.Event()
         self.events, self.last_progress = queue.Queue(), 0
         self.tray_events, self.tray_icon = queue.Queue(), None
+        self._tray_starting = False
         self._closing, self._schedule_timer = False, None
+        self._shutdown = threading.Event()
         self._popup_resume = None
         self._settings_window = self._feedback_window = self._operations_window = None
-        self._donation_window = None
+        self._donation_window = self._about_window = self._updates_window = None
         try:
             self.settings["autostart"] = preferences.read_autostart()
         except OSError:
@@ -733,7 +737,8 @@ class DesktopApplication(tk.Tk):
             ("设置", self.open_settings),
             ("问题反馈", self.open_feedback),
             ("捐赠", self.open_donation),
-            (f"版本号  v{preferences.VERSION}", None),
+            ("关于Cplus Cleaner", self.open_about),
+            ("检查更新", self.open_updates),
             ("退出软件", self.quit_app),
         ])
         for event in ("<Button-1>", "<Return>", "<space>"):
@@ -798,7 +803,15 @@ class DesktopApplication(tk.Tk):
         TaskRunner.poll(self)
         try:
             while True:
-                _, action = self.tray_events.get_nowait()
+                event, action = self.tray_events.get_nowait()
+                if event == "tray_ready":
+                    candidate, ready = action
+                    self._tray_starting = False
+                    if self.tray_icon is candidate and not ready:
+                        self.tray_icon = None
+                        self.status.set(f"隐藏失败：{candidate.error or '无法创建系统托盘图标'}")
+                        self.restore_window()
+                    continue
                 if action == "exit":
                     self.restore_window()
                     self.quit_app()
@@ -830,19 +843,32 @@ class DesktopApplication(tk.Tk):
     def open_donation(self):
         return self.open_panel_window("donation")
 
+    def open_about(self):
+        return self.open_panel_window("about")
+
+    def open_updates(self):
+        return self.open_panel_window("updates")
+
     def open_panel_window(self, key):
         title, factory = {"settings": ("设置", SettingsPanel),
                           "feedback": ("问题反馈", FeedbackPanel),
                           "donation": ("捐赠", DonationPanel),
+                          "about": ("关于Cplus Cleaner", AboutPanel),
+                          "updates": ("检查更新", UpdatePanel),
                           "operations": ("操作记录", OperationsPanel)}[key]
-        window, created = single_window(self, f"_{key}_window", f"CPlus Cleaner · {title}")
+        window, created = single_window(self, f"_{key}_window",
+                                        title if key == "about" else f"CPlus Cleaner · {title}")
         if not created:
             return window
         window.withdraw()
         window.configure(bg=WHITE)
         window.transient(self)
-        minimum = (820, 520) if key == "operations" else (780, 620)
+        compact = key in {"about", "updates"}
+        compact_height = 400 if key == "updates" else 500
+        minimum = (600, compact_height) if compact else ((820, 520) if key == "operations" else (780, 620))
         window.minsize(*minimum)
+        if compact:
+            window.resizable(False, False)
         window.protocol("WM_DELETE_WINDOW", window.destroy)
         window.bind("<Escape>", lambda event: window.destroy())
         panel = factory(window, self)
@@ -859,8 +885,8 @@ class DesktopApplication(tk.Tk):
                 self.views.pop(key, None)
         window.bind("<Destroy>", release, add="+")
         window.update_idletasks()
-        width = 960 if key == "operations" else 780
-        height = max(620, panel.winfo_reqheight())
+        width = 600 if compact else (960 if key == "operations" else 780)
+        height = max(compact_height if compact else 620, panel.winfo_reqheight())
         x = max(0, self.winfo_rootx()+(self.winfo_width()-width)//2)
         y = max(0, self.winfo_rooty()+(self.winfo_height()-height)//2)
         window.geometry(f"{width}x{height}+{x}+{y}")
@@ -901,6 +927,8 @@ class DesktopApplication(tk.Tk):
     def ensure_tray(self):
         if self.tray_icon and self.tray_icon.hwnd:
             return
+        if self._tray_starting:
+            raise OSError("系统托盘正在启动，请稍后再试。")
         candidate = tray.NativeTray(self.tray_events, ASSETS / "tray.ico")
         if not candidate.start():
             candidate.stop()
@@ -909,13 +937,23 @@ class DesktopApplication(tk.Tk):
 
     def hide_to_tray(self):
         self.more_menu.close()
-        try:
-            self.ensure_tray()
-        except OSError as exc:
-            self.status.set(f"隐藏失败：{exc}")
-            self.deiconify()
-            return
         self.withdraw()
+        if self._tray_starting or self.tray_icon and self.tray_icon.hwnd:
+            return
+        candidate = tray.NativeTray(self.tray_events, ASSETS / "tray.ico")
+        self.tray_icon, self._tray_starting = candidate, True
+        shutdown, events = self._shutdown, self.tray_events
+
+        def start_tray():
+            try:
+                ready = candidate.start()
+            except Exception as error:
+                candidate.error, ready = str(error), False
+            if not ready or shutdown.is_set():
+                candidate.stop()
+            if not shutdown.is_set():
+                events.put(("tray_ready", (candidate, ready)))
+        threading.Thread(target=start_tray, name="CPlus-tray-start", daemon=True).start()
 
     def restore_window(self):
         self.deiconify()
@@ -936,6 +974,11 @@ class DesktopApplication(tk.Tk):
 
     def destroy(self):
         self._closing = True
+        self._shutdown.set()
+        self.withdraw()
+        popup = getattr(self, "views", {}).get("popup")
+        if popup is not None:
+            popup.blocker.stop()
         if hasattr(self, "more_menu"):
             self.more_menu.close()
         if self._popup_resume is not None:
@@ -944,8 +987,13 @@ class DesktopApplication(tk.Tk):
         if self._schedule_timer is not None:
             self.after_cancel(self._schedule_timer)
             self._schedule_timer = None
+        for timer in self.tk.call('after', 'info'):
+            # Each widget owns its Tcl callback command and releases it during
+            # destroy. Cancel timers here without deleting a child's command.
+            self.tk.call('after', 'cancel', timer)
         if self.tray_icon:
-            self.tray_icon.stop()
+            # Let the tray message pump remove its icon without blocking Tk.
+            threading.Thread(target=self.tray_icon.stop, name="CPlus-tray-stop").start()
             self.tray_icon = None
         super().destroy()
 
@@ -953,17 +1001,13 @@ class DesktopApplication(tk.Tk):
         self._popup_resume = None
         if self._closing or "popup" in self.views:
             return
-        from cplus_cleaner.features.popup.popup import Blocker
-        if not Blocker().enabled:
-            return
-        if self.busy:
-            self._popup_resume = self.after(250, self.resume_popup_blocking)
+        from cplus_cleaner.features.popup.popup import has_saved_results
+        if not has_saved_results():
             return
         from cplus_cleaner.features.popup.popup_ui import PopupPage
         page = PopupPage(self.notebook, self)
         self.views["popup"] = page
         self.notebook.add(page, text="popup")
-        page.scan()
 
     def schedule_tick(self):
         self._schedule_timer = None
@@ -1008,7 +1052,7 @@ class DesktopApplication(tk.Tk):
         self.start("定时清理默认常规类型", work, done, failed)
 
     def ensure_view(self, key):
-        if key in {"settings", "feedback", "operations", "donation"}:
+        if key in {"settings", "feedback", "operations", "donation", "about", "updates"}:
             return self.open_panel_window(key).panel
         if key not in self.views:
             def migration_view():
@@ -1054,7 +1098,7 @@ class DesktopApplication(tk.Tk):
         return self.views.get(key)
 
     def navigate(self, key, *, use_existing=False):
-        if key in {"settings", "feedback", "operations"}:
+        if key in {"settings", "feedback", "operations", "donation", "about", "updates"}:
             return self.open_panel_window(key)
         self.previous_tool = getattr(self, "current_page", "home")
         home = self.home_page

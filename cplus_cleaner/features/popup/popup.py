@@ -7,12 +7,14 @@ Selected window actions are revalidated and executed by the Win32 adapter.
 from __future__ import annotations
 
 from dataclasses import replace
+import base64
 import json
 import ntpath
 import os
 import re
 from pathlib import Path
 import tempfile
+import threading
 import time
 
 from cplus_cleaner.common import core
@@ -218,8 +220,75 @@ def _atomic(path, data):
             temporary.unlink(missing_ok=True)
 
 
+def has_saved_results():
+    try:
+        return (_directory()/'results.json').is_file()
+    except OSError:
+        return False
+
+
+def save_results(items):
+    """Cache observations only; executable rule definitions stay in the shipped catalog."""
+    _atomic(_directory()/'results.json', dict(version=1, groups=[
+        dict(key=item.key, roots=list(item.roots), rules=[rule.id for rule in item.rules],
+             icon=base64.b64encode(item.icon).decode('ascii') if item.icon else '')
+        for item in visible_items(items)]))
+
+
+def load_results():
+    """Restore saved identities against current trusted rules without software discovery."""
+    path = _directory()/'results.json'
+    try:
+        if path.stat().st_size > 4*1024*1024:
+            raise ValueError('Invalid saved popup results')
+        data = json.loads(path.read_text('utf-8'))
+    except FileNotFoundError:
+        return None
+    if (not isinstance(data, dict) or data.get('version') != 1
+            or not isinstance(data.get('groups'), list) or len(data['groups']) > 1000):
+        raise ValueError('Invalid saved popup results')
+    if not data['groups']:
+        return []
+    definitions = {item.key: item for item in catalog()}
+    reason = windows.vendor_support_reason()
+    items, seen = [], set()
+    for entry in data['groups']:
+        if (not isinstance(entry, dict) or not isinstance(entry.get('key'), str)
+                or not isinstance(entry.get('roots'), list) or not entry['roots']
+                or len(entry['roots']) > 50 or not all(isinstance(root, str) for root in entry['roots'])
+                or not isinstance(entry.get('rules'), list)
+                or not all(isinstance(identity, str) for identity in entry['rules'])
+                or not isinstance(entry.get('icon', ''), str)):
+            raise ValueError('Invalid saved popup results')
+        definition = definitions.get(entry['key'])
+        if definition is None or entry['key'] in seen:
+            continue
+        seen.add(entry['key'])
+        roots = set()
+        for root in entry['roots']:
+            roots.update(_roots(dict(InstallLocation=root)))
+        if not roots:
+            continue
+        roots = tuple(sorted(roots))
+        identities = set(entry['rules'])
+        rules = tuple(huorong.bind_rule(rule, roots, reason=reason)
+                      for rule in definition.rules if rule.id in identities)
+        try:
+            icon = base64.b64decode(entry.get('icon', ''), validate=True) or None
+        except ValueError as error:
+            raise ValueError('Invalid saved popup icon') from error
+        if icon and (len(icon) > 128*1024 or not icon.startswith(b'\x89PNG\r\n\x1a\n')):
+            icon = None
+        items.append(replace(definition, roots=roots, rules=rules, icon=icon))
+    return visible_items(items)
+
+
 class Blocker:
     def __init__(self):
+        self._state_lock = threading.RLock()
+        self._poll_lock = threading.Lock()
+        self._stopped = threading.Event()
+        self._revision = 0
         self.items, self.pending = [], {}
         self.error = ''
         self.state = dict(version=3, enabled=False, software={}, rules={}, counts={}, history={},
@@ -257,11 +326,14 @@ class Blocker:
 
     @property
     def total_count(self):
-        return sum(self.state['counts'].values())
+        with self._state_lock:
+            return sum(self.state['counts'].values())
 
     def set_items(self, items):
-        self.items = [replace(item, rules=tuple(rule for rule in item.rules if rule.source == huorong.SOURCE))
-                      for item in items if item.source == huorong.SOURCE]
+        with self._state_lock:
+            self.items = [replace(item, rules=tuple(rule for rule in item.rules if rule.source == huorong.SOURCE))
+                          for item in items if item.source == huorong.SOURCE]
+            self._revision += 1
 
     def group_enabled(self, item):
         default = any(rule.default_enabled and rule.supported for rule in item.rules)
@@ -286,10 +358,12 @@ class Blocker:
         return sum(self.rule_count(rule) for rule in item.rules)
 
     def _commit(self, update):
-        state = dict(self.state, **{key: dict(self.state[key]) for key in ('software', 'rules', 'counts', 'history', 'actions')})
-        update(state)
-        _atomic(_directory()/'state.json', state)
-        self.state, self.error, self._dirty = state, '', False
+        with self._state_lock:
+            state = dict(self.state, **{key: dict(self.state[key]) for key in ('software', 'rules', 'counts', 'history', 'actions')})
+            update(state)
+            _atomic(_directory()/'state.json', state)
+            self.state, self.error, self._dirty = state, '', False
+            self._revision += 1
 
     def enable_detected(self):
         """Enable scanned software and supported window-only actions.
@@ -360,39 +434,58 @@ class Blocker:
     def _token(item):
         return (item['hwnd'], item['pid'], item['created'])
 
+    def stop(self):
+        """Invalidate in-flight observations immediately, without waiting for Win32 calls."""
+        self._stopped.set()
+
     def poll(self):
-        recovered = self._dirty
-        if self._dirty:
-            _atomic(_directory()/'state.json', self.state)
-            self._dirty = False
-        if not self.enabled and not self.pending:
+        with self._poll_lock:
+            return self._poll()
+
+    def _poll(self):
+        if self._stopped.is_set():
+            return False
+        with self._state_lock:
+            revision, items = self._revision, tuple(self.items)
+            recovered = self._dirty
+            if self._dirty:
+                _atomic(_directory()/'state.json', self.state)
+                self._dirty = False
+        if not self.pending and (not items or not self.enabled):
             return recovered
         current = windows.snapshot()
+        if self._stopped.is_set():
+            return recovered
         live = {self._token(item) for item in current}
         now, changed = time.time(), recovered
         for token, pending in list(self.pending.items()):
             software, rule, observed, snapshot = pending
             if token not in live and windows.disappeared(snapshot):
-                count = self.rule_count(rule)+1
-                self.state['counts'][rule.id] = count
-                self.state['history'][rule.id] = dict(time=now, software=software.name, title=rule.label,
-                                                     rule_id=rule.id, count=count, source=rule.source,
-                                                     action=rule.action)
+                with self._state_lock:
+                    count = self.rule_count(rule)+1
+                    self.state['counts'][rule.id] = count
+                    self.state['history'][rule.id] = dict(time=now, software=software.name, title=rule.label,
+                                                         rule_id=rule.id, count=count, source=rule.source,
+                                                         action=rule.action)
+                    self._dirty = True
                 del self.pending[token]
-                changed = self._dirty = True
+                changed = True
             elif now-observed > 15:
                 del self.pending[token]
-        if self._dirty:
-            _atomic(_directory()/'state.json', self.state)
-            self._dirty = False
-        if self.enabled:
+        with self._state_lock:
+            if self._dirty:
+                _atomic(_directory()/'state.json', self.state)
+                self._dirty = False
+        if self.enabled and revision == self._revision and not self._stopped.is_set():
             killed = {(pending[3]['pid'], pending[3]['created']) for pending in self.pending.values()
                       if pending[1].action == 'kill'}
             for item in current:
+                if self._stopped.is_set() or revision != self._revision:
+                    break
                 token = self._token(item)
                 if token in self.pending or (item['pid'], item['created']) in killed:
                     continue
-                candidates = [(software, rule) for software in self.items if self.group_enabled(software)
+                candidates = [(software, rule) for software in items if self.group_enabled(software)
                               and owned(item.get('image', ''), software.roots)
                               for rule in software.rules if self.rule_enabled(rule)]
                 extended = None
@@ -416,7 +509,8 @@ class Blocker:
                         continue
                     points = tuple(point[:2] for point in rule.matcher.points)
                     def validate(fresh, software=software, rule=rule):
-                        return (self.enabled and self.group_enabled(software) and self.rule_enabled(rule)
+                        return (not self._stopped.is_set() and revision == self._revision
+                                and self.enabled and self.group_enabled(software) and self.rule_enabled(rule)
                                 and matches(rule, fresh, software))
                     accepted = windows.apply_vendor(item, rule.action, validate, points)
                     if accepted:
@@ -430,12 +524,14 @@ class Blocker:
         cutoff = time.time()-HISTORY_DAYS*86400
         ids = {rule.id for item in self.items for rule in item.rules}
         result = []
-        for identity, row in self.state['history'].items():
+        with self._state_lock:
+            history, counts = dict(self.state['history']), dict(self.state['counts'])
+        for identity, row in history.items():
             if identity not in ids or not isinstance(row, dict):
                 continue
             timestamp = row.get('time')
             if isinstance(timestamp, (int, float)) and timestamp >= cutoff:
-                result.append(dict(row, count=self.state['counts'].get(identity, 0)))
+                result.append(dict(row, count=counts.get(identity, 0)))
         return sorted(result, key=lambda row: row['time'], reverse=True)
 
     def clear_history(self):

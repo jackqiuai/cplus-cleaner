@@ -100,9 +100,9 @@ class HeaderMenu:
             top = self.TOP + i*self.ROW_HEIGHT
             if i == self.active and action:
                 canvas.create_rectangle(7, top, self.width-7, top+self.ROW_HEIGHT, fill=self.HOVER, outline="")
-            if action is None:
+            if action is None or caption == "关于Cplus Cleaner":
                 canvas.create_line(18, top, self.width-18, top, fill="#edf2f2")
-            glyph = {"设置": "⚙", "问题反馈": "✉", "捐赠": "♡", "退出软件": "⇥"}.get(caption, "ⓘ")
+            glyph = {"设置": "⚙", "问题反馈": "✉", "捐赠": "♡", "检查更新": "↻", "退出软件": "⇥"}.get(caption, "ⓘ")
             canvas.create_text(28, top+self.ROW_HEIGHT//2, text=glyph,
                                font=("Segoe UI Symbol", -17), fill="#719397")
             canvas.create_text(47, top+self.ROW_HEIGHT//2, anchor="w", text=caption,

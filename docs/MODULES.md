@@ -15,6 +15,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | [`preferences.py`](../cplus_cleaner/application/preferences.py) | Settings, autostart and scheduling |
 | [`feedback.py`](../cplus_cleaner/application/feedback.py) | Feedback dialog and issue link |
 | [`donations.py`](../cplus_cleaner/application/donations.py) | Public donation link and owner-supplied Chinese payment QR definitions |
+| [`updates.py`](../cplus_cleaner/application/updates.py) | Public GitHub stable-release lookup and numeric version comparison |
 | [`tray.py`](../cplus_cleaner/application/tray.py) | Windows tray icon and menu |
 | [`bundle_check.py`](../cplus_cleaner/application/bundle_check.py) | Isolated executable resource and feature-page smoke checks |
 
@@ -31,6 +32,8 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | File | Purpose |
 | --- | --- |
 | [`donation_panel.py`](../cplus_cleaner/ui/donation_panel.py) | Bilingual donation dialog, QR previews and the public Ko-fi link |
+| [`about_panel.py`](../cplus_cleaner/ui/about_panel.py) | Bilingual About dialog with the application logo, version and GitHub star link |
+| [`update_panel.py`](../cplus_cleaner/ui/update_panel.py) | Bilingual update dialog, background requests and release-page navigation |
 | [`desktop.py`](../cplus_cleaner/ui/desktop.py) | Main window, navigation, feature composition and settings dialog |
 | [`desktop_panels.py`](../cplus_cleaner/ui/desktop_panels.py) | Shared result panels and activity log dialog |
 | [`app_menu.py`](../cplus_cleaner/ui/app_menu.py) | Application dropdown menu |
@@ -126,7 +129,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 
 | File | Purpose |
 | --- | --- |
-| [`popup.py`](../cplus_cleaner/features/popup/popup.py) | Popup scan and blocking orchestration |
+| [`popup.py`](../cplus_cleaner/features/popup/popup.py) | Popup scanning, cached results and background blocking orchestration |
 | [`popup_huorong.py`](../cplus_cleaner/features/popup/popup_huorong.py) | Huorong rule parsing and capability checks |
 | [`popup_inventory.py`](../cplus_cleaner/features/popup/popup_inventory.py) | Popup software inventory and path matching |
 | [`popup_models.py`](../cplus_cleaner/features/popup/popup_models.py) | Popup group, rule and state models |
