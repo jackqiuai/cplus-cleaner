@@ -162,11 +162,9 @@ The program stores settings, history and recovery manifests under:
 %LOCALAPPDATA%\CPLUSCLEANER\
 ```
 
-The internal directory name is retained for compatibility. Cleaning works locally without an account or cloud service. Opening a feedback link uses your browser; no diagnostic report is uploaded automatically. File-operation logs may contain local paths.
+Cleaning works locally without an account or cloud service. Opening a feedback link uses your browser; no diagnostic report is uploaded automatically. File-operation logs may contain local paths.
 
 ## Update or remove the portable application
-
-On the first normal launch, an existing `%LOCALAPPDATA%\CCLEANNER\` data folder is renamed to `%LOCALAPPDATA%\CPLUSCLEANER\` when the new folder is missing or empty. Its settings, popup rules, history and complete compression recovery manifests are preserved. An existing nonempty new folder takes priority and is never overwritten; the old folder is then left untouched. Duplicate launches and read-only helper processes do not migrate data.
 
 The EXE and ZIP need no installation. Settings, logs and recovery records are stored in the Windows user-data directory above, rather than beside the EXE; moving the EXE alone does not transfer that data to another Windows account or computer.
 
