@@ -1005,6 +1005,7 @@
     "压缩后大小": "Disk usage after",
     "容量按实际磁盘占用统计": "Sizes show actual disk usage.",
     "部分文件未压缩，未计入节省空间": "Some files were not compressed and do not count as space saved.",
+    "该软件已完成压缩，请先还原": "This app has finished compression. Restore it before compressing again.",
     "旧记录：未记录操作前的实际占用": "Legacy record: disk usage before the operation was not recorded.",
     "当前占用读取失败": "Current disk usage could not be read.",
     "读取软件压缩记录": "Reading compression records",

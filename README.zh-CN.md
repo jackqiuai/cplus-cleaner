@@ -113,6 +113,8 @@ C盘和聊天清理按类型汇总，不逐个展示文件。大文件搬家与�
 
 **若其他分区有可用空间，优先使用软件搬家，再考虑软件压缩。** 软件搬家可释放原分区空间，但不会减少软件在所有磁盘上的合计占用；软件压缩则是在减少占用与性能影响之间取舍。需要撤销压缩时，可在“软件压缩 → 压缩记录”中还原。
 
+部分文件可能维持未压缩状态，程序会跳过且不自动重试。仅发生这类跳过仍计为压缩完成，压缩记录中的操作为“还原”。
+
 ## 常见问题
 
 <details>
@@ -216,7 +218,7 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ## 项目状态
 
-当前程序版本号为 **1.1.4**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
+当前程序版本号为 **1.1.5**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
 
 ## 数字签名政策（Code signing policy）
 

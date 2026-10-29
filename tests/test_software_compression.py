@@ -128,6 +128,101 @@ class CompressionTests(unittest.TestCase):
         result=compression.compress(self.item(),runner=lambda *a:dict(returncode=1,output='access denied'))
         self.assertEqual(result['status'],'partial');self.assertIn('access denied',result['errors'])
 
+    def test_all_uncompressed_files_complete_once_until_explicit_restore(self):
+        item=self.item()
+        original={path.name:core.sha256_file(path) for path in (self.exe,self.file)}
+        runner=Mock(side_effect=self.noop)
+        result=compression.compress(item,runner=runner)
+        self.assertEqual(result['status'],'success')
+        self.assertEqual(result['errors'],[])
+        self.assertTrue(result['item'].compressed)
+        self.assertEqual(result['saved'],0)
+        runner.assert_called_once()
+        with self.assertRaisesRegex(ValueError,'已完成压缩'):
+            compression.compress(result['item'],runner=runner)
+        runner.assert_called_once()
+        record=compression.history(refresh=True)[0]
+        self.assertEqual((record['operation'],record['status']),('compress','success'))
+        self.assertEqual((record['compressed_files'],record['skipped_files']),(0,2))
+        self.assertFalse(record['restored'])
+        self.assertTrue(record['can_restore'])
+        self.assertFalse(self.scan()['items'],'Completed skipped files must not be recompressed on rescan')
+        restored=compression.restore(record,runner=self.noop)
+        self.assertEqual(restored['status'],'success')
+        self.assertTrue(compression.history()[0]['restored'])
+        self.assertEqual(len(self.scan()['items']),1)
+        self.assertEqual({path.name:core.sha256_file(path) for path in (self.exe,self.file)},original)
+
+    def test_mixed_compressed_and_skipped_files_complete_with_restore_available(self):
+        item=self.item();compressed=set()
+        def runner(paths,mode):
+            compressed.add(self.file)
+            return dict(returncode=0,output='')
+        with patch.object(compression,'_file_compressed',side_effect=lambda path,info=None:path in compressed):
+            result=compression.compress(item,runner=runner)
+            row=compression.history(refresh=True)[0]
+        self.assertEqual(result['status'],'success')
+        self.assertEqual(row['last_errors'],[])
+        self.assertEqual((row['compressed_files'],row['skipped_files']),(1,1))
+        self.assertEqual(row['operation'],'compress')
+        self.assertTrue(row['can_restore'])
+        self.assertFalse(compression.restore_started(row))
+
+    def test_legacy_uncompressed_notice_is_completed_without_hiding_real_errors_or_cancellation(self):
+        notice=compression.UNCOMPRESSED_NOTICE
+        for status in ('partial','failed','success'):
+            row=compression.record_view(dict(status=status,pending=0,last_errors=['Windows compact summary\n'+notice]))
+            self.assertEqual((row['status'],row['last_errors']),('success',[]))
+            self.assertFalse(compression.restore_started(row))
+        for status in ('cancelled','running'):
+            row=compression.record_view(dict(status=status,last_errors=[notice]))
+            self.assertEqual(row['status'],status)
+        row=compression.record_view(dict(status='partial',pending=1,last_errors=[notice]))
+        self.assertEqual(row['status'],'partial')
+        row=compression.record_view(dict(status='partial',pending=0,
+            last_errors=['[ERR] Access is denied.\n'+notice]))
+        self.assertEqual(row['status'],'partial')
+        self.assertIn('Access is denied.',row['last_errors'][0])
+        self.assertNotIn(notice,row['last_errors'][0])
+        restoring=dict(status='partial',operation='restore',last_errors=['file is locked'])
+        self.assertEqual(compression.record_view(restoring),restoring)
+        self.assertTrue(compression.restore_started(restoring))
+        self.assertTrue(compression.restore_started(dict(status='partial',restore_before=1)))
+
+    def test_existing_skipped_record_refresh_and_rescan_keep_completed_history(self):
+        compression.compress(self.item(),runner=self.noop)
+        row=compression._records()[0]
+        for key in ('operation','compressed_files','skipped_files'):
+            row.pop(key,None)
+        row.update(status='partial',last_errors=[compression.UNCOMPRESSED_NOTICE])
+        compression._store(row)
+        before=(compression._directory()/'records.json').read_bytes()
+        shown=compression.history()[0]
+        self.assertEqual(shown['status'],'success')
+        self.assertEqual(shown['last_errors'],[])
+        self.assertEqual((compression._directory()/'records.json').read_bytes(),before)
+        shown=compression.history(refresh=True)[0]
+        self.assertTrue(shown['can_restore'])
+        self.assertFalse(shown['restored'])
+        self.assertEqual(shown['status'],'success')
+        self.assertFalse(self.scan()['items'])
+
+    @unittest.skipUnless(os.name=='nt','Windows compact output verification')
+    def test_native_uncompressed_files_are_skipped_but_err_output_remains_failure(self):
+        for output,expected in ((b'0 files compressed',0),(b'[ERR] Access is denied.',1),
+                                (b'[ERR]\nAccess is denied.\n'+b'normal summary '*1000,1)):
+            process=Mock(returncode=0)
+            process.communicate.return_value=(output,None)
+            context=MagicMock();context.__enter__.return_value=process
+            with patch.object(compression.subprocess,'Popen',return_value=context), \
+                    patch.object(compression,'_file_compressed',return_value=False):
+                result=compression._compact([self.exe,self.file],True)
+            self.assertEqual(result['returncode'],expected)
+            self.assertEqual(result['skipped_files'],2)
+            self.assertNotIn(compression.UNCOMPRESSED_NOTICE,result['output'])
+            if expected:self.assertIn('Access is denied.',result['output'])
+            process.communicate.assert_called_once()
+
     def test_restore_uses_persisted_record_and_never_new_files(self):
         result=compression.compress(self.item(),runner=self.noop)
         record=compression.history()[0]

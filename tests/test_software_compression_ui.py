@@ -396,7 +396,7 @@ class CompressionPageTests(unittest.TestCase):
 
     def test_finished_partial_restore_reaches_100_and_retains_retry_for_remaining_files(self):
         record=dict(id='partial',name='Alpha App',old_size=2048,new_size=1024,
-                    schema=2,saved_bytes=1024,current_size=2048,can_restore=True,restored=False,status='partial')
+                    schema=2,saved_bytes=1024,current_size=2048,can_restore=True,restored=False,status='partial',operation='restore')
         self.mocks[4].return_value=[record]
         window=self.page.open_history()
         self.pump(lambda:not self.window.busy)
@@ -415,6 +415,34 @@ class CompressionPageTests(unittest.TestCase):
         self.assertTrue(window.result_note.winfo_ismapped())
         self.assertEqual(window.progress_percent.cget('fg'),'#ff6269')
         self.assertEqual(window.progress_bar.cget('style'),'Compression.Error.Horizontal.TProgressbar')
+
+    def test_skipped_compression_history_shows_restore_without_unfinished_reason(self):
+        notice=backend.UNCOMPRESSED_NOTICE
+        record=dict(id='skipped-history',name='Alpha App',install_path=str(self.base/'a'),
+                    old_size=2048,new_size=1024,pending=0,can_restore=True,restored=False,
+                    status='partial',last_errors=['Windows compact summary\n'+notice])
+        self.mocks[4].return_value=[record]
+        self.page.errors[record['id']]=notice
+        window=self.page.open_history()
+        self.pump(lambda:not self.window.busy)
+        button,shown=window.record_buttons[0]
+        self.assertEqual(button.caption,'还原')
+        self.assertTrue(button.enabled)
+        self.assertEqual(shown['status'],'success')
+        self.assertEqual(shown['last_errors'],[])
+        self.assertEqual(ui.error_summary([notice]),'')
+        labels=[str(child.cget('text')) for row in window.records_inner.winfo_children()
+                for child in row.winfo_children() if isinstance(child,ui.tk.Label)]
+        self.assertFalse(any('未完成原因' in text for text in labels))
+        def restore(value,**kwargs):
+            self.mocks[4].return_value=[dict(record,restored=True,can_restore=False,status='success',last_errors=[])]
+            return dict(status='success',errors=[])
+        with patch.object(backend,'restore',side_effect=restore) as action:
+            button.invoke()
+            self.pump(lambda:not self.window.busy and not self.page.queue_active)
+            action.assert_called_once()
+        self.assertEqual(window.record_buttons[0][0].caption,'已还原')
+        self.assertFalse(window.record_buttons[0][0].enabled)
 
     def test_verified_legacy_restore_stays_disabled_after_reload_and_reopen(self):
         root=self.base/'a';root.mkdir()

@@ -14,6 +14,7 @@ from ctypes import wintypes as wt
 import json
 import os
 from pathlib import Path
+import re
 import stat
 import subprocess
 import sys
@@ -30,6 +31,7 @@ WOF_TAG = 0x80000017
 _CATALOG = {}
 _LOCK = threading.RLock()
 LARGE_FILE_BYTES = 32 * 1024 * 1024
+UNCOMPRESSED_NOTICE = '部分文件未压缩，未计入节省空间'
 
 
 @dataclass(frozen=True)
@@ -205,10 +207,50 @@ def _mark_restored(record, physical):
     return True
 
 
-def _refresh_record(record, *, measured=None, cancel=None):
+def restore_started(record):
+    """A partial compression is not an interrupted restore."""
+    errors = record.get('last_errors') or []
+    errors = [errors] if isinstance(errors, str) else errors
+    return (record.get('operation') == 'restore' or 'restore_before' in record or 'restore_after' in record
+            or any('部分文件仍处于压缩状态，已保留还原记录' in str(error)
+                   for error in errors))
+
+
+def record_view(record):
+    """Drop the old synthetic failure without hiding real command errors."""
     row = copy.deepcopy(record)
+    if restore_started(row):
+        return row
+    errors = row.get('last_errors') or []
+    errors = [errors] if isinstance(errors, str) else errors
+    cleaned, changed = [], False
+    for error in errors:
+        text = str(error)
+        if UNCOMPRESSED_NOTICE not in text:
+            cleaned.append(error)
+            continue
+        changed = True
+        if re.search(r'\[ERR|error|denied|拒绝|拒絕|失败|失敗|错误|錯誤|无法|無法', text, re.I):
+            cleaned.append(text.replace(UNCOMPRESSED_NOTICE, '').strip())
+    if changed:
+        row['last_errors'] = cleaned
+        if not cleaned and row.get('status') in {'partial', 'failed', 'success'} and not row.get('pending'):
+            row.update(status='success', operation='compress', skipped_uncompressed=True)
+    return row
+
+
+def _finished_without_payload(record):
+    """Keep a completed all-skipped attempt until the user explicitly restores it."""
+    return (record.get('status') == 'success' and not restore_started(record)
+            and not record.get('restored') and not record.get('superseded')
+            and not record.get('remaining') and not record.get('compressed_files')
+            and bool(record.get('skipped_files') or record.get('skipped_uncompressed')))
+
+
+def _refresh_record(record, *, measured=None, cancel=None):
+    row = record_view(record)
     row['can_restore'] = not row.get('restored') and not row.get('superseded') and bool(
-        row.get('remaining', row.get('processed') or row.get('pending')))
+        row.get('remaining', row.get('processed') or row.get('pending')) or _finished_without_payload(row))
     if row.get('superseded') or _cancelled(cancel):
         return row
     try:
@@ -221,8 +263,8 @@ def _refresh_record(record, *, measured=None, cancel=None):
             row['current_size'] = measured['physical']
             if not row.get('restored'):
                 remaining, errors = _restore_remaining(root, snapshot['files'])
-                row['can_restore'] = bool(remaining)
-                if not remaining and not errors and not _cancelled(cancel):
+                row['can_restore'] = bool(remaining) or _finished_without_payload(row)
+                if not remaining and not errors and not _finished_without_payload(row) and not _cancelled(cancel):
                     if _mark_restored(record, measured['physical']):
                         row.update(restored=True, remaining=0, pending=0, status='success', can_restore=False, last_errors=[])
                     else:
@@ -240,9 +282,9 @@ def history(*, refresh=False, cancel=None):
         records = _records()
     result = []
     for record in reversed(records):
-        row = copy.deepcopy(record)
+        row = record_view(record)
         row['can_restore'] = not row.get('restored') and not row.get('superseded') and bool(
-            row.get('remaining', row.get('processed') or row.get('pending')))
+            row.get('remaining', row.get('processed') or row.get('pending')) or _finished_without_payload(row))
         if refresh:
             row = _refresh_record(record, cancel=cancel)
         result.append(row)
@@ -305,8 +347,8 @@ def scan(cancel=None, progress=None, *, records=None, icons=True):
         if blocked:
             skipped += 1
             continue
-        # Only unfinished managed compression belongs in history. Native or
-        # newly created compressed files must not hide a restored application.
+        # Managed attempts stay in history until restored. Native or newly
+        # created compressed files must not hide a restored application.
         model = Software(item.key, item.name, str(root), data['physical'],
                          None, item.icon, blocked, False, len(data['files']))
         info = root.stat()
@@ -451,13 +493,20 @@ def _compact(paths, compress, cancel=None, progress=None):
                             current_file_size=sizes[0],
                             bytes_processed=min(read_bytes or 0,total_bytes*.99),bytes_total=total_bytes))
             code = max(code,process.returncode)
-            outputs.append(output.decode('mbcs',errors='replace')[-3000:])
+            text = output.decode('mbcs',errors='replace')
+            lines = text.splitlines()
+            failures = ['\n'.join(lines[index:index+3]) for index,line in enumerate(lines)
+                        if re.search(r'\[ERR(?:OR)?\]', line, re.I)] if compress else []
+            if failures:
+                code = max(1, code)  # /I can report file errors with exit code 0.
+                outputs.append('\n'.join(failures[-5:])[:1000])
+            else:
+                outputs.append(text[-3000:])
+    skipped = 0
     if compress:
-        # WOF leaves sub-4KiB files resident/uncompressed even on a successful run.
-        uncompressed = [path for path in paths if path.stat().st_size >= 4096 and not _file_compressed(path)]
-        if uncompressed:
-            code = max(1, code)
-            outputs.append('部分文件未压缩，未计入节省空间')
+        # Windows may leave tiny or unsuitable files uncompressed. A completed
+        # command need not compress every file, and these files are not retried.
+        skipped = sum(not _file_compressed(path) for path in paths)
     else:
         remaining = [path for path in paths if _file_compressed(path)]
         if not remaining:
@@ -465,7 +514,7 @@ def _compact(paths, compress, cancel=None, progress=None):
         else:
             code = max(1, code)
             outputs.append('仍处于压缩状态：'+'；'.join(str(path) for path in remaining[:5]))
-    return dict(returncode=code, output='\n'.join(outputs))
+    return dict(returncode=code, output='\n'.join(outputs), skipped_files=skipped)
 
 
 def _batches(entries):
@@ -522,6 +571,7 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
         record = dict(id=uuid.uuid4().hex,name=item.name,install_path=str(root),old_size=before,
             new_size=before,time=int(time.time()),
             restored=False,superseded=False,processed=0,status='running')
+    record['operation'] = 'compress' if compressing else 'restore'
     journal = dict(name=item.name,key=item.key,folder=str(root),root=snapshot['root'],files=copy.deepcopy(snapshot['files']),
                    size=item.size,source=snapshot.get('source',{}))
     if compressing:
@@ -596,9 +646,11 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
             # A nonzero compact exit can describe a file already decompressed by
             # Windows. Verification of every retained entry is authoritative.
             status, errors = 'success', []
+    # This UI flag also marks a completed managed attempt, including one where
+    # every file was skipped, so it cannot be dispatched for compression again.
     model = replace(item,size=before if compressing else measured['physical'],
                     after=measured['physical'],
-                    compressed=measured['compressed'] if compressing else bool(remaining))
+                    compressed=(measured['compressed'] or status == 'success') if compressing else bool(remaining))
     with _LOCK:
         if model.icon is None and item.key in _CATALOG:
             model = replace(model,icon=_CATALOG[item.key]['item'].icon)
@@ -610,6 +662,8 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
         record['pending'] = 0 if status=='success' else len(entries)-len(processed)
         if status == 'success':
             record['remaining'], _ = _restore_remaining(root, journal['files'])
+            record.update(compressed_files=record['remaining'],
+                          skipped_files=max(0,len(processed)-record['remaining']))
     else:
         record.update(remaining=remaining,restore_before=before,restore_after=measured['physical'])
     if record['restored']:record['restored_time']=int(time.time())
@@ -637,7 +691,10 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
 
 
 def compress(item, cancel=None, progress=None, *, runner=None):
-    return _operate(item,_authorize(item),True,cancel,progress,runner)
+    snapshot = _authorize(item)
+    if item.compressed:
+        raise ValueError('该软件已完成压缩，请先还原')
+    return _operate(item,snapshot,True,cancel,progress,runner)
 
 
 def restore(item_or_record, cancel=None, progress=None, *, runner=None):
@@ -667,7 +724,7 @@ def restore(item_or_record, cancel=None, progress=None, *, runner=None):
     except (OSError, ValueError, KeyError) as exc:
         # Preflight failures happen before _operate can save an outcome. Keep
         # their reason beside the recovery entry instead of leaving a silent retry.
-        record = dict(record, status='failed', last_errors=[str(exc)[:1000]])
+        record = dict(record, status='failed', operation='restore', last_errors=[str(exc)[:1000]])
         try:
             _store(record)
         except OSError:

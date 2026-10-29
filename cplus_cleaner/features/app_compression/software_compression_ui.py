@@ -23,6 +23,7 @@ def error_text(errors):
 
 def error_summary(errors):
     """Keep the outcome from each error, omitting multiline command chatter."""
+    errors = backend.record_view(dict(last_errors=errors)).get('last_errors')
     errors = [errors] if isinstance(errors, str) else list(errors or [])
     summaries = []
     for error in errors[:3]:
@@ -647,6 +648,7 @@ class SoftwareCompressionPage(tk.Frame):
             if not records:
                 tk.Label(inner, text="暂无压缩记录", bg=WHITE, fg=MUTED, font=(FONT, 11)).pack(fill="x", pady=48)
             for record in records:
+                record = backend.record_view(record)
                 row = tk.Frame(inner, bg=WHITE)
                 row.pack(fill="x", pady=3)
                 row.columnconfigure(0, weight=1)
@@ -666,7 +668,7 @@ class SoftwareCompressionPage(tk.Frame):
                     detail += '  ·  当前占用读取失败'
                 tk.Label(row, text=detail, bg=WHITE, fg=MUTED, anchor="w", font=(FONT, 9)).grid(row=1, column=0, sticky="ew", pady=(0, 8))
                 caption = ("记录已更新" if record.get("superseded") else "已还原" if record.get("restored")
-                           else "继续还原" if record.get('status') in {'partial', 'failed', 'cancelled'} and record.get('can_restore')
+                           else "继续还原" if backend.restore_started(record) and record.get('status') in {'partial', 'failed', 'cancelled'} and record.get('can_restore')
                            else "还原")
                 button = PillButton(row, caption,
                                     lambda record=record: self.act_items([record], "restore"), width=104, height=32)

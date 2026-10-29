@@ -103,6 +103,8 @@ In that test, application startup became noticeably slower after compression. **
 
 **If another partition has free space, prefer App Mover before considering App Compression.** Moving an application frees space on its original partition without reducing its total usage across all drives. Compression trades reduced disk usage against possible performance costs. To undo compression, use **App Compression → Compression history → Restore**.
 
+Windows may leave some files uncompressed; these files are skipped without automatic retries. Such skips alone still count as a completed compression attempt, with **Restore** available in compression history.
+
 ## Frequently asked questions
 
 <details>
@@ -206,7 +208,7 @@ The same menu includes **About Cplus Cleaner**, with the application logo, curre
 
 ## Project status
 
-The current application version is **1.1.4**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
+The current application version is **1.1.5**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 

@@ -82,20 +82,20 @@
     },
     {
       "path": "README.md",
-      "bytes": 18739,
-      "sha256": "05ed88be8e75d7433e84a3ad58f8024fcb25d21ab268b9c33ba10381d90eb62f",
+      "bytes": 18950,
+      "sha256": "704398b3eb7ea8c15f24a8445af801e77b0bb7f4165eb512c08b2f01514524bc",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 17247,
-      "sha256": "2187bf54ce7f67311567154208311514701439107a368c58ca51ab0d21012015",
+      "bytes": 17414,
+      "sha256": "7770840d0882ec6bfdde4ecc502688eba86462175113ad33a28489361b782c30",
       "text": true
     },
     {
       "path": "README.zh-TW.md",
-      "bytes": 18119,
-      "sha256": "252bf2ddd783b698f9b3d1ddedc4a41c5781e9ed8258efc353adbe8b69e66ba3",
+      "bytes": 18286,
+      "sha256": "1b454529012a32321c1adb12d0184489983de7ae2fde263b31964dfbc71e22c8",
       "text": true
     },
     {
@@ -953,7 +953,7 @@
     {
       "path": "cplus_cleaner/application/preferences.py",
       "bytes": 10407,
-      "sha256": "0a0d1e19c356d3fae06d4206a109bf18df791521601735631628781e8c20bcea",
+      "sha256": "5cc02ee23e33750ec32d56ae788ffeaee9183b4bf48e7b551091f8273bac2b16",
       "text": true
     },
     {
@@ -1018,14 +1018,14 @@
     },
     {
       "path": "cplus_cleaner/features/app_compression/software_compression.py",
-      "bytes": 30360,
-      "sha256": "14fb663bcca9f3eafa5d2d4b26a47154e8ff48e28c0586d39bac7c5598918615",
+      "bytes": 33323,
+      "sha256": "240033b5387d52e764150392e39047dc02908003608b15dc0e594eae28960058",
       "text": true
     },
     {
       "path": "cplus_cleaner/features/app_compression/software_compression_ui.py",
-      "bytes": 39253,
-      "sha256": "1c534293c3aa16eada021f179f9072e5a90eb34a3ec1e40760c1976d2acc575a",
+      "bytes": 39420,
+      "sha256": "c99e3abf9ce8ea425af697dbe93e602d14591d274662239a70c0d2791d69d5da",
       "text": true
     },
     {
@@ -1462,14 +1462,14 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 118863,
-      "sha256": "5fd431350bdba265f16a4381aa570d747221a4fa4d5170308add1d0f46b15baf",
+      "bytes": 118985,
+      "sha256": "984a20bb4620f955f98bba1fa9dda59e2aceacd606e804945dc4e427396316f5",
       "text": true
     },
     {
       "path": "locales/zh-TW.json",
-      "bytes": 113274,
-      "sha256": "72d7bf141b48ec00e29eb2a0751d0599b9908fcf8d1b84dff995adccdc21adc4",
+      "bytes": 113364,
+      "sha256": "de0b7b539a3b1e465b3af72e99da3dcfa2746e4184cec0afdffabf84d5a60d85",
       "text": true
     },
     {
@@ -1684,14 +1684,14 @@
     },
     {
       "path": "tests/test_software_compression.py",
-      "bytes": 26430,
-      "sha256": "adaf48d387ce342bd0c29567fc19aaae5525c97421d3ad83b36e8762dc300b10",
+      "bytes": 32121,
+      "sha256": "cdd36a8993ae8eaa77733206494adf9954216b8ec800de2498fa7d156f8ebe87",
       "text": true
     },
     {
       "path": "tests/test_software_compression_ui.py",
-      "bytes": 28479,
-      "sha256": "4501d067ce9b5e538d3967e192adc8a3db7001da43203bea4a34b0f68737a0c9",
+      "bytes": 30189,
+      "sha256": "2589fb3a10a4c60d1649c3fbf1701bbe794c20cc9844174aeec50f3e1319098c",
       "text": true
     },
     {
