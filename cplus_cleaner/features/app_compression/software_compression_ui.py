@@ -602,14 +602,35 @@ class SoftwareCompressionPage(tk.Frame):
         if self.queue_active:self._show_progress()
         self._set_activity(self._activity_running)
         canvas = tk.Canvas(container, bg=WHITE, bd=0, highlightthickness=0)
-        scroll = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        def scroll_records(*args):
+            if inner.winfo_reqheight() <= canvas.winfo_height():
+                canvas.yview_moveto(0)
+            else:
+                canvas.yview(*args)
+        scroll = ttk.Scrollbar(container, orient="vertical", command=scroll_records)
         canvas.configure(yscrollcommand=scroll.set)
         scroll.pack(side="right", fill="y")
         canvas.pack(fill="both", expand=True)
         inner = tk.Frame(canvas, bg=WHITE)
         inner_id = canvas.create_window(0, 0, anchor="nw", window=inner)
-        canvas.bind("<Configure>", lambda event: canvas.itemconfigure(inner_id, width=event.width))
-        inner.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
+        window.records_canvas, window.records_inner, window.records_scrollbar = canvas, inner, scroll
+        def update_records_region(event=None):
+            width, height = max(1,canvas.winfo_width()), max(1,canvas.winfo_height())
+            canvas.itemconfigure(inner_id,width=width)
+            content_height = inner.winfo_reqheight()
+            canvas.configure(scrollregion=(0,0,width,max(height,content_height)))
+            if content_height <= height:
+                canvas.yview_moveto(0)
+        def wheel_records(event):
+            targets=(event.widget,window.winfo_containing(event.x_root,event.y_root))
+            for target in targets:
+                while target is not None:
+                    if target == canvas:
+                        return scroll_canvas(canvas,inner,event.delta)
+                    target=getattr(target,'master',None)
+        canvas.bind("<Configure>",update_records_region)
+        inner.bind("<Configure>",update_records_region)
+        window.bind('<MouseWheel>',wheel_records,add='+')
         window.record_buttons = []
 
         def reload_records(records=None):
@@ -620,6 +641,8 @@ class SoftwareCompressionPage(tk.Frame):
                 records = list(backend.history()) if records is None else records
             except Exception as error:
                 tk.Label(inner, text=f"读取记录失败：{error}", bg=WHITE, fg=MUTED, wraplength=580).pack(fill="x", pady=20)
+                inner.update_idletasks()
+                update_records_region()
                 return
             if not records:
                 tk.Label(inner, text="暂无压缩记录", bg=WHITE, fg=MUTED, font=(FONT, 11)).pack(fill="x", pady=48)
@@ -657,6 +680,10 @@ class SoftwareCompressionPage(tk.Frame):
                     row.bind('<Configure>',lambda event,label=error_label,text=f'未完成原因：{detail_error}':
                              label.fit_text(text,max(100,event.width-12)))
                 tk.Frame(row, bg=LINE, height=1).grid(row=3, column=0, columnspan=2, sticky="ew")
+            # An off-screen canvas window may not emit Configure when its
+            # requested size shrinks. Recalculate after rebuilding the rows.
+            inner.update_idletasks()
+            update_records_region()
             self._refresh_history_controls()
         window.reload_records = reload_records
         reload_records()

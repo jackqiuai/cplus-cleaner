@@ -34,7 +34,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | --- | --- |
 | [`donation_panel.py`](../cplus_cleaner/ui/donation_panel.py) | Bilingual donation dialog, QR previews and the public Ko-fi link |
 | [`about_panel.py`](../cplus_cleaner/ui/about_panel.py) | Bilingual About dialog with the application logo, version and GitHub star link |
-| [`update_panel.py`](../cplus_cleaner/ui/update_panel.py) | Bilingual update dialog, background requests and release-page navigation |
+| [`update_panel.py`](../cplus_cleaner/ui/update_panel.py) | Bilingual update results and background release checks |
 | [`desktop.py`](../cplus_cleaner/ui/desktop.py) | Main window, navigation, feature composition and settings dialog |
 | [`desktop_panels.py`](../cplus_cleaner/ui/desktop_panels.py) | Shared result panels and activity log dialog |
 | [`app_menu.py`](../cplus_cleaner/ui/app_menu.py) | Application dropdown menu |

@@ -1,7 +1,6 @@
 """Responsive, bilingual update checks; downloads remain a user browser action."""
 import queue
 import threading
-import webbrowser
 
 from cplus_cleaner.application import preferences, updates
 from cplus_cleaner.localization import localized_tk as tk
@@ -14,7 +13,6 @@ class UpdatePanel(tk.Frame):
         super().__init__(parent, bg=WHITE)
         self._destroyed, self._timer, self.checking = False, None, False
         self.results = queue.Queue()
-        self.release_url = updates.RELEASES_URL
         self.logo_image = app.images.get('brand/sidebar.png')
         tk.Label(self, image=self.logo_image, bg=WHITE).pack(pady=(25, 10))
         label(self, '检查更新', 19).pack()
@@ -35,23 +33,18 @@ class UpdatePanel(tk.Frame):
         controls = tk.Frame(self, bg=WHITE)
         self.controls = controls
         controls.pack(pady=(0, 25))
-        self.check_button = PillButton(controls, '检查更新', self.check, width=155, height=40, font=(FONT, 10, 'bold'))
-        self.download_button = PillButton(controls, '查看发布页', self.open_release, width=155, height=40,
-                                          font=(FONT, 10, 'bold'))
-        self.return_button = PillButton(controls, '关闭', parent.winfo_toplevel().destroy, width=105,
+        self.return_button = PillButton(controls, '确定', parent.winfo_toplevel().destroy, width=105,
                                         height=40, light=True, font=(FONT, 10, 'bold'))
-        for button in (self.check_button, self.download_button, self.return_button):
-            button.pack(side='left', padx=5)
-            button.configure(takefocus=True)
-            for event in ('<Return>', '<space>'):
-                button.bind(event, lambda event, control=button: control.invoke())
+        self.return_button.pack(padx=5)
+        self.return_button.configure(takefocus=True)
+        for event in ('<Return>', '<space>'):
+            self.return_button.bind(event, lambda event: self.return_button.invoke())
         self.check()
 
     def check(self):
         if self.checking or self._destroyed:
             return
         self.checking = True
-        self.check_button.set_enabled(False)
         self.status.set('正在检查更新…')
         if not self.progress.winfo_manager():
             self.progress.pack(pady=(0, 18), before=self.controls)
@@ -81,23 +74,11 @@ class UpdatePanel(tk.Frame):
         self.progress.stop()
         self.progress.pack_forget()
         self.checking = False
-        self.check_button.set_enabled(True)
         if failure:
             self.status.set(failure)
             return
         self.latest.set(f'v{release.version}')
-        self.release_url = release.url
-        self.status.set('发现新版本，点击前往下载。' if release.available else '当前已是最新版本。')
-        self.download_button.caption = '前往下载' if release.available else '查看发布页'
-        self.download_button.paint()
-
-    def open_release(self):
-        try:
-            opened = webbrowser.open_new_tab(self.release_url)
-        except (OSError, webbrowser.Error):
-            opened = False
-        if not opened:
-            self.status.set('无法打开浏览器，请稍后重试。')
+        self.status.set('发现新版本，请前往 GitHub Releases 下载。' if release.available else '当前已是最新版本。')
 
     def destroy(self):
         self._destroyed = True
@@ -108,4 +89,4 @@ class UpdatePanel(tk.Frame):
         super().destroy()
 
 
-# Purpose: Bilingual update dialog, background requests and release-page navigation
+# Purpose: Bilingual update results and background release checks

@@ -26,7 +26,8 @@ class CompressionPageTests(unittest.TestCase):
         self.gc_enabled = gc.isenabled()
         gc.disable()
         gc.collect()
-        self.temp = tempfile.TemporaryDirectory(prefix='compression-ui-', dir=core.APP_DIR.parent)
+        fixture_root = Path(os.environ.get('CPLUS_NATIVE_TEST_ROOT', str(core.APP_DIR.parent)))
+        self.temp = tempfile.TemporaryDirectory(prefix='compression-ui-', dir=fixture_root)
         self.base = Path(self.temp.name)
         self.items = [backend.Software('a', 'Alpha App', self.base/'a', 2048),
                       backend.Software('b', 'Beta App', self.base/'b', 4096),
@@ -358,6 +359,40 @@ class CompressionPageTests(unittest.TestCase):
         self.assertFalse(first.record_buttons[0][0].enabled)
         first.destroy()
         self.assertIsNone(self.page._history_window)
+
+    def test_history_scroll_pins_short_content_and_allows_overflow(self):
+        record=dict(id='short-history',name='Alpha App',old_size=2048,new_size=1024,
+                    restored=True,can_restore=False)
+        self.mocks[4].return_value=[record]
+        window=self.page.open_history()
+        self.pump(lambda:not self.window.busy)
+        canvas=window.records_canvas
+        main_position=self.page.canvas.yview()
+        for delta in (120,120,-120,240,-240):
+            canvas.event_generate('<MouseWheel>',delta=delta,x=20,y=20)
+            self.window.update()
+            self.assertEqual(canvas.yview(),(0.0,1.0))
+            self.assertEqual(window.records_inner.winfo_rooty(),canvas.winfo_rooty())
+        command=window.records_scrollbar.cget('command')
+        canvas.tk.call(command,'moveto','1')
+        self.window.update()
+        self.assertEqual(canvas.yview(),(0.0,1.0))
+        self.assertEqual(self.page.canvas.yview(),main_position)
+        self.mocks[4].return_value=[dict(record,id=str(n),name=f'App {n}') for n in range(25)]
+        window.reload_records();self.window.update()
+        canvas.event_generate('<MouseWheel>',delta=-120,x=20,y=20)
+        self.window.update()
+        self.assertGreater(canvas.yview()[0],0)
+        canvas.tk.call(command,'moveto','1')
+        self.window.update()
+        self.assertGreater(canvas.yview()[0],0)
+        self.mocks[4].return_value=[record]
+        window.reload_records();self.window.update()
+        self.assertEqual(canvas.yview(),(0.0,1.0))
+        window.geometry('850x600');self.window.update()
+        canvas.event_generate('<MouseWheel>',delta=120,x=20,y=20)
+        self.window.update()
+        self.assertEqual(canvas.yview(),(0.0,1.0))
 
     def test_finished_partial_restore_reaches_100_and_retains_retry_for_remaining_files(self):
         record=dict(id='partial',name='Alpha App',old_size=2048,new_size=1024,

@@ -611,7 +611,7 @@ class DesktopWorkflowTests(unittest.TestCase):
         self.window.update()
         self.assertLess(elapsed, 1.5)
 
-    def test_update_menu_checks_once_reuses_dialog_and_opens_exact_release(self):
+    def test_update_menu_checks_once_reuses_dialog_and_has_one_confirmation_button(self):
         from cplus_cleaner.application import updates
         self.window.navigate('cdrive')
         selected, tabs = self.window.notebook.select(), self.window.notebook.tabs()
@@ -622,6 +622,8 @@ class DesktopWorkflowTests(unittest.TestCase):
             self.window.more_menu.invoke(4)
             self.pump(lambda: not self.window.views['updates'].checking)
             dialog, page = self.window._updates_window, self.window.views['updates']
+            self.assertEqual(page.controls.winfo_children(),[page.return_button])
+            self.assertEqual(page.return_button.caption,'确定')
             self.assertEqual(page.latest.get(), 'v1.2.0')
             self.assertIn('发现新版本', page.status.get())
             for _ in range(3):
@@ -633,12 +635,9 @@ class DesktopWorkflowTests(unittest.TestCase):
             desktop.i18n.set_language('en')
             self.window.update()
             self.assertIn('Check for updates', dialog.title())
-            self.assertEqual(desktop.i18n.tr(page.download_button.caption), 'Download')
+            self.assertEqual(desktop.i18n.tr(page.return_button.caption), 'OK')
             captions = [str(w.cget('text')) for w in self.descendants(page) if 'text' in w.keys()]
             self.assertFalse(any(desktop.i18n.HAN.search(caption) for caption in captions))
-            with patch('cplus_cleaner.ui.update_panel.webbrowser.open_new_tab', return_value=True) as browser:
-                page.download_button.invoke()
-                browser.assert_called_once_with(release.url)
             page.return_button.invoke()
             self.window.update()
             self.assertIsNone(self.window._updates_window)
@@ -667,20 +666,18 @@ class DesktopWorkflowTests(unittest.TestCase):
             self.assertTrue(finished.wait(1))
             self.window.update()
 
-    def test_update_failure_can_retry_and_current_version_is_reported(self):
+    def test_update_failure_can_reopen_and_current_version_is_reported(self):
         from cplus_cleaner.application import updates
         with patch.object(updates, 'check_latest', side_effect=[updates.UpdateError('无法连接 GitHub，请检查网络后重试。'),
                     updates.ReleaseInfo(preferences.VERSION, False, updates.RELEASES_URL)]):
             page = self.window.open_updates().panel
             self.pump(lambda: not page.checking)
             self.assertIn('无法连接 GitHub', page.status.get())
-            self.assertTrue(page.check_button.enabled)
-            page.check_button.invoke()
+            page.return_button.invoke()
+            self.window.update()
+            page=self.window.open_updates().panel
             self.pump(lambda: not page.checking)
             self.assertEqual(page.status.get(), '当前已是最新版本。')
-            with patch('cplus_cleaner.ui.update_panel.webbrowser.open_new_tab', return_value=False):
-                page.download_button.invoke()
-                self.assertIn('无法打开浏览器', page.status.get())
 
     def test_about_bilingual_copy_and_exact_project_link_handle_browser_failure(self):
         from cplus_cleaner.ui.about_panel import PROJECT_URL

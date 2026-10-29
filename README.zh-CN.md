@@ -188,7 +188,7 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ### 更新
 
-通过右上角 **三横菜单 → 检查更新**，将正在运行的版本与 [GitHub 最新正式 Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) 比较，发现新版本时提供下载页入口。仅在主动点击时联网检查，检查过程不会阻塞界面；需要能够访问 GitHub，无需账号或 API key。下载后仍需按下列步骤手动替换 EXE，程序不会覆盖正在运行的文件。
+通过右上角 **三横菜单 → 检查更新**，将正在运行的版本与 [GitHub 最新正式 Release](https://github.com/jackqiuai/cplus-cleaner/releases/latest) 比较，发现新版本时显示提示。仅在主动点击时联网检查，检查过程不会阻塞界面；需要能够访问 GitHub，无需账号或 API key。下载后仍需按下列步骤手动替换 EXE，程序不会覆盖正在运行的文件。
 
 1. 等待正在执行的操作完成。如果准备更换 EXE 的存放位置，请先在旧版本中关闭“设置 → 开机自启动”，并点击“保存设置”。
 2. 通过程序菜单或托盘菜单中的“退出软件”完全退出。下载新版本后替换旧 EXE，或将新的便携 ZIP 解压到选定的软件目录。
@@ -216,7 +216,7 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ## 项目状态
 
-当前程序版本号为 **1.1.2**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
+当前程序版本号为 **1.1.3**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
 
 ## 数字签名政策（Code signing policy）
 
