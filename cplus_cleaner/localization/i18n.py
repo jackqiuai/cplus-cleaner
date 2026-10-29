@@ -12,7 +12,8 @@ from cplus_cleaner.common.runtime import resource_root
 
 _language = 'zh'
 _widgets = weakref.WeakSet()
-_catalog = None
+LANGUAGES = {'zh': '简体中文', 'zh-TW': '繁體中文', 'en': 'English'}
+_catalogs = {}
 HAN = re.compile(r'[\u3400-\u9fff]')
 PATH = re.compile(r'(?:[A-Za-z]:[\\/]|\\\\|%[A-Za-z_]+%[\\/])[^\n，；]*')
 
@@ -38,7 +39,9 @@ def detect_language():
     if os.name == 'nt':
         try:
             language_id = ctypes.windll.kernel32.GetUserDefaultUILanguage()
-            return 'zh' if language_id & 0x3ff == 0x04 else 'en'
+            if language_id & 0x3ff == 0x04:
+                return 'zh-TW' if language_id in (0x0404, 0x0c04, 0x1404, 0x7c04) else 'zh'
+            return 'en'
         except (AttributeError, OSError):
             pass
     return 'en'
@@ -54,7 +57,7 @@ def register(widget):
 
 def set_language(value):
     global _language
-    selected = value if value in ('zh', 'en') else detect_language()
+    selected = value if value in LANGUAGES else detect_language()
     if selected == _language:
         return
     _language = selected
@@ -71,11 +74,24 @@ def set_language(value):
 
 
 def _load():
-    global _catalog
-    if _catalog is None:
-        data = json.loads((resource_root() / 'locales/en.json').read_text(encoding='utf-8'))
+    if _language not in _catalogs:
+        root = resource_root() / 'locales'
+        english = json.loads((root / 'en.json').read_text(encoding='utf-8'))
+        data = english
+        if _language != 'en':
+            # A missing translation falls back to English per complete message
+            # or template. Runtime data is never passed through a script converter.
+            try:
+                translated = json.loads((root / f'{_language}.json').read_text(encoding='utf-8'))
+                messages = dict(english['messages'], **translated.get('messages', {}))
+                entries = {tuple(entry['parts']): entry for entry in english['templates']}
+                entries.update({tuple(entry['parts']): entry for entry in translated.get('templates', [])})
+                data = dict(messages=messages, templates=list(entries.values()))
+            except (OSError, ValueError, TypeError, KeyError):
+                data = english
         templates, numeric_segments = [], []
         for entry in data['templates']:
+            translation = entry.get('translation', entry.get('english'))
             fields, pieces, literals = 0, [], []
             for part in entry['parts']:
                 if part is None:
@@ -85,7 +101,7 @@ def _load():
                     pieces.append(re.escape(part))
                     if part.strip():
                         literals.append(part)
-            templates.append((sum(map(len, literals)), re.compile('^' + ''.join(pieces) + '$', re.S), entry['english'], literals))
+            templates.append((sum(map(len, literals)), re.compile('^' + ''.join(pieces) + '$', re.S), translation, literals))
             if fields:
                 # Scan notes concatenate complete sentences and numeric suffixes.
                 # Only numeric fields may match within a larger message, so an
@@ -95,22 +111,22 @@ def _load():
                     for part in entry['parts'])
                 if entry['parts'][0] is None:
                     numeric = r'(?<![\w.])' + numeric
-                numeric_segments.append((sum(map(len, literals)), re.compile(numeric), entry['english']))
+                numeric_segments.append((sum(map(len, literals)), re.compile(numeric), translation))
         templates.sort(key=lambda item: -item[0])
         numeric_segments.sort(key=lambda item: -item[0])
         messages = data['messages']
         # Longer complete phrases take precedence over small units in composites.
         keys = sorted((k for k in messages if HAN.search(k) and '\n' not in k), key=len, reverse=True)
         fragments = re.compile('|'.join(re.escape(k) for k in keys))
-        _catalog = messages, templates, fragments, numeric_segments
-    return _catalog
+        _catalogs[_language] = messages, templates, fragments, numeric_segments
+    return _catalogs[_language]
 
 
 def tr(value):
     if isinstance(value, OriginalText) or not isinstance(value, str) or _language == 'zh' or not HAN.search(value):
         return value
     if isinstance(value, DisplayName):
-        return _load()[0].get(value, value)
+        return _load()[0].get(value, value) if _language == 'en' else value
     return _translate(value)
 
 
@@ -124,13 +140,17 @@ def _translate(value):
         return value
     drive = re.fullmatch(r'([A-Za-z])盘(空间)?', value)
     if drive:
+        if _language == 'zh-TW':
+            return drive[1].upper() + '盤' + ('空間' if drive[2] else '')
         return 'Drive ' + drive[1].upper() + (' space' if drive[2] else '')
     count = re.fullmatch(r'(\d[\d,]*)(条|项|款|次)', value)
     if count:
+        if _language == 'zh-TW':
+            return count[1] + {'条': '條', '项': '項', '款': '款', '次': '次'}[count[2]]
         singular, plural = {'条': ('entry', 'entries'), '项': ('item', 'items'),
                             '款': ('app', 'apps'), '次': ('time', 'times')}[count[2]]
         return count[1] + ' ' + (singular if int(count[1].replace(',', '')) == 1 else plural)
-    for _, pattern, english, literals in templates:
+    for _, pattern, translation, literals in templates:
         if not all(part in value for part in literals):
             continue
         match = pattern.fullmatch(value)
@@ -139,17 +159,17 @@ def _translate(value):
             # Windows-provided error text are retained as data.
             fields = {key: _translate(item) if HAN.search(item) and len(item) < len(value) else item
                       for key, item in match.groupdict().items()}
-            return re.sub(r'\{(\d+)\}', lambda m: fields['p' + m[1]], english)
+            return re.sub(r'\{(\d+)\}', lambda m: fields['p' + m[1]], translation)
     if '\n' in value:
         return '\n'.join(_translate(line) if line else '' for line in value.split('\n'))
 
     def translate_segment(segment):
-        for _, pattern, english in numeric_segments:
+        for _, pattern, translation in numeric_segments:
             def render(match):
                 raw = match[0]
                 if re.fullmatch(r'\d[\d,]*(条|项|款|次)', raw):
                     return _translate(raw)
-                translated = re.sub(r'\{(\d+)\}', lambda field: match[int(field[1])+1], english)
+                translated = re.sub(r'\{(\d+)\}', lambda field: match[int(field[1])+1], translation)
                 leading = raw[:len(raw)-len(raw.lstrip())]
                 trailing = raw[len(raw.rstrip()):]
                 if translated.lstrip().startswith((';', ',', ':')):
@@ -160,7 +180,7 @@ def _translate(value):
         def render_static(match):
             translated = messages[match[0]]
             # Chinese sentences need no separating space; English sentences do.
-            if (match[0].endswith(('。', '！', '？')) and translated.endswith(('.', '!', '?'))
+            if (_language == 'en' and match[0].endswith(('。', '！', '？')) and translated.endswith(('.', '!', '?'))
                     and match.end() < len(segment) and not segment[match.end()].isspace()):
                 translated += ' '
             return translated

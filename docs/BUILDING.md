@@ -36,7 +36,7 @@ Outputs are `dist/CPlusCleaner.exe`, `dist/CPlusCleaner-windows-x64.zip` and `di
 
 ## Bundle verification
 
-The spec includes the `cplus_cleaner` modules, `assets/`, `rules/`, `locales/`, Tcl/Tk and `LICENSE`. The build checks PE architecture and the GUI subsystem, then runs the actual EXE with `--smoke-test` to validate resources, all feature pages and Chinese/English display. Checks use isolated settings and disable background scanning and file operations. The report is saved to `build/smoke-test.json`; build diagnostics are uploaded separately for 14 days.
+The spec includes the `cplus_cleaner` modules, `assets/`, `rules/`, `locales/`, Tcl/Tk and `LICENSE`. The build checks PE architecture and the GUI subsystem, then runs the actual EXE with `--smoke-test` to validate resources, all feature pages and Simplified Chinese, Traditional Chinese and English display. Checks use isolated settings and disable background scanning and file operations. The report is saved to `build/smoke-test.json`; build diagnostics are uploaded separately for 14 days.
 
 Frozen launches use the executable itself for background startup and the read-only component-analysis helper. Resources load from the extraction directory; settings and history remain in the user's existing application-data directory. Self-protection excludes the running EXE without excluding unrelated files in its parent directory.
 

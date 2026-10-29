@@ -14,8 +14,9 @@ import tempfile
 
 from cplus_cleaner.common import core
 from cplus_cleaner.common.runtime import launch_command
+from cplus_cleaner.localization.i18n import LANGUAGES
 
-VERSION = "1.1.3"
+VERSION = "1.1.4"
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
 RUN_NAME = "CCCLEANER"
 DEFAULTS = dict(autostart=False, scheduled_cleanup=False, cleanup_time="20:00",
@@ -24,7 +25,7 @@ DEFAULTS = dict(autostart=False, scheduled_cleanup=False, cleanup_time="20:00",
 
 def validate(values):
     result = {key: values.get(key, default) for key, default in DEFAULTS.items()}
-    if result['language'] not in ('', 'zh', 'en'):
+    if result['language'] not in ('', *LANGUAGES):
         raise ValueError('语言选项无效')
     for key in ("autostart", "scheduled_cleanup", "close_to_tray"):
         if not isinstance(result[key], bool):

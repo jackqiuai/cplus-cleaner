@@ -4,7 +4,7 @@
 
 **English** · [简体中文](README.zh-CN.md) · [Report an issue](https://github.com/jackqiuai/cplus-cleaner/issues) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)
 
-CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Chinese/English interface.
+CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Simplified Chinese, Traditional Chinese and English interface.
 
 **Portable, no installation required.** Run the downloaded EXE directly, or extract the portable ZIP and launch `CPlusCleaner.exe`. No separate Python installation is needed.
 
@@ -162,7 +162,7 @@ Keep `%LOCALAPPDATA%\CPLUSCLEANER\`, including `software-migrations.jsonl` and t
 
 ## Language and local data
 
-On first launch, a Chinese Windows display language selects Chinese; other display languages select English. Change the language in **Settings → Language**. Software names, file paths and Windows-returned output retain their original values where appropriate.
+On first launch, Traditional Chinese Windows display languages (Taiwan, Hong Kong and Macao) select Traditional Chinese; other Chinese variants select Simplified Chinese, and other languages select English. Change the language in **Settings → Language**, choosing **简体中文**, **繁體中文** or **English**. Your choice is saved and takes effect immediately, preserving scan results and selections. Missing translations fall back to English. Software names, file paths and Windows-returned output retain their original values where appropriate.
 
 The program stores settings, history and recovery manifests under:
 
@@ -200,13 +200,13 @@ For development and test expectations, see [CONTRIBUTING.md](CONTRIBUTING.md). R
 
 ## Donate
 
-Open the top-right menu and choose **Donate**. The Chinese interface displays a WeChat Pay QR code; the English interface provides a [Buy me a coffee](https://ko-fi.com/qiujack) button. Donations are entirely optional and support ongoing project maintenance.
+Open the top-right menu and choose **Donate**. The Simplified Chinese interface displays a WeChat Pay QR code; the Traditional Chinese and English interfaces provide a [Buy me a coffee](https://ko-fi.com/qiujack) button. You can switch between these donation methods in the dialog. Donations are entirely optional and support ongoing project maintenance.
 
 The same menu includes **About Cplus Cleaner**, with the application logo, current version and a **Give me a star** link to the project.
 
 ## Project status
 
-The current application version is **1.1.3**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
+The current application version is **1.1.4**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 

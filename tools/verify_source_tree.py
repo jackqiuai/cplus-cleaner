@@ -15,7 +15,7 @@ REQUIRED = (
     'cplus_cleaner/features/system/system_analysis_helper.py', 'assets/app-icon.png', 'assets/tray.ico',
     'assets/runtime-assets.json',
     'assets/category-icons.json', 'assets/chat-rules.json', 'assets/popup-huorong.json',
-    'rules/cdrive-private.json', 'locales/en.json',
+    'rules/cdrive-private.json', 'locales/en.json', 'locales/zh-TW.json',
 )
 
 

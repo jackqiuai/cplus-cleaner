@@ -1,25 +1,21 @@
-# 界面语言
+# Interface languages
 
-首次启动读取 Windows 当前用户的显示语言：中文区域变体使用中文，其他语言使用英文。读取失败时使用英文。
+| Stored code | Native name | Resource |
+| --- | --- | --- |
+| `zh` | 简体中文 | Source captions |
+| `zh-TW` | 繁體中文 | `zh-TW.json` |
+| `en` | English | `en.json` |
 
-设置中的“中文 / English”选择保存在应用数据目录的 `settings.json` 中，字段为 `language`，取值为 `zh` 或 `en`。旧设置或未选择时的空值表示按系统显示语言识别。保存后立即更新现有界面，保留扫描结果和勾选状态。
+On first launch, Windows display languages for Taiwan, Hong Kong and Macao select Traditional Chinese. Other Chinese variants select Simplified Chinese; other languages or a failed language lookup select English. This uses the Windows UI language, not the keyboard or regional format.
 
-`en.json` 包含静态文案及带动态字段的模板。中文原文为显示资源键，不修改扫描模型、路径、注册表键、规则 ID 或图标索引。新增文案应同步添加英文资源，并通过 `tests/test_i18n.py` 验证。
+Settings → Language saves the choice in `settings.json`. An empty value in older settings means automatic detection. Saving switches existing windows immediately while retaining scan results, filter values and selected items.
 
-`localized_tk.py` 只在界面模块中使用：标签通过显示变量呈现译文，筛选器继续保留原始枚举值。`MetricLabel` 在分离数字和文字前翻译整句，保留统计数字的红色加粗。
+Catalogs contain complete messages and dynamic templates. Source captions remain resource keys. English templates use the existing `english` field; other catalogs use `translation`. Placeholders and source `parts` must stay aligned with the English catalog. Missing target messages and templates fall back to English.
 
-必须保留的真实名称或文件名使用 `i18n.original(value)`。弹窗拦截的软件名称始终保持原名；规则描述和位置说明正常翻译。
+`localized_tk.py` renders translated labels, dialogs, menus, tables and counters without changing model data. `MetricLabel` translates complete sentences before styling their numbers. Use `i18n.original(value)` for names, paths and system output that must retain their spelling. `i18n.display_name(value)` only uses complete known aliases in English; software names remain unchanged in Chinese interfaces.
 
-其他软件列表使用 `i18n.display_name(value)`：有完整英文别名时显示该别名，未知真实名称保留原值，避免替换名称中的零散词语。计数标签处理英文单复数，隐私数量胶囊按译文宽度调整。
+Traditional Chinese uses reviewed interface terms such as 軟體, 檔案, 快取 and 資料夾. The shipped JSON is self-contained: the application needs no conversion library, online translation service, additional images or bundled fonts.
 
-已确认按钮术语：
-
-| 中文 | 英文 |
-|---|---|
-| 开始扫描 / 扫描 / 一键扫描 | Scan |
-| 立即清理 | Delete |
-| 立即搬家 | Move |
-
-发布目录直接附带可用的 `en.json`，不依赖本地分析报告或翻译生成工具。修改文案时同步维护该文件和对应动态模板，可执行 `python tools/verify_source_tree.py` 及语言测试核对。运行程序不依赖任何第三方翻译服务。
+When adding captions, update both catalogs and their templates. Run `python tools/verify_source_tree.py` and `python -m unittest discover -s tests -p test_i18n.py -v` to check coverage, placeholders, fallback behavior and language switching.
 
 <!-- Purpose: Interface language resources -->

@@ -63,11 +63,14 @@ def check():
             donation = app.open_donation()
             donation.withdraw()
             assert set(donation.panel.qr_images) == {'wechat'}
-            for language in ('zh', 'en'):
+            for language in i18n.LANGUAGES:
                 i18n.set_language(language)
                 app.update_language_layout()
                 app.update_idletasks()
                 assert donation.panel.current_view == ('china' if language == 'zh' else 'international')
+                if language == 'zh-TW':
+                    assert app.nav_widgets['home'][2].cget('text') == '首頁'
+                    assert i18n.tr('缓存文件') == '快取檔案'
             assert donation.panel.coffee_button.caption == 'Buy me a coffee'
             donation.destroy()
             about = app.open_about()
@@ -79,6 +82,7 @@ def check():
             about.withdraw()
             for language, title, caption in (
                     ('zh', '关于Cplus Cleaner', '给项目点个 Star'),
+                    ('zh-TW', '關於Cplus Cleaner', '為專案點個 Star'),
                     ('en', 'About Cplus Cleaner', 'Give me a star')):
                 i18n.set_language(language)
                 app.update_idletasks()
@@ -105,7 +109,7 @@ def check():
                 app.tk.call('after', 'cancel', timer)
             app.destroy()
     return dict(frozen=runtime.frozen(), version=preferences.VERSION, pages=pages,
-                image_count=len(images), languages=['zh', 'en'], donation_dialog=True, about_dialog=True,
+                image_count=len(images), languages=list(i18n.LANGUAGES), donation_dialog=True, about_dialog=True,
                 popup_auto_scan=False, update_dialog=True)
 
 

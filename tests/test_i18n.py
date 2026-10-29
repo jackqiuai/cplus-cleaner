@@ -22,7 +22,9 @@ class LanguageTests(unittest.TestCase):
         i18n.set_language('zh')
 
     def test_windows_ui_language_and_override(self):
-        for code, expected in ((0x0804, 'zh'), (0x0404, 'zh'), (0x0c04, 'zh'), (0x0409, 'en'), (0x0411, 'en')):
+        for code, expected in ((0x0804, 'zh'), (0x1004, 'zh'), (0x0404, 'zh-TW'),
+                               (0x0c04, 'zh-TW'), (0x1404, 'zh-TW'), (0x7c04, 'zh-TW'),
+                               (0x0409, 'en'), (0x0411, 'en')):
             with patch.object(ctypes.windll.kernel32, 'GetUserDefaultUILanguage', return_value=code):
                 self.assertEqual(i18n.detect_language(), expected)
                 i18n.set_language('')
@@ -53,28 +55,76 @@ class LanguageTests(unittest.TestCase):
             self.assertEqual(i18n.tr(f'{days}天内'), f'Within {days} days')
 
     def test_every_dynamic_template_retains_fields(self):
-        i18n.set_language('en')
-        catalog = json.loads((core.APP_DIR / 'locales/en.json').read_text(encoding='utf-8'))
-        self.assertGreater(len(catalog['messages']), 1000)
-        for entry in catalog['templates']:
-            number, parts = 0, []
-            for part in entry['parts']:
-                if part is None:
-                    parts.append('FIELD' + str(number))
-                    number += 1
-                else:
-                    parts.append(part)
-            expected = entry['english']
-            for n in range(number):
-                expected = expected.replace('{' + str(n) + '}', 'FIELD' + str(n))
-            with self.subTest(source=''.join(parts)):
-                self.assertEqual(i18n.tr(''.join(parts)), expected)
+        for language in ('en', 'zh-TW'):
+            i18n.set_language(language)
+            catalog = json.loads((core.APP_DIR / f'locales/{language}.json').read_text(encoding='utf-8'))
+            self.assertGreater(len(catalog['messages']), 1000)
+            for entry in catalog['templates']:
+                number, parts = 0, []
+                for part in entry['parts']:
+                    if part is None:
+                        parts.append('FIELD' + str(number))
+                        number += 1
+                    else:
+                        parts.append(part)
+                expected = entry.get('translation', entry.get('english'))
+                for n in range(number):
+                    expected = expected.replace('{' + str(n) + '}', 'FIELD' + str(n))
+                with self.subTest(language=language, source=''.join(parts)):
+                    self.assertEqual(i18n.tr(''.join(parts)), expected)
+
+    def test_traditional_catalog_covers_messages_templates_and_protects_data(self):
+        english = json.loads((core.APP_DIR/'locales/en.json').read_text(encoding='utf-8'))
+        traditional = json.loads((core.APP_DIR/'locales/zh-TW.json').read_text(encoding='utf-8'))
+        self.assertEqual(set(traditional['messages']), set(english['messages']))
+        self.assertEqual({tuple(entry['parts']) for entry in traditional['templates']},
+                         {tuple(entry['parts']) for entry in english['templates']})
+        i18n.set_language('zh-TW')
+        for source, expected in [('首页', '首頁'), ('软件搬家', '軟體搬家'),
+                                 ('软件卸载', '軟體解除安裝'), ('缓存文件', '快取檔案'),
+                                 ('开始扫描', '開始掃描'), ('立即清理', '立即清理'),
+                                 ('D盘空间', 'D盤空間'), ('确定', '確定'), ('2480条', '2480條')]:
+            self.assertEqual(i18n.tr(source), expected)
+        self.assertEqual(i18n.tr('发现隐私 2480 条，已选 2480 条'), '發現隱私 2480 條，已選 2480 條')
+        for text in (r'C:\用户\缓存文件\日志.tmp', '缓存文件.exe', i18n.original('鲁大师'),
+                     i18n.original('系统返回：无法读取文件'), i18n.display_name('雷电模拟器9')):
+            self.assertEqual(i18n.tr(text), text)
+        note = '扫描完成。 已排除 7 个含系统服务的软件。 1 个目录无法完整读取或含链接，已跳过。'
+        result = i18n.tr(note)
+        self.assertIn('已排除 7 個含系統服務的軟體。', result)
+        self.assertIn('1 個目錄無法完整讀取或含連結，已跳過。', result)
+        self.assertEqual(i18n.tr('重复文件清理'), '重複檔案清理')
+        self.assertEqual(i18n.tr('扫描范围'), '掃描範圍')
+        subtitle = '已选 13.2GB    ·    虚拟内存占用 7.25GB（单独管理）'
+        self.assertEqual(i18n.tr(subtitle), '已選 13.2GB    ·    虛擬記憶體占用 7.25GB（單獨管理）')
+
+    def test_missing_traditional_entries_fall_back_to_english(self):
+        self.addCleanup(i18n._translate.cache_clear)
+        with tempfile.TemporaryDirectory(dir=core.APP_DIR.parent) as directory:
+            root = Path(directory)
+            (root/'locales').mkdir()
+            english = dict(messages={'扫描': 'Scan', '关闭': 'Close'},
+                           templates=[dict(parts=['发现 ', None, ' 项'], english='Found {0} items')])
+            traditional = dict(messages={'扫描': '掃描'}, templates=[])
+            for code, data in [('en', english), ('zh-TW', traditional)]:
+                (root/f'locales/{code}.json').write_text(json.dumps(data), encoding='utf-8')
+            with patch.object(i18n, 'resource_root', return_value=root), patch.dict(i18n._catalogs, clear=True):
+                i18n.set_language('zh-TW')
+                i18n._translate.cache_clear()
+                self.assertEqual(i18n.tr('扫描'), '掃描')
+                self.assertEqual(i18n.tr('关闭'), 'Close')
+                self.assertEqual(i18n.tr('发现 7 项'), 'Found 7 items')
+                i18n.set_language('en')
+                self.assertEqual(i18n.tr('扫描'), 'Scan')
+                i18n.set_language('zh-TW')
+                self.assertEqual(i18n.tr('扫描'), '掃描')
+                i18n.set_language('zh')
 
     def test_setting_roundtrip_old_settings_and_invalid_value(self):
         with tempfile.TemporaryDirectory(dir=core.APP_DIR.parent) as directory, patch.object(core, 'DATA_DIR', Path(directory)):
             (core.DATA_DIR / 'settings.json').write_text('{"cleanup_time":"09:00"}', encoding='utf-8')
             self.assertEqual(preferences.load()['language'], '')
-            for language in ('zh', 'en'):
+            for language in i18n.LANGUAGES:
                 preferences.save(dict(preferences.DEFAULTS, language=language))
                 self.assertEqual(preferences.load()['language'], language)
             before = (core.DATA_DIR / 'settings.json').read_bytes()
@@ -165,6 +215,12 @@ class PresentationTests(unittest.TestCase):
         self.assertIn('Drive Cleanup Assistant', self.root.title())
         combo.set('Success')
         self.assertEqual(choice.get(), '成功')
+        i18n.set_language('zh-TW')
+        self.assertEqual(combo.get(), '成功')
+        self.assertEqual(preserved.cget('text'), '鲁大师')
+        self.assertIn('C盤清理助手', self.root.title())
+        self.assertEqual(variable.get(), '发现隐私 2480 条，已选 2480 条')
+        self.assertEqual(self.root.getvar(label.cget('textvariable')), '發現隱私 2480 條，已選 2480 條')
         i18n.set_language('zh')
         self.assertEqual(combo.get(), '成功')
         self.assertEqual(canvas.itemcget(item, 'text'), '立即搬家')
@@ -243,7 +299,8 @@ class DesktopLanguageTests(unittest.TestCase):
                 window.withdraw()
                 settings = window.panel
                 self.assertEqual(settings.language.get(), 'English')
-                for choice, code in (('中文', 'zh'), ('English', 'en')):
+                self.assertEqual(tuple(settings.language_combo.cget('values')), ('简体中文', '繁體中文', 'English'))
+                for choice, code in (('简体中文', 'zh'), ('繁體中文', 'zh-TW'), ('English', 'en')):
                     settings.language.set(choice)
                     settings.save()
                     app.update_idletasks()
@@ -253,6 +310,9 @@ class DesktopLanguageTests(unittest.TestCase):
                     self.assertIs(app.views['migrate'], migration)
                     self.assertEqual(app.cdrive_page.days.get(), '30')
                     self.assertEqual(i18n.tr(row.name._source_options['text']), '鲁大师')
+                    if code == 'zh-TW':
+                        self.assertEqual(app.nav_widgets['home'][2].cget('text'), '首頁')
+                        self.assertEqual(app.nav_widgets['migrate'][2].cget('text'), '軟體搬家')
                 self.assertEqual(app.nav_widgets['popup'][2].cget('text'), 'Popup Blocker')
                 self.assertEqual(errors, [])
             finally:

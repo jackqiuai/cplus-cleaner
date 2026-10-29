@@ -154,7 +154,7 @@ class SettingsPanel(Panel):
         label(language_row, '语言', 11).pack(side='left')
         self.language = tk.StringVar()
         self.language_combo = ttk.Combobox(
-            language_row, values=(i18n.original('中文'), i18n.original('English')),
+            language_row, values=tuple(i18n.original(name) for name in i18n.LANGUAGES.values()),
             textvariable=self.language, state='readonly', width=15)
         self.language_combo.pack(side='left', padx=15)
         label(self.body, '选择界面语言；保存后立即生效。', 9, MUTED,
@@ -195,7 +195,8 @@ class SettingsPanel(Panel):
         self.scheduled.set(values["scheduled_cleanup"])
         self.tray.set(values["close_to_tray"])
         self.cleanup_time.set(values["cleanup_time"])
-        self.language.set('中文' if (values.get('language') or i18n.detect_language()) == 'zh' else 'English')
+        code = values.get('language') or i18n.detect_language()
+        self.language.set(i18n.LANGUAGES.get(code, 'English'))
         next_run = self.app.scheduler.next_run
         self.next_run.set(f"下次清理：{next_run:%Y-%m-%d %H:%M}" if next_run else "")
         self.message.set("")
@@ -203,7 +204,7 @@ class SettingsPanel(Panel):
     def save(self):
         values = dict(self.app.settings, autostart=self.autostart.get(), scheduled_cleanup=self.scheduled.get(),
                       close_to_tray=self.tray.get(), cleanup_time=self.cleanup_time.get().strip(),
-                      language='zh' if self.language.get() == '中文' else 'en')
+                      language={name: code for code, name in i18n.LANGUAGES.items()}.get(self.language.get(), i18n.language()))
         try:
             self.app.apply_settings(values)
         except (OSError, ValueError) as exc:

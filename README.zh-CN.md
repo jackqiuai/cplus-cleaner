@@ -1,6 +1,6 @@
 # CPlus Cleaner — Windows Disk Cleaner & App Mover｜C盘清理与软件搬家
 
-**清理磁盘、搬移软件、整理聊天缓存，在一个中英文桌面界面中管理存储空间。**
+**清理磁盘、搬移软件、整理聊天缓存，在支持简体中文、繁体中文和英文的桌面界面中管理存储空间。**
 
 **简体中文** · [English](README.md) · [问题反馈](https://github.com/jackqiuai/cplus-cleaner/issues) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)
 
@@ -172,7 +172,7 @@ C盘和聊天清理按类型汇总，不逐个展示文件。大文件搬家与�
 
 ## 语言与本地数据
 
-首次启动按 Windows 显示语言选择界面：中文系统使用中文，其他语言使用英文。可在“设置 → 语言”中改为“中文”或“English”。真实软件名称、文件路径及 Windows 返回的内容按对应规则保留原样。
+首次启动按 Windows 显示语言选择界面：台湾、香港及澳门的繁体显示语言使用繁体中文，其他中文变体使用简体中文，其他语言使用英文。可在“设置 → 语言”中选择“简体中文”“繁體中文”或“English”；选择会保存并立即生效，保留扫描结果和勾选状态。缺少某条翻译时使用英文。真实软件名称、文件路径及 Windows 返回的内容按对应规则保留原样。
 
 设置、日志和恢复记录保存在：
 
@@ -210,13 +210,13 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ## 捐赠支持
 
-通过右上角三横菜单 → **捐赠**，可支持项目持续维护。中文界面默认展示微信收款码，英文界面提供 [Buy me a coffee](https://ko-fi.com/qiujack) 按钮。软件免费使用，捐赠完全自愿。
+通过右上角三横菜单 → **捐赠**，可支持项目持续维护。简体中文界面默认展示微信收款码，繁体中文与英文界面默认提供 [Buy me a coffee](https://ko-fi.com/qiujack) 按钮；可在弹窗中切换捐赠方式。软件免费使用，捐赠完全自愿。
 
 同一菜单中的 **关于Cplus Cleaner** 显示软件 LOGO、当前版本号，并提供“给项目点个 Star”的 GitHub 项目链接。
 
 ## 项目状态
 
-当前程序版本号为 **1.1.3**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
+当前程序版本号为 **1.1.4**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
 
 ## 数字签名政策（Code signing policy）
 

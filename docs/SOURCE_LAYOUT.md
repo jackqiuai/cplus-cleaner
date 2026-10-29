@@ -12,6 +12,7 @@ The repository contains the complete runtime source tree and its checked-in reso
 | `assets/` | Icons, illustrations, selection controls, image mappings, chat rules and popup definitions. |
 | `rules/cdrive-private.json` | Reviewed drive-cleanup rule catalog. |
 | `locales/en.json` | English display strings and dynamic templates; Chinese source strings remain in the program. |
+| `locales/zh-TW.json` | Traditional Chinese display strings and dynamic templates, with English fallback. |
 | `tests/` | Isolated backend tests and real Tk interface workflows. |
 | `.github/ISSUE_TEMPLATE/` | Problem reports and feature requests. |
 | `docs/images/home-en.png` | English Home screenshot shown in README. |
