@@ -82,14 +82,20 @@
     },
     {
       "path": "README.md",
-      "bytes": 18704,
-      "sha256": "142ea8712d57748fa0f555cde153487d68f281908e3ec77aeb401934878a3436",
+      "bytes": 18739,
+      "sha256": "05ed88be8e75d7433e84a3ad58f8024fcb25d21ab268b9c33ba10381d90eb62f",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 17212,
-      "sha256": "2300368be66fdc4cf2b6209436a0f444f071614c168657bb1db706e9ee03af48",
+      "bytes": 17247,
+      "sha256": "2187bf54ce7f67311567154208311514701439107a368c58ca51ab0d21012015",
+      "text": true
+    },
+    {
+      "path": "README.zh-TW.md",
+      "bytes": 18119,
+      "sha256": "252bf2ddd783b698f9b3d1ddedc4a41c5781e9ed8258efc353adbe8b69e66ba3",
       "text": true
     },
     {
@@ -1750,8 +1756,8 @@
     },
     {
       "path": "tools/prepare_source_release.py",
-      "bytes": 6599,
-      "sha256": "2f5949bddd28ee10acdae0733cc4af23834a98d306a26c1b5580a4490cbc0edb",
+      "bytes": 6618,
+      "sha256": "9d646b451fd4ad7d10c057d198c04c52fc951a3f38b3e5a2cd50e9831b17bd60",
       "text": true
     },
     {

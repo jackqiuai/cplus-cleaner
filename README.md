@@ -2,7 +2,7 @@
 
 **Free up disk space and manage installed applications.**
 
-**English** · [简体中文](README.zh-CN.md) · [Report an issue](https://github.com/jackqiuai/cplus-cleaner/issues) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)
+**English** · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [Report an issue](https://github.com/jackqiuai/cplus-cleaner/issues) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)
 
 CPlus Cleaner is a Windows desktop utility for disk cleanup, application migration, NTFS compression and privacy cleanup. It combines chat cache cleanup, large-file management, duplicate detection, software uninstall and rule-based popup blocking in a Simplified Chinese, Traditional Chinese and English interface.
 

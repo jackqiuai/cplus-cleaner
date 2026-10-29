@@ -11,7 +11,7 @@ from verify_source_tree import verify
 
 
 ROOT_FILES = (
-    '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md',
+    '.gitattributes', '.gitignore', 'start.bat', 'requirements.txt', 'README.md', 'README.zh-CN.md', 'README.zh-TW.md',
     'GITHUB-ABOUT.md', 'CONTRIBUTING.md', 'LICENSE', 'CPlusCleaner.spec', 'requirements-build.txt',
 )
 DIRECTORIES = ('cplus_cleaner', 'assets', 'rules', 'locales', 'tests', 'docs', '.github')

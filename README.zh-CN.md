@@ -2,7 +2,7 @@
 
 **清理磁盘、搬移软件、整理聊天缓存，在支持简体中文、繁体中文和英文的桌面界面中管理存储空间。**
 
-**简体中文** · [English](README.md) · [问题反馈](https://github.com/jackqiuai/cplus-cleaner/issues) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)
+**简体中文** · [繁體中文](README.zh-TW.md) · [English](README.md) · [问题反馈](https://github.com/jackqiuai/cplus-cleaner/issues) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)
 
 CPlus Cleaner 是 Windows 桌面清理与空间管理工具，提供 C盘清理、软件搬家、软件压缩、聊天清理、隐私清理、大文件搬家、重复文件清理、软件卸载、弹窗拦截与系统管理。
 
