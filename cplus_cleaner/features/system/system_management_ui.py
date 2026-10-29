@@ -35,7 +35,7 @@ class SystemManagementPage(tk.Frame):
         header.pack(fill='x', padx=32, pady=(27, 12))
         self.refresh_button = PillButton(header, '刷新', self.refresh_system, width=145)
         self.refresh_button.pack(side='right')
-        tk.Label(header, text='系统管理', bg=WHITE, fg=INK, font=(FONT, 20, 'bold')).pack(anchor='w')
+        tk.Label(header, text='系统瘦身', bg=WHITE, fg=INK, font=(FONT, 20, 'bold')).pack(anchor='w')
         tk.Label(self, text='管理回收站、休眠、虚拟内存与 Windows 组件存储。', bg=WHITE, fg=MUTED,
                  font=(FONT, 10), anchor='w', justify='left', wraplength=760).pack(fill='x', padx=33, pady=(0, 8))
         tk.Label(self, text='以下由 Windows 管理，未计入可清理空间。', bg=WHITE, fg=MUTED,
@@ -227,4 +227,4 @@ class SystemManagementPage(tk.Frame):
         if self.canvas.winfo_ismapped() and self.inner.winfo_reqheight() > self.canvas.winfo_height():
             self.canvas.yview_scroll(-int(event.delta/120), 'units')
 
-# Purpose: System Management page
+# Purpose: System Slim page

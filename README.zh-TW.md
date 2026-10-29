@@ -4,7 +4,7 @@
 
 **繁體中文** · [简体中文](README.zh-CN.md) · [English](README.md) · [問題回報](https://github.com/jackqiuai/cplus-cleaner/issues) · [參與貢獻](CONTRIBUTING.md) · [MIT 授權條款](LICENSE)
 
-CPlus Cleaner 是 Windows 桌面清理與空間管理工具，提供 C盤清理、軟體搬家、軟體壓縮、聊天清理、隱私清理、大檔案搬家、重複檔案清理、軟體解除安裝、彈窗攔截與系統管理。
+CPlus Cleaner 是 Windows 桌面清理與空間管理工具，提供 C盤清理、軟體搬家、軟體壓縮、聊天清理、隱私清理、大檔案搬家、重複檔案清理、軟體解除安裝、彈窗攔截與系統瘦身。
 
 **綠色版本，無須安裝。** 下載 EXE 即可直接執行，也可解壓縮可攜式 ZIP 後啟動 `CPlusCleaner.exe`，無須另行安裝 Python。
 
@@ -50,7 +50,7 @@ https://github.com/user-attachments/assets/c5228662-efab-49e4-b8d6-7b64b010f335
 | 隱私清理 | 分類整理已支援的 Windows 使用痕跡、軟體痕跡、Chrome／Edge 瀏覽及下載紀錄，以及衍生隱私項目。 |
 | 軟體解除安裝 | 搜尋、選擇單一或多個已安裝軟體，呼叫其登錄的發行者解除安裝程式；完成後可檢查受支援的殘留。 |
 | 彈窗攔截 | 識別已支援的軟體，按群組或單條規則設定攔截；清單不顯示暫不支援的規則。 |
-| 系統管理 | 檢視系統檔案占用，管理資源回收筒、休眠、虛擬記憶體與 Windows 元件存放區。 |
+| 系統瘦身 | 檢視系統檔案占用，管理資源回收筒、休眠、虛擬記憶體與 Windows 元件存放區。 |
 
 設定支援每日排程清理、開機自動啟動、關閉時隱藏到系統匣，以及語言選擇。操作紀錄使用獨立視窗。
 
@@ -219,7 +219,7 @@ EXE 與 ZIP 均無須安裝。設定、記錄與還原紀錄儲存在上述 Wind
 
 ## 專案狀態
 
-目前程式版本號為 **1.1.5**。可從[正式發佈頁面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下載 Windows x64 EXE 或綠色 ZIP 套件。GitHub Actions 會在發佈過程中自動執行測試、建置並附上已驗證的檔案。程式無須安裝。
+目前程式版本號為 **1.1.6**。可從[正式發佈頁面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下載 Windows x64 EXE 或綠色 ZIP 套件。GitHub Actions 會在發佈過程中自動執行測試、建置並附上已驗證的檔案。程式無須安裝。
 
 ## 數位簽章政策（Code signing policy）
 

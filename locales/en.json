@@ -618,7 +618,7 @@
     "虚拟内存": "Virtual memory",
     "调整后需重启生效": "Restart required after changes",
     "系统管理项目，单独调整，不计入普通缓存可清理总数。": "Managed separately by the system; excluded from ordinary cache totals.",
-    "系统管理": "System Management",
+    "系统瘦身": "System Slim",
     "以下由 Windows 管理，未计入可清理空间。": "The following items are managed by Windows and excluded from cleanable space.",
     "正在扫描": "Scanning",
     "发现可释放": "Space available to free",

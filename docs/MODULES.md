@@ -69,7 +69,7 @@ The root contains only the public Python launcher. Runtime code lives in `cplus_
 | [`system_actions_ui.py`](../cplus_cleaner/features/system/system_actions_ui.py) | System maintenance action UI |
 | [`system_analysis.py`](../cplus_cleaner/features/system/system_analysis.py) | Component analysis, progress and elevated read-only jobs |
 | [`system_analysis_helper.py`](../cplus_cleaner/features/system/system_analysis_helper.py) | Read-only component-analysis helper entry |
-| [`system_management_ui.py`](../cplus_cleaner/features/system/system_management_ui.py) | System Management page |
+| [`system_management_ui.py`](../cplus_cleaner/features/system/system_management_ui.py) | System Slim page |
 
 ## cplus_cleaner/features/home
 

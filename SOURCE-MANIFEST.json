@@ -82,20 +82,20 @@
     },
     {
       "path": "README.md",
-      "bytes": 18950,
-      "sha256": "704398b3eb7ea8c15f24a8445af801e77b0bb7f4165eb512c08b2f01514524bc",
+      "bytes": 18944,
+      "sha256": "d1be68260be8182bdad2f3720919645da24b62bb71195edf54b910e6f6de1d75",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
       "bytes": 17414,
-      "sha256": "7770840d0882ec6bfdde4ecc502688eba86462175113ad33a28489361b782c30",
+      "sha256": "63cbd18daf2606687b007d47b6db6c216850a1897a5c5821af2d79bde27bb262",
       "text": true
     },
     {
       "path": "README.zh-TW.md",
       "bytes": 18286,
-      "sha256": "1b454529012a32321c1adb12d0184489983de7ae2fde263b31964dfbc71e22c8",
+      "sha256": "7b0151771bcb09e084ca9117f490d8a6fdbdf9752333a8aa76a102dc2b517117",
       "text": true
     },
     {
@@ -953,7 +953,7 @@
     {
       "path": "cplus_cleaner/application/preferences.py",
       "bytes": 10407,
-      "sha256": "5cc02ee23e33750ec32d56ae788ffeaee9183b4bf48e7b551091f8273bac2b16",
+      "sha256": "00ae609901dbacd34d85ca596d2fb26aded35c581f83ec35b4f06fdc7f0a2096",
       "text": true
     },
     {
@@ -1228,8 +1228,8 @@
     },
     {
       "path": "cplus_cleaner/features/system/cdrive_system.py",
-      "bytes": 12496,
-      "sha256": "f3031ba405592177a00f9ab9e0a866a983188ef96d1429ce3a68f47276319659",
+      "bytes": 12490,
+      "sha256": "a124362e320054a6261db3ce960dec2a943be672529c9a6c246eed0664d74863",
       "text": true
     },
     {
@@ -1252,8 +1252,8 @@
     },
     {
       "path": "cplus_cleaner/features/system/system_management_ui.py",
-      "bytes": 13111,
-      "sha256": "a4ab6fef52a6ebd5de2b0bcb096568cbf1bdcc3b753c67e6da8dc6e2ac6e6547",
+      "bytes": 13105,
+      "sha256": "e420b5bfc6af53ba754b6772ef4f5651dfc252408485be5d1becf443706b3d89",
       "text": true
     },
     {
@@ -1337,7 +1337,7 @@
     {
       "path": "cplus_cleaner/ui/desktop.py",
       "bytes": 57609,
-      "sha256": "c8cf343a3b5346c14feef0ebf06eebecfac0ccfb8e8835213e92ca1c11638cf8",
+      "sha256": "201d236cf2ed8e46b12a505d51bf493a7258d8b72ff5c00fc981e39506012277",
       "text": true
     },
     {
@@ -1384,8 +1384,8 @@
     },
     {
       "path": "docs/MODULES.md",
-      "bytes": 9051,
-      "sha256": "ddd3940bac39f44aff837d7ae5f1f1faee1ee800510acd8e8e3d1f73c0bc7bf2",
+      "bytes": 9045,
+      "sha256": "1bc52f2352471d807a4d660ab50ea08cf2263e8dfa3808c2bbf2873ea49746ee",
       "text": true
     },
     {
@@ -1396,8 +1396,8 @@
     },
     {
       "path": "docs/SOURCE_LAYOUT.md",
-      "bytes": 5286,
-      "sha256": "2f6f02155219567dc58f3874dfcc016cb276326f68404f2ec5ca75cfb9ae36f4",
+      "bytes": 5284,
+      "sha256": "0f685969602b8e91d565c7de4c6b42a074732bd36f0d92b10c0e5ec1f8661b06",
       "text": true
     },
     {
@@ -1462,14 +1462,14 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 118985,
-      "sha256": "984a20bb4620f955f98bba1fa9dda59e2aceacd606e804945dc4e427396316f5",
+      "bytes": 118979,
+      "sha256": "2b18406bc2dd611432fbb8f4c688d78d8044d7533afb09bdda1d95134f4ec6ee",
       "text": true
     },
     {
       "path": "locales/zh-TW.json",
       "bytes": 113364,
-      "sha256": "de0b7b539a3b1e465b3af72e99da3dcfa2746e4184cec0afdffabf84d5a60d85",
+      "sha256": "3eb919fd22a4fe0449d22427abc222e8221492f83c98aba53e6980dd7d3c2a3e",
       "text": true
     },
     {
@@ -1726,8 +1726,8 @@
     },
     {
       "path": "tests/test_system_management_ui.py",
-      "bytes": 10243,
-      "sha256": "e0fa054ee0961a2ddddc7e8b07b55c4209d043ca878a4750505b5ba3877cfb02",
+      "bytes": 10237,
+      "sha256": "261cfc71c7ef70095406474cb38c8f9101f5d09ba4ab88787e39ba97f4476482",
       "text": true
     },
     {

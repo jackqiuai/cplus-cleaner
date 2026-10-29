@@ -656,7 +656,7 @@ class DesktopApplication(tk.Tk):
            ("large", "大文件搬家", "▣"), ("migrate", "软件搬家", "◇"),
            ("compress", "软件压缩", "▧"), ("duplicates", "重复文件清理", "▥"),
            ("privacy", "隐私清理", "♧"), ("uninstall", "软件卸载", "▱"), ("popup", "弹窗拦截", "▱"),
-           ("system", "系统管理", "⚙")]
+           ("system", "系统瘦身", "⚙")]
 
     def __init__(self, background=False):
         self.settings = preferences.load()

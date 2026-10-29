@@ -7,7 +7,7 @@ The repository contains the complete runtime source tree and its checked-in reso
 | `app.py`, `start.bat` | Public launching entry points. |
 | `cplus_cleaner/application/` | Single-instance handling, preferences, feedback and tray. |
 | `cplus_cleaner/common/`, `ui/`, `localization/`, `platforms/` | Shared file operations, interface, language and Windows software integration. |
-| `cplus_cleaner/features/` | Home, drive/chat/privacy cleanup, large files, app moving/compression/uninstall, popup blocking, duplicates and system management. |
+| `cplus_cleaner/features/` | Home, drive/chat/privacy cleanup, large files, app moving/compression/uninstall, popup blocking, duplicates and system slimming. |
 | `cplus_cleaner/features/system/system_analysis_helper.py` | Read-only analysis helper dispatched through `app.py --component-analysis-job`; Windows UAC is requested only for that analysis. |
 | `assets/` | Icons, illustrations, selection controls, image mappings, chat rules and popup definitions. |
 | `rules/cdrive-private.json` | Reviewed drive-cleanup rule catalog. |

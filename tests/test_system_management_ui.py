@@ -132,7 +132,7 @@ class SystemManagementTests(unittest.TestCase):
         page.refresh_button.invoke()
         self.pump(lambda: not self.app.busy)
         self.app.apply_settings(dict(self.app.settings, language='en'))
-        self.assertEqual(self.app.nav_widgets['system'][2].cget('text'), 'System Management')
+        self.assertEqual(self.app.nav_widgets['system'][2].cget('text'), 'System Slim')
         self.assertEqual(i18n.tr(page.refresh_button.caption), 'Refresh')
         self.assertIs(self.app.views['system'], page)
         self.assertTrue(all(button.enabled for button in page.system_buttons.values()))

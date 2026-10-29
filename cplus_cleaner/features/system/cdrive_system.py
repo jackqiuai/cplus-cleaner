@@ -1,4 +1,4 @@
-"""Explicit Windows maintenance actions used by System Management and paging shortcuts.
+"""Explicit Windows maintenance actions used by System Slim and paging shortcuts.
 
 These system-owned files are never passed to the generic file deletion engine.
 Importing or reading this module does not invoke a maintenance action.

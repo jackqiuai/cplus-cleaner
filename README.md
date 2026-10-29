@@ -38,7 +38,7 @@ https://github.com/user-attachments/assets/2d3ed710-2246-4981-836c-c8fb233a772b
 | Privacy Cleanup | Review supported Windows usage traces, application traces, Chrome/Edge history and derived privacy categories. |
 | Software Uninstall | Search installed applications, select individual or multiple entries and invoke their registered uninstallers. Review supported leftovers after uninstalling. |
 | Popup Blocker | Detect supported applications and manage group and individual popup rules. Unsupported rules are omitted from the list. |
-| System Management | Inspect system files and access recycle-bin, hibernation, virtual-memory and Windows component-store actions. |
+| System Slim | Inspect system files and access recycle-bin, hibernation, virtual-memory and Windows component-store actions. |
 
 Additional settings include daily scheduled cleanup, startup with Windows, close-to-tray behavior and a persistent language choice. Operation history opens in a separate window.
 
@@ -208,7 +208,7 @@ The same menu includes **About Cplus Cleaner**, with the application logo, curre
 
 ## Project status
 
-The current application version is **1.1.5**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
+The current application version is **1.1.6**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 
