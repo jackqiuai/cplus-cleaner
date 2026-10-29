@@ -95,6 +95,14 @@ Python code is organized under `cplus_cleaner/` by feature and shared responsibi
 
 Drive and chat cleanup summarize categories rather than listing every file. Large File Mover and Duplicate Cleanup expose individual file selections.
 
+## App Compression: practical experience
+
+In one usage test, an application's disk usage decreased from **13.2GB** to **9.1GB**, saving about **4.1GB**. This is one observed result, not a guaranteed saving. Larger installations may offer more absolute savings, but their compression ratio is not necessarily higher; results depend on the files they contain.
+
+In that test, application startup became noticeably slower after compression. **App Compression is generally not recommended for routine use**, especially for frequently used applications or when launch speed matters.
+
+**If another partition has free space, prefer App Mover before considering App Compression.** Moving an application frees space on its original partition without reducing its total usage across all drives. Compression trades reduced disk usage against possible performance costs. To undo compression, use **App Compression → Compression history → Restore**.
+
 ## Frequently asked questions
 
 <details>
