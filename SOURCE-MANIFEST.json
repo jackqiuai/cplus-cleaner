@@ -1012,14 +1012,14 @@
     },
     {
       "path": "cplus_cleaner/features/app_compression/software_compression.py",
-      "bytes": 21775,
-      "sha256": "b40d79378ec09c1db76b34288eea04696b5313d85c1d701aca3c72b13ef9b958",
+      "bytes": 30360,
+      "sha256": "14fb663bcca9f3eafa5d2d4b26a47154e8ff48e28c0586d39bac7c5598918615",
       "text": true
     },
     {
       "path": "cplus_cleaner/features/app_compression/software_compression_ui.py",
-      "bytes": 32209,
-      "sha256": "c9e9777c21abf77c7f114f0e5f644fd1f4203e92f6f0a74aba0458fc490e39a0",
+      "bytes": 37910,
+      "sha256": "c7dd4f36094d9c7a7592428ae4e237eab988163f794521e03fe3e312a9c96b20",
       "text": true
     },
     {
@@ -1456,8 +1456,8 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 117855,
-      "sha256": "43687a78fa2f150d33bb1b531ceb8f02548c576f8bc354e9ed6673fa25b6a581",
+      "bytes": 118717,
+      "sha256": "09e617af353b7e228c6804fb14f47cf754167c62576f764ba30c1402a625f176",
       "text": true
     },
     {
@@ -1582,8 +1582,8 @@
     },
     {
       "path": "tests/test_i18n.py",
-      "bytes": 13695,
-      "sha256": "3c3d80da909fbb522ea5efc5414762628435ad5171b35e7342a099f61538e814",
+      "bytes": 14831,
+      "sha256": "a379b9d68906b39bd7cd32f43e580599a273fd2a1b9a4a076f781dccc004c717",
       "text": true
     },
     {
@@ -1672,14 +1672,14 @@
     },
     {
       "path": "tests/test_software_compression.py",
-      "bytes": 11679,
-      "sha256": "a4a3f18d794e7e86340a357196deaa613d781e360c9b6ee40d03247397b5464c",
+      "bytes": 26430,
+      "sha256": "adaf48d387ce342bd0c29567fc19aaae5525c97421d3ad83b36e8762dc300b10",
       "text": true
     },
     {
       "path": "tests/test_software_compression_ui.py",
-      "bytes": 19282,
-      "sha256": "2847236d78ea31dfb07e7fc96a1e159f7f5a00acf5a6d52cbb081b7531e4aeb0",
+      "bytes": 26659,
+      "sha256": "ffd3f5f53ff8cbd4b2f9eaf197f8f4cc5a9fd2fd9f48180d70ef3fce605b458b",
       "text": true
     },
     {

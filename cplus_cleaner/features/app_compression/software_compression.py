@@ -29,6 +29,7 @@ from cplus_cleaner.platforms import software_windows as windows
 WOF_TAG = 0x80000017
 _CATALOG = {}
 _LOCK = threading.RLock()
+LARGE_FILE_BYTES = 32 * 1024 * 1024
 
 
 @dataclass(frozen=True)
@@ -191,13 +192,59 @@ def _atomic(path, value):
         temporary.unlink(missing_ok=True)
 
 
-def history():
+def _mark_restored(record, physical):
+    """Commit a verified completed restore without overwriting concurrent work."""
+    with _LOCK:
+        records = _records()
+        current = next((row for row in records if row.get('id') == record['id']), None)
+        if current != record:
+            return False
+        current.update(restored=True, remaining=0, pending=0, status='success',
+                       current_size=physical, restored_time=int(time.time()), last_errors=[])
+        _atomic(_directory()/'records.json', records)
+    return True
+
+
+def _refresh_record(record, *, measured=None, cancel=None):
+    row = copy.deepcopy(record)
+    row['can_restore'] = not row.get('restored') and not row.get('superseded') and bool(
+        row.get('remaining', row.get('processed') or row.get('pending')))
+    if row.get('superseded') or _cancelled(cancel):
+        return row
+    try:
+        snapshot = json.loads((_directory()/(_record_id(row['id'])+'.json')).read_text('utf-8'))
+        if snapshot['folder'] != row['install_path']:
+            raise ValueError('压缩记录目录不匹配')
+        root = _validate_root(Path(snapshot['folder']), snapshot['root'])
+        measured = _measure(root, cancel) if measured is None else measured
+        if not _cancelled(cancel) and not measured['errors'] and not measured['blocked']:
+            row['current_size'] = measured['physical']
+            if not row.get('restored'):
+                remaining, errors = _restore_remaining(root, snapshot['files'])
+                row['can_restore'] = bool(remaining)
+                if not remaining and not errors and not _cancelled(cancel):
+                    if _mark_restored(record, measured['physical']):
+                        row.update(restored=True, remaining=0, pending=0, status='success', can_restore=False, last_errors=[])
+                    else:
+                        row['can_restore'] = True  # Re-read after concurrent work finishes.
+        elif not _cancelled(cancel):
+            row['refresh_error'] = '目录未完整读取，请重新扫描'
+    except (OSError, ValueError, KeyError) as exc:
+        row['refresh_error'] = str(exc)
+        row['can_restore'] = False
+    return row
+
+
+def history(*, refresh=False, cancel=None):
     with _LOCK:
         records = _records()
     result = []
     for record in reversed(records):
         row = copy.deepcopy(record)
-        row['can_restore'] = not row.get('restored') and not row.get('superseded') and bool(row.get('processed') or row.get('pending'))
+        row['can_restore'] = not row.get('restored') and not row.get('superseded') and bool(
+            row.get('remaining', row.get('processed') or row.get('pending')))
+        if refresh:
+            row = _refresh_record(record, cancel=cancel)
         result.append(row)
     return result
 
@@ -240,7 +287,8 @@ def scan(cancel=None, progress=None, *, records=None, icons=True):
             continue
         active = [record for record in saved if not record.get('restored') and not record.get('superseded')
                   and os.path.normcase(record.get('install_path','')) == os.path.normcase(str(root))]
-        if active and data['compressed']:
+        active = [_refresh_record(record, measured=data, cancel=cancel) for record in active]
+        if any(not record.get('restored') for record in active):
             continue  # Completed applications remain available in compression history.
         blocked = ''
         try:
@@ -257,9 +305,10 @@ def scan(cancel=None, progress=None, *, records=None, icons=True):
         if blocked:
             skipped += 1
             continue
-        model = Software(item.key, item.name, str(root), item.size,
-                         data['physical'] if data['compressed'] else None, item.icon, blocked,
-                         data['compressed'], len(data['files']))
+        # Only unfinished managed compression belongs in history. Native or
+        # newly created compressed files must not hide a restored application.
+        model = Software(item.key, item.name, str(root), data['physical'],
+                         None, item.icon, blocked, False, len(data['files']))
         info = root.stat()
         result.append(model)
         issued[model.key] = dict(item=model, root=[info.st_dev,info.st_ino],
@@ -292,7 +341,7 @@ def _validate_root(root, identity):
     return root
 
 
-def _validate_file(root, entry):
+def _checked_file(root, entry):
     relative = Path(entry['relative'])
     if relative.is_absolute() or '..' in relative.parts or not relative.parts:
         raise ValueError('文件超出压缩清单范围')
@@ -305,9 +354,66 @@ def _validate_file(root, entry):
         if core.is_link(parent):
             raise ValueError('文件父目录已变成链接')
     info = path.lstat()
-    if not stat.S_ISREG(info.st_mode) or core.is_link(path) or info.st_nlink > 1 or _identity(info) != entry['identity']:
+    if not stat.S_ISREG(info.st_mode) or core.is_link(path) or info.st_nlink > 1:
+        raise ValueError('文件身份、大小或修改时间已变化，已保留')
+    return path, info
+
+
+def _validate_file(root, entry):
+    path, info = _checked_file(root, entry)
+    if _identity(info) != entry['identity']:
         raise ValueError('文件身份、大小或修改时间已变化，已保留')
     return path
+
+
+def _restore_candidate(root, entry):
+    try:
+        path, info = _checked_file(root, entry)
+    except FileNotFoundError:
+        return None  # Missing files no longer need decompression.
+    if not _file_compressed(path, info):
+        return None  # Changed, already uncompressed files must not cause a false failure.
+    # Restore current ordinary files at retained paths, including rotated logs.
+    # The caller captures/revalidates their current identities before compact.
+    return path
+
+
+def _restore_remaining(root, entries):
+    remaining, errors = 0, []
+    for entry in entries:
+        try:
+            if _restore_candidate(root, entry) is not None:
+                remaining += 1
+        except (OSError, ValueError) as exc:
+            remaining += 1  # Unreadable or unsafe entries remain retryable.
+            if len(errors) < 50:
+                errors.append(str(exc))
+    return remaining, errors
+
+
+class _IoCounters(ct.Structure):
+    _fields_ = [(name, ct.c_ulonglong) for name in (
+        'reads', 'writes', 'other', 'read_bytes', 'write_bytes', 'other_bytes')]
+
+
+@lru_cache(maxsize=1)
+def _io_api():
+    library = ct.WinDLL('kernel32', use_last_error=True)
+    function = library.GetProcessIoCounters
+    function.argtypes = [wt.HANDLE, ct.POINTER(_IoCounters)]
+    function.restype = wt.BOOL
+    return library, function
+
+
+def _process_read_bytes(process):
+    """Read I/O performed by our compact child; None means unavailable."""
+    if os.name != 'nt' or getattr(process, '_handle', None) is None:
+        return None
+    try:
+        counters = _IoCounters()
+        return counters.read_bytes if _io_api()[1](int(process._handle), ct.byref(counters)) else None
+    except (OSError, AttributeError, TypeError, ValueError):
+        return None
 
 
 def _compact(paths, compress, cancel=None, progress=None):
@@ -325,6 +431,9 @@ def _compact(paths, compress, cancel=None, progress=None):
             continue
         with subprocess.Popen(arguments+[str(path) for path in selected],stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,creationflags=0x08000000) as process:
+            started = time.monotonic()
+            sizes = [max(1,path.stat().st_size) for path in selected]
+            total_bytes = sum(sizes)
             while True:
                 try:
                     output,_ = process.communicate(timeout=.2)
@@ -335,16 +444,39 @@ def _compact(paths, compress, cancel=None, progress=None):
                         process.terminate()
                         output,_ = process.communicate()
                         break
+                    if progress:
+                        read_bytes = _process_read_bytes(process)
+                        progress(dict(busy=True,elapsed=max(0,int(time.monotonic()-started)),
+                            current_file=str(selected[0]),
+                            current_file_size=sizes[0],
+                            bytes_processed=min(read_bytes or 0,total_bytes*.99),bytes_total=total_bytes))
             code = max(code,process.returncode)
             outputs.append(output.decode('mbcs',errors='replace')[-3000:])
-    if not compress and not any(_file_compressed(path) for path in paths):
-        code=0
+    if compress:
+        # WOF leaves sub-4KiB files resident/uncompressed even on a successful run.
+        uncompressed = [path for path in paths if path.stat().st_size >= 4096 and not _file_compressed(path)]
+        if uncompressed:
+            code = max(1, code)
+            outputs.append('部分文件未压缩，未计入节省空间')
+    else:
+        remaining = [path for path in paths if _file_compressed(path)]
+        if not remaining:
+            code = 0
+        else:
+            code = max(1, code)
+            outputs.append('仍处于压缩状态：'+'；'.join(str(path) for path in remaining[:5]))
     return dict(returncode=code, output='\n'.join(outputs))
 
 
 def _batches(entries):
     batch, length = [], 0
     for entry in entries:
+        if entry['identity'][2] >= LARGE_FILE_BYTES:
+            if batch:
+                yield batch
+                batch, length = [], 0
+            yield [entry]
+            continue
         cost = len(entry['relative'])+320
         if batch and (len(batch)>=64 or length+cost>18000):
             yield batch
@@ -372,18 +504,23 @@ def _store(record, manifest=None):
 
 
 def _operate(item, snapshot, compressing, cancel, progress, runner=None, previous=None):
-    if runner is None:
-        runner = lambda paths, mode: _compact(paths,mode,cancel,progress)
     root = _validate_root(Path(item.folder), snapshot['root'])
     if _cancelled(cancel):
         return dict(status='cancelled',item=item,before=item.size,after=item.after,saved=0,
                     errors=[],cancelled=True,record=None)
-    record = dict(id=uuid.uuid4().hex,name=item.name,install_path=str(root),old_size=item.size,
-        new_size=item.after if item.after is not None else item.size,time=int(time.time()),
-        restored=False,superseded=False,processed=0,status='running') if compressing else copy.deepcopy(previous)
+    baseline = _measure(root, cancel)
+    if baseline['errors'] or baseline['blocked']:
+        raise ValueError('目录未完整读取，请重新扫描')
+    if _cancelled(cancel):
+        return dict(status='cancelled',item=item,before=baseline['physical'],after=baseline['physical'],
+                    saved=0,errors=[],cancelled=True,record=None)
+    before = baseline['physical']
+    record = dict(id=uuid.uuid4().hex,name=item.name,install_path=str(root),old_size=before,
+        new_size=before,time=int(time.time()),schema=2,logical_size=baseline['logical'],
+        saved_bytes=0,restored=False,superseded=False,processed=0,status='running') if compressing else copy.deepcopy(previous)
     if record is None:
-        record = dict(id=uuid.uuid4().hex,name=item.name,install_path=str(root),old_size=item.size,
-            new_size=item.after if item.after is not None else item.size,time=int(time.time()),
+        record = dict(id=uuid.uuid4().hex,name=item.name,install_path=str(root),old_size=before,
+            new_size=before,time=int(time.time()),
             restored=False,superseded=False,processed=0,status='running')
     journal = dict(name=item.name,key=item.key,folder=str(root),root=snapshot['root'],files=copy.deepcopy(snapshot['files']),
                    size=item.size,source=snapshot.get('source',{}))
@@ -391,23 +528,38 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
         record['pending'] = len(snapshot['files'])
     # Verify that a recovery record can be persisted before changing file attributes.
     _store(record, journal if compressing else snapshot)
-    entries, errors, processed = snapshot['files'], [], []
+    entries, errors, processed, examined = snapshot['files'], [], [], 0
+    total_bytes = sum(max(1,entry['identity'][2]) for entry in entries)
+    completed_bytes, batch_bytes = 0, 0
+    def report(activity=None, *, finished=False):
+        if progress:
+            activity = activity or {}
+            partial = min(batch_bytes*.99,max(0,activity.get('bytes_processed',0)))
+            value = 100 if finished else min(99,100*(completed_bytes+partial)/max(1,total_bytes))
+            progress(dict(activity,message=('压缩' if compressing else '还原')+'：'+item.name,
+                completed=examined,total=len(entries),bytes_completed=completed_bytes+partial,
+                bytes_total=total_bytes,progress=value,busy=bool(activity.get('busy'))))
     for batch in _batches(entries):
         if _cancelled(cancel):
             break
+        batch_bytes = sum(max(1,entry['identity'][2]) for entry in batch)
         valid = []
         for entry in batch:
             try:
-                path = _validate_file(root, entry)
-                valid.append((entry,path))
+                path = _validate_file(root, entry) if compressing else _restore_candidate(root, entry)
+                if path is not None:
+                    if not compressing:
+                        entry = dict(relative=entry['relative'], identity=_identity(path.lstat()))
+                        path = _validate_file(root, entry)
+                    valid.append((entry,path))
             except (OSError,ValueError) as exc:
                 if len(errors)<50:errors.append(str(exc))
         if valid:
-            if progress:
-                progress(dict(message=('压缩' if compressing else '还原')+'：'+item.name,
-                    completed=len(processed),total=len(entries),progress=int(100*len(processed)/max(1,len(entries)))))
+            report()
             try:
-                outcome = runner([path for entry,path in valid], compressing)
+                paths = [path for entry,path in valid]
+                outcome = (runner(paths,compressing) if runner is not None
+                           else _compact(paths,compressing,cancel,report))
                 if outcome.get('returncode'):
                     errors.append(outcome.get('output','Windows compact 返回失败')[-2000:])
             except OSError as exc:
@@ -425,23 +577,41 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
             if compressing:record['pending'] = len(entries)-len(processed)
             record['status'] = 'partial'
             _store(record)
-        if progress:
-            progress(dict(message=('压缩' if compressing else '还原')+'：'+item.name,
-                completed=len(processed),total=len(entries),progress=int(100*len(processed)/max(1,len(entries)))))
+        examined += len(batch)
+        completed_bytes += batch_bytes
+        report()
     measured = _measure(root)
     errors.extend(measured['errors'])
+    errors.extend(measured['blocked'])
     cancelled = _cancelled(cancel)
     status = 'cancelled' if cancelled else 'partial' if errors and processed else 'failed' if errors else 'success'
-    if not compressing and not errors and any(_file_compressed(root/entry['relative']) for entry in processed):
-        errors.append('部分文件仍处于压缩状态，已保留还原记录')
-        status='partial'
-    model = replace(item,after=measured['physical'],compressed=measured['compressed'])
+    remaining = None
+    if not compressing:
+        remaining, verification_errors = _restore_remaining(root, entries)
+        errors.extend(error for error in verification_errors if error not in errors)
+        if remaining and not cancelled:
+            errors.append('部分文件仍处于压缩状态，已保留还原记录')
+            status = 'partial' if processed else 'failed'
+        elif not remaining and not cancelled and not measured['errors'] and not measured['blocked']:
+            # A nonzero compact exit can describe a file already decompressed by
+            # Windows. Verification of every retained entry is authoritative.
+            status, errors = 'success', []
+    model = replace(item,size=before if compressing else measured['physical'],
+                    after=measured['physical'],
+                    compressed=measured['compressed'] if compressing else bool(remaining))
     with _LOCK:
         if model.icon is None and item.key in _CATALOG:
             model = replace(model,icon=_CATALOG[item.key]['item'].icon)
-    record.update(new_size=measured['physical'],processed=len(processed),status=status,
+    record.update(current_size=measured['physical'],processed=len(processed),status=status,
+                  last_errors=[str(error)[:1000] for error in errors[:5]],
                   restored=not compressing and status=='success')
-    if compressing:record['pending'] = 0 if status=='success' else len(entries)-len(processed)
+    if compressing:
+        record.update(new_size=measured['physical'],saved_bytes=max(0,before-measured['physical']))
+        record['pending'] = 0 if status=='success' else len(entries)-len(processed)
+        if status == 'success':
+            record['remaining'], _ = _restore_remaining(root, journal['files'])
+    else:
+        record.update(remaining=remaining,restore_before=before,restore_after=measured['physical'])
     if record['restored']:record['restored_time']=int(time.time())
     _store(record,journal if compressing else snapshot)
     with _LOCK:
@@ -454,11 +624,16 @@ def _operate(item, snapshot, compressing, cancel, progress, runner=None, previou
     try:
         preferences.append_activity('software_compress' if compressing else 'software_restore',
             ok=status=='success',summary=f"{item.name}：{status}",count=len(processed),
-            bytes_before=item.size,bytes_after=measured['physical'])
+            bytes_before=before,bytes_after=measured['physical'])
     except OSError:
         pass
-    return dict(status=status,item=model,before=item.size,after=measured['physical'],
-        saved=max(0,item.size-measured['physical']),errors=errors,cancelled=cancelled,record=record)
+    if not cancelled:
+        examined = len(entries)
+        completed_bytes = total_bytes
+        report(finished=True)
+    return dict(status=status,item=model,before=before,after=measured['physical'],
+        saved=max(0,before-measured['physical']) if compressing else 0,
+        errors=errors,cancelled=cancelled,record=record)
 
 
 def compress(item, cancel=None, progress=None, *, runner=None):
@@ -471,20 +646,32 @@ def restore(item_or_record, cancel=None, progress=None, *, runner=None):
         snapshot = _authorize(item)
         with _LOCK:
             previous = next((row for row in reversed(_records()) if row.get('install_path')==item.folder
-                and not row.get('restored') and not row.get('superseded') and (row.get('processed') or row.get('pending'))),None)
+                and not row.get('restored') and not row.get('superseded')),None)
         if previous is not None:
             return restore(previous,cancel,progress,runner=runner)
         return _operate(item,snapshot,False,cancel,progress,runner)
     identity = _record_id(item_or_record.get('id'))
     with _LOCK:
         record = next((row for row in _records() if row.get('id')==identity),None)
-        if record is None or record.get('restored') or record.get('superseded') or not (record.get('processed') or record.get('pending')):
+        # Counts describe the last attempt, not the recovery capability. A
+        # failed attempt can touch zero files while compressed files remain.
+        if record is None or record.get('restored') or record.get('superseded'):
             raise ValueError('该压缩记录已还原、已更新或不可用')
+    try:
         snapshot = json.loads((_directory()/(identity+'.json')).read_text('utf-8'))
-    if snapshot['folder'] != record['install_path']:
-        raise ValueError('压缩记录目录不匹配')
-    item = Software(snapshot['key'],record['name'],record['install_path'],record['old_size'],
-                    record['new_size'],compressed=True,files=len(snapshot['files']))
-    return _operate(item,snapshot,False,cancel,progress,runner,record)
+        if snapshot['folder'] != record['install_path']:
+            raise ValueError('压缩记录目录不匹配')
+        item = Software(snapshot['key'],record['name'],record['install_path'],record['old_size'],
+                        record['new_size'],compressed=True,files=len(snapshot['files']))
+        return _operate(item,snapshot,False,cancel,progress,runner,record)
+    except (OSError, ValueError, KeyError) as exc:
+        # Preflight failures happen before _operate can save an outcome. Keep
+        # their reason beside the recovery entry instead of leaving a silent retry.
+        record = dict(record, status='failed', last_errors=[str(exc)[:1000]])
+        try:
+            _store(record)
+        except OSError:
+            pass
+        raise
 
 # Purpose: Transparent compression, restore, eligibility and history

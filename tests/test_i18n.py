@@ -82,6 +82,26 @@ class LanguageTests(unittest.TestCase):
                 preferences.save(dict(preferences.DEFAULTS, language='fr'))
             self.assertEqual((core.DATA_DIR / 'settings.json').read_bytes(), before)
 
+    def test_compression_disk_usage_and_legacy_history_are_fully_localized(self):
+        i18n.set_language('en')
+        self.assertEqual(i18n.tr('容量按实际磁盘占用统计'),'Sizes show actual disk usage.')
+        for text in ('压缩前占用 13.2GB  ·  压缩后占用 9.1GB  ·  本次节省 4.1GB  ·  当前占用 12.29GB',
+                     '旧记录：未记录操作前的实际占用  ·  当前占用 13.2GB',
+                     '当前占用读取失败'):
+            translated=i18n.tr(text)
+            self.assertNotRegex(translated,i18n.HAN)
+            if '4.1GB' in text:self.assertIn('saved this time: 4.1GB',translated)
+
+    def test_compression_activity_keeps_file_names_and_translates_elapsed_time(self):
+        i18n.set_language('en')
+        path=r'D:\软件\data.vmdk'
+        text=f'压缩：Example（24%） · 已用时 8 秒 · 当前文件：{path}'
+        translated=i18n.tr(text)
+        self.assertIn(path,translated)
+        self.assertIn('Elapsed: 8s',translated)
+        self.assertIn('Current file:',translated)
+        self.assertNotRegex(translated.replace(path,''),i18n.HAN)
+
     def test_concatenated_scan_summaries_translate_numeric_suffixes(self):
         i18n.set_language('en')
         self.assertEqual(i18n.tr('选择其他位置'), 'Choose folder')

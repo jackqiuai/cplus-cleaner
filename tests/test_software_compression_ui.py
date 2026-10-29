@@ -1,5 +1,6 @@
 """UI fixtures never compress or restore installed software."""
 import gc
+import os
 from dataclasses import replace
 from pathlib import Path
 import tempfile
@@ -30,6 +31,7 @@ class CompressionPageTests(unittest.TestCase):
         self.items = [backend.Software('a', 'Alpha App', self.base/'a', 2048),
                       backend.Software('b', 'Beta App', self.base/'b', 4096),
                       backend.Software('c', 'Alpha Protected', self.base/'c', 1024, blocked='fixture protected')]
+        self.real_history = backend.history
         self.patches = [patch.object(core, 'DATA_DIR', self.base/'state'),
                         patch.object(preferences, 'load', return_value=dict(preferences.DEFAULTS)),
                         patch.object(preferences, 'read_autostart', return_value=False),
@@ -228,7 +230,7 @@ class CompressionPageTests(unittest.TestCase):
         self.assertEqual(self.page.rows['b'].action.caption, '还原')
         self.assertTrue(self.page.scan_button.enabled)
         self.assertIn('失败 1 款', self.page.note.get())
-        self.assertLess(self.page.progress_value.get(),100)
+        self.assertEqual(self.page.progress_value.get(),100)
 
     def test_cancel_keeps_partial_result_and_does_not_start_remaining_software(self):
         def compress(item, **kwargs):
@@ -259,6 +261,7 @@ class CompressionPageTests(unittest.TestCase):
                     return self.result(item,operation)
                 current=next(item for item in self.page.apps if item.key=='a')
                 history=self.page.open_history() if operation=='restore' else None
+                if history is not None:self.pump(lambda:not self.window.busy)
                 with patch.object(backend,operation,side_effect=work):
                     try:
                         self.page.act_items([current],operation)
@@ -297,6 +300,33 @@ class CompressionPageTests(unittest.TestCase):
             self.pump(lambda:not self.page.queue_active and not self.window.busy)
         self.assertEqual(self.page.progress_value.get(),100)
 
+    def test_long_file_activity_keeps_animating_and_stops_after_completion(self):
+        entered,release=threading.Event(),threading.Event()
+        def work(item,**kwargs):
+            kwargs['progress'](dict(progress=24,completed=104,total=427,busy=True,
+                current_file=r'D:\leidian\LDPlayer9\vms\data.vmdk',current_file_size=6*1024**3,elapsed=8))
+            entered.set();release.wait(10)
+            return self.result(item)
+        with patch.object(backend,'compress',side_effect=work):
+            try:
+                self.page.rows['a'].action.invoke()
+                self.pump(lambda:entered.is_set() and self.page._activity_running)
+                self.assertEqual(self.page.progress_value.get(),24)
+                self.assertTrue(self.page.activity_bar.winfo_ismapped())
+                value=float(self.page.activity_bar['value'])
+                self.pump(lambda:float(self.page.activity_bar['value'])!=value)
+                self.assertIn('data.vmdk',self.page.progress_caption.cget('text'))
+                self.assertIn('已用时 8 秒',self.page.progress_caption.cget('text'))
+                window=self.page.open_history()
+                self.window.update()
+                self.assertTrue(window.activity_bar.winfo_ismapped())
+            finally:release.set()
+            self.pump(lambda:not self.window.busy and not self.page.queue_active)
+        self.assertFalse(self.page._activity_running)
+        self.assertFalse(self.page.activity_bar.winfo_ismapped())
+        self.assertFalse(window.activity_bar.winfo_ismapped())
+        self.assertEqual(self.page.progress_value.get(),100)
+
     def test_history_is_single_window_and_restore_uses_exact_record(self):
         record = dict(id='fixture-record', name='Alpha App', install_path=str(self.base/'a'),
                       old_size=2048, new_size=1024, time='2026/10/24 02:00', restored=False, can_restore=True)
@@ -304,6 +334,7 @@ class CompressionPageTests(unittest.TestCase):
         first = self.page.open_history()
         second = self.page.open_history()
         self.assertIs(first, second)
+        self.pump(lambda: not self.window.busy)
         self.assertEqual(len(first.record_buttons), 1)
         button = first.record_buttons[0][0]
         self.assertEqual(button.caption, '还原')
@@ -317,17 +348,107 @@ class CompressionPageTests(unittest.TestCase):
 
         with patch.object(backend, 'restore', side_effect=restore) as action:
             button.invoke()
+            self.assertFalse(button.enabled)
+            button.invoke()
             self.pump(lambda: not self.page.queue_active and not self.window.busy)
+            first.record_buttons[0][0].invoke()
+            action.assert_called_once()
         self.assertEqual(action.call_args.args[0], record)
         self.assertEqual(first.record_buttons[0][0].caption, '已还原')
         self.assertFalse(first.record_buttons[0][0].enabled)
         first.destroy()
         self.assertIsNone(self.page._history_window)
 
+    def test_finished_partial_restore_reaches_100_and_retains_retry_for_remaining_files(self):
+        record=dict(id='partial',name='Alpha App',old_size=2048,new_size=1024,
+                    schema=2,saved_bytes=1024,current_size=2048,can_restore=True,restored=False,status='partial')
+        self.mocks[4].return_value=[record]
+        window=self.page.open_history()
+        self.pump(lambda:not self.window.busy)
+        def restore(item,**kwargs):
+            kwargs['progress'](dict(progress=76,completed=76,total=100))
+            return dict(status='partial',errors=['fixture locked file'],cancelled=False)
+        with patch.object(backend,'restore',side_effect=restore):
+            window.record_buttons[0][0].invoke()
+            self.pump(lambda:not self.page.queue_active and not self.window.busy)
+        self.assertEqual(self.page.progress_value.get(),100)
+        self.assertEqual(window.progress_percent.cget('text'),'100%')
+        self.assertIn('部分完成',window.progress_caption.cget('text'))
+        self.assertTrue(window.record_buttons[0][0].enabled)
+        self.assertEqual(window.record_buttons[0][0].caption,'继续还原')
+        self.assertIn('fixture locked file',window.result_note.cget('text'))
+        self.assertTrue(window.result_note.winfo_ismapped())
+        self.assertEqual(window.progress_percent.cget('fg'),'#ff6269')
+        self.assertEqual(window.progress_bar.cget('style'),'Compression.Error.Horizontal.TProgressbar')
+
+    def test_verified_legacy_restore_stays_disabled_after_reload_and_reopen(self):
+        root=self.base/'a';root.mkdir()
+        payload=root/'app.log';payload.write_bytes(b'already restored')
+        info=root.stat()
+        record=dict(id='a'*32,name='Alpha App',install_path=str(root),old_size=2048,new_size=2048,
+                    processed=1,pending=0,status='partial',restored=False,superseded=False)
+        snapshot=dict(key='a',name='Alpha App',folder=str(root),root=[info.st_dev,info.st_ino],
+                      files=[dict(relative='app.log',identity=backend._identity(payload.lstat()))])
+        backend._store(record,snapshot)
+        with patch.object(backend,'history',wraps=self.real_history):
+            window=self.page.open_history()
+            self.pump(lambda:not self.window.busy)
+            self.assertEqual(window.record_buttons[0][0].caption,'已还原')
+            self.assertFalse(window.record_buttons[0][0].enabled)
+            self.page._reload_history()
+            self.assertEqual(window.record_buttons[0][0].caption,'已还原')
+            window.destroy()
+            reopened=self.page.open_history()
+            self.pump(lambda:not self.window.busy)
+            self.assertEqual(reopened.record_buttons[0][0].caption,'已还原')
+            self.assertFalse(reopened.record_buttons[0][0].enabled)
+
+    @unittest.skipUnless(os.name=='nt','Windows transparent compression')
+    def test_real_history_button_recovers_after_zero_processed_failure(self):
+        root=self.base/'a';root.mkdir()
+        payload=root/'VBox.log.1';payload.write_bytes(b'restore retry fixture\n'*10000)
+        digest=core.sha256_file(payload)
+        outcome=backend._compact([payload],True)
+        self.assertEqual(outcome['returncode'],0,outcome)
+        self.assertTrue(backend._file_compressed(payload))
+        info=root.stat()
+        record=dict(id='b'*32,name='Alpha App',install_path=str(root),old_size=payload.stat().st_size,
+                    new_size=backend.allocated_size(payload),processed=1,pending=0,remaining=1,
+                    status='partial',restored=False,superseded=False)
+        snapshot=dict(key='a',name='Alpha App',folder=str(root),root=[info.st_dev,info.st_ino],
+                      files=[dict(relative=payload.name,identity=backend._identity(payload.lstat()))])
+        backend._store(record,snapshot)
+        actual_restore=backend.restore
+        calls=[]
+        def work(value,**kwargs):
+            calls.append(value['id'])
+            if len(calls)==1:
+                def locked(paths,mode):raise PermissionError('fixture locked log')
+                return actual_restore(value,runner=locked,**kwargs)
+            return actual_restore(value,**kwargs)
+        with patch.object(backend,'history',wraps=self.real_history),patch.object(backend,'restore',side_effect=work):
+            window=self.page.open_history()
+            self.pump(lambda:not self.window.busy)
+            window.record_buttons[0][0].invoke()
+            self.pump(lambda:not self.page.queue_active and not self.window.busy)
+            self.assertEqual(backend._records()[0]['processed'],0)
+            self.assertEqual(window.record_buttons[0][0].caption,'继续还原')
+            self.assertIn('fixture locked log',window.result_note.cget('text'))
+            window.record_buttons[0][0].invoke()
+            self.pump(lambda:not self.page.queue_active and not self.window.busy)
+            self.assertEqual(window.record_buttons[0][0].caption,'已还原')
+            self.assertFalse(window.record_buttons[0][0].enabled)
+            self.assertEqual(window.progress_percent.cget('fg'),'#27b77d')
+            self.assertEqual(window.progress_percent.cget('text'),'100%')
+        self.assertEqual(len(calls),2)
+        self.assertFalse(backend._file_compressed(payload))
+        self.assertEqual(core.sha256_file(payload),digest)
+
     def test_superseded_history_is_visible_and_cannot_restore(self):
         self.mocks[4].return_value = [dict(id='old', name='Old App', old_size=2048, new_size=1024,
                                          superseded=True, can_restore=True, restored=False)]
         window = self.page.open_history()
+        self.pump(lambda: not self.window.busy)
         button, record = window.record_buttons[0]
         self.assertEqual(button.caption, '记录已更新')
         self.assertFalse(button.enabled)

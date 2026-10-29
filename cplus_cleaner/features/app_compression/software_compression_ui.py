@@ -4,6 +4,7 @@ from __future__ import annotations
 import base64
 from dataclasses import replace
 import math
+from pathlib import Path
 import time
 from cplus_cleaner.localization import localized_tk as tk
 from cplus_cleaner.localization.i18n import tr, display_name
@@ -18,6 +19,18 @@ from cplus_cleaner.ui.ui_widgets import Checkbutton, MetricLabel, single_window,
 def error_text(errors):
     errors = list(errors or [])
     return "；".join(str(error) for error in errors[:3]) + (f"；另有{len(errors)-3}项" if len(errors) > 3 else "")
+
+
+def error_summary(errors):
+    """Keep the outcome from each error, omitting multiline command chatter."""
+    errors = [errors] if isinstance(errors, str) else list(errors or [])
+    summaries = []
+    for error in errors[:3]:
+        lines = [' '.join(line.split()) for line in str(error).splitlines() if line.strip()]
+        if lines and lines[-1] not in summaries:
+            summaries.append(lines[-1])
+    text = '；'.join(summaries)
+    return text if len(text) <= 240 else text[:239]+'…'
 
 
 def record_time(value):
@@ -118,6 +131,7 @@ class SoftwareCompressionPage(tk.Frame):
         self._progress_total = self._progress_finished = 0
         self._progress_units = self._current_progress = 0.0
         self._progress_name = ''
+        self._activity_running = False
         self.heading = tk.StringVar(value="发现可压缩软件 0 款，已选择 0 款")
         self.note = tk.StringVar(value="点击“扫描”读取可压缩的软件列表。")
         self.search = tk.StringVar()
@@ -130,7 +144,7 @@ class SoftwareCompressionPage(tk.Frame):
         self.warning.grid(row=0, column=0, rowspan=2, sticky="nw", padx=(0, 12), pady=2)
         self.heading_label = MetricLabel(header, textvariable=self.heading, bg=WHITE, fg=INK, font=(FONT, 14))
         self.heading_label.grid(row=0, column=1, sticky="nw")
-        self.subtitle = tk.Label(header, text="节省磁盘空间，不影响软件使用", bg=WHITE, fg="#c1c7c8",
+        self.subtitle = tk.Label(header, text="容量按实际磁盘占用统计", bg=WHITE, fg="#c1c7c8",
                                  anchor="w", font=(FONT, 9))
         self.subtitle.grid(row=1, column=1, sticky="nw", pady=(6, 0))
         actions = tk.Frame(header, bg=WHITE)
@@ -186,9 +200,13 @@ class SoftwareCompressionPage(tk.Frame):
         self.progress_value = tk.DoubleVar(value=0)
         ttk.Style(self).configure('Compression.Horizontal.TProgressbar',background='#51db9e',
             troughcolor='#edf7f2',borderwidth=0,thickness=10)
+        ttk.Style(self).configure('Compression.Error.Horizontal.TProgressbar',background='#ff6269',
+            troughcolor='#fff0f0',borderwidth=0,thickness=10)
         self.progress_bar = ttk.Progressbar(self.progress_frame,variable=self.progress_value,maximum=100,
             mode='determinate',style='Compression.Horizontal.TProgressbar')
         self.progress_bar.pack(fill='x')
+        self.activity_bar=ttk.Progressbar(self.progress_frame,mode='indeterminate',
+            style='Compression.Horizontal.TProgressbar',maximum=100)
         area = tk.Frame(self, bg=WHITE)
         self._list_area = area
         area.pack(fill="both", expand=True, padx=25)
@@ -347,6 +365,10 @@ class SoftwareCompressionPage(tk.Frame):
         message = str(data.get("message", "正在处理…")) if isinstance(data, dict) else str(data)
         if isinstance(data, dict) and isinstance(data.get("progress"), (int, float)):
             message += f"（{max(0, min(100, data['progress'])):.0f}%）"
+        if isinstance(data,dict) and data.get('current_file'):
+            if isinstance(data.get('elapsed'),(int,float)):
+                message += f" · 已用时 {int(data['elapsed'])} 秒"
+            message += f" · 当前文件：{data['current_file']}"
         self.app.report_progress(message)
         self.app.events.put(("batch", (self._apply_progress, (data,message))))
 
@@ -357,16 +379,41 @@ class SoftwareCompressionPage(tk.Frame):
         if window is not None and window.winfo_exists() and not window.progress_frame.winfo_manager():
             window.progress_frame.pack(side='bottom',fill='x',padx=20,pady=(3,15),before=window.records_area)
 
-    def _set_progress(self,value,caption=None):
+    def _set_progress(self,value,caption=None,*,error=False):
         value = max(0.0,min(100.0,float(value)))
         self.progress_value.set(value)
-        self.progress_percent.configure(text=f'{value:.0f}%')
+        color = '#ff6269' if error else '#27b77d'
+        self.progress_percent.configure(text=f'{value:.0f}%',fg=color)
+        self.progress_caption.configure(fg='#ff6269' if error else INK)
+        style='Compression.Error.Horizontal.TProgressbar' if error else 'Compression.Horizontal.TProgressbar'
+        self.progress_bar.configure(style=style)
         if caption is not None:
             self.progress_caption.configure(text=caption)
         window=self._history_window
         if window is not None and window.winfo_exists():
-            window.progress_caption.configure(text=self.progress_caption.cget('text'))
-            window.progress_percent.configure(text=f'{value:.0f}%')
+            window.progress_caption.configure(text=self.progress_caption.cget('text'),fg=self.progress_caption.cget('fg'))
+            window.progress_percent.configure(text=f'{value:.0f}%',fg=color)
+            window.progress_bar.configure(style=style)
+            window.result_note.configure(fg='#ff6269' if error else MUTED)
+
+    def _set_activity(self,active):
+        active=bool(active)
+        if active != self._activity_running:
+            self._activity_running=active
+            if active:
+                self.activity_bar.pack(fill='x',pady=(4,0))
+                self.activity_bar.start(25)
+            else:
+                self.activity_bar.stop()
+                self.activity_bar.pack_forget()
+        window=self._history_window
+        if window is not None and window.winfo_exists():
+            if active and not window.activity_bar.winfo_manager():
+                window.activity_bar.pack(fill='x',pady=(4,0),before=window.result_note)
+                window.activity_bar.start(25)
+            elif not active:
+                window.activity_bar.stop()
+                window.activity_bar.pack_forget()
 
     def _current_caption(self,detail=''):
         verb = '还原' if self.operation=='restore' else '压缩'
@@ -377,6 +424,7 @@ class SoftwareCompressionPage(tk.Frame):
         self.note.set(message)
         if not self.queue_active or not self._progress_total or not isinstance(data,dict):
             return
+        self._set_activity(data.get('busy',False))
         value=data.get('progress')
         completed,total=data.get('completed'),data.get('total')
         if not isinstance(value,(int,float)) and isinstance(completed,(int,float)) and isinstance(total,(int,float)) and total>0:
@@ -385,6 +433,12 @@ class SoftwareCompressionPage(tk.Frame):
             self._current_progress=max(self._current_progress,max(0,min(100,value)))
         overall=100*(self._progress_units+min(.99,self._current_progress/100))/self._progress_total
         detail=f' · {completed}/{total} 个文件' if isinstance(completed,int) and isinstance(total,int) else ''
+        if isinstance(data.get('elapsed'),(int,float)):
+            detail += f" · 已用时 {int(data['elapsed'])} 秒"
+        if data.get('current_file'):
+            detail += f" · {Path(data['current_file']).name}"
+            if isinstance(data.get('current_file_size'),(int,float)):
+                detail += f" ({size_text(data['current_file_size'])})"
         self._set_progress(min(99,overall),self._current_caption(detail))
 
     def compress_selected(self):
@@ -421,6 +475,7 @@ class SoftwareCompressionPage(tk.Frame):
         self._progress_total,self._progress_finished=len(requested),0
         self._progress_units=self._current_progress=0.0
         self._last_progress=0.0
+        self._set_activity(False)
         self._show_progress()
         self._set_progress(0)
         for item in requested:
@@ -449,13 +504,15 @@ class SoftwareCompressionPage(tk.Frame):
             self.queue = []
         if not self.queue:
             self.queue_active = False
+            self._set_activity(False)
             counts = {status: sum(result.get("status") == status for result in self.results)
                       for status in ("success", "partial", "failed", "cancelled")}
             verb = "还原" if self.operation == "restore" else "压缩"
             complete=not self._queue_cancelled and counts['success']==self._progress_total
             state='完成' if complete else '已取消' if self._queue_cancelled else '部分完成' if counts['success'] or counts['partial'] else '未完成'
-            self._set_progress(100 if complete else min(99,self.progress_value.get()),
-                f'{verb}{state} · 完成 {counts["success"]}/{self._progress_total} 款')
+            self._set_progress(min(99,self.progress_value.get()) if self._queue_cancelled else 100,
+                f'{verb}{state} · 完成 {counts["success"]}/{self._progress_total} 款',
+                error=not complete and not self._queue_cancelled)
             self.note.set(("任务已取消；" if self._queue_cancelled else "") +
                           f"完成 {counts['success']} 款，部分完成 {counts['partial']} 款，失败 {counts['failed']} 款。" +
                           (" " + error_text(list(self.errors.values())) if self.errors else ""))
@@ -482,13 +539,15 @@ class SoftwareCompressionPage(tk.Frame):
                 return {"status": "failed", "errors": [str(error)]}
 
         def done(result):
+            self._set_activity(False)
             status = result.get("status", "failed")
             if status not in {"success", "partial", "failed", "cancelled"}:
                 status = "failed"
             self.states[key] = status
             self.results.append(dict(result, status=status))
             self._progress_finished+=1
-            self._progress_units+=1.0 if status=='success' else min(.99,self._current_progress/100)
+            interrupted = self.app.cancel.is_set() or bool(result.get('cancelled')) or status == 'cancelled'
+            self._progress_units+=min(.99,self._current_progress/100) if interrupted else 1.0
             self._set_progress(min(99,100*self._progress_units/max(1,self._progress_total)))
             detail = error_text(result.get("errors"))
             if detail:
@@ -531,10 +590,17 @@ class SoftwareCompressionPage(tk.Frame):
         window.progress_bar=ttk.Progressbar(window.progress_frame,variable=self.progress_value,maximum=100,
             mode='determinate',style='Compression.Horizontal.TProgressbar')
         window.progress_bar.pack(fill='x')
+        window.activity_bar=ttk.Progressbar(window.progress_frame,mode='indeterminate',
+            style='Compression.Horizontal.TProgressbar',maximum=100)
+        window.result_note=tk.Label(window.progress_frame,textvariable=self.note,bg=WHITE,
+            fg=MUTED,font=(FONT,9),anchor='w',justify='left',wraplength=780)
+        window.result_note.pack(fill='x',pady=(6,0))
+        window.progress_frame.bind('<Configure>',lambda event:window.result_note.configure(wraplength=max(200,event.width)))
         container = tk.Frame(window, bg=WHITE)
         window.records_area=container
         container.pack(fill="both", expand=True, padx=20, pady=(0, 18))
         if self.queue_active:self._show_progress()
+        self._set_activity(self._activity_running)
         canvas = tk.Canvas(container, bg=WHITE, bd=0, highlightthickness=0)
         scroll = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
         canvas.configure(yscrollcommand=scroll.set)
@@ -546,12 +612,12 @@ class SoftwareCompressionPage(tk.Frame):
         inner.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
         window.record_buttons = []
 
-        def reload_records():
+        def reload_records(records=None):
             for widget in inner.winfo_children():
                 widget.destroy()
             window.record_buttons = []
             try:
-                records = list(backend.history())
+                records = list(backend.history()) if records is None else records
             except Exception as error:
                 tk.Label(inner, text=f"读取记录失败：{error}", bg=WHITE, fg=MUTED, wraplength=580).pack(fill="x", pady=20)
                 return
@@ -565,16 +631,46 @@ class SoftwareCompressionPage(tk.Frame):
                 text = name + "  " + record_time(record.get("time", ""))
                 tk.Label(row, text=text, bg=WHITE, fg=INK, anchor="w", font=(FONT, 10)).grid(row=0, column=0, sticky="ew", pady=(8, 2))
                 before, after = record.get("old_size", 0), record.get("new_size", 0)
-                detail = f"压缩前 {size_text(before)}  ·  压缩后 {size_text(after)}  ·  节省 {size_text(max(0, before-after))}"
+                if record.get('schema', 0) >= 2:
+                    detail = f"压缩前占用 {size_text(before)}  ·  压缩后占用 {size_text(after)}  ·  本次节省 {size_text(record.get('saved_bytes', 0))}"
+                else:
+                    # Legacy records compared logical size with physical usage;
+                    # they cannot establish how much this operation saved.
+                    detail = '旧记录：未记录操作前的实际占用'
+                if record.get('current_size') is not None:
+                    detail += f"  ·  当前占用 {size_text(record['current_size'])}"
+                if record.get('refresh_error'):
+                    detail += '  ·  当前占用读取失败'
                 tk.Label(row, text=detail, bg=WHITE, fg=MUTED, anchor="w", font=(FONT, 9)).grid(row=1, column=0, sticky="ew", pady=(0, 8))
-                button = PillButton(row, "记录已更新" if record.get("superseded") else "已还原" if record.get("restored") else "还原",
+                caption = ("记录已更新" if record.get("superseded") else "已还原" if record.get("restored")
+                           else "继续还原" if record.get('status') in {'partial', 'failed', 'cancelled'} and record.get('can_restore')
+                           else "还原")
+                button = PillButton(row, caption,
                                     lambda record=record: self.act_items([record], "restore"), width=104, height=32)
                 button.grid(row=0, column=1, rowspan=2, padx=(10, 0))
                 window.record_buttons.append((button, record))
-                tk.Frame(row, bg=LINE, height=1).grid(row=2, column=0, columnspan=2, sticky="ew")
+                detail_error=error_summary(record.get('last_errors')) or error_summary(self.errors.get(str(record.get('id')),''))
+                if detail_error:
+                    error_label=tk.Label(row,text=f'未完成原因：{detail_error}',bg=WHITE,fg='#ff6269',
+                        anchor='w',font=(FONT,9),wraplength=0,height=1,width=1)
+                    error_label.grid(row=2,column=0,columnspan=2,sticky='ew',pady=(0,8))
+                    row.bind('<Configure>',lambda event,label=error_label,text=f'未完成原因：{detail_error}':
+                             label.fit_text(text,max(100,event.width-12)))
+                tk.Frame(row, bg=LINE, height=1).grid(row=3, column=0, columnspan=2, sticky="ew")
             self._refresh_history_controls()
         window.reload_records = reload_records
         reload_records()
+        if not self.processing:
+            def refreshed(records):
+                if window.winfo_exists():
+                    reload_records(records)
+                self.update_summary()
+            def failed(error):
+                self.note.set(f'读取记录失败：{error}')
+                self.update_summary()
+            self.app.start('读取软件压缩记录', lambda: backend.history(refresh=True, cancel=self.app.cancel),
+                           refreshed, failed)
+            self.update_summary()
         return window
 
     def _reload_history(self):
@@ -589,6 +685,7 @@ class SoftwareCompressionPage(tk.Frame):
                 button.set_enabled(not self.processing and bool(record.get("can_restore")) and not record.get("restored") and not record.get("superseded"))
 
     def destroy(self):
+        self._set_activity(False)
         for attribute in ("_pending_open", "_queue_after"):
             timer = getattr(self, attribute, None)
             if timer is not None:

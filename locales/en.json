@@ -1000,8 +1000,13 @@
     "节省磁盘空间，不影响软件使用": "Save disk space while keeping applications usable",
     "搜索软件": "Search applications",
     "软件名称": "Application name",
-    "压缩前大小": "Size before",
-    "压缩后大小": "Size after",
+    "压缩前大小": "Disk usage before",
+    "压缩后大小": "Disk usage after",
+    "容量按实际磁盘占用统计": "Sizes show actual disk usage.",
+    "部分文件未压缩，未计入节省空间": "Some files were not compressed and do not count as space saved.",
+    "旧记录：未记录操作前的实际占用": "Legacy record: disk usage before the operation was not recorded.",
+    "当前占用读取失败": "Current disk usage could not be read.",
+    "读取软件压缩记录": "Reading compression records",
     "尚未扫描，请点击“扫描”。": "Not scanned. Click Scan.",
     "软件": "Application",
     "还原中…": "Restoring...",
@@ -1017,6 +1022,10 @@
     "暂无可压缩软件": "No compressible applications",
     "任务已取消；": "Task cancelled;",
     "已还原": "Restored",
+    "继续还原": "Resume restore",
+    "当前文件：": "Current file: ",
+    "未完成原因：": "Reason: ",
+    "仍处于压缩状态：": "Files still compressed: ",
     "暂无压缩记录": "No compression history",
     "切换中": "Switching paths",
     "仅扫描 Windows 系统盘上的软件": "Only applications on the Windows system drive are scanned.",
@@ -1238,6 +1247,10 @@
     "无法迁移用户数据。请关闭旧版程序，检查新旧数据目录及权限后重试。原有数据不会被覆盖。": "Unable to migrate user data. Close the old application, check both data folders and their permissions, then try again. Existing data will not be overwritten."
   },
   "templates": [
+    {
+      "parts": [" · 已用时 ", null, " 秒"],
+      "english": " · Elapsed: {0}s"
+    },
     {
       "parts": [
         "当前用户在 ",
@@ -2298,14 +2311,18 @@
     },
     {
       "parts": [
-        "压缩前 ",
+        "压缩前占用 ",
         null,
-        "  ·  压缩后 ",
+        "  ·  压缩后占用 ",
         null,
-        "  ·  节省 ",
+        "  ·  本次节省 ",
         null
       ],
-      "english": "Before compression: {0}; after compression: {1}; saved: {2}."
+      "english": "Disk usage before: {0}; after: {1}; saved this time: {2}."
+    },
+    {
+      "parts": ["  ·  当前占用 ", null],
+      "english": "  ·  Current disk usage: {0}"
     },
     {
       "parts": [
