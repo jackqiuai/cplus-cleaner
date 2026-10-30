@@ -14,7 +14,7 @@ CPlus Cleaner 是 Windows 桌面清理與空間管理工具，提供 C盤清理�
 
 ## 專案介紹影片
 
-https://github.com/user-attachments/assets/c5228662-efab-49e4-b8d6-7b64b010f335
+https://github.com/user-attachments/assets/95f8d196-d23a-42b9-ad1c-2ccf70220740
 
 **[下載中文版原始影片（MP4）](https://github.com/jackqiuai/cplus-cleaner/raw/refs/heads/main/docs/videos/CPlus-Cleaner-intro-zh.mp4)**
 

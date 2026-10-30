@@ -9,6 +9,12 @@
       "text": true
     },
     {
+      "path": ".github/FUNDING.yml",
+      "bytes": 936,
+      "sha256": "3dddd5ea58d6fa6387174e1a0a4d974fc3ca62dc5a3008c0693183b2109224a2",
+      "text": true
+    },
+    {
       "path": ".github/ISSUE_TEMPLATE/README.md",
       "bytes": 245,
       "sha256": "fba59e68c92df74b4a58abd2b5250ca3d6ff081e62fd18afb8732902e93a6250",
@@ -83,19 +89,19 @@
     {
       "path": "README.md",
       "bytes": 18944,
-      "sha256": "c47f7cc3ec05c4d94728c44815cd03cbe71f5cbeaa74231d5fc8fb0153e71323",
+      "sha256": "6dab06c11a29af7f23933dc3443f9a9148670c8b57181edb2f7bde4e10a11fe5",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
       "bytes": 17414,
-      "sha256": "f56c3186075e4e85a21822587dc67f0da286aeb0a9d5f242cd456ffc37790c4f",
+      "sha256": "01126f15186844884a99646c5cce4b2784144640a9d35dfaacd6a3d047e81d34",
       "text": true
     },
     {
       "path": "README.zh-TW.md",
       "bytes": 18286,
-      "sha256": "a4339ade2ec708f3ac8928ce5ddbd35e8513fb1df7be39b3c1d1096ec2380f8c",
+      "sha256": "868338998423b01395ce4c3676505aa4533491d1e9232ae2516eef68d4fcfc5f",
       "text": true
     },
     {
@@ -1432,26 +1438,26 @@
     },
     {
       "path": "docs/images/video-cover-en.png",
-      "bytes": 1130082,
-      "sha256": "a9ebaabc8e7ecaf81b4f0f090b9aa3a7bbf47a7632e52a4f6830c9eded30a7c0",
+      "bytes": 1138662,
+      "sha256": "e4049e8a09929e6c19970707e968bf8624e88f38978ae9acad5cba410d8becdf",
       "text": false
     },
     {
       "path": "docs/images/video-cover-zh.png",
-      "bytes": 1098124,
-      "sha256": "6aabbd1bc5d03d409f37f51780cc9f8f16c0afe8814b059243b0b95924a8ea48",
+      "bytes": 1106632,
+      "sha256": "ac6b0628a5f7ecf9366ed49a25be6c2e9c24dea871d81dd4b8a2dc6c5ad73779",
       "text": false
     },
     {
       "path": "docs/videos/CPlus-Cleaner-intro-en.mp4",
-      "bytes": 22297743,
-      "sha256": "7e67ecaf23fb6109bfeb4c12b7be0ba3d63404804e5459114e24cceba2cf54d0",
+      "bytes": 22117388,
+      "sha256": "7366b208a052471f32c286287718c389fcbf3aa9f330e15e7a62232fc30d254c",
       "text": false
     },
     {
       "path": "docs/videos/CPlus-Cleaner-intro-zh.mp4",
-      "bytes": 20650011,
-      "sha256": "4939b20561a35ed8b2b482e6a341c8ff8f971aa0733d3ce081ecc26e16ef7dcc",
+      "bytes": 20922000,
+      "sha256": "17c748c49487c7679f591a91822ff23354a960febc55e6405de85a67e808b512",
       "text": false
     },
     {

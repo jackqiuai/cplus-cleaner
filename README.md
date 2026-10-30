@@ -12,7 +12,7 @@ CPlus Cleaner is a Windows desktop utility for disk cleanup, application migrati
 
 ## Introduction video
 
-https://github.com/user-attachments/assets/2d3ed710-2246-4981-836c-c8fb233a772b
+https://github.com/user-attachments/assets/6473daff-9764-4ce5-8df1-893df92d124b
 
 **[Download the original English video (MP4)](https://github.com/jackqiuai/cplus-cleaner/raw/refs/heads/main/docs/videos/CPlus-Cleaner-intro-en.mp4)**
 
