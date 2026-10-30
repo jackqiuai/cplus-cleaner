@@ -1,4 +1,5 @@
 import gc
+from dataclasses import replace
 from pathlib import Path
 import tempfile
 import time
@@ -90,6 +91,52 @@ class UninstallPageTests(unittest.TestCase):
         self.page.scan_button.invoke();self.pump(lambda:not self.window.busy)
         self.assertFalse(self.page.rows);self.assertFalse(self.page.selected)
         self.assertEqual(self.window.nav_metrics['uninstall']['text'],'0款')
+
+    def test_long_scan_errors_preserve_table_height_and_open_one_details_window(self):
+        baseline = self.page.canvas.winfo_height()
+        path = 'C:\\Users\\fixture\\Doubao\\' + 'module\\' * 45 + 'vendors.chunk.js'
+        error = path + ': [WinError 3] missing\n' + repr(path)
+        self.mocks[4].return_value = dict(
+            items=[replace(self.items[0], size_complete=False), *self.items[1:]],
+            errors=[error] * 3, diagnostics=[dict(names=['Fixture app'], location=path,
+                bytes=2048, complete=False, missing=1, unreadable=3, skipped_links=0,
+                missing_samples=[path])])
+        with patch.object(backend, 'uninstall', side_effect=AssertionError('scan must not uninstall')) as uninstall:
+            self.page.scan_button.invoke()
+            self.pump(lambda:not self.window.busy)
+            self.assertLessEqual(self.page.note_bar.winfo_height(), 32)
+            self.assertGreaterEqual(self.page.canvas.winfo_height(), baseline - 18)
+            self.assertEqual(int(self.page.note_label.cget('height')), 1)
+            self.assertNotIn(path, self.page.note.get())
+            self.assertNotIn('\n', self.page.note.get())
+            self.assertIn('≥', self.page.heading.get())
+            self.assertEqual(self.page.rows['a'].size.cget('text'), '≥2KB')
+            first = self.page.show_scan_details()
+            self.assertIs(first, self.page.show_scan_details())
+            self.assertIn(error, first.details_text.get('1.0', 'end-1c'))
+            for language, heading in (('en', 'Read error details'), ('zh-TW', '讀取錯誤詳情'), ('zh', '读取错误详情')):
+                desktop.i18n.set_language(language)
+                self.window.update()
+                content = first.details_text.get('1.0', 'end-1c')
+                self.assertIn(heading, content)
+                self.assertIn(error, content)
+            uninstall.assert_not_called()
+        self.page.note.set(error * 20)
+        self.window.update()
+        self.assertLessEqual(self.page.note_bar.winfo_height(), 32)
+
+    def test_home_scan_uses_same_summary_and_unknown_sizes_are_not_shown_as_zero(self):
+        from cplus_cleaner.features.home.home_results import _uninstall
+        result = dict(items=[replace(self.items[0], size=0, size_complete=False)],
+                      errors=['very long path ' * 200], diagnostics=[])
+        _uninstall(self.page, result, dict(message='扫描完成'))
+        self.window.update()
+        self.assertEqual(self.page.rows['a'].size.cget('text'), '未知')
+        self.assertIn('占用 未知', self.page.heading.get())
+        self.assertNotIn('very long path', self.page.note.get())
+        self.assertTrue(self.page.scan_details_button.winfo_ismapped())
+        self.page.set_scan_status(dict(errors=[], diagnostics=[]))
+        self.assertNotIn('very long path', self.page.note.get())
     def test_queue_continues_after_failure_and_only_uninstalls_explicit_items(self):
         self.select('a');self.select('b')
         calls=[]

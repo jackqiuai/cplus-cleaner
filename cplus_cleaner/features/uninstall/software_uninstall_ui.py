@@ -5,18 +5,57 @@ import base64
 import math
 import re
 from cplus_cleaner.localization import localized_tk as tk
+from cplus_cleaner.localization import i18n
 from cplus_cleaner.localization.i18n import tr, display_name
+from tkinter import Text as NativeText
 from tkinter import font
 from cplus_cleaner.localization.localized_tk import ttk
 
 from cplus_cleaner.features.uninstall import software_uninstall as backend
 from cplus_cleaner.ui.desktop import WHITE, INK, MUTED, MINT, PALE, LINE, CORAL, FONT, PillButton, size_text, disk_snapshot, disk_name
-from cplus_cleaner.ui.ui_widgets import Checkbutton, MetricLabel
+from cplus_cleaner.ui.ui_widgets import Checkbutton, MetricLabel, single_window
 
 
 def error_text(errors):
     errors = errors or []
     return "；".join(str(error) for error in errors[:3]) + (f"；另有{len(errors)-3}项" if len(errors) > 3 else "")
+
+
+def size_caption(amount, complete=True):
+    if complete:
+        return size_text(amount)
+    return '≥' + size_text(amount) if amount else '未知'
+
+
+class ScanDetailsText(NativeText):
+    """Translate diagnostic headings while preserving names, paths and OS errors."""
+    def __init__(self, parent, page, **kwargs):
+        super().__init__(parent, **kwargs)
+        self.page = page
+        i18n.register(self)
+
+    def reload_records(self):
+        lines = [tr('容量统计不完整时，“≥”表示已读取的最小容量。'), '']
+        for detail in self.page.scan_diagnostics:
+            if detail.get('complete', True):
+                continue
+            lines.extend([' / '.join(detail.get('names', [])), detail.get('location', '')])
+            lines.append(tr('已读取容量') + '：' + size_text(detail.get('bytes', 0)))
+            for key, label in (('missing', '扫描时已消失的文件或目录'),
+                               ('unreadable', '无法读取的文件或目录'), ('skipped_links', '已跳过链接')):
+                lines.append(tr(label) + '：' + str(detail.get(key, 0)))
+            lines.extend(detail.get('missing_samples', []))
+            lines.append('')
+        if self.page.scan_errors:
+            lines.append(tr('读取错误详情'))
+            lines.extend(str(error) for error in self.page.scan_errors)
+        self.configure(state='normal')
+        self.delete('1.0', 'end')
+        self.insert('1.0', '\n'.join(lines))
+        self.configure(state='disabled')
+
+    def _language_changed(self):
+        self.reload_records()
 
 
 class SoftwareRow(tk.Frame):
@@ -36,7 +75,7 @@ class SoftwareRow(tk.Frame):
         self.icon.grid(row=0, column=1, padx=(0, 5))
         self.name = tk.Label(self, text=display_name(item.name), bg=WHITE, fg=INK, font=(FONT, 10), width=1, anchor="w")
         self.name.grid(row=0, column=2, sticky="ew", padx=(3, 8))
-        self.size = tk.Label(self, text=size_text(item.size), bg=WHITE, fg=MUTED, font=(FONT, 9))
+        self.size = tk.Label(self, text=size_caption(item.size, item.size_complete), bg=WHITE, fg=MUTED, font=(FONT, 9))
         self.size.grid(row=0, column=3)
         self.date = tk.Label(self, text=page.date_text(item.install_time), bg=WHITE, fg=MUTED, font=(FONT, 9))
         self.date.grid(row=0, column=4)
@@ -200,6 +239,8 @@ class SoftwareUninstallPage(tk.Frame):
         self.app = app
         self.apps, self.rows, self.icons, self.selected, self.states = [], {}, {}, set(), {}
         self.results, self.queue, self.errors = [], [], {}
+        self.scan_errors, self.scan_diagnostics = [], []
+        self._scan_details_window = None
         self.scanning = self.queue_active = self._loaded = False
         self._pending_open = self._queue_after = self._residue_window = None
         self._queue_cancelled = False
@@ -249,8 +290,13 @@ class SoftwareUninstallPage(tk.Frame):
             bg="#f2f7fa", fg=MUTED, bd=0, relief="flat", font=(FONT, 9))
         self.date_button.grid(row=0, column=4)
         tk.Label(self.table_header, text="操作", bg="#f2f7fa", fg=MUTED, font=(FONT, 9)).grid(row=0, column=5)
-        tk.Label(self, textvariable=self.note, bg=WHITE, fg=MUTED, anchor="w", justify="left",
-                 wraplength=700, font=(FONT, 9)).pack(side="bottom", fill="x", padx=25, pady=(7, 10))
+        self.note_bar = tk.Frame(self, bg=WHITE)
+        self.note_bar.pack(side='bottom', fill='x', padx=25, pady=(7, 10))
+        self.note_label = tk.Label(self.note_bar, textvariable=self.note, bg=WHITE, fg=MUTED,
+                                   anchor='w', height=1, wraplength=0, font=(FONT, 9))
+        self.note_label.pack(side='left', fill='x', expand=True)
+        self.scan_details_button = PillButton(self.note_bar, '扫描详情', self.show_scan_details,
+                                              width=96, height=28, font=(FONT, 9))
         area = tk.Frame(self, bg=WHITE)
         area.pack(fill="both", expand=True, padx=25)
         self.canvas = tk.Canvas(area, bg=WHITE, bd=0, highlightthickness=0)
@@ -347,8 +393,11 @@ class SoftwareUninstallPage(tk.Frame):
 
     def update_summary(self):
         total = sum(item.size for item in self.apps)
-        selected_size = sum(item.size for item in self.apps if item.key in self.selected)
-        self.heading.set(f"共 {len(self.apps)} 款软件，占用 {size_text(total)}，已选择 {size_text(selected_size)}")
+        selected = [item for item in self.apps if item.key in self.selected]
+        selected_size = sum(item.size for item in selected)
+        total_text = size_caption(total, all(item.size_complete for item in self.apps))
+        selected_text = size_caption(selected_size, all(item.size_complete for item in selected))
+        self.heading.set(f"共 {len(self.apps)} 款软件，占用 {total_text}，已选择 {selected_text}")
         if hasattr(self.app, "set_nav_metric"):
             self.app.set_nav_metric("uninstall", len(self.apps), "款")
         visible = [item for item in self.visible_apps() if self.selectable(item)]
@@ -398,6 +447,9 @@ class SoftwareUninstallPage(tk.Frame):
             return
         self.scanning = True
         self.apps, self.selected, self.states, self.results, self.errors = [], set(), {}, [], {}
+        self.scan_errors, self.scan_diagnostics = [], []
+        self.scan_details_button.pack_forget()
+        self.refresh_scan_details()
         self.icons.clear()
         self.search.set("")
         self.render()
@@ -417,8 +469,7 @@ class SoftwareUninstallPage(tk.Frame):
             self.apps = list(result.get("items", []))
             self.states = {item.key: "ready" for item in self.apps}
             self.render()
-            errors = error_text(result.get("errors"))
-            self.note.set(("扫描已取消，显示已找到的软件。" if result.get("cancelled") else "扫描完成。") + (" " + errors if errors else ""))
+            self.set_scan_status(result)
 
         def failed(error):
             self.scanning = False
@@ -428,6 +479,42 @@ class SoftwareUninstallPage(tk.Frame):
         self.app.start("扫描已安装软件", work, done, failed)
 
     scan = load
+
+    def set_scan_status(self, result, message=None):
+        self.scan_errors = list(result.get('errors') or [])
+        self.scan_diagnostics = list(result.get('diagnostics') or [])
+        partial = any(not item.size_complete for item in self.apps)
+        self.scan_details_button.pack_forget()
+        summary = message or ('扫描已取消，显示已找到的软件。' if result.get('cancelled') else '扫描完成。')
+        if partial or self.scan_errors:
+            summary += (' 部分容量未完整统计；详情中可查看原因。' if partial else
+                        ' 部分软件信息无法读取；详情中可查看原因。')
+            self.scan_details_button.pack(side='right', padx=(10, 0))
+        self.note.set(summary)
+        self.refresh_scan_details()
+
+    def refresh_scan_details(self):
+        window = self._scan_details_window
+        if window is not None and window.winfo_exists():
+            window.reload_records()
+
+    def show_scan_details(self):
+        window, created = single_window(self, '_scan_details_window', '软件扫描详情')
+        if not created:
+            return window
+        window.geometry('760x460')
+        window.minsize(500, 280)
+        window.configure(bg=WHITE)
+        text = ScanDetailsText(window, self, wrap='word', bg=WHITE, fg=INK,
+                               font=(FONT, 10), relief='flat', padx=14, pady=14)
+        scrollbar = ttk.Scrollbar(window, orient='vertical', command=text.yview)
+        text.configure(yscrollcommand=scrollbar.set)
+        scrollbar.pack(side='right', fill='y')
+        text.pack(fill='both', expand=True)
+        window.details_text = text
+        window.reload_records = text.reload_records
+        window.reload_records()
+        return window
 
     def report_progress(self, data):
         message = str(data.get("message", "正在处理…")) if isinstance(data, dict) else str(data)
@@ -564,6 +651,8 @@ class SoftwareUninstallPage(tk.Frame):
         if self._residue_window is not None:
             self._residue_window._callback = None
             self._residue_window.destroy()
+        if self._scan_details_window is not None:
+            self._scan_details_window.destroy()
         super().destroy()
         self.icons.clear()
         for attribute in ("heading", "disk", "note", "search", "select_all_value"):

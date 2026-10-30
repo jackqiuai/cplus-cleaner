@@ -11,10 +11,12 @@ from datetime import datetime
 import copy
 import ctypes as ct
 from ctypes import wintypes as wt
+import errno
 import hashlib
 import os
 from pathlib import Path
 import re
+import stat
 import threading
 
 from cplus_cleaner.common import core
@@ -45,6 +47,7 @@ class Software:
     icon: bytes | None = None
     source: dict = field(default_factory=dict, compare=False, repr=False)
     blocked: str = ''
+    size_complete: bool = True
 
 
 def _cancelled(cancel):
@@ -170,16 +173,76 @@ def _location(record, uninstaller):
     return None
 
 
-def _directory_size(root, cancel, errors):
+def _read_path(path):
+    """Use extended absolute Windows paths for reads, without changing OS policy.
+
+    Extended paths are confined to inventory I/O. Display paths, registered
+    uninstall commands and the identities retained for execution stay unchanged.
+    """
+    value = os.path.abspath(os.fspath(path))
+    if os.name != 'nt' or value.startswith('\\\\?\\'):
+        return value
+    return '\\\\?\\UNC\\' + value[2:] if value.startswith('\\\\') else '\\\\?\\' + value
+
+
+def _redirected(info):
+    # Keep the common walker's link protection, including compressed WOF files.
+    return stat.S_ISLNK(info.st_mode) or bool(getattr(info, 'st_file_attributes', 0) & 0x400
+        and getattr(info, 'st_reparse_tag', 0) != 0x80000017)
+
+
+def _directory_size(root, cancel, errors, *, diagnostics=None):
+    detail = diagnostics if diagnostics is not None else {}
+    detail.update(complete=True, missing=0, unreadable=0, skipped_links=0, errors=[], missing_samples=[])
     total = 0
+
     def failure(path, error):
+        detail['complete'] = False
+        if (isinstance(error, FileNotFoundError) or getattr(error, 'winerror', None) in (2, 3)
+                or getattr(error, 'errno', None) == errno.ENOENT):
+            # Application updaters may remove a backup between enumeration and
+            # stat. Keep the count, but do not flood the UI with vanished paths.
+            detail['missing'] += 1
+            if len(detail['missing_samples']) < 5:
+                detail['missing_samples'].append(str(path))
+            return
+        detail['unreadable'] += 1
+        message = f'{path}：{error}'
+        if len(detail['errors']) < 5:
+            detail['errors'].append(message)
         if len(errors) < 100:
-            errors.append(f'{path}：{error}')
-    for path in core.walk_files(root, cancel, on_error=failure):
+            errors.append(message)
+
+    stack = [Path(root)]
+    while stack:
+        if _cancelled(cancel):
+            detail['complete'] = False
+            break
+        current = stack.pop()
         try:
-            total += path.stat().st_size
+            info = os.stat(_read_path(current), follow_symlinks=False)
+            if _redirected(info):
+                detail['skipped_links'] += 1
+                continue
+            with os.scandir(_read_path(current)) as entries:
+                for entry in entries:
+                    if _cancelled(cancel):
+                        detail['complete'] = False
+                        break
+                    path = current / entry.name
+                    try:
+                        info = entry.stat(follow_symlinks=False)
+                        if _redirected(info):
+                            detail['skipped_links'] += 1
+                        elif stat.S_ISDIR(info.st_mode):
+                            stack.append(path)
+                        elif stat.S_ISREG(info.st_mode):
+                            total += info.st_size
+                    except OSError as exc:
+                        failure(path, exc)
         except OSError as exc:
-            failure(path, exc)
+            failure(current, exc)
+    detail['bytes'] = total // 1024 * 1024
     return total//1024*1024
 
 
@@ -245,9 +308,19 @@ def scan(cancel=None, progress=None, *, records=None, icons=True, retain_invento
                 continue
             size_key = os.path.normcase(str(location))
             if size_key not in sizes:
-                sizes[size_key] = (size_reader or _directory_size)(location, cancel, errors)
+                detail = dict(location=str(location), names=[], complete=True, missing=0,
+                              unreadable=0, skipped_links=0, errors=[])
+                if size_reader is None:
+                    amount = _directory_size(location, cancel, errors, diagnostics=detail)
+                else:
+                    previous = len(errors)
+                    amount = size_reader(location, cancel, errors)
+                    detail.update(complete=len(errors) == previous, unreadable=len(errors)-previous,
+                                  errors=errors[previous:previous+5], bytes=amount)
+                sizes[size_key] = amount, detail
             if _cancelled(cancel):
                 break
+            amount, detail = sizes[size_key]
             source = copy.deepcopy(record.get('_source', {}))
             source['snapshot'] = {field_name: record.get(field_name, '') for field_name in FIELDS}
             source['executable'] = str(executable.absolute())
@@ -257,9 +330,12 @@ def scan(cancel=None, progress=None, *, records=None, icons=True, retain_invento
             if not identity.strip('\\'):
                 identity = name+'|'+str(location)+'|'+command
             key = hashlib.sha256(identity.casefold().encode('utf-8')).hexdigest()
-            item = Software(key, name, sizes[size_key], _date(record, executable), str(location), command,
-                            _icon_bytes(icon_path, record) if icons else None, source)
+            item = Software(key, name, amount, _date(record, executable), str(location), command,
+                            _icon_bytes(icon_path, record) if icons else None, source,
+                            size_complete=detail['complete'])
             items.append(item)
+            if name not in detail['names']:
+                detail['names'].append(name)
             issued[key] = (item, copy.deepcopy(source))
         except (OSError, ValueError, TypeError) as exc:
             if len(errors) < 100:
@@ -268,7 +344,8 @@ def scan(cancel=None, progress=None, *, records=None, icons=True, retain_invento
         with _LOCK:
             _ISSUED.clear()
             _ISSUED.update(issued)
-    return dict(items=items, errors=errors, skipped=skipped, cancelled=_cancelled(cancel))
+    return dict(items=items, errors=errors, skipped=skipped, cancelled=_cancelled(cancel),
+                diagnostics=[detail for _, detail in sizes.values()])
 
 
 def _validate(item):

@@ -1247,11 +1247,25 @@
     "检查更新失败，请稍后重试。": "Unable to check for updates. Please try again later.",
     "无法连接 GitHub，请检查网络后重试。": "Cannot connect to GitHub. Check your connection and try again.",
     "用户数据迁移未完成": "User data migration did not complete",
-    "无法迁移用户数据。请关闭旧版程序，检查新旧数据目录及权限后重试。原有数据不会被覆盖。": "Unable to migrate user data. Close the old application, check both data folders and their permissions, then try again. Existing data will not be overwritten."
+    "无法迁移用户数据。请关闭旧版程序，检查新旧数据目录及权限后重试。原有数据不会被覆盖。": "Unable to migrate user data. Close the old application, check both data folders and their permissions, then try again. Existing data will not be overwritten.",
+    "扫描详情": "Scan details",
+    "软件扫描详情": "Software scan details",
+    "容量统计不完整时，“≥”表示已读取的最小容量。": "When size measurement is incomplete, “≥” indicates the measured minimum size.",
+    "已读取容量": "Measured size",
+    "扫描时已消失的文件或目录": "Files or folders that disappeared during scanning",
+    "无法读取的文件或目录": "Unreadable files or folders",
+    "已跳过链接": "Skipped links",
+    "读取错误详情": "Read error details",
+    "部分容量未完整统计；详情中可查看原因。": "Some sizes are incomplete; see scan details for the reasons.",
+    "部分软件信息无法读取；详情中可查看原因。": "Some application information could not be read; see scan details."
   },
   "templates": [
     {
-      "parts": [" · 已用时 ", null, " 秒"],
+      "parts": [
+        " · 已用时 ",
+        null,
+        " 秒"
+      ],
       "english": " · Elapsed: {0}s"
     },
     {
@@ -2324,7 +2338,10 @@
       "english": "Disk usage before: {0}; after: {1}; saved this time: {2}."
     },
     {
-      "parts": ["  ·  当前占用 ", null],
+      "parts": [
+        "  ·  当前占用 ",
+        null
+      ],
       "english": "  ·  Current disk usage: {0}"
     },
     {

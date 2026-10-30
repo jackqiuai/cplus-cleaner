@@ -218,7 +218,7 @@ EXE 与 ZIP 均无需安装。设置、日志和恢复记录保存在上述 Wind
 
 ## 项目状态
 
-当前程序版本号为 **1.1.6**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
+当前程序版本号为 **1.1.7**。可从[正式发布页面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下载 Windows x64 EXE 或绿色 ZIP 包。GitHub Actions 在发布过程中自动运行测试、构建并附加已验证的文件。程序无需安装。
 
 ## 数字签名政策（Code signing policy）
 

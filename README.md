@@ -208,7 +208,7 @@ The same menu includes **About Cplus Cleaner**, with the application logo, curre
 
 ## Project status
 
-The current application version is **1.1.6**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
+The current application version is **1.1.7**. Download the Windows x64 EXE or portable ZIP from [Releases](https://github.com/jackqiuai/cplus-cleaner/releases/latest). GitHub Actions runs tests, builds the application and attaches the verified files during release publication. No installation is required.
 
 ## Code signing policy
 

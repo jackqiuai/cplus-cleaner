@@ -219,7 +219,7 @@ EXE 與 ZIP 均無須安裝。設定、記錄與還原紀錄儲存在上述 Wind
 
 ## 專案狀態
 
-目前程式版本號為 **1.1.6**。可從[正式發佈頁面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下載 Windows x64 EXE 或綠色 ZIP 套件。GitHub Actions 會在發佈過程中自動執行測試、建置並附上已驗證的檔案。程式無須安裝。
+目前程式版本號為 **1.1.7**。可從[正式發佈頁面](https://github.com/jackqiuai/cplus-cleaner/releases/latest)下載 Windows x64 EXE 或綠色 ZIP 套件。GitHub Actions 會在發佈過程中自動執行測試、建置並附上已驗證的檔案。程式無須安裝。
 
 ## 數位簽章政策（Code signing policy）
 

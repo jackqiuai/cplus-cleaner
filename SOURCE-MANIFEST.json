@@ -83,19 +83,19 @@
     {
       "path": "README.md",
       "bytes": 18944,
-      "sha256": "d1be68260be8182bdad2f3720919645da24b62bb71195edf54b910e6f6de1d75",
+      "sha256": "c47f7cc3ec05c4d94728c44815cd03cbe71f5cbeaa74231d5fc8fb0153e71323",
       "text": true
     },
     {
       "path": "README.zh-CN.md",
       "bytes": 17414,
-      "sha256": "63cbd18daf2606687b007d47b6db6c216850a1897a5c5821af2d79bde27bb262",
+      "sha256": "f56c3186075e4e85a21822587dc67f0da286aeb0a9d5f242cd456ffc37790c4f",
       "text": true
     },
     {
       "path": "README.zh-TW.md",
       "bytes": 18286,
-      "sha256": "7b0151771bcb09e084ca9117f490d8a6fdbdf9752333a8aa76a102dc2b517117",
+      "sha256": "a4339ade2ec708f3ac8928ce5ddbd35e8513fb1df7be39b3c1d1096ec2380f8c",
       "text": true
     },
     {
@@ -953,7 +953,7 @@
     {
       "path": "cplus_cleaner/application/preferences.py",
       "bytes": 10407,
-      "sha256": "00ae609901dbacd34d85ca596d2fb26aded35c581f83ec35b4f06fdc7f0a2096",
+      "sha256": "931055c923de5d6efa3ef33421e31f885cb38891bb82fa480dacc73759332fe7",
       "text": true
     },
     {
@@ -1108,8 +1108,8 @@
     },
     {
       "path": "cplus_cleaner/features/home/home_results.py",
-      "bytes": 9113,
-      "sha256": "412ef101b6fc985ac4da79af3f89bb12bb9c7406c2a00aadeb54c7c4eb9ec4fb",
+      "bytes": 8965,
+      "sha256": "b396600290898abe558a2267abb53ec5cb58e4e8f61b9b80bd4d6f6c95365d3a",
       "text": true
     },
     {
@@ -1264,14 +1264,14 @@
     },
     {
       "path": "cplus_cleaner/features/uninstall/software_uninstall.py",
-      "bytes": 14555,
-      "sha256": "5afb1d7b99f986d1caebced6d14f6fd2b633d36c43a77593b6ab3baf00c91557",
+      "bytes": 18066,
+      "sha256": "1626647a5ba40d37cbcf80e402532a9f6fdb85febbf0f70bb3441c993259b7fd",
       "text": true
     },
     {
       "path": "cplus_cleaner/features/uninstall/software_uninstall_ui.py",
-      "bytes": 27836,
-      "sha256": "757737fbefb57e3e3fbdf4fcbf6093e855a937bce061430b4052d8505c7cd8e9",
+      "bytes": 32061,
+      "sha256": "325c723016d278f7480f61ab29bffb5ca1d11533ab04c3916314cc751bb67753",
       "text": true
     },
     {
@@ -1462,14 +1462,14 @@
     },
     {
       "path": "locales/en.json",
-      "bytes": 118979,
-      "sha256": "2b18406bc2dd611432fbb8f4c688d78d8044d7533afb09bdda1d95134f4ec6ee",
+      "bytes": 119846,
+      "sha256": "e86a47a10ad94cc7c30fb1e464e3127829ec1d2d960a9d3aee1e4295f3310b6b",
       "text": true
     },
     {
       "path": "locales/zh-TW.json",
-      "bytes": 113364,
-      "sha256": "3eb919fd22a4fe0449d22427abc222e8221492f83c98aba53e6980dd7d3c2a3e",
+      "bytes": 114144,
+      "sha256": "6f635bbdd20667522a2f4e8b2130460041279817c7c2fe2b732040b6d09dfc64",
       "text": true
     },
     {
@@ -1708,14 +1708,14 @@
     },
     {
       "path": "tests/test_software_uninstall.py",
-      "bytes": 16294,
-      "sha256": "d5fa250e7cd9c714cadd5493d6977d352e3eff1f52b3ee9221bfb6d8a564b055",
+      "bytes": 20611,
+      "sha256": "3273b3ea7e836a828acb01969fde4f47041603ac8c4d7bdf4deb917009ff1ba5",
       "text": true
     },
     {
       "path": "tests/test_software_uninstall_ui.py",
-      "bytes": 9044,
-      "sha256": "60a522826ed0dee1417e1bd38ac24d5041b99d5160bf5ea8536607c40f6a461e",
+      "bytes": 11962,
+      "sha256": "7d8519b9e7269cd85617686b33aa83bafecafc36402332f929b4d4da7d92e53e",
       "text": true
     },
     {

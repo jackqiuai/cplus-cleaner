@@ -152,7 +152,6 @@ def _popup(page, payload, feature):
 
 
 def _uninstall(page, payload, feature):
-    from cplus_cleaner.features.uninstall.software_uninstall_ui import error_text
     page.scanning = False
     page._loaded = True
     page.selected.clear()
@@ -163,8 +162,7 @@ def _uninstall(page, payload, feature):
     page.search.set('')
     page.render()
     _disk_summary(page)
-    errors = error_text(payload.get('errors'))
-    page.note.set(_message(feature) + (' ' + errors if errors else ''))
+    page.set_scan_status(payload, _message(feature))
 
 
 def apply_result(app, key, feature):

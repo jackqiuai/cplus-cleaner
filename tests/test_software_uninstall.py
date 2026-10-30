@@ -6,6 +6,8 @@ import tempfile
 import threading
 import time
 import unittest
+from contextlib import contextmanager
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from cplus_cleaner.common import core
@@ -113,6 +115,86 @@ class SoftwareTests(unittest.TestCase):
         line, args = uninstall_windows.command_parts(item.command,self.exe)
         self.assertEqual(args,'--id "value with spaces"')
         self.assertIn(str(self.exe),line)
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows extended paths')
+    def test_deep_inventory_paths_work_without_changing_windows_long_path_policy(self):
+        folder = self.folder / ('backup-' + 'x' * 115) / ('module-' + 'y' * 115)
+        path = folder / ('vendors-' + 'z' * 65 + '.chunk.js')
+        self.assertGreater(len(str(path)), 260)
+        self.assertTrue(folder.is_relative_to(self.base))
+        os.mkdir(software._read_path(folder.parent))
+        os.mkdir(software._read_path(folder))
+        try:
+            with open(software._read_path(path), 'wb') as stream:
+                stream.write(b'x' * 8192)
+            scandir = os.scandir
+            def strict_scandir(value):
+                # Reproduce the other PC's legacy-path limit independently of
+                # the runner's LongPathsEnabled setting.
+                if len(str(value)) >= 260 and not str(value).startswith('\\\\?\\'):
+                    raise FileNotFoundError(str(value))
+                return scandir(value)
+            with patch.object(software.os, 'scandir', side_effect=strict_scandir):
+                result = self.scan()
+            self.assertEqual(result['items'][0].size, 11 * 1024)
+            self.assertTrue(result['items'][0].size_complete)
+            self.assertFalse(result['errors'])
+            self.assertEqual(result['items'][0].command, self.record['UninstallString'])
+        finally:
+            # Only explicitly created fixture paths; no recursive deletion.
+            os.unlink(software._read_path(path))
+            os.rmdir(software._read_path(folder))
+            os.rmdir(software._read_path(folder.parent))
+        self.assertEqual(software._read_path(r'\\server\share\folder'), r'\\?\UNC\server\share\folder')
+
+    def test_disappeared_and_unreadable_files_keep_inventory_and_mark_partial_sizes(self):
+        scandir = os.scandir
+        class BrokenEntry:
+            def __init__(self, name, error):
+                self.name, self.error = name, error
+            def stat(self, *, follow_symlinks):
+                raise self.error
+        @contextmanager
+        def changed_directory(value):
+            with scandir(value) as entries:
+                yield [*entries,
+                       BrokenEntry('vanished.chunk.js', FileNotFoundError(2, 'gone')),
+                       BrokenEntry('private.dat', PermissionError(13, 'denied'))]
+        with patch.object(software.os, 'scandir', side_effect=changed_directory):
+            result = self.scan()
+        item = result['items'][0]
+        self.assertFalse(item.size_complete)
+        self.assertEqual(item.size, 3 * 1024)
+        self.assertEqual(item.command, self.record['UninstallString'])
+        detail = result['diagnostics'][0]
+        self.assertEqual((detail['missing'], detail['unreadable']), (1, 1))
+        self.assertFalse(detail['complete'])
+        self.assertEqual(detail['missing_samples'], [str(self.folder / 'vanished.chunk.js')])
+        self.assertEqual(len(result['errors']), 1)
+        self.assertIn('private.dat', result['errors'][0])
+        self.assertNotIn('vanished.chunk.js', result['errors'][0])
+
+    def test_size_walk_skips_redirected_directories_and_keeps_wof_files(self):
+        class Entry:
+            def __init__(self, name, mode, tag, size=0):
+                self.name = name
+                self.info = SimpleNamespace(st_mode=mode, st_reparse_tag=tag,
+                                            st_file_attributes=0x400, st_size=size)
+            def stat(self, *, follow_symlinks):
+                self.assert_no_follow = not follow_symlinks
+                return self.info
+        @contextmanager
+        def directory(value):
+            self.assertEqual(value, software._read_path(self.folder))
+            yield [Entry('outside-link', 0o040755, 0xA0000003),
+                   Entry('compressed.bin', 0o100644, 0x80000017, 4096)]
+        detail, errors = {}, []
+        with patch.object(software.os, 'scandir', side_effect=directory):
+            total = software._directory_size(self.folder, None, errors, diagnostics=detail)
+        self.assertEqual(total, 4096)
+        self.assertEqual(detail['skipped_links'], 1)
+        self.assertTrue(detail['complete'])
+        self.assertFalse(errors)
 
     def test_invalid_icon_uninstaller_component_and_original_self_are_excluded(self):
         invalid = [dict(self.record,SystemComponent=1),dict(self.record,DisplayName=''),
