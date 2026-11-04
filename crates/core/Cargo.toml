@@ -1,0 +1,23 @@
+[package]
+name = "cplus-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+cplus-platform-windows = { path = "../platform_windows" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+sha2.workspace = true
+regex.workspace = true
+globset.workspace = true
+anyhow.workspace = true
+semver = "1"
+windows-sys.workspace = true
+include_dir = "0.7"
+rusqlite = { version = "0.37", features = ["bundled", "backup", "hooks"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+
+[dev-dependencies]
+tempfile.workspace = true
