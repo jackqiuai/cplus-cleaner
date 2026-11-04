@@ -16,6 +16,10 @@ concurrency:
 jobs:
   build:
     runs-on: windows-2022
+    # Avoid runneradmin's 8.3 TEMP alias in path-identity regression tests.
+    env:
+      TEMP: ${{ runner.temp }}
+      TMP: ${{ runner.temp }}
     timeout-minutes: 60
     defaults:
       run:
@@ -65,6 +69,10 @@ jobs:
     needs: build
     if: vars.SIGNPATH_ENABLED == 'true' && github.event_name != 'pull_request' && (github.event_name == 'release' || startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))))
     runs-on: windows-2022
+    # Avoid runneradmin's 8.3 TEMP alias in path-identity regression tests.
+    env:
+      TEMP: ${{ runner.temp }}
+      TMP: ${{ runner.temp }}
     timeout-minutes: 90
     permissions:
       actions: read
