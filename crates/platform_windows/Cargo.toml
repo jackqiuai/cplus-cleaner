@@ -1,0 +1,12 @@
+[package]
+name = "cplus-platform-windows"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+windows-sys = { workspace = true, features = ["Win32_System_Com", "Win32_UI_Shell_Common", "Win32_UI_HiDpi"] }
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+
