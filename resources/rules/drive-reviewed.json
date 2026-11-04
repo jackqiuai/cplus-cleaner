@@ -1,0 +1,1229 @@
+{
+  "schema": 1,
+  "categories": [
+    {
+      "id": "10",
+      "name": "爱奇异",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/212.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\IQIYI Video\\EdgeWebView\\UserData\\EBWebView\\Default\\Cache\\Cache_Datal",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\IQIYI Video\\LStyle\\cache\\recomcache\\pic",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\IQIYI Video",
+          "patterns": [
+            "*.log"
+          ],
+          "recursive": false,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "腾讯视频",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/214.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\Tencent\\QQLive\\Log\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "网易云音乐",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40014.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\Netease\\CloudMusic\\update\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Netease\\CloudMusic\\Cache\\Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "QQ",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40017.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\Tencent\\QQ\\STemp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\Tencent\\QQ\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\qq_guild\\Cache\\Cache_Data\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\Tencent\\QQTempSys\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "百度网盘",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40015.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\BaiduYunGuanjia\\logs\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "WPS",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/205.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\kingsoft\\wps\\addons\\data\\win-i386\\promeapps\\cache\\Cache",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\wps\\addons\\data\\win-i386\\promeapps\\cache\\GPUCache",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\office6\\update\\log",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\wps\\download\\*.*\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\office6\\update",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\office6\\cache",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\office6\\update\\down",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\office6\\log",
+          "patterns": [
+            "*.*"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%APPDATA%\\kingsoft\\wps\\addons\\pool\\*.7z",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "Chrome",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/217.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Service Worker\\CacheStorage\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Service Worker\\ScriptCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Code Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\JumpListIconsMostVisited\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\GrShaderCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "Edge",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/218.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\Microsoft\\\\Edge\\User Data\\Default\\Cache\\Cache_Data\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\Default\\Service Worker\\CacheStorage\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\Default\\Service Worker\\ScriptCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\GrShaderCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%ProgramData%\\Microsoft\\EdgeUpdate\\Log\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "IE浏览器",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40013.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\Microsoft\\Windows\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "Metro通讯",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40016.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\Packages\\microsoft.windowscommunicationsapps_8wekyb3d8bbwe\\LocalState",
+          "patterns": [
+            "*.etl"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Packages\\microsoft.windowscommunicationsapps_8wekyb3d8bbwe\\LocalState",
+          "patterns": [
+            "*.log"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Packages\\microsoft.windowscommunicationsapps_8wekyb3d8bbwe\\AC\\Microsoft\\CryptnetUrlCache",
+          "patterns": [
+            "MetaData"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%LOCALAPPDATA%\\Packages\\microsoft.windowscommunicationsapps_8wekyb3d8bbwe\\AC\\Microsoft\\CryptnetUrlCache\\MetaData\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "联想应用商店",
+      "group": "应用程序",
+      "selected": true,
+      "icon": "categories/40012.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\lenovo\\LeAppStore\\storecache\\Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%ProgramData%\\Lenovo\\LeAppStore\\logs\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "Office",
+      "group": "应用程序",
+      "selected": false,
+      "icon": "categories/216.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\Microsoft\\Office\\Recent\\*.lnk",
+          "patterns": [],
+          "recursive": false,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "name": "WebPI缓存",
+      "group": "应用程序",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Web Platform Installer\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "name": "Windows报告",
+      "group": "系统相关",
+      "selected": true,
+      "icon": "categories/101.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Windows\\WER\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%ProgramData%\\Microsoft\\Windows\\WER\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\LiveKernelReports",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "windows_delivery",
+      "name": "Windows Delivery Optimization files",
+      "group": "系统相关",
+      "selected": true,
+      "icon": "categories/101.png",
+      "paths": []
+    },
+    {
+      "id": "windows_updates",
+      "name": "Windows Update cleanup",
+      "group": "系统相关",
+      "selected": true,
+      "icon": "categories/109.png",
+      "paths": []
+    },
+    {
+      "id": "windows_old",
+      "name": "Previous Windows installations",
+      "group": "系统相关",
+      "selected": true,
+      "icon": "categories/101.png",
+      "paths": []
+    },
+    {
+      "id": "34",
+      "name": "Windows Defender扫描历史",
+      "group": "系统相关",
+      "selected": true,
+      "icon": "categories/109.png",
+      "paths": [
+        {
+          "root": "%ProgramData%\\Microsoft\\Windows Defender\\Support\\",
+          "patterns": [
+            "*.log"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%ProgramData%\\Microsoft\\Windows Defender\\Support\\",
+          "patterns": [
+            "*.log"
+          ],
+          "recursive": false,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "name": "NuGet包缓存",
+      "group": "缓存文件",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%USERPROFILE%\\.nuget\\packages",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "name": "缩略图缓存",
+      "group": "缓存文件",
+      "selected": true,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Windows\\Explorer\\",
+          "patterns": [
+            "thumbcache*.db",
+            "iconcache*.db"
+          ],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "47",
+      "name": "Terminal Server Client缓存",
+      "group": "缓存文件",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Terminal Server Client\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "name": "XDE缓存文件",
+      "group": "缓存文件",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%ProgramData%\\Microsoft\\XDE",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\XDE",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "name": "PDB缓存文件",
+      "group": "缓存文件",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%LOCALAPPDATA%\\DBG",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "name": "Visual Studio智能跟踪",
+      "group": "缓存文件",
+      "selected": false,
+      "icon": "categories/104.png",
+      "paths": [
+        {
+          "root": "%ProgramData%\\Microsoft Visual Studio\\10.0\\TraceDebugging",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "name": "缩略图缓存",
+      "group": "缓存文件",
+      "selected": true,
+      "icon": "categories/40005.png",
+      "paths": [
+        {
+          "root": "%LocalAppData%\\Microsoft\\Windows\\Explorer",
+          "patterns": [
+            "thumbcache*.db",
+            "iconcache*.db"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%LocalAppData%",
+          "patterns": [
+            "IconCache.db"
+          ],
+          "recursive": false,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "name": "WinINet网页缓存",
+      "group": "缓存文件",
+      "selected": true,
+      "icon": "categories/40009.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Windows\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\ServiceProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\ServiceProfiles\\*\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\Temporary Internet Files\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\INetCache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\MicrosoftEdge\\Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\MicrosoftEdge\\Cache\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "name": "Boot备份信息",
+      "group": "备份文件",
+      "selected": false,
+      "icon": "categories/107.png",
+      "paths": [
+        {
+          "root": "%SystemRoot%\\pss",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "name": "WinSxS临时文件",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/105.png",
+      "paths": [
+        {
+          "root": "%SystemRoot%\\CbsTemp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "name": "Windows日志",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/40000.png",
+      "paths": [
+        {
+          "root": "%SystemRoot%",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Performance\\WinSAT",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Panther",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\Windows",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\MigWiz",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\CLR_*",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\CLR_*\\*",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Microsoft\\Windows",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Logs\\",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Logs\\",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Performance\\WinSAT\\DataStore\\",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%ProgramData%\\USOShared\\Logs",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\WDI\\LogFiles\\*",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\LogFiles\\*",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\debug",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\Microsoft\\CLR_*\\*.log",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\Microsoft\\CLR_*\\*.log",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\Microsoft\\CLR_*\\*\\*.log",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\Microsoft\\CLR_*\\*\\*.log",
+          "patterns": [
+            "*.log",
+            "*.etl",
+            "*.cab",
+            "*.txt",
+            "*.tmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "62",
+      "name": "最近打开的文件",
+      "group": "临时文件",
+      "selected": false,
+      "icon": "categories/102.png",
+      "paths": [
+        {
+          "root": "%APPDATA%\\Microsoft\\\\Windows\\\\Recent\\",
+          "patterns": [
+            "*.lnk",
+            "*.automaticdestinations-ms",
+            "*.customdestinations-ms"
+          ],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "63",
+      "name": "临时文件",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/101.png",
+      "paths": [
+        {
+          "root": "%SystemRoot%\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%Temp%",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\ServiceProfiles\\*\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\config\\systemprofile\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Packages\\*\\AC\\!*\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\ServiceProfiles\\*\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\System32\\config\\systemprofile\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\Temp\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "66",
+      "name": "QQ临时数据",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/208.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\AndroidAssist",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\AndroidServer",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\Logs",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\TXSSO\\SetupLogs",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\TXSSO\\SSOTemp",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\Tencent\\Users\\*\\WinTemp\\*",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "67",
+      "name": "YY临时文件",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/209.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\duowan\\yy\\log",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Roaming\\duowan\\yy\\Cache",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "68",
+      "name": "腾讯相关软件下载目录",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/208.png",
+      "paths": [
+        {
+          "root": "%ProgramData%\\temp",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "72",
+      "name": "系统以及程序崩溃dmp文件",
+      "group": "临时文件",
+      "selected": false,
+      "icon": "categories/106.png",
+      "paths": [
+        {
+          "root": "%SystemRoot%",
+          "patterns": [
+            "*.dmp"
+          ],
+          "recursive": false,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\Minidump",
+          "patterns": [
+            "*.dmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        },
+        {
+          "root": "%SystemRoot%\\LiveKernelReports",
+          "patterns": [
+            "*.dmp"
+          ],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "74",
+      "name": "Visual Studio日志",
+      "group": "临时文件",
+      "selected": true,
+      "icon": "categories/106.png",
+      "paths": [
+        {
+          "root": "%SystemDrive%\\Users\\*\\AppData\\Local\\Microsoft\\VisualStudio\\SettingsLogs\\",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "name": "英伟达驱动安装包",
+      "group": "临时文件",
+      "selected": false,
+      "icon": "categories/200.png",
+      "paths": [
+        {
+          "root": "%PROGRAMDATA%\\NVIDIA Corporation\\Downloader",
+          "patterns": [],
+          "recursive": true,
+          "excluded": []
+        }
+      ]
+    }
+  ]
+}
