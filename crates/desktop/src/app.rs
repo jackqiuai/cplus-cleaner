@@ -1948,6 +1948,8 @@ mod selection_tests {
         ));
         let fixture = std::env::temp_dir().join(format!("cplus-tray-scan-{}", common::token()));
         std::fs::create_dir_all(&fixture).unwrap();
+        // Windows runners may expose TEMP through an 8.3 alias.
+        let fixture = std::fs::canonicalize(fixture).unwrap();
         std::fs::write(fixture.join("a.txt"), b"owned duplicate").unwrap();
         std::fs::write(fixture.join("b.txt"), b"owned duplicate").unwrap();
         let (mut app, _) = App::new(Config {
