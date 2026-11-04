@@ -1,0 +1,126 @@
+{
+  "sourceBinarySha256": "0c472dbfa9e202dacd97eb53480af969dfdee9f3f8a5ec3533060e57d461ba99",
+  "cards": {
+    "run": {
+      "original": "40033.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40033.svg",
+      "sourceSha256": "bd875bb7f55cf487e8fd77e95504cebf7dbee7b3618c3df9d5b30f93868b871f",
+      "file": "privacy/run.png",
+      "sha256": "85224d20720fbcd339b4e5560f95f160c05b11b3778be600254a8778ae8eb3ce"
+    },
+    "start_recent": {
+      "original": "40036.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40036.svg",
+      "sourceSha256": "e0aaca9ac4d3f21683e66759e002fb3a6ba5db081b192744738c77a40de723a6",
+      "file": "privacy/start_recent.png",
+      "sha256": "a289f92514d48d3cea30d96be32abbb147bf766bce44a3fdd9054bee6528ec21"
+    },
+    "recent_docs": {
+      "original": "40036.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40036.svg",
+      "sourceSha256": "e0aaca9ac4d3f21683e66759e002fb3a6ba5db081b192744738c77a40de723a6",
+      "file": "privacy/recent_docs.png",
+      "sha256": "a289f92514d48d3cea30d96be32abbb147bf766bce44a3fdd9054bee6528ec21"
+    },
+    "extensions": {
+      "original": "40033.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40033.svg",
+      "sourceSha256": "bd875bb7f55cf487e8fd77e95504cebf7dbee7b3618c3df9d5b30f93868b871f",
+      "file": "privacy/extensions.png",
+      "sha256": "85224d20720fbcd339b4e5560f95f160c05b11b3778be600254a8778ae8eb3ce"
+    },
+    "app_switched": {
+      "original": "40037.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40037.svg",
+      "sourceSha256": "4b36dd1c6ff4f5f00e1b3f469524f89726217987ff31be6f6fea55a58857ddb5",
+      "file": "privacy/app_switched.png",
+      "sha256": "a141b1d37f9a37d2d1a93eb58f43b5c5ddf10a63766da6a1256d56d8c89a2e52"
+    },
+    "regedit": {
+      "original": "40032.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40032.svg",
+      "sourceSha256": "444ed5191e9fe9b3cbf9ac8304ec027cb8731a67ff51742dbcfd6238053a8545",
+      "file": "privacy/regedit.png",
+      "sha256": "af4a37c5673afad88b98a985792071800b05f3338cd851078928c3114484b25e"
+    },
+    "thunder": {
+      "original": "40035.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40035.svg",
+      "sourceSha256": "dfe9c09e22f0b4750ddea5e6e84cdc9015d389fb13888f6edb23ae99f45b7daf",
+      "file": "privacy/thunder.png",
+      "sha256": "53a3473c346c44e6f852054fd10947cbdb66f8d6899b07d6426835aff182a0fc"
+    },
+    "chrome_history": {
+      "original": "217.png",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/217.png",
+      "sourceSha256": "f0afab8340c2bee7987d0ef57efdcc55b58434a6aa3661fce8fd68d50060363a",
+      "file": "privacy/chrome_history.png",
+      "sha256": "acb9a6e5865cddffd28c88459b3119d3e53072715f559871c15a803c38118f30"
+    },
+    "chrome_downloads": {
+      "original": "40011.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40011.svg",
+      "sourceSha256": "dddb591ff823096352badf69e1a1310de80e9acdb01218c4c862236da20e03d5",
+      "file": "privacy/chrome_downloads.png",
+      "sha256": "2c4e80a5ed03566c53a6838f9d3b8cb914a578ecb1e7f9a3c9def0ec52392b9e"
+    },
+    "edge_history": {
+      "original": "218.png",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/218.png",
+      "sourceSha256": "898101ae1a47c6ef4026ac9667ef264e6bcf5582bdb941110fc18786921194e2",
+      "file": "privacy/edge_history.png",
+      "sha256": "568a6d08ada3aa101018b2800300aab580fe50ec23b20fbdd8c67a7d9ed8b723"
+    },
+    "edge_downloads": {
+      "original": "40011.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40011.svg",
+      "sourceSha256": "dddb591ff823096352badf69e1a1310de80e9acdb01218c4c862236da20e03d5",
+      "file": "privacy/edge_downloads.png",
+      "sha256": "2c4e80a5ed03566c53a6838f9d3b8cb914a578ecb1e7f9a3c9def0ec52392b9e"
+    },
+    "sensitive": {
+      "original": "40031.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40031.svg",
+      "sourceSha256": "cc9b874799c28682e26c1376591a96be1b91706db5a4065fa75c89d4403bff94",
+      "file": "privacy/sensitive.png",
+      "sha256": "586656d41dcb6fd99587cd817c3b0ab4d44629170bde376c131238afab169191"
+    },
+    "shopping": {
+      "original": "40034.svg",
+      "source": "source-analysis/rea-fanqie/ui-assets/icon/40034.svg",
+      "sourceSha256": "3cbd50a654145aa972c336dd7aed52e6ca0505121562d730547d6161b8129c20",
+      "file": "privacy/shopping.png",
+      "sha256": "099145cd8df595581080f7849dcef4186ab72326276ffe24b33240edf5c3dcfa"
+    }
+  },
+  "groups": {
+    "windows": {
+      "original": "c-pc-log",
+      "source": "source-analysis/rea-fanqie/ui-assets/svg-sprites/icon-c-pc-log.svg",
+      "sourceSha256": "14da273ef98fa29b785a4051ef47b10b0e232bd77e897a17c45ee7b59f9b5704",
+      "file": "privacy/windows.png",
+      "sha256": "6e39fc7109ad373fe250a158c3202124ae14672c6425874a9c585e5e35cb6a92"
+    },
+    "software": {
+      "original": "c-p-2",
+      "source": "source-analysis/rea-fanqie/ui-assets/svg-sprites/icon-c-p-2.svg",
+      "sourceSha256": "a50e2307628aacd6f9b12fd74c1665b921c72a010b9c0ad3a42bfefd1bc35310",
+      "file": "privacy/software.png",
+      "sha256": "6e39fc7109ad373fe250a158c3202124ae14672c6425874a9c585e5e35cb6a92"
+    },
+    "browsers": {
+      "original": "c-p-4",
+      "source": "source-analysis/rea-fanqie/ui-assets/svg-sprites/icon-c-p-4.svg",
+      "sourceSha256": "cc7b3323aec2687cc2781283af0e908c4e19ee0893510c2a88b04245a053696b",
+      "file": "privacy/browsers.png",
+      "sha256": "a640957d1c4ed313b48733fb58db70c9cc87497eec1b79b1b7d027bd92b81c91"
+    },
+    "risk": {
+      "original": "c-p-5",
+      "source": "source-analysis/rea-fanqie/ui-assets/svg-sprites/icon-c-p-5.svg",
+      "sourceSha256": "2316e089da266f59f030e3fc4efa53838a7e59b8f2069da2d9a625a6ba31a4ff",
+      "file": "privacy/risk.png",
+      "sha256": "4063ea95e7de89dbd58192f5eb0937950e8532f448bed3be33cbb518da12536b"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+[
+
+  {
+    "path": "background.png",
+    "source": "background-original.png",
+    "transformation": "Lanczos cover fit to 1024x800; original gradient colors",
+    "sha256": "1ccb5fa4a08a7ad84acd857c857f7bd6aaeff28a38ae82c9572d3df697ec2ee2"
+  },
+  {
+    "path": "search.png",
+    "source": "search.svg",
+    "transformation": "Mint background and yellow magnifying glass, antialiased 28x28 export",
+    "sha256": "8e3e4d5680284dc4dec7f5342864b82b353637631e8ea09e62cf3fa76d0a541d"
+  }
+]

@@ -1,0 +1,43 @@
+# Rust build products and local validation output
+/target/
+/dist/
+/validation-output/
+*.pdb
+*.log
+*.tmp
+*.dmp
+*.etl
+# Editor and OS state
+.vs/
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini
+.DS_Store
+# Local runtime profiles, settings and operation/recovery records
+/CPLUSCLEANER/
+/local-data/
+/test-results/
+/coverage/
+/settings.json
+/activity.jsonl
+/rust-*-history.json
+/rust-software-migrations.json
+/rust-migration-backup/
+# Secrets and signing credentials (configure GitHub Secrets instead)
+.env
+.env.*
+!.env.example
+**/credentials.json
+**/secrets.json
+**/secrets.toml
+.cargo/credentials
+.cargo/credentials.toml
+*.pem
+*.key
+*.pfx
+*.p12
+*.keystore
+id_rsa*
+id_ed25519*
+# Retain Cargo.lock for reproducible application builds.
