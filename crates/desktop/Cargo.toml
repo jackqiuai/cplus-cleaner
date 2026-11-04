@@ -1,0 +1,24 @@
+[package]
+name = "cplus-cleaner"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+build = "build.rs"
+
+[[bin]]
+name = "CPlusCleaner"
+path = "src/main.rs"
+
+[dependencies]
+cplus-core = { path = "../core" }
+cplus-platform-windows = { path = "../platform_windows" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+iced = { version = "=0.14.0", default-features = false, features = ["tiny-skia", "tokio", "image-without-codecs", "svg", "canvas", "advanced-shaping", "crisp"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "ico"] }
+tray-icon = "0.21"
+
+[build-dependencies]
+winresource = "0.1"
