@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="none">
-  <defs><clipPath id="corners"><rect width="1200" height="300" rx="15"/></clipPath></defs>
-  <g clip-path="url(#corners)">
-    <path d="M350 285C530 300 635 208 785 240s237 82 415 25v35H350Z" fill="#b9f6df" opacity=".22"/>
-    <path d="M580 300c155-14 237-104 360-92s175 59 260 56v36Z" fill="#b1f2dc" opacity=".18"/>
-    <path d="M830 300c127-3 246-71 370-39v39Z" fill="#d5fbed" opacity=".58"/>
-  </g>
-</svg>
