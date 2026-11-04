@@ -42,11 +42,13 @@ jobs:
           cargo clippy --workspace --all-targets --locked -- -D warnings
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
       - name: Test and build standalone executable
-        # Use the runner workspace temp path instead of the user profile's 8.3 alias.
-        env:
-          TEMP: ${{ runner.temp }}
-          TMP: ${{ runner.temp }}
-        run: ./build.ps1
+        run: |
+          # Keep WOF fixtures on the system volume and avoid TEMP's 8.3 alias.
+          $testTemp = Join-Path $env:USERPROFILE 'cplus-cleaner-ci-temp'
+          New-Item -ItemType Directory -Path $testTemp -Force | Out-Null
+          $env:TEMP = $testTemp
+          $env:TMP = $testTemp
+          ./build.ps1
       - name: Upload signing input
         id: signing-input
         if: vars.SIGNPATH_ENABLED == 'true' && github.event_name != 'pull_request' && (github.event_name == 'release' || startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))))
