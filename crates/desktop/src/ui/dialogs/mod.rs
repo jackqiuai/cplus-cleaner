@@ -2,6 +2,7 @@ use super::{pages, theme, widgets::*};
 mod activity;
 mod feedback;
 mod settings;
+use crate::app::Pending;
 use crate::{
     app::{Action, App, Dialog, Message},
     i18n::Language,
@@ -15,6 +16,12 @@ use iced::{
 };
 
 pub fn view<'a>(app: &'a App, id: window::Id, dialog: &Dialog) -> Element<'a, Message> {
+    if matches!(dialog, Dialog::Confirm | Dialog::Information) {
+        return prompt(app, id, *dialog == Dialog::Confirm);
+    }
+    if *dialog == Dialog::Updates {
+        return updates(app, id);
+    }
     if *dialog == Dialog::Settings {
         return settings::view(app);
     }
@@ -39,24 +46,14 @@ pub fn view<'a>(app: &'a App, id: window::Id, dialog: &Dialog) -> Element<'a, Me
         Dialog::Feedback => unreachable!(),
         Dialog::Donate => donate(app),
         Dialog::About => about(app),
-        Dialog::Updates => updates(app),
+        Dialog::Updates => unreachable!(),
         Dialog::History(f) => history(app, *f),
         Dialog::Residue => residue(app),
-        Dialog::Confirm => confirm(app),
-        Dialog::Information => information(app),
+        Dialog::Confirm | Dialog::Information => unreachable!(),
     };
     body = body.push(content);
     let mut footer = row![Space::new().width(Length::Fill)].spacing(12);
     match dialog {
-        Dialog::Confirm => {
-            footer = footer
-                .push(btn(app.t("Back"), Some(Message::Dismiss(id)), false))
-                .push(btn(
-                    app.t("Confirm"),
-                    (!app.busy()).then_some(Message::Confirm),
-                    true,
-                ))
-        }
         Dialog::Residue => {
             footer = footer
                 .push(btn(
@@ -67,26 +64,10 @@ pub fn view<'a>(app: &'a App, id: window::Id, dialog: &Dialog) -> Element<'a, Me
                 ))
                 .push(btn(app.t("Close"), Some(Message::Dismiss(id)), false))
         }
-        _ => {
-            footer = footer.push(btn(
-                app.t(
-                    if *dialog == Dialog::Updates || *dialog == Dialog::Information {
-                        "OK"
-                    } else {
-                        "Close"
-                    },
-                ),
-                Some(Message::Dismiss(id)),
-                false,
-            ))
-        }
+        _ => footer = footer.push(btn(app.t("Close"), Some(Message::Dismiss(id)), false)),
     }
-    if matches!(dialog, Dialog::Residue) || *dialog == Dialog::Updates {
-        let feature = match dialog {
-            Dialog::Updates => Feature::Home,
-            _ => app.progress.feature,
-        };
-        body = body.push(pages::progress_for(app, feature));
+    if matches!(dialog, Dialog::Residue) {
+        body = body.push(pages::progress_for(app, app.progress.feature));
     }
     body = body.push(footer);
     container(body)
@@ -94,6 +75,153 @@ pub fn view<'a>(app: &'a App, id: window::Id, dialog: &Dialog) -> Element<'a, Me
         .width(Length::Fill)
         .height(Length::Fill)
         .style(theme::surface)
+        .into()
+}
+pub(crate) fn prompt_size(app: &App, confirmation: bool) -> iced::Size {
+    if confirmation {
+        let detailed = app.pending.as_ref().is_some_and(|p| {
+            p.ids.len() > 3
+                || matches!(p.action, Action::Compress | Action::System(_))
+                || p.ids.iter().any(|id| id == "drive:windows_old")
+        });
+        iced::Size::new(400.0, if detailed { 360.0 } else { 280.0 })
+    } else {
+        let detailed = app.info.chars().count() > 90
+            || app.info.lines().count() > 2
+            || app.issues.len() > 1
+            || app
+                .issues
+                .iter()
+                .any(|i| i.path.chars().count() > 80 || i.message.chars().count() > 90);
+        iced::Size::new(360.0, if detailed { 360.0 } else { 220.0 })
+    }
+}
+fn pending_capacity(p: &Pending, report: &cplus_core::ScanResult) -> Option<u64> {
+    if p.ids.is_empty() || matches!(p.action, Action::Restore(_) | Action::System(_)) {
+        return None;
+    }
+    Some(if p.feature == Feature::Drive {
+        report
+            .categories
+            .iter()
+            .filter(|c| p.ids.contains(&c.id))
+            .map(|c| c.bytes)
+            .sum()
+    } else if !report.apps.is_empty() {
+        report
+            .apps
+            .iter()
+            .filter(|a| p.ids.contains(&a.id))
+            .map(|a| {
+                if p.feature == Feature::Compression {
+                    a.physical
+                } else {
+                    a.logical
+                }
+            })
+            .sum()
+    } else {
+        report
+            .files
+            .iter()
+            .filter(|f| p.ids.contains(&f.id) || p.ids.contains(&f.category))
+            .map(|f| {
+                if p.feature == Feature::Duplicates {
+                    f.allocated
+                } else {
+                    f.size
+                }
+            })
+            .sum()
+    })
+}
+fn prompt(app: &App, id: window::Id, confirmation: bool) -> Element<'_, Message> {
+    let deletion = confirmation
+        && app
+            .pending
+            .as_ref()
+            .is_some_and(|p| matches!(p.action, Action::Delete));
+    let icon = iced::widget::svg(iced::widget::svg::Handle::from_memory(if confirmation {
+        br##"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#fff6e7"/><path d="m16 6 11 19H5Z" fill="none" stroke="#dba124" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 12v6m0 3h.01" stroke="#dba124" stroke-width="2" stroke-linecap="round"/></svg>"##.as_slice()
+    } else {
+        br##"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#e8faf2"/><circle cx="16" cy="16" r="10" fill="none" stroke="#0bb47e" stroke-width="1.7"/><path d="M16 15v7m0-12h.01" stroke="#0bb47e" stroke-width="2" stroke-linecap="round"/></svg>"##.as_slice()
+    })).width(32).height(32);
+    let heading = row![
+        icon,
+        bold(
+            app.t(if deletion {
+                "Confirm deletion of selected items?"
+            } else if confirmation {
+                "Confirm operation"
+            } else {
+                "Notice"
+            }),
+            17
+        )
+    ]
+    .spacing(10)
+    .align_y(iced::Alignment::Center);
+    let button = |text: String, message: Option<Message>, primary: bool| {
+        iced::widget::button(
+            container(bold(text, 13).color(if primary {
+                iced::Color::WHITE
+            } else {
+                theme::MINT
+            }))
+            .center_x(Length::Fill)
+            .center_y(Length::Fill),
+        )
+        .width(if primary { 112 } else { 86 })
+        .height(34)
+        .padding(0)
+        .on_press_maybe(message)
+        .style(move |theme, status| {
+            let mut style = if primary {
+                theme::primary(theme, status)
+            } else {
+                theme::secondary(theme, status)
+            };
+            style.border.radius = 6.0.into();
+            if primary && deletion && !matches!(status, iced::widget::button::Status::Disabled) {
+                style.background = Some(theme::CORAL.into());
+            }
+            style
+        })
+    };
+    let footer: Element<'_, Message> = if confirmation {
+        row![
+            Space::new().width(Length::Fill),
+            button(app.t("Cancel"), Some(Message::Dismiss(id)), false),
+            button(
+                app.t(if deletion {
+                    "Confirm deletion"
+                } else {
+                    "Confirm"
+                }),
+                (!app.busy() && app.pending.is_some()).then_some(Message::Confirm),
+                true
+            )
+        ]
+        .spacing(10)
+        .into()
+    } else {
+        container(button(app.t("OK"), Some(Message::Dismiss(id)), true))
+            .center_x(Length::Fill)
+            .into()
+    };
+    let content = if confirmation {
+        confirm(app)
+    } else {
+        information(app)
+    };
+    container(column![heading, content, footer].spacing(12))
+        .padding(18)
+        .width(Length::Fill)
+        .height(Length::Fill)
+        .style(|_| container::Style {
+            background: Some(iced::Color::WHITE.into()),
+            ..Default::default()
+        })
         .into()
 }
 fn donate(app: &App) -> Element<'_, Message> {
@@ -148,36 +276,103 @@ fn about(app: &App) -> Element<'_, Message> {
     .align_x(iced::Alignment::Center)
     .into()
 }
-fn updates(app: &App) -> Element<'_, Message> {
-    let mut content = column![small(format!(
-        "{}  {}",
-        app.t("Current version"),
-        cplus_core::VERSION
-    ))]
-    .spacing(20);
-    if let Some(release) = &app.release {
-        content = content
-            .push(bold(
-                app.t(if release.newer {
-                    "A newer version is available"
-                } else {
-                    "You are up to date"
-                }),
-                23,
-            ))
-            .push(label(format!(
-                "{}  {}",
-                app.t("Latest release"),
-                release.tag
-            )));
-    } else if !app.update_error.is_empty() {
-        content = content
-            .push(bold(app.t("Unable to check for updates"), 22))
-            .push(small(short(&app.t(&app.update_error), 250)));
+fn updates(app: &App, id: window::Id) -> Element<'_, Message> {
+    let failed = app.release.is_none() && !app.update_error.is_empty();
+    let title = if let Some(release) = &app.release {
+        if release.newer {
+            "A newer version is available"
+        } else {
+            "You are up to date"
+        }
+    } else if failed {
+        "Unable to check for updates"
     } else {
-        content = content.push(bold(app.t("Checking the latest stable release…"), 21));
-    }
-    content.push(Space::new().height(Length::Fill)).into()
+        "Checking the latest stable release…"
+    };
+    let mark = if failed {
+        "M12 7v6m0 4h.01"
+    } else if app.release.as_ref().is_some_and(|r| r.newer) {
+        "M7 12l5-5 5 5m-5-5v11"
+    } else if app.release.is_some() {
+        "M6 12l4 4 8-8"
+    } else {
+        "M7 12h.01M12 12h.01M17 12h.01"
+    };
+    let color = if failed { "#ff5966" } else { "#16c88d" };
+    let icon = format!(
+        r##"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><circle cx="48" cy="48" r="46" fill="{color}" opacity=".05"/><circle cx="48" cy="48" r="37" fill="{color}" opacity=".12"/><circle cx="48" cy="48" r="28" fill="{color}"/><g transform="translate(24 24) scale(2)" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{mark}"/></g></svg>"##
+    );
+    let versions = container(
+        column![
+            row![
+                small(app.t("Current version"))
+                    .color(theme::INK)
+                    .width(Length::Fill),
+                label(format!("v{}", cplus_core::VERSION)).size(12)
+            ],
+            iced::widget::rule::horizontal(1),
+            row![
+                small(app.t("Latest release"))
+                    .color(theme::INK)
+                    .width(Length::Fill),
+                label(
+                    app.release
+                        .as_ref()
+                        .map(|r| r.tag.clone())
+                        .unwrap_or_else(|| "--".into())
+                )
+                .size(12)
+            ]
+        ]
+        .spacing(8),
+    )
+    .padding([10, 20])
+    .width(256)
+    .style(|_| container::Style {
+        background: Some(theme::PALE.into()),
+        border: iced::Border {
+            radius: 6.0.into(),
+            ..Default::default()
+        },
+        ..Default::default()
+    });
+    container(
+        column![
+            iced::widget::svg(iced::widget::svg::Handle::from_memory(icon.into_bytes()))
+                .width(84)
+                .height(84),
+            bold(app.t(title), 17).align_x(iced::Alignment::Center),
+            small(if failed {
+                short(&app.t(&app.update_error), 85)
+            } else {
+                app.t("Thank you for using CPlus Cleaner")
+            })
+            .size(11)
+            .align_x(iced::Alignment::Center),
+            versions,
+            small(app.t("Version information comes from GitHub Releases")).size(10),
+            iced::widget::button(
+                container(bold(app.t("OK"), 13).color(iced::Color::WHITE))
+                    .center_x(Length::Fill)
+                    .center_y(Length::Fill)
+            )
+            .padding(0)
+            .width(136)
+            .height(32)
+            .style(theme::primary)
+            .on_press(Message::Dismiss(id))
+        ]
+        .spacing(6)
+        .align_x(iced::Alignment::Center),
+    )
+    .padding(10)
+    .center_x(Length::Fill)
+    .center_y(Length::Fill)
+    .style(|_| container::Style {
+        background: Some(iced::Color::WHITE.into()),
+        ..Default::default()
+    })
+    .into()
 }
 fn history(app: &App, feature: Feature) -> Element<'_, Message> {
     let mut rows = Column::new().spacing(12);
@@ -421,23 +616,53 @@ fn confirm(app: &App) -> Element<'_, Message> {
             S::PagefileSettings => "Virtual memory settings",
             S::AnalyzeComponents => "Analyze components",
         };
-        return column![bold(app.t(title), 20), label(app.t("Windows may ask for administrator permission.")),
+        return scrollable(column![bold(app.t(title), 14), label(app.t("Windows may ask for administrator permission.")).size(13),
             small(app.t("Windows will perform this operation. Other selected cleanup items are not included."))
-        ].spacing(14).into();
+        ].spacing(8)).height(Length::Fill).into();
     }
     let text = match p.action {
-        Action::Delete => "Files will be permanently deleted.",
+        Action::Delete => "Files will be permanently deleted and cannot be recovered.",
         Action::System(_) => "Windows may ask for administrator permission.",
         _ => "Close the selected applications before continuing.",
     };
-    let mut rows = column![
-        bold(app.name(p.feature), 20),
-        label(app.t(text)),
-        small(format!("{} {}", app.t("Selected"), p.ids.len()))
-    ]
-    .spacing(14);
+    let mut rows = column![small(app.name(p.feature)), label(app.t(text)).size(13)].spacing(8);
+    if !p.ids.is_empty() {
+        let mut summary = column![row![
+            small(app.t("Selected")).width(Length::Fill),
+            bold(format!("{} {}", p.ids.len(), app.t("items")), 13)
+        ]]
+        .spacing(8);
+        if let Some(capacity) = app
+            .reports
+            .get(&p.feature)
+            .and_then(|r| pending_capacity(p, r))
+        {
+            summary = summary.push(row![
+                small(app.t("Selected size")).width(Length::Fill),
+                amount(bytes(capacity), 14)
+            ]);
+        }
+        rows = rows.push(
+            container(summary)
+                .padding([10, 12])
+                .width(Length::Fill)
+                .style(|_| container::Style {
+                    background: Some(theme::PALE.into()),
+                    border: iced::Border {
+                        radius: 7.0.into(),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                }),
+        );
+    }
     if p.feature == Feature::Drive && p.ids.iter().any(|id| id == "drive:windows_old") {
         rows = rows.push(label(app.t("Deleting previous Windows installations prevents reverting to that Windows version.")).color(theme::CORAL));
+    }
+    if matches!(p.action, Action::Compress) {
+        rows = rows.push(small(app.t(
+            "Compression can slow application startup. Moving apps is preferred.",
+        )));
     }
     if let Some(report) = app.reports.get(&p.feature) {
         if p.feature == Feature::LargeFiles {
@@ -485,26 +710,28 @@ fn confirm(app: &App) -> Element<'_, Message> {
                         .map(|f| cplus_core::common::display_path(&f.path))
                 })
                 .unwrap_or_default();
-            rows = rows.push(small(short(&name, 90)));
+            rows = rows.push(small(name));
         }
-    }
-    if matches!(p.action, Action::Compress) {
-        rows = rows.push(small(app.t(
-            "Compression can slow application startup. Moving apps is preferred.",
-        )));
+        if p.ids.len() > 16 {
+            rows = rows.push(small(format!(
+                "{}: {}",
+                app.t("Additional items"),
+                p.ids.len() - 16
+            )));
+        }
     }
     scrollable(rows).height(Length::Fill).into()
 }
 fn information(app: &App) -> Element<'_, Message> {
-    let mut rows = Column::new().spacing(12);
+    let mut rows = Column::new().spacing(8);
     if !app.info.is_empty() {
-        rows = rows.push(label(app.t(&app.info)));
+        rows = rows.push(label(app.t(&app.info)).size(13));
     }
     for issue in app.issues.iter().take(50) {
         rows = rows.push(
             column![
-                small(short(&issue.path, 120)),
-                label(short(&app.t(&issue.message), 350))
+                small(issue.path.clone()),
+                label(app.t(&issue.message)).size(13)
             ]
             .spacing(5),
         );
@@ -527,4 +754,92 @@ fn display_time(v: &serde_json::Value) -> String {
 }
 fn one_line(value: &str) -> String {
     short(&value.split_whitespace().collect::<Vec<_>>().join(" "), 50)
+}
+
+#[cfg(test)]
+mod prompt_tests {
+    use super::*;
+    use cplus_core::{AppInfo, Category, FileEntry, ScanResult};
+
+    #[test]
+    fn capacity_uses_only_pending_items_and_the_features_size_basis() {
+        let mut pending = Pending {
+            feature: Feature::Drive,
+            action: Action::Delete,
+            ids: vec!["chosen".into()],
+        };
+        let mut report = ScanResult {
+            categories: vec![
+                Category {
+                    id: "chosen".into(),
+                    bytes: 123,
+                    ..Default::default()
+                },
+                Category {
+                    id: "other".into(),
+                    bytes: 999,
+                    ..Default::default()
+                },
+            ],
+            apps: vec![AppInfo {
+                id: "chosen".into(),
+                logical: 100,
+                physical: 60,
+                ..Default::default()
+            }],
+            ..Default::default()
+        };
+        assert_eq!(pending_capacity(&pending, &report), Some(123));
+        pending.feature = Feature::Compression;
+        assert_eq!(pending_capacity(&pending, &report), Some(60));
+        pending.feature = Feature::AppMover;
+        assert_eq!(pending_capacity(&pending, &report), Some(100));
+        report.apps.clear();
+        report.files.push(FileEntry {
+            id: "file".into(),
+            category: "chosen".into(),
+            path: "example.zip".into(),
+            size: 100,
+            allocated: 80,
+            identity: Default::default(),
+            scope: String::new(),
+            blocked: String::new(),
+        });
+        pending.ids.push("file".into());
+        pending.feature = Feature::LargeFiles;
+        assert_eq!(pending_capacity(&pending, &report), Some(100));
+        pending.feature = Feature::Duplicates;
+        assert_eq!(pending_capacity(&pending, &report), Some(80));
+        pending.action = Action::Restore("history".into());
+        assert_eq!(pending_capacity(&pending, &report), None);
+        pending.action = Action::Delete;
+        pending.ids.clear();
+        assert_eq!(pending_capacity(&pending, &report), None);
+    }
+
+    #[test]
+    fn prompt_size_keeps_short_messages_compact_and_gives_warnings_more_room() {
+        let data = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
+            "../../validation-output/prompt-size-test-{}",
+            std::process::id()
+        ));
+        let (mut app, _) = App::new(crate::app::Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        app.info = "Short notice".into();
+        app.issues.clear();
+        assert_eq!(prompt_size(&app, false), iced::Size::new(360.0, 220.0));
+        app.info = "Long notice ".repeat(20);
+        assert_eq!(prompt_size(&app, false).height, 360.0);
+        app.pending = Some(Pending {
+            feature: Feature::Drive,
+            action: Action::Delete,
+            ids: vec!["cache".into()],
+        });
+        assert_eq!(prompt_size(&app, true), iced::Size::new(400.0, 280.0));
+        app.pending.as_mut().unwrap().ids = vec!["drive:windows_old".into()];
+        assert_eq!(prompt_size(&app, true).height, 360.0);
+    }
 }

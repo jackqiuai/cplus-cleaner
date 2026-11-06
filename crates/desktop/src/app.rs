@@ -30,6 +30,7 @@ use std::{
 
 #[derive(Clone, Default)]
 pub struct Config {
+    pub taskbar_test: bool,
     pub preview: bool,
     pub data: Option<PathBuf>,
     pub language: Option<String>,
@@ -46,6 +47,7 @@ impl Config {
         let mut args = std::env::args().skip(1);
         while let Some(arg) = args.next() {
             match arg.as_str() {
+                "--taskbar-test" => c.taskbar_test = true,
                 "--preview" => c.preview = true,
                 "--data-dir" => {
                     c.data = Some(
@@ -72,6 +74,9 @@ impl Config {
         }
         if c.data.is_some() && !c.preview {
             anyhow::bail!("Custom data directories require --preview");
+        }
+        if c.taskbar_test && (!c.preview || c.data.is_none()) {
+            anyhow::bail!("Taskbar tests require --preview and an isolated --data-dir");
         }
         if !c.preview {
             c.quit_after = None;
@@ -110,6 +115,13 @@ pub struct Pending {
 }
 #[derive(Clone, Debug)]
 pub enum Message {
+    NavHover(Feature, bool),
+    MonitorTab(crate::monitor::Tab),
+    MonitorReady(window::Id, u64, i32, i32),
+    MonitorClose,
+    MonitorMain,
+    MonitorCleanup,
+    WindowFocused(window::Id),
     Tick,
     Opened(window::Id),
     Close(window::Id),
@@ -184,6 +196,8 @@ pub struct Job {
     pub name: String,
 }
 pub struct App {
+    hovered_nav: Option<Feature>,
+    pub monitor: crate::monitor::Monitor,
     pub store: Store,
     pub config: Config,
     pub i18n: I18n,
@@ -266,6 +280,7 @@ pub fn feature_key(f: Feature) -> &'static str {
 }
 impl App {
     pub fn new(config: Config) -> (Self, Task<Message>) {
+        let monitor_preview = config.preview && config.page.as_deref() == Some("monitor");
         let store = Store::new(config.data.clone(), config.preview)
             .expect("Cannot open application data folder");
         let _ = store.backup_legacy();
@@ -294,7 +309,7 @@ impl App {
             size: Size::new(1240.0, 850.0),
             min_size: Some(Size::new(1080.0, 740.0)),
             position: window::Position::Centered,
-            visible: !config.background,
+            visible: !config.background && !monitor_preview,
             exit_on_close_request: false,
             icon: window_icon(),
             ..Default::default()
@@ -328,6 +343,11 @@ impl App {
         let destination_files = store.default_destination(false);
         let activities = store.activities();
         let mut app = Self {
+            hovered_nav: None,
+            monitor: crate::monitor::Monitor::new(
+                settings.taskbar_monitor || monitor_preview,
+                config.preview && !config.taskbar_test,
+            ),
             store,
             config,
             i18n,
@@ -400,7 +420,11 @@ impl App {
                 ..Default::default()
             }),
         );
-        (app, open.map(Message::Opened))
+        let mut tasks = vec![open.map(Message::Opened)];
+        if monitor_preview {
+            tasks.push(app.open_monitor(crate::monitor::Tab::Overview, 1000, 900));
+        }
+        (app, Task::batch(tasks))
     }
     pub fn t(&self, s: &str) -> String {
         self.i18n.t(s)
@@ -541,6 +565,17 @@ impl App {
             .unwrap_or_else(|| "—".into())
     }
     pub fn title(&self, id: window::Id) -> String {
+        if self.monitor.window == Some(id) {
+            return format!(
+                "CPlus Cleaner · {}{}",
+                self.t("System status"),
+                if self.config.preview {
+                    " · Preview"
+                } else {
+                    ""
+                }
+            );
+        }
         if id == self.main {
             format!(
                 "CPlus Cleaner{}",
@@ -558,6 +593,14 @@ impl App {
         }
     }
     pub fn dialog_title(&self, d: &Dialog) -> String {
+        if *d == Dialog::Confirm
+            && self
+                .pending
+                .as_ref()
+                .is_some_and(|p| matches!(p.action, Action::Delete))
+        {
+            return self.t("Confirm deletion");
+        }
         self.t(match d {
             Dialog::Settings => "Settings",
             Dialog::Activity => "Activity Log",
@@ -580,8 +623,10 @@ impl App {
         Subscription::batch([
             iced::time::every(Duration::from_millis(120)).map(|_| Message::Tick),
             window::close_requests().map(Message::Close),
-            window::events().filter_map(|(id, event)| {
-                (event == window::Event::Unfocused).then_some(Message::TrayDismiss(id))
+            window::events().filter_map(|(id, event)| match event {
+                window::Event::Focused => Some(Message::WindowFocused(id)),
+                window::Event::Unfocused => Some(Message::TrayDismiss(id)),
+                _ => None,
             }),
             iced::event::listen_with(|event, _, id| {
                 matches!(
@@ -626,12 +671,29 @@ impl App {
             let _ = tx.send(Event::Finished(result));
         });
     }
+    fn pending_home_scans(&self) -> Vec<Feature> {
+        Feature::HOME
+            .into_iter()
+            .filter(|f| {
+                !self.scan_elapsed.contains_key(f)
+                    || self.reports.get(f).is_none_or(|r| r.cancelled)
+            })
+            .collect()
+    }
     pub fn scan(&mut self) {
         if self.busy() {
             return;
         }
         let feature = self.page;
-        if matches!(feature, Feature::LargeFiles | Feature::Home) {
+        let pending = if feature == Feature::Home {
+            self.pending_home_scans()
+        } else {
+            vec![feature]
+        };
+        if pending.is_empty() {
+            return;
+        }
+        if pending.contains(&Feature::LargeFiles) {
             // A new attempt replaces the large-file authorization, even if it later fails.
             self.reports.remove(&Feature::LargeFiles);
             self.selected.remove(&Feature::LargeFiles);
@@ -640,19 +702,19 @@ impl App {
             &self.duplicate_drive,
         )];
         let minimum = Self::DUPLICATE_MINIMUMS[self.duplicate_minimum];
-        if matches!(feature, Feature::Duplicates | Feature::Home) {
+        if pending.contains(&Feature::Duplicates) {
             self.invalidate_duplicates();
         }
         let days = self.days;
         self.scan_elapsed.remove(&feature);
         if feature == Feature::Home {
-            for f in Feature::HOME {
-                self.scan_elapsed.remove(&f);
+            for f in &pending {
+                self.scan_elapsed.remove(f);
             }
         }
         self.start(feature, "Scanning", move |store, ctx, tx| {
             if feature == Feature::Home {
-                let errors = home::scan(&store, &locations, minimum, &ctx, |r| {
+                let errors = home::scan(&store, &pending, &locations, minimum, &ctx, |r| {
                     let _ = tx.send(Event::Report(r));
                 });
                 if !errors.is_empty() {
@@ -709,26 +771,41 @@ impl App {
         let size = match d {
             Dialog::Activity => Size::new(850.0, 530.0),
             Dialog::History(_) | Dialog::Residue => Size::new(850.0, 620.0),
-            Dialog::Settings => Size::new(630.0, 600.0),
+            Dialog::Settings => Size::new(507.0, 525.0),
             Dialog::Donate => Size::new(520.0, 640.0),
             Dialog::About => Size::new(340.0, 440.0),
             Dialog::Feedback => Size::new(740.0, 640.0),
-            _ => Size::new(640.0, 440.0),
+            Dialog::Updates => Size::new(320.0, 304.0),
+            Dialog::Confirm | Dialog::Information => {
+                ui::dialogs::prompt_size(self, d == Dialog::Confirm)
+            }
         };
         let (id, task) = window::open(window::Settings {
             size,
-            resizable: d != Dialog::Settings,
-            min_size: Some(if d == Dialog::About {
-                size
-            } else if d == Dialog::Activity {
-                Size::new(800.0, 400.0)
-            } else if d == Dialog::Feedback {
-                Size::new(720.0, 640.0)
-            } else if d == Dialog::Settings {
-                Size::new(610.0, 600.0)
-            } else {
-                Size::new(450.0, 350.0)
-            }),
+            resizable: !matches!(
+                d,
+                Dialog::Settings | Dialog::Updates | Dialog::Confirm | Dialog::Information
+            ),
+            decorations: true,
+            minimizable: !matches!(d, Dialog::Updates | Dialog::Confirm | Dialog::Information),
+            min_size: Some(
+                if matches!(
+                    d,
+                    Dialog::About
+                        | Dialog::Updates
+                        | Dialog::Settings
+                        | Dialog::Confirm
+                        | Dialog::Information
+                ) {
+                    size
+                } else if d == Dialog::Activity {
+                    Size::new(800.0, 400.0)
+                } else if d == Dialog::Feedback {
+                    Size::new(720.0, 640.0)
+                } else {
+                    Size::new(450.0, 350.0)
+                },
+            ),
             position: window::Position::Centered,
             exit_on_close_request: false,
             icon: window_icon(),
@@ -759,6 +836,43 @@ impl App {
         Task::batch(close.into_iter().chain(std::iter::once(task.then(move |_| {
             window::raw_id::<Message>(id).map(move |hwnd| Message::TrayReady(id, hwnd, x, y))
         }))))
+    }
+    fn open_monitor(&mut self, tab: crate::monitor::Tab, x: i32, y: i32) -> Task<Message> {
+        if let Some(id) = self.monitor.window {
+            if self.monitor.tab == tab {
+                self.monitor.window = None;
+                return window::close(id);
+            }
+            self.monitor.tab = tab;
+            return window::gain_focus(id);
+        }
+        let (x, y) = if x == 0 && y == 0 {
+            cplus_platform_windows::monitor::taskbar::cursor_position()
+        } else {
+            (x, y)
+        };
+        self.monitor.tab = tab;
+        let (id, open) = window::open(window::Settings {
+            size: Size::new(390.0, 620.0),
+            visible: false,
+            decorations: false,
+            resizable: false,
+            minimizable: false,
+            level: window::Level::AlwaysOnTop,
+            exit_on_close_request: false,
+            platform_specific: window::settings::PlatformSpecific {
+                skip_taskbar: true,
+                undecorated_shadow: true,
+                corner_preference: window::settings::platform::CornerPreference::Round,
+                ..Default::default()
+            },
+            ..Default::default()
+        });
+        self.monitor.window = Some(id);
+        self.monitor.focused = false;
+        open.then(move |_| {
+            window::raw_id::<Message>(id).map(move |hwnd| Message::MonitorReady(id, hwnd, x, y))
+        })
     }
     fn load_history(&mut self, f: Feature) {
         self.start(f, "Loading history", move |store, ctx, _| {
@@ -926,10 +1040,9 @@ impl App {
                 }
             }
             Event::Finished(value) => {
-                let timed = self
-                    .job
-                    .as_ref()
-                    .is_none_or(|j| j.name != "Loading history");
+                let timed = self.job.as_ref().is_none_or(|j| {
+                    !matches!(j.name.as_str(), "Loading history" | "Check for Updates")
+                });
                 let elapsed = if timed {
                     self.job.as_ref().map(|j| j.ctx.elapsed_ms()).unwrap_or(0)
                 } else {
@@ -1058,6 +1171,32 @@ impl App {
     }
     pub fn update(&mut self, message: Message) -> Task<Message> {
         match message {
+            Message::WindowFocused(id) => {
+                if self.monitor.window == Some(id) {
+                    self.monitor.focused = true;
+                }
+            }
+            Message::MonitorTab(tab) => self.monitor.tab = tab,
+            Message::MonitorReady(id, hwnd, x, y) => {
+                if self.monitor.window == Some(id) {
+                    cplus_platform_windows::windows::show_tray_menu(hwnd, x, y);
+                }
+            }
+            Message::MonitorClose => {
+                if let Some(id) = self.monitor.window.take() {
+                    return window::close(id);
+                }
+            }
+            Message::MonitorMain | Message::MonitorCleanup => {
+                if matches!(message, Message::MonitorCleanup) {
+                    self.page = Feature::Drive;
+                }
+                let close = self.monitor.window.take().map(window::close);
+                return Task::batch(close.into_iter().chain([
+                    window::set_mode(self.main, window::Mode::Windowed),
+                    window::gain_focus(self.main),
+                ]));
+            }
             Message::Tick => {
                 if cplus_platform_windows::processes::activation_requested(if self.config.preview {
                     "CPlusCleaner-Rust-Preview"
@@ -1071,6 +1210,22 @@ impl App {
                 }
                 let events = self.rx.try_iter().collect::<Vec<_>>();
                 let mut tasks = vec![];
+                self.monitor.poll();
+                let actions: Vec<_> = self
+                    .monitor
+                    .panel
+                    .as_ref()
+                    .map(|p| p.events.try_iter().collect())
+                    .unwrap_or_default();
+                for action in actions {
+                    use cplus_platform_windows::monitor::taskbar::Action;
+                    tasks.push(match action {
+                        Action::Open(tab, x, y) => {
+                            self.open_monitor(crate::monitor::Tab::ALL[tab], x, y)
+                        }
+                        Action::Menu(x, y) => self.open_tray_menu(x, y),
+                    });
+                }
                 for event in events {
                     tasks.push(self.receive(event));
                 }
@@ -1125,6 +1280,10 @@ impl App {
                 }
             }
             Message::TrayDismiss(id) => {
+                if self.monitor.window == Some(id) && self.monitor.focused {
+                    self.monitor.window = None;
+                    return window::close(id);
+                }
                 if self.tray_menu == Some(id) {
                     self.tray_menu = None;
                     return window::close(id);
@@ -1143,11 +1302,18 @@ impl App {
                 return Task::batch(tasks);
             }
             Message::Opened(id) => {
-                if id == self.main && !self.config.background {
+                if id == self.main
+                    && !self.config.background
+                    && !(self.config.preview && self.config.page.as_deref() == Some("monitor"))
+                {
                     return window::gain_focus(id);
                 }
             }
             Message::Close(id) => {
+                if self.monitor.window == Some(id) {
+                    self.monitor.window = None;
+                    return window::close(id);
+                }
                 if self.tray_menu == Some(id) {
                     self.tray_menu = None;
                     return window::close(id);
@@ -1166,6 +1332,7 @@ impl App {
                 return window::close(id);
             }
             Message::Exit => {
+                self.monitor.enable(false);
                 self.save_preferences();
                 if let Some(job) = &self.job {
                     job.ctx.cancel.cancel();
@@ -1178,6 +1345,13 @@ impl App {
                 }
                 self.stop.store(true, Ordering::Relaxed);
                 return iced::exit();
+            }
+            Message::NavHover(feature, inside) => {
+                if inside {
+                    self.hovered_nav = Some(feature);
+                } else if self.hovered_nav == Some(feature) {
+                    self.hovered_nav = None;
+                }
             }
             Message::Navigate(f) => {
                 self.page = f;
@@ -1627,9 +1801,19 @@ impl App {
                     "autostart" => self.edit.autostart = on,
                     "schedule" => self.edit.scheduled_cleanup = on,
                     "tray" => self.edit.close_to_tray = on,
+                    "monitor" => {
+                        self.edit.taskbar_monitor = on;
+                        self.monitor.enable(on);
+                    }
                     _ => {}
                 }
                 self.save_preferences();
+                if key == "monitor"
+                    && !on
+                    && let Some(id) = self.monitor.window.take()
+                {
+                    return window::close(id);
+                }
             }
             Message::Time(value) => {
                 self.edit.cleanup_time = value;
@@ -1741,6 +1925,9 @@ impl App {
         Task::none()
     }
     pub fn view(&self, id: window::Id) -> Element<'_, Message> {
+        if self.monitor.window == Some(id) {
+            return ui::monitor::view(self);
+        }
         if self.tray_menu == Some(id) {
             return ui::tray::view(self);
         }
@@ -1775,6 +1962,7 @@ impl App {
         .padding([25, if english { 8 } else { 15 }]);
         for f in Feature::ALL {
             let active = self.page == f;
+            let hovered = self.hovered_nav == Some(f);
             let has_metric = self
                 .reports
                 .get(&f)
@@ -1783,6 +1971,13 @@ impl App {
             let mut item = row![
                 nav_icon(f, active, 22),
                 label(self.name(f))
+                    .color(if hovered {
+                        iced::Color::from_rgb8(0x08, 0x6b, 0x46)
+                    } else if active {
+                        theme::MINT
+                    } else {
+                        theme::INK
+                    })
                     .size(if english { 12 } else { 14 })
                     .wrapping(if english {
                         iced::widget::text::Wrapping::None
@@ -1819,53 +2014,60 @@ impl App {
                 );
             }
             nav = nav.push(
-                button(container(item).width(Length::Fill))
-                    .padding([12, if english { 4 } else { 10 }])
-                    .width(Length::Fill)
-                    .on_press(Message::Navigate(f))
-                    .style(move |_, status| iced::widget::button::Style {
-                        background: if active
-                            || matches!(status, iced::widget::button::Status::Hovered)
-                        {
-                            Some(theme::PALE.into())
-                        } else {
-                            None
-                        },
-                        text_color: if active { theme::MINT } else { theme::INK },
-                        border: iced::Border {
-                            radius: 9.0.into(),
+                iced::widget::mouse_area(
+                    button(container(item).width(Length::Fill))
+                        .padding([12, if english { 4 } else { 10 }])
+                        .width(Length::Fill)
+                        .on_press(Message::Navigate(f))
+                        .style(move |_, status| iced::widget::button::Style {
+                            background: if active
+                                || hovered
+                                || matches!(status, iced::widget::button::Status::Hovered)
+                            {
+                                Some(theme::PALE.into())
+                            } else {
+                                None
+                            },
+                            text_color: if hovered
+                                || matches!(status, iced::widget::button::Status::Hovered)
+                            {
+                                iced::Color::from_rgb8(0x08, 0x6b, 0x46)
+                            } else if active {
+                                theme::MINT
+                            } else {
+                                theme::INK
+                            },
+                            border: iced::Border {
+                                radius: 9.0.into(),
+                                ..Default::default()
+                            },
                             ..Default::default()
-                        },
-                        ..Default::default()
-                    }),
+                        }),
+                )
+                .on_enter(Message::NavHover(f, true))
+                .on_exit(Message::NavHover(f, false)),
             );
         }
-        let sidebar = container(column![
-            nav,
-            Space::new().height(Length::Fill),
-            container(small(format!("V{}", VERSION))).padding(20)
-        ])
-        .width(238)
-        .height(Length::Fill)
-        .style(|_| container::Style {
-            background: Some(iced::Color::WHITE.into()),
-            border: iced::Border {
-                color: theme::LINE,
-                width: 1.0,
+        let sidebar = container(column![nav, Space::new().height(Length::Fill)])
+            .width(238)
+            .height(Length::Fill)
+            .style(|_| container::Style {
+                background: Some(iced::Color::WHITE.into()),
+                border: iced::Border {
+                    color: theme::LINE,
+                    width: 1.0,
+                    ..Default::default()
+                },
                 ..Default::default()
-            },
-            ..Default::default()
-        });
+            });
         let mut activity_label = row![].spacing(6).align_y(iced::Alignment::Center);
-        if self.page == Feature::Home {
-            activity_label = activity_label.push(
+        activity_label = activity_label.push(
                 iced::widget::svg(iced::widget::svg::Handle::from_memory(
                     br#"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7v5l4 2"/></svg>"#
                 ))
                 .width(16).height(16)
                 .style(|_, _| iced::widget::svg::Style { color: Some(theme::MUTED) })
-            );
-        }
+        );
         activity_label = activity_label.push(label(self.t("Activity Log")).color(theme::MUTED));
         let header = row![
             column![
@@ -1939,6 +2141,108 @@ pub fn category_selectable(report: &ScanResult, category: &Category) -> bool {
 #[cfg(test)]
 mod selection_tests {
     use super::*;
+    #[test]
+    fn navigation_hover_updates_on_entry_and_ignores_an_older_menu_exit() {
+        let data = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
+            "../../validation-output/navigation-hover-test-{}",
+            std::process::id()
+        ));
+        let (mut app, _) = App::new(Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        let _ = app.update(Message::NavHover(Feature::Drive, true));
+        assert_eq!(app.hovered_nav, Some(Feature::Drive));
+        let _ = app.update(Message::NavHover(Feature::Chat, true));
+        let _ = app.update(Message::NavHover(Feature::Drive, false));
+        assert_eq!(app.hovered_nav, Some(Feature::Chat));
+        let _ = app.update(Message::NavHover(Feature::Chat, false));
+        assert_eq!(app.hovered_nav, None);
+        assert_eq!(app.page, Feature::Home);
+        assert!(!app.busy());
+    }
+    #[test]
+    fn update_checks_do_not_publish_elapsed_time_but_scans_still_do() {
+        let data = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
+            "../../validation-output/update-timing-test-{}",
+            std::process::id()
+        ));
+        let (mut app, _) = App::new(Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        for (name, timed) in [
+            ("Check for Updates", false),
+            ("Loading history", false),
+            ("Scanning", true),
+        ] {
+            app.job = Some(Job {
+                ctx: Context::new(Feature::Home),
+                name: name.into(),
+            });
+            let _ = app.receive(Event::Finished(Ok(JobValue::Scan)));
+            assert_eq!(app.status_elapsed.is_some(), timed, "{name}");
+        }
+    }
+    #[test]
+    fn home_scan_preserves_completed_empty_results_and_retries_cancelled_results() {
+        let data = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
+            "../../validation-output/home-pending-test-{}",
+            std::process::id()
+        ));
+        let (mut app, _) = App::new(Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        assert_eq!(app.pending_home_scans(), Feature::HOME);
+        for f in Feature::HOME {
+            app.reports.insert(
+                f,
+                Arc::new(ScanResult {
+                    feature: f,
+                    ..Default::default()
+                }),
+            );
+            app.scan_elapsed.insert(f, 42);
+        }
+        app.page = Feature::Home;
+        app.scan();
+        assert!(!app.busy());
+        assert_eq!(app.scan_elapsed.get(&Feature::Duplicates), Some(&42));
+        assert!(app.reports.contains_key(&Feature::LargeFiles));
+        Arc::make_mut(app.reports.get_mut(&Feature::Duplicates).unwrap()).cancelled = true;
+        assert_eq!(app.pending_home_scans(), [Feature::Duplicates]);
+        app.reports.remove(&Feature::Chat);
+        assert_eq!(
+            app.pending_home_scans(),
+            [Feature::Chat, Feature::Duplicates]
+        );
+    }
+
+    #[test]
+    fn monitor_details_reuse_one_window_without_starting_cleanup() {
+        let data = std::env::temp_dir().join(format!("cplus-monitor-test-{}", common::token()));
+        let (mut app, _) = App::new(Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        assert!(!app.edit.taskbar_monitor);
+        let _ = app.open_monitor(crate::monitor::Tab::Cpu, 500, 500);
+        let id = app.monitor.window.unwrap();
+        let _ = app.open_monitor(crate::monitor::Tab::Memory, 500, 500);
+        assert_eq!(app.monitor.window, Some(id));
+        assert_eq!(app.monitor.tab, crate::monitor::Tab::Memory);
+        assert!(!app.busy());
+        let _ = app.update(Message::TrayDismiss(id));
+        assert_eq!(app.monitor.window, Some(id));
+        let _ = app.update(Message::WindowFocused(id));
+        let _ = app.update(Message::TrayDismiss(id));
+        assert!(app.monitor.window.is_none());
+    }
 
     #[test]
     fn tray_navigation_starts_scan_for_its_page_without_replacing_an_active_job() {

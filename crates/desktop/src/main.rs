@@ -2,6 +2,7 @@
 mod app;
 mod i18n;
 mod integrations;
+mod monitor;
 mod ui;
 
 fn main() -> anyhow::Result<()> {

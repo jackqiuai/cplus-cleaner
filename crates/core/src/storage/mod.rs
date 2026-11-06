@@ -17,6 +17,7 @@ pub struct Settings {
     pub close_to_tray: bool,
     pub last_cleanup_date: String,
     pub language: String,
+    pub taskbar_monitor: bool,
 }
 impl Default for Settings {
     fn default() -> Self {
@@ -27,6 +28,7 @@ impl Default for Settings {
             close_to_tray: false,
             last_cleanup_date: String::new(),
             language: String::new(),
+            taskbar_monitor: false,
         }
     }
 }

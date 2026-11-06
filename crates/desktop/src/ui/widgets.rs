@@ -225,15 +225,22 @@ pub fn symbol(name: &str, size: u32) -> Element<'static, Message> {
         .into()
 }
 pub fn grid<'a>(elements: Vec<Element<'a, Message>>, columns: usize) -> Column<'a, Message> {
-    let mut output = Column::new().spacing(12);
-    let mut current = Row::new().spacing(12);
+    grid_spaced(elements, columns, 12)
+}
+pub fn grid_spaced<'a>(
+    elements: Vec<Element<'a, Message>>,
+    columns: usize,
+    spacing: u32,
+) -> Column<'a, Message> {
+    let mut output = Column::new().spacing(spacing);
+    let mut current = Row::new().spacing(spacing);
     let mut count = 0;
     for element in elements {
         current = current.push(container(element).width(Length::FillPortion(1)));
         count += 1;
         if count == columns {
             output = output.push(current);
-            current = Row::new().spacing(12);
+            current = Row::new().spacing(spacing);
             count = 0;
         }
     }

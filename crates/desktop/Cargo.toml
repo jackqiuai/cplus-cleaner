@@ -16,7 +16,7 @@ serde.workspace = true
 serde_json.workspace = true
 chrono.workspace = true
 anyhow.workspace = true
-iced = { version = "=0.14.0", default-features = false, features = ["tiny-skia", "tokio", "image-without-codecs", "svg", "canvas", "advanced-shaping", "crisp"] }
+iced = { version = "=0.14.0", default-features = false, features = ["tiny-skia", "tokio", "image-without-codecs", "svg", "canvas", "advanced-shaping", "crisp", "advanced"] }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "ico"] }
 tray-icon = "0.21"
 

@@ -5,7 +5,8 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-windows-sys = { workspace = true, features = ["Win32_System_Com", "Win32_UI_Shell_Common", "Win32_UI_HiDpi"] }
+windows-sys = { workspace = true, features = ["Win32_System_Com", "Win32_UI_Shell_Common", "Win32_UI_HiDpi", "Win32_UI_Input_KeyboardAndMouse", "Win32_System_Performance", "Win32_System_ProcessStatus", "Win32_NetworkManagement_IpHelper", "Win32_NetworkManagement_Ndis", "Win32_Networking_WinSock"] }
+windows = { version = "0.62", features = ["Win32_System_Com", "Win32_UI_Accessibility", "Win32_Foundation", "Networking_Connectivity"] }
 serde.workspace = true
 serde_json.workspace = true
 anyhow.workspace = true

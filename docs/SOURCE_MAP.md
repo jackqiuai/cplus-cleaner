@@ -318,3 +318,8 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `rust-toolchain.toml` | Pinned Rust compiler, tools and Windows target |
 | `start.bat` | Console launcher for the locally built Rust EXE |
 | `start.vbs` | Windowless launcher for the locally built Rust EXE |
+| `crates/desktop/src/monitor.rs` | Background sampling coordination, taskbar state and detail-page model |
+| `crates/desktop/src/ui/monitor.rs` | System status overview, process lists, disk activity and compact network detail page |
+| `crates/platform_windows/src/monitor.rs` | Read-only Windows CPU, memory, disk, network and connected WLAN sampling |
+| `crates/platform_windows/src/monitor/` | Native taskbar status panel implementation |
+| `crates/platform_windows/src/monitor/taskbar.rs` | Right-aligned taskbar panel rendering, positioning and click handling |

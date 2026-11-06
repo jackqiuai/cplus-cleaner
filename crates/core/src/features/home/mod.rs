@@ -44,13 +44,14 @@ fn scan_home_feature(
 
 pub fn scan(
     store: &Store,
+    pending: &[Feature],
     locations: &[super::duplicates::Location],
     minimum: u64,
     ctx: &Context,
     mut completed: impl FnMut(ScanResult),
 ) -> Vec<Issue> {
     let mut errors = vec![];
-    for feature in Feature::HOME {
+    for &feature in pending {
         if ctx.cancel.cancelled() {
             break;
         }
@@ -130,14 +131,18 @@ mod tests {
         let store = Store::new(Some(temp.path().join("profile")), true).unwrap();
         let feature = *Feature::HOME.last().unwrap();
         let ctx = Context::new(Feature::Home).child(feature);
-        let report = scan_home_feature(
-            feature,
+        let mut reports = vec![];
+        let errors = scan(
             &store,
+            &[feature],
             &[Location::cleanable(&selected)],
             DEFAULT_MINIMUM,
             &ctx,
-        )
-        .unwrap();
+            |report| reports.push(report),
+        );
+        assert!(errors.is_empty());
+        assert_eq!(reports.len(), 1);
+        let report = reports.pop().unwrap();
         assert_eq!(report.feature, Feature::Duplicates);
         assert_eq!(report.files.len(), 2);
         assert_eq!(report.categories.len(), 1);

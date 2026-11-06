@@ -1,5 +1,6 @@
 //! Typed Windows integration used by the feature engines and desktop.
 pub mod filesystem;
+pub mod monitor;
 pub mod processes;
 pub mod registry;
 pub mod shell;

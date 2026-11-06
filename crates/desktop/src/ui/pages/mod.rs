@@ -73,6 +73,7 @@ pub fn main_button(
 }
 pub fn hero(app: &App) -> Element<'static, Message> {
     let f = app.page;
+    let compact = cleanup::compact(f);
     let report = app.reports.get(&f);
     let count = report.map(|r| r.count()).unwrap_or(0);
     let size = report.map(|r| r.bytes()).unwrap_or(0);
@@ -109,7 +110,7 @@ pub fn hero(app: &App) -> Element<'static, Message> {
     let (action, name) = action(f);
     let mut summary = column![
         row![
-            bitmap("status-warning.png", 29),
+            bitmap("status-warning.png", if compact { 24 } else { 29 }),
             bold(
                 app.t(if count > 0 {
                     "Found"
@@ -120,15 +121,15 @@ pub fn hero(app: &App) -> Element<'static, Message> {
                 } else {
                     "Ready to scan"
                 }),
-                19
+                if compact { 17 } else { 19 }
             ),
-            amount(metric, 30)
+            amount(metric, if compact { 26 } else { 30 })
         ]
-        .spacing(12)
+        .spacing(if compact { 8 } else { 12 })
         .align_y(iced::Alignment::Center),
         row![small(app.t("Selected")), amount(selected_metric, 16)].spacing(9)
     ]
-    .spacing(13)
+    .spacing(if compact { 6 } else { 13 })
     .width(Length::Fill);
     if apps {
         summary = summary.push(
@@ -154,9 +155,11 @@ pub fn hero(app: &App) -> Element<'static, Message> {
                 .style(theme::capacity)
         ]
         .spacing(6)
-        .width(170)
+        .width(if compact { 128 } else { 170 })
     });
-    let mut r = row![summary].spacing(24).align_y(iced::Alignment::Center);
+    let mut r = row![summary]
+        .spacing(if compact { 16 } else { 24 })
+        .align_y(iced::Alignment::Center);
     if let Some(disk) = disk {
         r = r.push(disk);
     }
@@ -174,7 +177,10 @@ pub fn hero(app: &App) -> Element<'static, Message> {
                 .then_some(Message::Request(action, None)),
             true,
         ));
-    container(r).padding(24).style(theme::hero).into()
+    container(r)
+        .padding(if compact { [14, 18] } else { [24, 24] })
+        .style(theme::hero)
+        .into()
 }
 pub fn progress(app: &App) -> Element<'static, Message> {
     progress_for(app, app.page)

@@ -27,8 +27,17 @@ CPlus Cleaner is a free, portable Windows desktop utility for disk cleanup, larg
 | Software Uninstall | List registered applications, invoke their uninstallers and separately review supported leftovers. |
 | Popup Blocker | Discover applications supported by the bundled rules and manage group/individual switches and blocking history. |
 | System Slimming | Access recycle-bin, hibernation, virtual-memory and Windows component-store tools. |
+| Taskbar system status | Show CPU usage, memory usage, system-drive space usage and upload/download speeds on the right side of the taskbar. Click a metric to open its detail page. |
 
 Settings include automatic language switching and saving, startup with Windows, daily cleanup and close-to-tray behavior. Separate windows provide activity records, feature histories, feedback, About and update checking.
+
+### Taskbar system status
+
+Enable **Settings → System status** to show a compact taskbar panel. CPU, MEM and DISK show usage percentages; **↑ / ↓** show upload and download speeds in the same column. DISK means system-drive space usage.
+
+Click a metric to open **Overview, CPU, Memory, Disk or Network**. CPU and Memory list the processes using the most resources. Disk shows system-drive capacity and read/write activity. Network shows live speeds, traffic counted during monitoring, the interface, connected WLAN name, connection status, link speed, IPv4 and IPv6. Unavailable values appear as `--`.
+
+The compact Network page displays its information without scrolling. Closing the detail window leaves monitoring running; turn off **System status** in Settings to disable it. Monitoring reads system counters and does not save traffic history.
 
 ## Download and run
 
