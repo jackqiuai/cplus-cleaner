@@ -1,5 +1,8 @@
 //! Read-only system samples. All counters are kept on one background thread.
+pub mod cpu_sensor;
+pub mod cpu_service;
 pub mod taskbar;
+pub mod temperature;
 use crate::{filesystem, from_wide, wide};
 use std::{collections::HashMap, mem, path::PathBuf, ptr, time::Instant};
 use windows_sys::Win32::{
@@ -34,6 +37,7 @@ pub struct Network {
 }
 #[derive(Clone, Debug, Default)]
 pub struct Sample {
+    pub temperatures: temperature::Temperatures,
     pub cpu: Option<f64>,
     pub memory_used: u64,
     pub memory_total: u64,

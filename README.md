@@ -33,6 +33,8 @@ Settings include automatic language switching and saving, startup with Windows, 
 
 ### Taskbar system status
 
+CPU temperature can be enabled separately through the optional PawnIO-backed service. Its first setup requires administrator authorization; subsequent viewing does not. See [CPU temperature setup and third-party components](docs/CPU_TEMPERATURE.md).
+
 Enable **Settings → System status** to show a compact taskbar panel. CPU, MEM and DISK show usage percentages; **↑ / ↓** show upload and download speeds in the same column. DISK means system-drive space usage.
 
 Click a metric to open **Overview, CPU, Memory, Disk or Network**. CPU and Memory list the processes using the most resources. Disk shows system-drive capacity and read/write activity. Network shows live speeds, traffic counted during monitoring, the interface, connected WLAN name, connection status, link speed, IPv4 and IPv6. Unavailable values appear as `--`.
@@ -119,8 +121,6 @@ Some Windows tests create temporary hard links, junctions, sparse or compressed 
 | `build.ps1` / `package.ps1` | Local build and packaging |
 | `.github/workflows` | Windows build, optional signing and release-asset workflows |
 
-Detailed [file and directory purposes](docs/SOURCE_MAP.md) · [clean-clone build and CI guide](docs/BUILDING.md).
-
 ## Language and local data
 
 Choose **简体中文 / 繁體中文 / English** in Settings. The application initially selects a language based on Windows preferences. Settings and operation/recovery records are stored at:
@@ -159,6 +159,8 @@ When close-to-tray is enabled, closing the main window hides it. Use the tray me
 
 ## Update or remove
 
+If CPU temperature support was enabled, remove its Windows service using the administrator command in [CPU temperature setup](docs/CPU_TEMPERATURE.md) before deleting the application. The shared PawnIO driver is retained for other software.
+
 Use **≡ → Check for updates** to check for updates on GitHub. Downloading and replacing the EXE are manual steps; read the release notes first. Fully exit the old process before replacement and preserve recovery data. If moving the EXE, disable startup and scheduled cleanup first, then configure them again from the new location. Settings save automatically.
 
 To remove the portable application, disable startup and scheduled cleanup, finish active operations and exit from the tray menu. Remove the application's own files. Retain `%LOCALAPPDATA%\CPLUSCLEANER\` and migrated application folders for as long as you need restoration. Removing Cleaner does not undo migrations/compression or recover deleted files.
@@ -172,3 +174,5 @@ You can support development through **Donate** in the application, [Buy me a cof
 ## License
 
 Original project code is distributed under the [MIT License](LICENSE). Third-party artwork and rule data retain their own rights and distribution terms; the project license does not relicense those materials. CPlus Cleaner is independent of the software vendors mentioned here.
+
+Detailed [file and directory purposes](docs/SOURCE_MAP.md) · [clean-clone build and CI guide](docs/BUILDING.md).

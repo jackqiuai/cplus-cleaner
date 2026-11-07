@@ -270,6 +270,7 @@ fn about(app: &App) -> Element<'_, Message> {
                 "https://github.com/jackqiuai/cplus-cleaner".into()
             )),
         small(app.t("License: MIT")),
+        iced::widget::button(small(app.t("Third-party licenses"))).padding(0).style(theme::menu_item).on_press(Message::CpuTemperatureLicenses),
         Space::new().height(Length::Fill)
     ]
     .spacing(8)

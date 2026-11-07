@@ -66,6 +66,7 @@ pub struct Monitor {
     enabled: Arc<AtomicBool>,
     details: Arc<AtomicBool>,
     network_details: Arc<AtomicBool>,
+    temperature_details: Arc<AtomicBool>,
     stop: Arc<AtomicBool>,
     sequence: u64,
     pub sample: Sample,
@@ -83,27 +84,63 @@ impl Monitor {
         let enabled = Arc::new(AtomicBool::new(enabled));
         let details = Arc::new(AtomicBool::new(false));
         let network_details = Arc::new(AtomicBool::new(false));
+        let temperature_details = Arc::new(AtomicBool::new(false));
         let stop = Arc::new(AtomicBool::new(false));
         // Preview windows never attach to the user's real taskbar.
         let panel = (!preview).then(Panel::default);
         let panel_model = panel.as_ref().map(|p| p.model.clone());
-        let (state, active, detailed, network_detailed, quit) = (
+        let (state, active, detailed, network_detailed, temperature_detailed, quit) = (
             shared.clone(),
             enabled.clone(),
             details.clone(),
             network_details.clone(),
+            temperature_details.clone(),
             stop.clone(),
         );
         std::thread::spawn(move || {
+            use cplus_platform_windows::monitor::temperature::{self, Temperatures};
+            let mut temperature_job: Option<std::sync::mpsc::Receiver<Temperatures>> = None;
+            let mut temperature_at: Option<Instant> = None;
+            let mut temperature_updated = None;
+            let mut temperatures = Temperatures::default();
             let mut sampler = None;
             let mut icons = Icons::new();
             while !quit.load(Ordering::Relaxed) {
                 if active.load(Ordering::Relaxed) {
                     let reader = sampler.get_or_insert_with(Sampler::default);
-                    let sample = reader.sample(
+                    let mut sample = reader.sample(
                         detailed.load(Ordering::Relaxed),
                         network_detailed.load(Ordering::Relaxed),
                     );
+                    if let Some(receiver) = &temperature_job {
+                        match receiver.try_recv() {
+                            Ok(value) => {
+                                temperatures = value;
+                                temperature_updated = temperature_at;
+                                temperature_job = None;
+                            }
+                            Err(std::sync::mpsc::TryRecvError::Disconnected) => {
+                                temperature_job = None
+                            }
+                            Err(std::sync::mpsc::TryRecvError::Empty) => {}
+                        }
+                    }
+                    if temperature_detailed.load(Ordering::Relaxed) {
+                        sample.temperatures = temperatures.fresh(temperature_updated);
+                        sample.temperatures.cpu =
+                            cplus_platform_windows::monitor::cpu_service::cached();
+                        if temperature_job.is_none()
+                            && temperature_at
+                                .is_none_or(|at| at.elapsed() >= Duration::from_secs(10))
+                        {
+                            let (tx, rx) = std::sync::mpsc::channel();
+                            temperature_job = Some(rx);
+                            temperature_at = Some(Instant::now());
+                            std::thread::spawn(move || {
+                                let _ = tx.send(temperature::read());
+                            });
+                        }
+                    }
                     // Only visible high-usage entries need icons; never load every EXE.
                     let mut cpu: Vec<_> = sample.processes.iter().collect();
                     cpu.sort_by(|a, b| b.cpu.unwrap_or(-1.0).total_cmp(&a.cpu.unwrap_or(-1.0)));
@@ -154,6 +191,7 @@ impl Monitor {
             enabled,
             details,
             network_details,
+            temperature_details,
             stop,
             sequence: 0,
             sample: Sample::default(),
@@ -178,6 +216,10 @@ impl Monitor {
         }
     }
     pub fn poll(&mut self) {
+        self.temperature_details.store(
+            self.window.is_some() && matches!(self.tab, Tab::Overview | Tab::Cpu | Tab::Disk),
+            Ordering::Relaxed,
+        );
         self.network_details.store(
             self.window.is_some() && self.tab == Tab::Network,
             Ordering::Relaxed,
@@ -285,6 +327,10 @@ mod tests {
                 tab == Tab::Network
             );
             assert_eq!(
+                monitor.temperature_details.load(Ordering::Relaxed),
+                matches!(tab, Tab::Overview | Tab::Cpu | Tab::Disk)
+            );
+            assert_eq!(
                 monitor.details.load(Ordering::Relaxed),
                 matches!(tab, Tab::Cpu | Tab::Memory)
             );
@@ -292,6 +338,7 @@ mod tests {
         monitor.window = None;
         monitor.poll();
         assert!(!monitor.network_details.load(Ordering::Relaxed));
+        assert!(!monitor.temperature_details.load(Ordering::Relaxed));
         assert!(!monitor.details.load(Ordering::Relaxed));
     }
     #[test]

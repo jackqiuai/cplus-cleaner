@@ -6,6 +6,9 @@ mod monitor;
 mod ui;
 
 fn main() -> anyhow::Result<()> {
+    if cplus_platform_windows::monitor::cpu_service::command()? {
+        return Ok(());
+    }
     let config = app::Config::parse()?;
     if let Some(path) = config.smoke.as_ref() {
         let report = cplus_core::validation::bundle_report()?;

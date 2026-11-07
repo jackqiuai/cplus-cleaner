@@ -86,6 +86,7 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `crates/desktop/src/integrations/` | Desktop integration, tray and native event bridge |
 | `crates/desktop/src/integrations/mod.rs` | Desktop integration, tray and native event bridge |
 | `crates/desktop/src/main.rs` | Desktop application entry point and command-line modes |
+| `crates/desktop/src/monitor.rs` | Shared asynchronous system-status model, live counters and temperature sampling |
 | `crates/desktop/src/ui/` | Iced desktop application source |
 | `crates/desktop/src/ui/dialogs/` | Iced UI components: dialogs |
 | `crates/desktop/src/ui/dialogs/activity.rs` | Iced UI implementation: activity |
@@ -94,6 +95,7 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `crates/desktop/src/ui/dialogs/settings.rs` | Iced UI implementation: settings |
 | `crates/desktop/src/ui/fonts.rs` | Iced UI implementation: fonts |
 | `crates/desktop/src/ui/mod.rs` | Iced UI implementation: mod |
+| `crates/desktop/src/ui/monitor.rs` | Iced UI implementation: monitor |
 | `crates/desktop/src/ui/pages/` | Iced UI components: pages |
 | `crates/desktop/src/ui/pages/applications.rs` | Iced UI implementation: applications |
 | `crates/desktop/src/ui/pages/cleanup.rs` | Iced UI implementation: cleanup |
@@ -119,6 +121,13 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `crates/platform_windows/src/filesystem/large_scan/layout/tests.rs` | Regression tests: tests |
 | `crates/platform_windows/src/filesystem/mod.rs` | Native Windows filesystem API wrappers |
 | `crates/platform_windows/src/lib.rs` | platform_windows crate public exports and initialization |
+| `crates/platform_windows/src/monitor/` | Native Windows monitor API wrappers |
+| `crates/platform_windows/src/monitor.rs` | Native Windows monitor.rs API wrappers |
+| `crates/platform_windows/src/monitor/cpu_sensor.rs` | Validated fixed CPU temperature reads using signed PawnIO modules |
+| `crates/platform_windows/src/monitor/cpu_service.rs` | Protected temperature service installation, sampling, update recovery and removal |
+| `crates/platform_windows/src/monitor/taskbar.rs` | Native Windows monitor API wrappers |
+| `crates/platform_windows/src/monitor/temperature.ps1` | Read system-disk temperature using Windows storage counters and SMART |
+| `crates/platform_windows/src/monitor/temperature.rs` | Bounded asynchronous disk temperature probe and value validation |
 | `crates/platform_windows/src/processes/` | Native Windows processes API wrappers |
 | `crates/platform_windows/src/processes/mod.rs` | Native Windows processes API wrappers |
 | `crates/platform_windows/src/registry/` | Native Windows registry API wrappers |
@@ -127,9 +136,21 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `crates/platform_windows/src/shell/mod.rs` | Native Windows shell API wrappers |
 | `crates/platform_windows/src/windows/` | Native Windows windows API wrappers |
 | `crates/platform_windows/src/windows/mod.rs` | Native Windows windows API wrappers |
+| `crates/platform_windows/vendors/` | Third-party components retained for reproducible offline builds |
+| `crates/platform_windows/vendors/pawnio/` | Official PawnIO installer, signed modules, corresponding sources and notices |
+| `crates/platform_windows/vendors/pawnio/AMDFamily17.bin` | Signed AMD Zen temperature module embedded at compile time |
+| `crates/platform_windows/vendors/pawnio/AMDFamily17.p` | Corresponding upstream source for the signed AMD module |
+| `crates/platform_windows/vendors/pawnio/COPYING` | Full upstream LGPL module license text |
+| `crates/platform_windows/vendors/pawnio/include/` | Headers required by the corresponding PawnIO module sources |
+| `crates/platform_windows/vendors/pawnio/include/pawnio.inc` | Unmodified upstream PawnIO module API declarations |
+| `crates/platform_windows/vendors/pawnio/IntelMSR.bin` | Signed Intel temperature module embedded at compile time |
+| `crates/platform_windows/vendors/pawnio/IntelMSR.p` | Corresponding upstream source for the signed Intel module |
+| `crates/platform_windows/vendors/pawnio/NOTICE.md` | Component versions, licensing terms, source links and pinned digest provenance |
+| `crates/platform_windows/vendors/pawnio/PawnIO_setup.exe` | Unmodified official PawnIO 2.2.0 installer embedded for optional CPU setup |
 | `docs/` | Build, source, validation and signing documentation |
 | `docs/BUILDING.md` | Clean-clone build requirements, commands, CI and release guide |
 | `docs/CODE_SIGNING.md` | Optional signing configuration without credentials |
+| `docs/CPU_TEMPERATURE.md` | Optional PawnIO CPU temperature setup, protected service and removal guide |
 | `docs/images/` | Localized application screenshots Build, source, validation and signing documentation |
 | `docs/images/home-en.png` | English application Home screenshot |
 | `docs/images/home-zh-CN.png` | Simplified Chinese application Home screenshot |
@@ -318,8 +339,3 @@ Every published directory and file is listed below. Paths stay unchanged to pres
 | `rust-toolchain.toml` | Pinned Rust compiler, tools and Windows target |
 | `start.bat` | Console launcher for the locally built Rust EXE |
 | `start.vbs` | Windowless launcher for the locally built Rust EXE |
-| `crates/desktop/src/monitor.rs` | Background sampling coordination, taskbar state and detail-page model |
-| `crates/desktop/src/ui/monitor.rs` | System status overview, process lists, disk activity and compact network detail page |
-| `crates/platform_windows/src/monitor.rs` | Read-only Windows CPU, memory, disk, network and connected WLAN sampling |
-| `crates/platform_windows/src/monitor/` | Native taskbar status panel implementation |
-| `crates/platform_windows/src/monitor/taskbar.rs` | Right-aligned taskbar panel rendering, positioning and click handling |

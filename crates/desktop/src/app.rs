@@ -115,6 +115,8 @@ pub struct Pending {
 }
 #[derive(Clone, Debug)]
 pub enum Message {
+    CpuTemperatureLicenses,
+    EnableCpuTemperature,
     NavHover(Feature, bool),
     MonitorTab(crate::monitor::Tab),
     MonitorReady(window::Id, u64, i32, i32),
@@ -196,6 +198,7 @@ pub struct Job {
     pub name: String,
 }
 pub struct App {
+    cpu_temperature_setup: Option<shell::ElevatedProcess>,
     hovered_nav: Option<Feature>,
     pub monitor: crate::monitor::Monitor,
     pub store: Store,
@@ -343,6 +346,7 @@ impl App {
         let destination_files = store.default_destination(false);
         let activities = store.activities();
         let mut app = Self {
+            cpu_temperature_setup: None,
             hovered_nav: None,
             monitor: crate::monitor::Monitor::new(
                 settings.taskbar_monitor || monitor_preview,
@@ -1171,6 +1175,30 @@ impl App {
     }
     pub fn update(&mut self, message: Message) -> Task<Message> {
         match message {
+            Message::CpuTemperatureLicenses => {
+                self.info = format!(
+                    "{}\n\n{}",
+                    cplus_platform_windows::monitor::cpu_sensor::NOTICE,
+                    cplus_platform_windows::monitor::cpu_sensor::LICENSE
+                );
+                self.issues.clear();
+                return self.open_dialog(Dialog::Information);
+            }
+            Message::EnableCpuTemperature => {
+                if self.config.preview {
+                    self.info = self.t("CPU temperature setup is disabled in preview mode");
+                    return self.open_dialog(Dialog::Information);
+                }
+                if self.cpu_temperature_setup.is_none() {
+                    match cplus_platform_windows::monitor::cpu_service::enable() {
+                        Ok(process) => self.cpu_temperature_setup = Some(process),
+                        Err(e) => {
+                            self.info = e.to_string();
+                            return self.open_dialog(Dialog::Information);
+                        }
+                    }
+                }
+            }
             Message::WindowFocused(id) => {
                 if self.monitor.window == Some(id) {
                     self.monitor.focused = true;
@@ -1198,6 +1226,25 @@ impl App {
                 ]));
             }
             Message::Tick => {
+                if let Some(process) = &self.cpu_temperature_setup {
+                    match process.poll() {
+                        Ok(Some(code)) => {
+                            self.cpu_temperature_setup = None;
+                            self.info = if code == 0 {
+                                self.t("CPU temperature service enabled")
+                            } else {
+                                cplus_platform_windows::monitor::cpu_service::failure()
+                            };
+                            return self.open_dialog(Dialog::Information);
+                        }
+                        Err(e) => {
+                            self.cpu_temperature_setup = None;
+                            self.info = e.to_string();
+                            return self.open_dialog(Dialog::Information);
+                        }
+                        Ok(None) => {}
+                    }
+                }
                 if cplus_platform_windows::processes::activation_requested(if self.config.preview {
                     "CPlusCleaner-Rust-Preview"
                 } else {
@@ -2141,6 +2188,21 @@ pub fn category_selectable(report: &ScanResult, category: &Category) -> bool {
 #[cfg(test)]
 mod selection_tests {
     use super::*;
+    #[test]
+    fn preview_cpu_temperature_setup_never_requests_elevation() {
+        let data = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
+            "../../validation-output/cpu-setup-preview-test-{}",
+            std::process::id()
+        ));
+        let (mut app, _) = App::new(Config {
+            preview: true,
+            data: Some(data),
+            ..Default::default()
+        });
+        let _ = app.update(Message::EnableCpuTemperature);
+        assert!(app.cpu_temperature_setup.is_none());
+        assert!(app.windows.values().any(|d| *d == Dialog::Information));
+    }
     #[test]
     fn navigation_hover_updates_on_entry_and_ignores_an_older_menu_exit() {
         let data = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(

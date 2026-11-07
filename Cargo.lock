@@ -448,7 +448,7 @@ dependencies = [
 
 [[package]]
 name = "cplus-cleaner"
-version = "1.1.2"
+version = "1.1.3"
 dependencies = [
  "anyhow",
  "chrono",
@@ -464,7 +464,7 @@ dependencies = [
 
 [[package]]
 name = "cplus-core"
-version = "1.1.2"
+version = "1.1.3"
 dependencies = [
  "anyhow",
  "chrono",
@@ -484,11 +484,12 @@ dependencies = [
 
 [[package]]
 name = "cplus-platform-windows"
-version = "1.1.2"
+version = "1.1.3"
 dependencies = [
  "anyhow",
  "serde",
  "serde_json",
+ "sha2",
  "windows",
  "windows-sys 0.61.2",
 ]

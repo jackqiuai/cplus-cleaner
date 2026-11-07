@@ -116,6 +116,7 @@ fn actual_sparse_and_compressed_allocation_is_not_replaced_by_directory_size() {
         .unwrap();
     ioctl(&compressed, FSCTL_SET_COMPRESSION, true);
     compressed.write_all(&vec![2; 1024 * 1024]).unwrap();
+    compressed.sync_all().unwrap();
     drop(compressed);
     let old = uninstall::measure(temp.path(), &Context::new(Feature::AppMover));
     let batch = measure(temp.path(), MeasureMode::Auto);

@@ -10,3 +10,7 @@
 *.vbs text eol=crlf
 *.png binary
 *.ico binary
+*.exe binary
+*.bin binary
+*.p text eol=lf
+*.inc text eol=lf

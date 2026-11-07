@@ -24,7 +24,46 @@ fn card<'a>(content: impl Into<Element<'a, Message>>) -> Element<'a, Message> {
         .style(theme::card)
         .into()
 }
-fn meter<'a>(app: &App, title: &str, value: Option<f64>, caption: String) -> Element<'a, Message> {
+fn temperature<'a>(app: &App, value: Option<f64>) -> Element<'a, Message> {
+    let text = small(
+        value
+            .map(|v| format!("{v:.0}°C"))
+            .unwrap_or_else(|| "--".into()),
+    )
+    .color(theme::INK);
+    if value.is_some() {
+        return text.into();
+    }
+    widget::tooltip(
+        text,
+        container(small(app.t(
+            "Temperature sensor unavailable for the current hardware or permissions",
+        )))
+        .padding(8)
+        .style(theme::card),
+        widget::tooltip::Position::Top,
+    )
+    .into()
+}
+fn cpu_temperature<'a>(app: &App) -> Element<'a, Message> {
+    if app.monitor.sample.temperatures.cpu.is_none()
+        && cplus_platform_windows::monitor::cpu_sensor::supported()
+    {
+        button(small(app.t("Enable CPU temperature")).color(theme::MINT))
+            .padding(0)
+            .style(theme::menu_item)
+            .on_press(Message::EnableCpuTemperature)
+            .into()
+    } else {
+        temperature(app, app.monitor.sample.temperatures.cpu)
+    }
+}
+fn meter<'a>(
+    app: &App,
+    title: &str,
+    value: Option<f64>,
+    caption: impl Into<Element<'a, Message>>,
+) -> Element<'a, Message> {
     card(
         column![
             row![
@@ -41,7 +80,7 @@ fn meter<'a>(app: &App, title: &str, value: Option<f64>, caption: String) -> Ele
                         ..Default::default()
                     }
                 }),
-            small(caption)
+            caption.into()
         ]
         .spacing(10),
     )
@@ -147,6 +186,20 @@ fn disk(app: &App, overview: bool) -> Element<'_, Message> {
             )
         })
         .unwrap_or_else(|| app.t("Unavailable"));
+    let caption: Element<'_, Message> = if overview {
+        row![
+            small(caption).width(Length::Fill),
+            row![
+                small(app.t("Temperature")),
+                temperature(app, sample.temperatures.disk)
+            ]
+            .spacing(4)
+        ]
+        .spacing(6)
+        .into()
+    } else {
+        small(caption).into()
+    };
     let heading = meter(app, "System drive space", sample.disk_percent(), caption);
     let heading: Element<'_, Message> = if overview {
         button(heading)
@@ -283,12 +336,7 @@ fn process_list(app: &App, tab: Tab) -> Element<'_, Message> {
             .width(Length::Fill),
             small(format!("{} ↓", app.t(tab.key())))
         ],
-        scrollable(content).height(Length::Fill),
-        small(app.t(if tab == Tab::Memory {
-            "Working set; shared pages may be counted in multiple processes"
-        } else {
-            "Updated each second; unavailable processes show --"
-        }))
+        scrollable(content).height(Length::Fill)
     ]
     .spacing(8)
     .into()
@@ -322,7 +370,11 @@ pub fn view(app: &App) -> Element<'_, Message> {
                         bold("CPU ›", 14).width(Length::Fill),
                         bold(percentage(sample.cpu), 20)
                     ],
-                    chart(app, Tab::Cpu, 40.0)
+                    chart(app, Tab::Cpu, 26.0),
+                    row![
+                        small(app.t("CPU temperature")).width(Length::Fill),
+                        cpu_temperature(app)
+                    ]
                 ]
                 .spacing(6),
             );
@@ -330,11 +382,11 @@ pub fn view(app: &App) -> Element<'_, Message> {
                 app,
                 "Memory",
                 sample.memory_percent(),
-                format!(
+                small(format!(
                     "{} / {}",
                     bytes(sample.memory_used),
                     bytes(sample.memory_total)
-                ),
+                )),
             );
             column![
                 button(cpu)
@@ -351,11 +403,20 @@ pub fn view(app: &App) -> Element<'_, Message> {
                     .style(theme::menu_item)
                     .on_press(Message::MonitorTab(Tab::Network))
             ]
-            .spacing(10)
+            .spacing(6)
             .into()
         }
         Tab::Cpu => column![
-            meter(app, "CPU usage", sample.cpu, app.t("Overall system usage")),
+            meter(
+                app,
+                "CPU usage",
+                sample.cpu,
+                row![
+                    small(app.t("Overall system usage")).width(Length::Fill),
+                    row![small(app.t("Temperature")), cpu_temperature(app)].spacing(4)
+                ]
+                .spacing(6)
+            ),
             process_list(app, tab)
         ]
         .spacing(16)
@@ -365,12 +426,12 @@ pub fn view(app: &App) -> Element<'_, Message> {
                 app,
                 "Memory",
                 sample.memory_percent(),
-                format!(
+                small(format!(
                     "{} {} / {}",
                     app.t("Used"),
                     bytes(sample.memory_used),
                     bytes(sample.memory_total)
-                )
+                ))
             ),
             process_list(app, tab)
         ]
@@ -391,7 +452,7 @@ pub fn view(app: &App) -> Element<'_, Message> {
                                 .width(Length::Fill),
                             column![small(app.t("Write")), bold(speed(sample.write), 20)]
                         ],
-                        chart(app, Tab::Disk, 65.0),
+                        chart(app, Tab::Disk, 48.0),
                         small(app.t("Last minute"))
                     ]
                     .spacing(10)
@@ -407,9 +468,13 @@ pub fn view(app: &App) -> Element<'_, Message> {
                             app.t("File system"),
                             info.map(|d| d.filesystem.clone())
                                 .unwrap_or_else(|| "--".into())
-                        )
+                        ),
+                        row![
+                            small(app.t("Temperature")).width(Length::Fill),
+                            temperature(app, sample.temperatures.disk)
+                        ]
                     ]
-                    .spacing(12)
+                    .spacing(8)
                 )
             ]
             .spacing(12)
