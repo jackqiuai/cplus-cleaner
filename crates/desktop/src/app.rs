@@ -156,6 +156,7 @@ pub enum Message {
     Confirm,
     Language(Language),
     Setting(&'static str, bool),
+    ToggleTemperatureSettings,
     Time(String),
     SaveSettings,
     Folder(Feature),
@@ -243,6 +244,7 @@ pub struct App {
     pub scan_elapsed: BTreeMap<Feature, u64>,
     settings_saving: bool,
     settings_save_due: Option<Instant>,
+    pub temperature_settings_open: bool,
     pub issues: Vec<Issue>,
     pub job: Option<Job>,
     pub progress: Progress,
@@ -394,6 +396,7 @@ impl App {
             status_elapsed: None,
             settings_saving: false,
             settings_save_due: None,
+            temperature_settings_open: false,
             issues: vec![],
             job: None,
             progress: Progress::default(),
@@ -409,6 +412,7 @@ impl App {
             started: Instant::now(),
             component_analysis: String::new(),
         };
+        app.apply_temperature_columns();
         let categories = features::drive_cleanup::default_categories();
         let choices = categories
             .iter()
@@ -775,7 +779,7 @@ impl App {
         let size = match d {
             Dialog::Activity => Size::new(850.0, 530.0),
             Dialog::History(_) | Dialog::Residue => Size::new(850.0, 620.0),
-            Dialog::Settings => Size::new(507.0, 525.0),
+            Dialog::Settings => Size::new(507.0, 650.0),
             Dialog::Donate => Size::new(520.0, 640.0),
             Dialog::About => Size::new(340.0, 440.0),
             Dialog::Feedback => Size::new(740.0, 640.0),
@@ -910,6 +914,13 @@ impl App {
             .unwrap_or(0)]
         .clone();
     }
+    fn apply_temperature_columns(&self) {
+        self.monitor.set_temperature_columns(
+            self.settings.show_cpu_temp,
+            self.settings.show_gpu_temp,
+            self.settings.show_disk_temp,
+        );
+    }
     fn preferences_to_save(&self) -> Settings {
         let mut settings = self.edit.clone();
         // A partially typed time must not prevent language and toggle changes.
@@ -1029,6 +1040,7 @@ impl App {
                 match result {
                     Ok(saved) => {
                         self.settings = saved;
+                        self.apply_temperature_columns();
                         // Serialize writes so rapid edits cannot finish out of order.
                         self.save_preferences();
                     }
@@ -1852,8 +1864,16 @@ impl App {
                         self.edit.taskbar_monitor = on;
                         self.monitor.enable(on);
                     }
+                    "cpu_temp" => self.edit.show_cpu_temp = on,
+                    "gpu_temp" => self.edit.show_gpu_temp = on,
+                    "disk_temp" => self.edit.show_disk_temp = on,
                     _ => {}
                 }
+                self.monitor.set_temperature_columns(
+                    self.edit.show_cpu_temp,
+                    self.edit.show_gpu_temp,
+                    self.edit.show_disk_temp,
+                );
                 self.save_preferences();
                 if key == "monitor"
                     && !on
@@ -1861,6 +1881,9 @@ impl App {
                 {
                     return window::close(id);
                 }
+            }
+            Message::ToggleTemperatureSettings => {
+                self.temperature_settings_open = !self.temperature_settings_open;
             }
             Message::Time(value) => {
                 self.edit.cleanup_time = value;

@@ -1,7 +1,7 @@
 use super::*;
 use iced::{
     Color,
-    widget::{column, pick_list, svg, text_input, toggler},
+    widget::{button, column, pick_list, svg, text_input, toggler},
 };
 
 pub(super) fn view(app: &App) -> Element<'_, Message> {
@@ -42,6 +42,17 @@ pub(super) fn view(app: &App) -> Element<'_, Message> {
         .spacing(14)
         .align_y(iced::Alignment::Center)
     };
+    let compact_toggle = |name: &str, key: &'static str, on: bool| {
+        row![
+            bold(app.t(name), 12).width(Length::Fill),
+            toggler(on)
+                .size(16)
+                .on_toggle(move |on| Message::Setting(key, on))
+                .style(theme::toggle)
+        ]
+        .spacing(10)
+        .align_y(iced::Alignment::Center)
+    };
     let mut time = text_input("HH:MM", &app.edit.cleanup_time)
         .size(13)
         .padding([7, 10])
@@ -67,6 +78,52 @@ pub(super) fn view(app: &App) -> Element<'_, Message> {
                 ..Default::default()
             })
     };
+    let mut system_status = column![toggle(
+        "System status",
+        "Show CPU, memory, disk and network speed",
+        "monitor",
+        app.edit.taskbar_monitor
+    )]
+    .spacing(10);
+    if app.edit.taskbar_monitor {
+        let (caret, label) = if app.temperature_settings_open {
+            ("▾", "Hide temperature settings")
+        } else {
+            ("▸", "Temperature settings")
+        };
+        system_status = system_status.push(
+            button(
+                row![
+                    small(caret).size(14).color(theme::MINT),
+                    column![
+                        bold(app.t(label), 13),
+                        small(app.t("Choose which temperature columns appear on the taskbar"))
+                            .size(11)
+                    ]
+                    .spacing(3)
+                ]
+                .spacing(8)
+                .align_y(iced::Alignment::Center),
+            )
+            .on_press(Message::ToggleTemperatureSettings)
+            .style(theme::subtle)
+            .padding([8, 10])
+            .width(Length::Fill),
+        );
+        if app.temperature_settings_open {
+            system_status = system_status.push(
+                container(
+                    column![
+                        compact_toggle("CPU temperature", "cpu_temp", app.edit.show_cpu_temp),
+                        compact_toggle("GPU temperature", "gpu_temp", app.edit.show_gpu_temp),
+                        compact_toggle("Disk temperature", "disk_temp", app.edit.show_disk_temp),
+                    ]
+                    .spacing(8),
+                )
+                .padding([0, 18]),
+            );
+        }
+    }
     let mut content = column![
         row![
             bold(app.t("Language"), 15).width(Length::Fill),
@@ -113,12 +170,7 @@ pub(super) fn view(app: &App) -> Element<'_, Message> {
             app.edit.close_to_tray
         ),
         separator(),
-        toggle(
-            "System status",
-            "Show CPU, memory, disk and network speed",
-            "monitor",
-            app.edit.taskbar_monitor
-        )
+        system_status
     ]
     .spacing(12);
     if app.edit.validate().is_err() {

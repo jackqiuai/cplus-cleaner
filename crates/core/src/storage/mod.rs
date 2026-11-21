@@ -18,6 +18,9 @@ pub struct Settings {
     pub last_cleanup_date: String,
     pub language: String,
     pub taskbar_monitor: bool,
+    pub show_cpu_temp: bool,
+    pub show_gpu_temp: bool,
+    pub show_disk_temp: bool,
 }
 impl Default for Settings {
     fn default() -> Self {
@@ -29,6 +32,9 @@ impl Default for Settings {
             last_cleanup_date: String::new(),
             language: String::new(),
             taskbar_monitor: false,
+            show_cpu_temp: true,
+            show_gpu_temp: true,
+            show_disk_temp: true,
         }
     }
 }

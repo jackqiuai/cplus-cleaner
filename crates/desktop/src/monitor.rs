@@ -2,7 +2,7 @@
 use cplus_platform_windows::{
     monitor::{
         Sample, Sampler,
-        taskbar::{Panel, Status},
+        taskbar::{ColumnVisibility, Panel, Status},
     },
     shell,
 };
@@ -125,13 +125,15 @@ impl Monitor {
                             Err(std::sync::mpsc::TryRecvError::Empty) => {}
                         }
                     }
-                    if temperature_detailed.load(Ordering::Relaxed) {
+                    // Sample temperatures whenever monitoring is active (taskbar panel included),
+                    // not only while a detail tab is open.
+                    if active.load(Ordering::Relaxed)
+                        || temperature_detailed.load(Ordering::Relaxed)
+                    {
                         sample.temperatures = temperatures.fresh(temperature_updated);
-                        sample.temperatures.cpu =
-                            cplus_platform_windows::monitor::cpu_service::cached();
                         if temperature_job.is_none()
                             && temperature_at
-                                .is_none_or(|at| at.elapsed() >= Duration::from_secs(10))
+                                .is_none_or(|at| at.elapsed() >= Duration::from_secs(20))
                         {
                             let (tx, rx) = std::sync::mpsc::channel();
                             temperature_job = Some(rx);
@@ -141,6 +143,8 @@ impl Monitor {
                             });
                         }
                     }
+                    sample.temperatures.cpu =
+                        cplus_platform_windows::monitor::cpu_service::cached();
                     // Only visible high-usage entries need icons; never load every EXE.
                     let mut cpu: Vec<_> = sample.processes.iter().collect();
                     cpu.sort_by(|a, b| b.cpu.unwrap_or(-1.0).total_cmp(&a.cpu.unwrap_or(-1.0)));
@@ -213,6 +217,15 @@ impl Monitor {
         }
         if let Some(panel) = &self.panel {
             panel.set_enabled(enabled);
+        }
+    }
+    pub fn set_temperature_columns(&self, cpu: bool, gpu: bool, disk: bool) {
+        if let Some(panel) = &self.panel {
+            panel.set_columns(ColumnVisibility {
+                cpu_temp: cpu,
+                gpu_temp: gpu,
+                disk_temp: disk,
+            });
         }
     }
     pub fn poll(&mut self) {

@@ -2,6 +2,7 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $cpu = $null
 $diskTemperature = $null
+$gpuTemperature = $null
 function Read-SmartTemperature([byte[]]$data) {
     if ($data.Length -ne 512) { return $null }
     foreach ($attribute in @(194, 190)) {
@@ -14,6 +15,16 @@ function Read-SmartTemperature([byte[]]$data) {
     return $null
 }
 # CPU temperature is supplied separately by the PawnIO service.
+# GPU temperature is read from LibreHardwareMonitor's WMI bridge when it is installed.
+try {
+    $sensors = @(Get-CimInstance -Namespace root/LibreHardwareMonitor -ClassName Temperature -OperationTimeoutSec 2 |
+        Where-Object { $_.Name -match 'GPU' -and $_.Value -gt 0 -and $_.Value -le 125 })
+    if ($sensors.Count -gt 0) {
+        $core = @($sensors | Where-Object { $_.Name -match 'GPU Core' })
+        $pick = if ($core.Count -gt 0) { $core[0] } else { ($sensors | Sort-Object Value -Descending)[0] }
+        $gpuTemperature = [double]$pick.Value
+    }
+} catch {}
 try {
     # Follow the system partition to its disk; never assume that C: is PhysicalDrive0.
     $letter = $env:SystemDrive.TrimEnd(':')
@@ -36,4 +47,4 @@ if ($null -eq $diskTemperature -and $null -ne $disk -and @($disk).Count -eq 1) {
         }
     } catch {}
 }
-@{ cpu = $cpu; disk = $diskTemperature } | ConvertTo-Json -Compress
+@{ cpu = $cpu; disk = $diskTemperature; gpu = $gpuTemperature } | ConvertTo-Json -Compress

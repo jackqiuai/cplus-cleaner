@@ -1,6 +1,7 @@
 //! Read-only system samples. All counters are kept on one background thread.
 pub mod cpu_sensor;
 pub mod cpu_service;
+pub mod gpu;
 pub mod taskbar;
 pub mod temperature;
 use crate::{filesystem, from_wide, wide};

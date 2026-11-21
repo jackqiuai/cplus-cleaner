@@ -40,10 +40,26 @@ pub fn cursor_position() -> (i32, i32) {
     }
     (point.x, point.y)
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ColumnVisibility {
+    pub cpu_temp: bool,
+    pub gpu_temp: bool,
+    pub disk_temp: bool,
+}
+impl Default for ColumnVisibility {
+    fn default() -> Self {
+        Self {
+            cpu_temp: true,
+            gpu_temp: true,
+            disk_temp: true,
+        }
+    }
+}
 #[derive(Default)]
 pub struct Model {
     pub sample: Sample,
     pub status: Status,
+    pub columns: ColumnVisibility,
 }
 pub struct Panel {
     pub model: Arc<Mutex<Model>>,
@@ -79,6 +95,10 @@ impl Panel {
     pub fn set_enabled(&self, enabled: bool) {
         self.enabled.store(enabled, Ordering::Release);
     }
+    pub fn set_columns(&self, columns: ColumnVisibility) {
+        let mut model = self.model.lock().unwrap_or_else(|e| e.into_inner());
+        model.columns = columns;
+    }
 }
 struct WindowData {
     model: Arc<Mutex<Model>>,
@@ -86,12 +106,103 @@ struct WindowData {
     font: HFONT,
     hovered: i32,
 }
-const PANEL_WIDTH: i32 = 216;
-const COLUMN_EDGES: [i32; 5] = [0, 40, 80, 120, PANEL_WIDTH];
-fn column_at(x: i32, width: i32) -> usize {
-    (0..3)
-        .find(|&i| x < COLUMN_EDGES[i + 1] * width / PANEL_WIDTH)
-        .unwrap_or(3)
+const COLUMN_WIDTH: i32 = 40;
+const NETWORK_WIDTH: i32 = 96;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum ColumnKind {
+    Cpu,
+    CpuTemp,
+    Memory,
+    GpuTemp,
+    Disk,
+    DiskTemp,
+    Network,
+}
+impl ColumnKind {
+    fn tab(self) -> usize {
+        match self {
+            Self::Cpu | Self::CpuTemp => 1,
+            Self::Memory => 2,
+            Self::GpuTemp => 0,
+            Self::Disk | Self::DiskTemp => 3,
+            Self::Network => 4,
+        }
+    }
+    fn value(self, sample: &Sample) -> Option<f64> {
+        match self {
+            Self::Cpu => sample.cpu,
+            Self::CpuTemp => sample.temperatures.cpu,
+            Self::Memory => sample.memory_percent(),
+            Self::GpuTemp => sample.temperatures.gpu,
+            Self::Disk => sample.disk_percent(),
+            Self::DiskTemp => sample.temperatures.disk,
+            Self::Network => None,
+        }
+    }
+    fn text(self, sample: &Sample) -> (String, String) {
+        match self {
+            Self::Cpu => ("CPU".into(), percentage(sample.cpu)),
+            Self::CpuTemp => ("CPU".into(), celsius(sample.temperatures.cpu)),
+            Self::Memory => ("MEM".into(), percentage(sample.memory_percent())),
+            Self::GpuTemp => ("GPU".into(), celsius(sample.temperatures.gpu)),
+            Self::Disk => ("DISK".into(), percentage(sample.disk_percent())),
+            Self::DiskTemp => ("DISK".into(), celsius(sample.temperatures.disk)),
+            Self::Network => (
+                speed(sample.network.as_ref().and_then(|n| n.upload)),
+                speed(sample.network.as_ref().and_then(|n| n.download)),
+            ),
+        }
+    }
+}
+fn visible_columns(visibility: ColumnVisibility) -> Vec<ColumnKind> {
+    let mut columns = vec![ColumnKind::Cpu];
+    if visibility.cpu_temp {
+        columns.push(ColumnKind::CpuTemp);
+    }
+    columns.push(ColumnKind::Memory);
+    if visibility.gpu_temp {
+        columns.push(ColumnKind::GpuTemp);
+    }
+    columns.push(ColumnKind::Disk);
+    if visibility.disk_temp {
+        columns.push(ColumnKind::DiskTemp);
+    }
+    columns.push(ColumnKind::Network);
+    columns
+}
+fn column_count(visibility: ColumnVisibility) -> usize {
+    4 + [
+        visibility.cpu_temp,
+        visibility.gpu_temp,
+        visibility.disk_temp,
+    ]
+    .into_iter()
+    .filter(|shown| *shown)
+    .count()
+}
+fn panel_width(visibility: ColumnVisibility) -> i32 {
+    COLUMN_WIDTH * (column_count(visibility) as i32 - 1) + NETWORK_WIDTH
+}
+fn column_at(x: i32, width: i32, visibility: ColumnVisibility) -> usize {
+    let count = column_count(visibility);
+    let logical = panel_width(visibility);
+    (0..count)
+        .find(|&i| {
+            let edge = if i + 1 == count {
+                width
+            } else {
+                COLUMN_WIDTH * (i as i32 + 1) * width / logical
+            };
+            x < edge
+        })
+        .unwrap_or(count - 1)
+}
+fn tab_at(column: usize, visibility: ColumnVisibility) -> usize {
+    let columns = visible_columns(visibility);
+    columns
+        .get(column.min(columns.len() - 1))
+        .map_or(4, |kind| kind.tab())
 }
 fn usage_color(value: Option<f64>) -> u32 {
     match value {
@@ -126,23 +237,21 @@ unsafe extern "system" fn procedure(hwnd: HWND, message: u32, w: WPARAM, l: LPAR
                 DeleteObject(brush);
                 let old = SelectObject(dc, data.font);
                 SetBkMode(dc, TRANSPARENT as i32);
-                let sample = data
+                let (sample, visibility) = data
                     .model
                     .try_lock()
-                    .map(|m| m.sample.clone())
+                    .map(|m| (m.sample.clone(), m.columns))
                     .unwrap_or_default();
-                let columns = [
-                    ("CPU".into(), percentage(sample.cpu)),
-                    ("MEM".into(), percentage(sample.memory_percent())),
-                    ("DISK".into(), percentage(sample.disk_percent())),
-                    (
-                        speed(sample.network.as_ref().and_then(|n| n.upload)),
-                        speed(sample.network.as_ref().and_then(|n| n.download)),
-                    ),
-                ];
-                for (i, (top, bottom)) in columns.iter().enumerate() {
-                    let left = bounds.right * COLUMN_EDGES[i] / PANEL_WIDTH;
-                    let right = bounds.right * COLUMN_EDGES[i + 1] / PANEL_WIDTH;
+                let columns = visible_columns(visibility);
+                let width = panel_width(visibility);
+                for (i, kind) in columns.iter().enumerate() {
+                    let (top, bottom) = kind.text(&sample);
+                    let left = bounds.right * (i as i32 * COLUMN_WIDTH) / width;
+                    let right = if i + 1 == columns.len() {
+                        bounds.right
+                    } else {
+                        bounds.right * ((i as i32 + 1) * COLUMN_WIDTH) / width
+                    };
                     if data.hovered == i as i32 {
                         let brush = CreateSolidBrush(rgb(226, 247, 238));
                         FillRect(
@@ -157,9 +266,9 @@ unsafe extern "system" fn procedure(hwnd: HWND, message: u32, w: WPARAM, l: LPAR
                         );
                         DeleteObject(brush);
                     }
-                    if i == 3 {
-                        let inset = (bounds.right * 4 / PANEL_WIDTH).max(1);
-                        let arrow_width = bounds.right * 14 / PANEL_WIDTH;
+                    if *kind == ColumnKind::Network {
+                        let inset = (bounds.right * 4 / width).max(1);
+                        let arrow_width = bounds.right * 14 / width;
                         let brush = CreateSolidBrush(rgb(220, 228, 233));
                         FillRect(
                             dc,
@@ -221,12 +330,7 @@ unsafe extern "system" fn procedure(hwnd: HWND, message: u32, w: WPARAM, l: LPAR
                         &mut rect,
                         DT_CENTER | DT_VCENTER | DT_SINGLELINE,
                     );
-                    SetTextColor(
-                        dc,
-                        usage_color(
-                            [sample.cpu, sample.memory_percent(), sample.disk_percent()][i],
-                        ),
-                    );
+                    SetTextColor(dc, usage_color(kind.value(&sample)));
                     let mut rect = RECT {
                         left,
                         right,
@@ -248,7 +352,8 @@ unsafe extern "system" fn procedure(hwnd: HWND, message: u32, w: WPARAM, l: LPAR
             WM_MOUSEMOVE => {
                 let mut rect = RECT::default();
                 GetClientRect(hwnd, &mut rect);
-                let index = column_at(l as u16 as i32, rect.right.max(1)) as i32;
+                let visibility = data.model.try_lock().map(|m| m.columns).unwrap_or_default();
+                let index = column_at(l as u16 as i32, rect.right.max(1), visibility) as i32;
                 if data.hovered != index {
                     data.hovered = index;
                     InvalidateRect(hwnd, ptr::null(), 0);
@@ -272,7 +377,11 @@ unsafe extern "system" fn procedure(hwnd: HWND, message: u32, w: WPARAM, l: LPAR
                 GetCursorPos(&mut p);
                 let mut rect = RECT::default();
                 GetClientRect(hwnd, &mut rect);
-                let tab = column_at(l as u16 as i32, rect.right.max(1)) + 1;
+                let visibility = data.model.try_lock().map(|m| m.columns).unwrap_or_default();
+                let tab = tab_at(
+                    column_at(l as u16 as i32, rect.right.max(1), visibility),
+                    visibility,
+                );
                 let _ = data.tx.send(if message == WM_LBUTTONUP {
                     Action::Open(tab, p.x, p.y)
                 } else {
@@ -291,6 +400,11 @@ const fn rgb(r: u32, g: u32, b: u32) -> u32 {
 pub fn percentage(value: Option<f64>) -> String {
     value
         .map(|v| format!("{v:.0}%"))
+        .unwrap_or_else(|| "--".into())
+}
+pub fn celsius(value: Option<f64>) -> String {
+    value
+        .map(|v| format!("{v:.0}°C"))
         .unwrap_or_else(|| "--".into())
 }
 pub fn speed(value: Option<f64>) -> String {
@@ -508,6 +622,7 @@ unsafe fn run(
     let active = enabled_flag.clone();
     let stopping = stop_flag.clone();
     let output = geometry.clone();
+    let geometry_model = model.clone();
     thread::spawn(move || unsafe {
         SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
         let mut initialized = false;
@@ -532,12 +647,17 @@ unsafe fn run(
                 && let Some(a) = &automation
             {
                 let dpi = GetDpiForWindow(shell).max(96);
+                let visibility = geometry_model
+                    .try_lock()
+                    .map(|m| m.columns)
+                    .unwrap_or_default();
+                let panel_width = panel_width(visibility) * dpi as i32 / 96;
                 let mut bar = RECT::default();
                 GetWindowRect(shell, &mut bar);
                 Some(Layout {
                     shell: shell as usize,
                     dpi,
-                    bounds: placement(a, shell, PANEL_WIDTH * dpi as i32 / 96),
+                    bounds: placement(a, shell, panel_width),
                     at: std::time::Instant::now(),
                     bar,
                 })
@@ -627,7 +747,8 @@ unsafe fn run(
                 && let Some(layout) = layout
             {
                 if let Some((x, y, height)) = layout.bounds {
-                    let width = PANEL_WIDTH * layout.dpi as i32 / 96;
+                    let visibility = model.try_lock().map(|m| m.columns).unwrap_or_default();
+                    let width = panel_width(visibility) * layout.dpi as i32 / 96;
                     let (x, y) = (layout.bar.left + x, layout.bar.top + y);
                     let target = RECT {
                         left: x,
@@ -769,15 +890,70 @@ mod tests {
     use super::*;
     #[test]
     fn compact_columns_keep_their_click_targets_and_usage_colors() {
+        let all = ColumnVisibility::default();
+        assert_eq!(panel_width(all), 336);
         for scale in [1, 2] {
-            for (x, expected) in [(0, 0), (39, 0), (40, 1), (80, 2), (120, 3), (215, 3)] {
-                assert_eq!(column_at(x * scale, PANEL_WIDTH * scale), expected);
+            for (x, expected) in [
+                (0, 0),
+                (39, 0),
+                (40, 1),
+                (79, 1),
+                (80, 2),
+                (119, 2),
+                (120, 3),
+                (159, 3),
+                (160, 4),
+                (199, 4),
+                (200, 5),
+                (239, 5),
+                (240, 6),
+                (335, 6),
+            ] {
+                assert_eq!(
+                    column_at(x * scale, panel_width(all) * scale, all),
+                    expected
+                );
             }
         }
+        assert_eq!(tab_at(0, all), 1);
+        assert_eq!(tab_at(1, all), 1);
+        assert_eq!(tab_at(2, all), 2);
+        assert_eq!(tab_at(3, all), 0);
+        assert_eq!(tab_at(4, all), 3);
+        assert_eq!(tab_at(5, all), 3);
+        assert_eq!(tab_at(6, all), 4);
         assert_eq!(usage_color(Some(25.0)), rgb(0, 169, 145));
         assert_eq!(usage_color(Some(76.0)), rgb(229, 139, 36));
         assert_eq!(usage_color(Some(95.0)), rgb(239, 85, 85));
         assert_eq!(usage_color(None), rgb(120, 144, 156));
+        assert_eq!(celsius(Some(58.4)), "58°C");
+        assert_eq!(celsius(None), "--");
+    }
+    #[test]
+    fn hidden_temperature_columns_compact_the_panel() {
+        let minimal = ColumnVisibility {
+            cpu_temp: false,
+            gpu_temp: false,
+            disk_temp: false,
+        };
+        assert_eq!(panel_width(minimal), 216);
+        assert_eq!(visible_columns(minimal).len(), 4);
+        assert_eq!(column_at(119, panel_width(minimal), minimal), 2);
+        assert_eq!(column_at(120, panel_width(minimal), minimal), 3);
+        assert_eq!(tab_at(0, minimal), 1);
+        assert_eq!(tab_at(1, minimal), 2);
+        assert_eq!(tab_at(2, minimal), 3);
+        assert_eq!(tab_at(3, minimal), 4);
+
+        let disk_only = ColumnVisibility {
+            cpu_temp: false,
+            gpu_temp: false,
+            disk_temp: true,
+        };
+        assert_eq!(panel_width(disk_only), 256);
+        assert_eq!(visible_columns(disk_only).len(), 5);
+        assert_eq!(tab_at(3, disk_only), 3);
+        assert_eq!(tab_at(4, disk_only), 4);
     }
     #[test]
     fn gaps_do_not_overlap_existing_buttons() {

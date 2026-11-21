@@ -8,6 +8,7 @@ use std::{
 pub struct Temperatures {
     pub cpu: Option<f64>,
     pub disk: Option<f64>,
+    pub gpu: Option<f64>,
 }
 impl Temperatures {
     pub fn fresh(self, sampled: Option<Instant>) -> Self {
@@ -20,7 +21,12 @@ impl Temperatures {
 }
 
 pub fn read() -> Temperatures {
-    read_inner().unwrap_or_default()
+    let mut value = read_inner().unwrap_or_default();
+    // Prefer the official WDDM probe; fall back to the LHM WMI value from PowerShell.
+    if let Some(gpu) = super::gpu::read() {
+        value.gpu = Some(gpu);
+    }
+    value
 }
 fn read_inner() -> Option<Temperatures> {
     let executable = std::path::PathBuf::from(std::env::var_os("SystemRoot")?)
@@ -60,7 +66,7 @@ fn read_inner() -> Option<Temperatures> {
 }
 fn decode(bytes: &[u8]) -> Option<Temperatures> {
     let mut value: Temperatures = serde_json::from_slice(bytes).ok()?;
-    for v in [&mut value.cpu, &mut value.disk] {
+    for v in [&mut value.cpu, &mut value.disk, &mut value.gpu] {
         *v = v.filter(|n| n.is_finite() && *n > 0.0 && *n <= 125.0);
     }
     Some(value)
@@ -73,12 +79,12 @@ mod tests {
         let start = Instant::now();
         let value = read();
         assert!(start.elapsed() < Duration::from_secs(12));
-        for v in [value.cpu, value.disk].into_iter().flatten() {
+        for v in [value.cpu, value.disk, value.gpu].into_iter().flatten() {
             assert!(v.is_finite() && v > 0.0 && v <= 125.0);
         }
         eprintln!(
-            "CPU temperature: {:?}; system-disk temperature: {:?}",
-            value.cpu, value.disk
+            "CPU temperature: {:?}; system-disk temperature: {:?}; GPU temperature: {:?}",
+            value.cpu, value.disk, value.gpu
         );
     }
     #[test]
@@ -91,11 +97,18 @@ mod tests {
                 .cpu
                 .is_none()
         );
-        let invalid = decode(br#"{"cpu":0,"disk":65535}"#).unwrap();
-        assert!(invalid.cpu.is_none() && invalid.disk.is_none());
+        let invalid = decode(br#"{"cpu":0,"disk":65535,"gpu":999}"#).unwrap();
+        assert!(invalid.cpu.is_none() && invalid.disk.is_none() && invalid.gpu.is_none());
+        let gpu = decode(br#"{"cpu":null,"disk":null,"gpu":66.2}"#).unwrap();
+        assert_eq!(gpu.fresh(Some(Instant::now())).gpu, Some(66.2));
+        assert_eq!(
+            gpu.fresh(Some(Instant::now() - Duration::from_secs(31)))
+                .gpu,
+            None
+        );
         assert!(decode(b"not JSON").is_none());
         assert!(
-            decode(br#"{"cpu":null,"disk":null}"#)
+            decode(br#"{"cpu":null,"disk":null,"gpu":null}"#)
                 .unwrap()
                 .cpu
                 .is_none()
